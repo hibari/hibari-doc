@@ -1,0 +1,55 @@
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+digraph data_flow {
+    HEAD1 [label="Brick 1\nHead"];
+    MIDDLE1 [label="Brick 2\nMiddle"];
+    TAIL1 [label="Brick 3\nTail\n+Official Tail"];
+
+    HEAD2 [label="Brick 1\nHead"];
+    TAIL2 [label="Brick 3\nTail\n+Official Tail"];
+
+    HEAD3 [label="Brick 1\nHead"];
+    MIDDLE3 [label="Brick 3\nMiddle\n+Official Tail"];
+    TAIL3 [label="Brick 2\nTail"];
+
+    HEAD4 [label="Brick 1\nHead"];
+    MIDDLE4 [label="Brick 3\nMiddle"];
+    TAIL4 [label="Brick 2\nTail\n+Official Tail"];
+
+    //{rank=same; HEAD1 HEAD2 HEAD3 HEAD4};
+    {rank=same; HEAD1 MIDDLE1 TAIL1};
+    {rank=same; HEAD2 TAIL2};
+    {rank=same; HEAD3 MIDDLE3 TAIL3};
+    {rank=same; HEAD4 MIDDLE4 TAIL4};
+
+    HEAD1 -> MIDDLE1 [label="Replication"];
+    MIDDLE1 -> TAIL1 [label="Replication"];
+    HEAD1 -> HEAD2 [label="Time passes..."];
+
+    HEAD2 -> TAIL2 [label="Replication"];
+    HEAD2 -> HEAD3 [label="Time passes..."];
+
+    HEAD3 -> MIDDLE3 [label="Replication"];
+    MIDDLE3 -> TAIL3 [label="Repair"];
+    TAIL3 -> MIDDLE3 [label="Repair"];
+    MIDDLE3 -> TAIL3 [label="Replication"];
+    HEAD3 -> HEAD4 [label="Time passes..."];
+
+    HEAD4 -> MIDDLE4 [label="Replication"];
+    MIDDLE4 -> TAIL4 [label="Replication"];
+};

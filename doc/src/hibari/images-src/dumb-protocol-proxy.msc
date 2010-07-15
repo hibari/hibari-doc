@@ -1,0 +1,36 @@
+## -*- mode: graphviz-dot -*-
+## vim: set syntax=dot:
+
+##
+## Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+##
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+
+msc {
+    DUMB_CLIENT [label="Dumb Protocol\nClient"],
+    DUMB_SERVER [label="Dumb Protocol\nServer"],
+    HIBARI_CLIENT [label="Hibari client\n(proxy/consistent\nhashing router)"],
+    CHAIN1 [label="Chain 1\nBrick X"],
+    CHAIN2 [label="Chain 2\nBrick Y"],
+    CHAINN [label="Chain N\nBrick Z"];
+
+    DUMB_CLIENT -> DUMB_SERVER [label="Dumb query"];
+    DUMB_SERVER => HIBARI_CLIENT [label="Hibari API call"];
+    // HIBARI_CLIENT box HIBARI_CLIENT [label="Calculate the {Table,Key} -> Chain mapping, e.g. Chain #2"];
+    --- [label="Proxy calculates the {Table,Key,OpList} -> Chain mapping, e.g. Chain #2"];
+    HIBARI_CLIENT -> CHAIN2 [label="Hibari query"];
+    CHAIN2 -> HIBARI_CLIENT [label="Hibari reply"];
+    HIBARI_CLIENT => DUMB_SERVER [label="Hibari API return"];
+    DUMB_SERVER -> DUMB_CLIENT [label="Dumb reply"];
+}

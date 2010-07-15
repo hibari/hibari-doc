@@ -1,0 +1,39 @@
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+digraph data_flow {
+    {rank=same; BRICK1 BRICK2 BRICK3};
+
+    BRICK1 [label="Brick 1"];
+    BRICK2 [label="Brick 2"];
+    BRICK3 [label="Brick 3"];
+    COMMON [label="Common Log:\n* key metadata\n* value blobs"];
+    PLOG1 [label="Private log Brick 1:\n* key metadata"];
+    PLOG2 [label="Private log Brick 2:\n* key metadata"];
+    PLOG3 [label="Private log Brick 3:\n* key metadata"];
+
+    BRICK1 -> COMMON [label="sync write\nrequest"];
+    COMMON -> BRICK1 [label="sync write\nreply"];
+    BRICK2 -> COMMON [label="sync write\nrequest"];
+    COMMON -> BRICK2 [label="sync write\nreply"];
+    BRICK3 -> COMMON [label="sync write\nrequest"];
+    COMMON -> BRICK3 [label="sync write\nreply"];
+
+    COMMON -> PLOG1 [label="async metadata\ncopy"];
+    COMMON -> PLOG2 [label="async metadata\ncopy"];
+    COMMON -> PLOG3 [label="async metadata\ncopy"];
+};

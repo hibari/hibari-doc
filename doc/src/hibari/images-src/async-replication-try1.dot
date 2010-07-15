@@ -1,0 +1,51 @@
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+digraph data_flow {
+    //nodesep = 0.5;
+    CLIENT [label="Data Center 1\nClient"];
+    HEAD [label="Data Center 1\nHead Brick"];
+    MIDDLE [label="Data Center 1\nMiddle Brick"];
+    TAIL [label="Data Center 1\nTail Brick\n+Official Tail"];
+    HEAD2 [label="Data Center 2\nHead Brick"];
+    MIDDLE2 [label="Data Center 2\nMiddle Brick"];
+    TAIL2 [label="Data Center 2\nTail Brick\n+Official Tail"];
+    CLIENT2 [label="Data Center 2\nClient"];
+//    {rank=same; CLIENT  HEAD MIDDLE TAIL};
+//    {rank=same; CLIENT2 HEAD2 MIDDLE2 TAIL2};
+    {rank=same; CLIENT CLIENT2};
+    {rank=same; HEAD HEAD2};
+
+  subgraph foo1 {
+    CLIENT -> HEAD [label="Update request"];
+    HEAD -> MIDDLE [label="Replication"];
+    MIDDLE -> TAIL [label="Replication"];
+    TAIL -> CLIENT [label="Update reply"];
+    TAIL -> TAIL [label="Write to\nasync update log"]
+  }
+
+  subgraph foo2 {
+    HEAD2 -> MIDDLE2 [label="Replication"];
+    MIDDLE2 -> TAIL2 [label="Replication"];
+
+    CLIENT2 -> HEAD2 [label="Update request"];
+    TAIL2 -> CLIENT2 [label="Update reply"];
+  }
+
+  TAIL -> HEAD2 [label="Replay async\nupdate log"];
+  //foo1 -> foo2 [label="Replay async\nupdate log"];
+};

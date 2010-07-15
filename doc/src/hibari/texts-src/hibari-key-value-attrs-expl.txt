@@ -1,0 +1,43 @@
+// -*- Doc -*-
+// vim: set syntax=asciidoc:
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+"Storage location = RAM" means that, during normal query handling,
+data is retrieved from a copy in RAM.  All modifications of any/all
+attributes of a key are written to the write-ahead log to prevent data
+loss in case of a cluster-wide power failure.  See
+xref:write-ahead-logs[] for more details.
+
+"Store location = disk" means that the value of the attribute is not
+stored in RAM.  Metadata in RAM contains a pointer to the attribute's
+location:file #, byte offset, and length.  A log sequence file inside
+the common log must be opened, call `lseek(2)`, and then `read(2)` to
+retrieve the attribute.
+
+// JWN: There has been no definition for the term "common log" before
+// this section.  The above description is confusing without knowing
+// what it means.
+
+Best case:: Zero disk seeks are required to read a key's value
+blob from disk, because all data in question is in the OS's page
+cache.
+Typical case:: One seek and read is required: the file's inode
+info is cached, but the desired file page(s) is not cached.
+Worse case:: The file system will need to perform additional seeks and
+reads to read intermediate directory data, inode, and indirect storage
+block data within the inode.

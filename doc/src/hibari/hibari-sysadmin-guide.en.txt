@@ -1,0 +1,2454 @@
+// -*- Doc -*-
+// vim: set syntax=asciidoc:
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+= Hibari System Administrator's Guide
+:Date: 2010/07/05
+:Revision: 0.5
+:Copyright: Copyright (C) 2006-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+
+<<<
+== Introduction
+
+=== The Problem
+
+There exists a dichotomy in modern storage products. Commodity storage
+is inexpensive, but unreliable. Enterprise storage is expensive, but
+reliable. Large capacities are present in both enterprise and
+commodity class. The problem, then, becomes how to leverage
+inexpensive commodity hardware to achieve high capacity enterprise
+class reliability at a fraction of the cost.
+
+This problem space has been researched extensively, especially in the
+last few years: in academia, the commercial sector, and by open source
+community.  Hibari uses techniques and algorithms from this research
+to create a solution which is reliable, cost effective, and scalable.
+
+=== Key-Value Store
+
+Hibari is key-value store.  If a key-value store were represented as
+an SQL table, it would be defined as:
+
+[[sql-definition-key-value]]
+.SQL-like definition of a generic key value store
+-----------------------------------------------------
+CREATE TABLE foo (
+    BLOB key;
+    BLOB value;
+) PRIMARY KEY key;
+-----------------------------------------------------
+
+In truth, each key stored in Hibari has three additional fields
+associated with it. See xref:hibari-data-model[] and 
+link:hibari-developer-guide.en.html[Hibari Developer's Guide] for details.
+
+[[hibari-origins]]
+=== Hibari's Origins
+
+Hibari was originally written by Gemini Mobile Technologies to support
+mobile messaging and email services.  Hibari was released outside of
+Gemini under the Apache Public License version 2.0 in July 2010.
+
+Hibari has been deployed by multiple telecom carriers in Asia and
+Europe.  Hibari may lack some features such as monitoring, event and
+alarm management, and other "production environment" support services.
+Since telecom operator has its own data center support infrastructure,
+Hibari's development has not included many services that would be
+redundant in a carrier environment.  We hope that Hibari's release to
+the open source community will close those functional gaps as Hibari
+spreads outside of carrier data centers.
+
+Gemini Mobile Technologies provides full support, consulting, and
+development services for Hibari.  Please see the
+http://www.geminimobile.com/[Gemini Mobile Technologies Web page] for
+more information.
+
+=== Summary of Hibari's Main Features
+
+* A Hibari cluster is a distributed system.
+* A Hibari cluster is linearly scalable.
+* A Hibari cluster is highly available.
+* All updates are durable.
+* All updates are strongly consistent.
+* All client operations are lockless.
+* A Hibari cluster's performance is excellent.
+* Multiple client access protocols are available.
+* Data is repaired automatically after a server failure.
+* Cluster configuration can be changed at any time.
+* Data is automatically rebalanced.
+* Heterogeneous hardware support is easy.
+* Micro-transactions simplify creation of robust client applications.
+* Per-table configurable performance options are available.
+
+[[acid-base-hibari]]
+=== The "ACID vs. BASE" Spectrum and Hibari
+
+IMPORTANT: We strongly believe that "ACID" and "BASE" properties exist
+on a spectrum and are not exclusively one or the other
+(black-or-white) properties.
+
+Most database users and administrators are familiar with the acronym
+ACID: Atomic, Consistent, Independent, and Durable.  Now, consider an
+alternative method of storing and managing data, BASE:
+
+* Basically available
+* Soft state
+* Eventually consistent
+
+For an
+link:http://queue.acm.org/detail.cfm?id=1394128[exploration of ACID and BASE properties (at ACM Queue)], see:
+
+  BASE: An Acid Alternative
+  Dan Pritchett
+  ACM Queue, volume 6, number 3 (May/June 2008)
+  ISSN: 1542-7730
+  http://queue.acm.org/detail.cfm?id=1394128
+
+When both strict ACID and strict BASE properties are placed on a
+spectrum, they are at the opposite ends.  However, a distributed
+database system can fit anywhere in the middle of the spectrum.
+
+A Hibari cluster lies near the ACID end of the ACID/BASE spectrum.  In
+general, Hibari's design will always favors consistency and durability
+of updates at the expense of 100% availability in all situations.
+
+[[cap-theorem-and-hibari]]
+=== The CAP Theorem and Hibari
+
+WARNING: Eric Brewer's "CAP Theorem", and its proof by Gilbert and
+Lynch, is a tricky thing.  It's nearly impossible to cleanly apply the
+purity of logic to the dirty world of real, industrial computing
+systems.  We strongly suggest that the reader consider the CAP
+properties as a spectrum, one of balances and trade-offs.  The
+distributed database world is not black and white, and it is important
+to know where the gray areas are.
+
+See the
+link:http://en.wikipedia.org/wiki/CAP_theorem[Wikipedia article about the CAP theorem] 
+for a summary of the theorem, its proof, and related links.
+
+  CAP Theorem (postulated by Eric Brewer, Inktomi, 2000)
+  Wikipedia
+  http://en.wikipedia.org/wiki/CAP_theorem
+
+IMPORTANT: The CAP Theorem's properties of the "Availability" and
+"Partition tolerance" are very tightly related.
+
+The line between "CA" and "CP" systems is very fine and nuanced.  From
+the viewpoint of operations/production staff, a Hibari cluster will
+behave more like "CA" database systems, such as clustered RDBMS
+systems, and less like "CP" systems such as HBase or Hypertable.  Most
+distributed databases in the "CA" or "CP" families are mixture of
+both.footnote:[The crucial detail is that such systems may not be "CA"
+and "CP" at the same time: they can shift around the spectrum in reaction
+to events such as network partition.]
+
+Hibari includes an Erlang/OTP application specifically for detecting
+network partitions.  See xref:admin-server-and-network-partition[] for
+details.
+
+<<<
+===  Copyright Notices
+
+Copyright (C) 2005-2010 Gemini Mobile Technologies, Inc.  All rights
+reserved.
+
+Gemini Mobile(R) and HyperScale(R) are registered trademarks of Gemini
+Mobile Technologies, Inc. in the United States and other countries.
+
+Portions of Gemini products include third-party technology used under
+license.
+
+------------
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+------------
+<<<
+
+== Hibari's Main Features in Broad Detail
+
+=== Distributed system
+
+Multiple machines can participate in a single cluster.  The maximum
+size of a Hibari cluster has not yet been determined.  A practical
+limit of approximately 200-250 nodes is likely.
+
+Any server node can handle any client request, forwarding a request to
+the correct server node when necessary.  Clients maintain enough state
+to send their queries directly to the correct server node in all
+common cases.
+
+=== Scalable system
+
+The total storage and processing capacity of a Hibari cluster
+increases linearly as machines are added to the cluster.
+
+=== Durable updates
+
+Every key update is written and flushed to stable storage (via the
+`fsync()` system call) before sending acknowledgments to the client.
+
+=== Consistent updates
+
+After a key's update is acknowledged, no client in the cluster can see
+an older version of that key.  Hibari uses the "chain replication"
+algorithm to maintain consistency across all replicas of a key.
+
+All data written to disk include MD5 checksums; the checksums are
+validated on each read to avoid sending corrupted data to the client.
+
+[[lockless-client-api]]
+=== Lockless client API
+
+The Hibari client API requires that all operations (read queries
+operations and/or update operations) be self-contained within a single
+client request.  Therefore, locks are not implemented because they are
+not required.
+
+Inside Hibari, each key-value pair also contains a ``timestamp''
+value.  A timestamp is an integer.  Each time the key is updated, the
+timestamp value must increase.  (This requirement is enforced by all
+server nodes.)
+
+In many database systems, if a client requires guarantees that a key has
+not changed since the last time it was read, then the client acquires
+a lock (or lease) on the key.  In Hibari, the client's update
+specifies the timestamp of the last read attempt of the key:
+
+* If the timestamp matches the server, the operation is permitted.
+* If the timestamp does not match the server's timestamp, then the
+  operation is not permitted, and the new timestamp is returned to the
+  client.
+
+It is recommended that all Hibari nodes use NTP to synchronize their
+system clocks.  The simplest Hibari client API uses timestamps based
+upon the OS system clock for timestamp values.  This feature can be
+bypassed, however, by using a slightly more complex client API.
+
+However, Hibari's overload detection and work-dumping algorithms will
+use the OS system clock, regardless of which client API is used.  All
+system clocks, client and server, be synchronized to be within roughly
+1 second of each other.
+
+=== High availability
+
+Each key can be replicated multiple times (configurable on a per-table
+basis).  As long as one copy of the key survives, all operations on
+that key are permitted.  A cluster can survive multiple cluster node
+failures and still maintain full data integrity.
+
+The cluster membership application, called the Hibari Admin Server,
+runs as an active/standby application on one or more of the server
+nodes.  The Admin Server's configuration and private state are also
+maintained in Hibari server nodes.  Shared storage such as NFS, shared
+SCSI/Fibre Channel LUNs, or replicated block devices are not required.
+
+If the Admin Server fails and is restarted on a standby node, the rest
+of the cluster can continue normal operation.  If another brick fails
+while the Admin Server is restarting, then clients may see service
+interruptions (usually in the form of timeouts) until the Admin Server
+has finished restarting and can react to the failure.
+
+=== Multiple Client Protocols
+
+Hibari supports many client protocols for queries and updates:
+
+* A native Erlang API, via Erlang's native message-passing mechanism
+* Amazon S3 protocol, via HTTP
+* UBF, Joe Armstrong's ``Universal Binary Format'' protocol, via TCP
+* UBF via several minor variations of TCP transport
+* UBF over JSON-RPC, via HTTP
+* JSON-encoded UBF, via TCP
+
+Protocols under development:
+
+* Memcached, via TCP
+* UBF over Thrift, via TCP
+* UBF over Protocol Buffers, via TCP
+
+Most of the client access protocols are implemented using the
+Erlang/OTP `application` behavior.  By separating each access protocol
+into separate OTP applications, Hibari's packaging is quite flexible:
+packaging can add or remove protocol support as desired.  Similarly,
+protocols can be stopped and started at runtime.
+
+[[overview-high-performance]]
+=== High performance
+
+Hibari's performance is competitive with other distributed,
+non-relational databases such as HBase and Cassandra, when used with
+similar replication and durability configurations.  Despite the
+constraints of durable writes and strong consistency, Hibari's
+performance can exceed those databases on some workloads.
+
+IMPORTANT: The metadata of all keys stored by the brick, called the
+``key catalog'', are stored in RAM to accelerate commonly-used
+operations.  In addition, non-zero values of the "expiration_time" and
+non-empty values of "flags" are also stored in RAM (see
+xref:sql-definition-hibari[]).  As a consequence, a multi-million key
+brick can require many gigabytes of RAM.
+
+=== Automatic repair
+
+Replicas of keys are automatically repaired whenever a cluster node
+crashes and restarts.
+
+=== Dynamic configuration
+
+The number of replicas per key can be changed without service
+interruption.  Likewise, replication chains can be added or removed
+from the cluster without service interruption.  This permits the
+cluster to grow (or shrink) as workloads change.  See
+xref:chain-migration[] for more details.
+
+=== Data rebalancing
+
+Keys will be automatically be rebalanced across the cluster without
+service interruption.  See xref:chain-migration[] for more details.
+
+=== Heterogeneous hardware support
+
+Each replication chain can be assigned a weighting factor that will
+increase or decrease the percentage of a table's key space relative to
+all other chains.  This feature can permit use of cluster nodes with
+different CPU, RAM, and/or disk capacities.
+
+=== Micro-Transactions
+
+Under limited circumstances, operations on multiple keys can be given
+transactional commit/abort semantics.  Such micro-transactions can
+considerably simplify the creation of robust applications that keep
+data consistent despite failures by both clients and servers.
+
+[[per-table-config-perf-options]]
+=== Per-table configurable performance options
+
+Each Hibari table may be configured with the following options to
+enhance performance ... though each of these options has a
+corresponding price to pay.
+
+* RAM-based storage: All data (both keys and values) may be stored in
+  RAM, at the expense of increased RAM consumption.
+  Disk is used still used to log all updates, to protect against
+  a catastrophic power failure.
+* Asynchronous writes: Use of the `fsync()` system call can be disabled
+  to improve performance, at the expense of data loss in a system
+  crash or power failure.
+* Non-durable updates: All update logging can be disabled to improve
+  performance, at the expense of data loss when all nodes in a
+  replication chain crash.
+
+== Getting Started with Hibari (INCOMPLETE)
+_draft_
+
+NOTE: Don't forget to mention the recommendation of 2 physical network
+interfaces.
+
+=== Starting Hibari for the first time (INCOMPLETE)
+_draft_
+
+=== An Introductory Example (INCOMPLETE)
+_draft_
+
+== Building A Hibari Database
+
+=== Defining a Schema
+
+Hibari is a key-value database.  Unlike a relational DBMS, Hibari
+applications do not need to create a schema.  The only application
+requirement is that all its tables be created in advance, see
+xref:creating-new-tables[] below.
+
+[[hibari-data-model]]
+=== The Hibari Data Model
+
+If a Hibari table were represented within an SQL database, it would
+look something like this:
+
+[[sql-definition-hibari]]
+.SQL-like definition of a Hibari table
+include::texts-src/hibari-sql-definition.txt[]
+
+Hibari table names use the Erlang data type ``atom''.  The types of
+all key-related attributes are presented below.
+
+.Types of Hibari table key-value attributes
+include::texts-src/hibari-key-value-attrs.txt[]
+
+include::texts-src/hibari-key-value-attrs-expl.txt[]
+
+The practical constraints on maximum value blob size are affected by
+total blob size and frequency of large blob access.  For example,
+storing an occasional 64MB value blob is different than a 100% write
+workload of 100% 64MB value blobs.  The Hibari client API does not
+have a method to update or fetch less than the entire value blob, so a
+brick can be blocked for many seconds if it tried to operate on (for
+example) even a single 4GB blob.  In addition, other processes can be
+blocked by `'busy_dist_port'` events while processing big value blobs.
+
+=== Hibari's Client Operations 
+
+Hibari's basic client operations are enumerated below.
+
+`add`:: Set a key/value/expiration/flags only if the key does not already exist.
+`delete`:: Delete a key
+`get`:: Get a key's timestamp and value
+`get_many`:: Get a range of keys
+`replace`:: Set a key/value/expiration/flags only if the key does exist
+`set`:: Set a key/value/expiration/flags
+`txn`:: Start of a micro-transaction
+
+Each operation can be accompanied by operation-specific flags.  Some
+of these flags include:
+
+`witness`:: Do not return the value blob. (`get`, `get_many`) 
+`must_exist`:: Abort micro-transaction if key does not exist.
+`must_not_exist`:: Abort micro-transaction if key does exist.
+`{testset, TS}`:: Perform the action only if the key's current timestamp
+exactly matches `TS`. (`delete`, `replace`, `set`, micro-transaction) 
+
+For details of these operations and lesser-used per-operation flags,
+see:
+
+* xref:micro-transactions[]
+* link:hibari-developer-guide.en.html[Hibari Developer's Guide]
+
+=== Indexes
+
+Hibari does not support automatic indexing of value blobs.  If an
+application requires indexing, the application must build and maintain
+those indexes.
+
+[[creating-new-tables]]
+=== Creating New Tables
+
+New tables can be created by two different methods:
+
+* Via the Admin Server's status server.  Follow the "Add a table" link
+  at the bottom.
+* Using the Erlang shell.
+
+For details on the Erlang shell API and detailed explanations of the
+table options presented in the Admin server's HTTP interface, see the
+link:hibari-developer-guide.en.html[Hibari Developer's Guide]
+
+[[hibari-architecture]]
+== Hibari Architecture
+
+From a logical point of view, Hibari's architecture has three layers:
+
+* Top layer: consistent hashing
+* Middle layer: chain replication
+* Bottom layer: the storage brick
+
+This section discusses each of these major layers in detail, starting
+from the bottom and working upward.
+
+.Logical architecture diagram; physical hosts/bricks are color-coded with 5 colors
+svgimage::images/logical-architecture1[align="center", scaledwidth="80%"]
+
+.Logical architecture diagram, alternative perspective
+svgimage::images/logical-architecture-alt[align="center", scaledwidth="80%"]
+
+=== Bricks, Physical and Logical
+
+The word "brick" has two different meanings in a Hibari system:
+
+* An entire physical machine that has Hibari software installed,
+configured, and (hopefully) running.
+* A logical software entity that runs inside the Hibari application
+that is responsible for managing key-value pairs.
+
+[[the-physical-brick]]
+==== The physical brick
+
+The phrase "physical brick" and "machine" are interchangeable, most of
+the time.  Hibari is designed to react correctly to the failure of any
+part of the machine that the Hibari application is running:
+
+* disk
+* power supply
+* CPU
+* network
+
+Hibari is designed to take advantage of low-cost, off-the-self
+commodity servers.
+
+A physical brick is the basic unit of failure.  Data replication (via
+the chain replication algorithm) is responsible for protecting data,
+not redundant equipment such as dual power supplies and RAID disk
+subsystems.  If a physical brick crashes for any reason, copies of
+data on other physical bricks can still be used.
+
+It is certainly possible to decrease the chances of data loss by using
+physical bricks with more expensive equipment.  Given the same number
+of copies of a key-value pair, the chances of data loss are less if
+each brick has multiple power supplies and RAID 1/5/6/10 disk.  But
+risk of data loss can also be reduced by increasing the number of data
+replicas ("chain length") using cheaper, non-redundant server
+hardware.
+
+==== The logical brick
+
+A logical brick is a software entity that runs within a Hibari
+application instance on a physical brick.  A single Hibari physical
+brick can support dozens or (potentially) hundreds of logical bricks,
+though limitations of CPU, RAM, and/or disk capacity can impose a
+smaller limit.
+
+A logical brick maintains RAM and disk data structures to store a
+collection of key-value pairs.  The keys are maintained in
+lexicographic sorting order.
+
+The replication technique used by Hibari, chain replication, maintains
+identical copies of key-value pairs across multiple logical bricks.
+The number of copies of a key-value pair is exactly equal to the
+length of the chain.  See the next subsection below for more details.
+
+It is possible to configure Hibari to place all of the logical bricks
+for the same chain onto the same physical brick.  This practice can be
+useful in a developer's environment, but it is impractical for
+production networks: such a configuration does not have any physical
+redundancy, and therefore it poses a greater risk of data loss.
+
+[[write-ahead-logs]]
+=== Write-Ahead Logs
+
+By default, all logical bricks will record all updates to a
+``write-ahead log''.  Used by many database systems, a write-ahead log
+(WAL) appears to be an infinitely-sized log where all important events
+(e.g. all write and delete operations) are appended to the end of the
+log.  The log is considered ``write-ahead'' if a log entry is written
+_prior to_ any significant processing by the application.
+
+[[write-ahead-logs-in-hibari]]
+==== Write-ahead logs in the Hibari application
+
+Two types of write-ahead logs are used by the Hibari application.
+These logs cooperate with each other to provide several benefits to
+the logical brick.
+
+There are two types of write-ahead logs:
+
+* The shared "common log".  This single write-ahead log instance provides
+  durability guarantees to all logical bricks within the server node
+  via the `fsync()` system call.
+* Individual ``private logs''.  Each logical brick maintains its own private
+  write-ahead log instance.  All metadata regarding keys in the
+  logical brick are stored in the logical brick's private log.
+
+All updates are written first to the common log, usually in a
+synchronous manner.  At a later time, update metadata is lazily copied
+from the common log to the corresponding brick's private log.
+Value blobs (for bricks that store value blobs on disk)
+will remain in the common log and are managed by
+the ``scavenger'', see xref:scavenger[].
+
+svgimage::images/private-and-common-logs[align="center", scaledwidth="80%"]
+
+[[two-wal-types]]
+==== Two types of write-ahead logs
+The two log types cooperate to support a number of useful properties.
+
+* Data durability in case of system crash or power failure.  All
+  synchronous writes to the ``common log'' are guaranteed to be
+  flushed to stable storage.
+* Performance enhancement by limiting `fsync()` usage.  After a
+  logical brick writes data to the common log, it will request an
+  `fsync()`.  The common log will combine `fsync()` requests from
+  multiple bricks into a single system call.
+* Performance enhancement at logical brick startup.  A brick's private
+  log stores only that bricks key metadata.  Therefore, at startup
+  time, the logical brick does not scan data maintained by other
+  logical bricks.  This can be a very substantial time savings as the
+  amount of metadata managed by all logical bricks grows over time.
+* Performance enhancement by separating synchronous writes from
+  asynchronous writes.  If the common log's storage is on a separate
+  device, e.g. a write-optimized flash memory block device, then all
+  of the `fsync()` calls can finish much faster.  During later
+  processing of the asynchronous/lazy copying of key metadata from the
+  common log to individual private logs can take advantage of OS dirty
+  page write coalescing and other I/O optimizations without
+  interference by `fsync()`.  These copies are performed roughly once
+  per second.
+
+[[wal-dirs-and-files]]
+==== Directories and files used by write-ahead logs
+
+Each write-ahead log is stored on disk as a collection of large files
+(default = 100MB each).  Each file in the log is identified by a ``log
+sequence number'' and is called a ``log sequence file''.
+
+Log sequence files are append-only and are never written again.
+Consequently, data in a log sequence file is never overwritten.  Any
+disk space reclaimed by checkpoint and scavenger operations is done by
+copying data from old log sequence files and appending to new log
+sequence files.  Once the new log sequence file(s) is flushed to
+stable storage, the old log sequence file(s) can be deleted.
+
+When a log sequence file reaches its maximum size, the current log
+file is closed and a new one is opened with a monotonically increasing
+log serial number.
+
+All log files for a write-ahead log are grouped under a single
+directory called, `hlog.`{log-name}, where {log-name} is the name of
+the brick or of the common log.  These directories are stored under
+the `var/data` subdirectory of the application's installation path,
+`/usr/local/TODO/TODO/var/data` (by default).
+
+The maximum log file size (`brick_max_log_size_mb` in the
+`central.conf` file) is advisory only and is not enforced as a hard
+limit.
+
+==== Reclaiming disk space used by write-ahead logs
+
+In practice, infinite storage is not yet available.  The Hibari system
+uses two mechanisms to reclaim unused disk space:
+
+* The ``checkpoint'' mechanism, see xref:checkpoints[].
+* The ``scavenger'' mechanism, see xref:scavenger[].
+
+==== Write-ahead log serial numbers
+
+Each item written in a write-ahead log is assigned a serial number.
+If the brick is in ``standalone'' or ``head'' roles, then the serial
+number will be assigned by that brick.  For downstream bricks, the
+serial number assigned by the ``head'' brick will be used.
+
+The serial number mechanism is used to ensure that a single unique
+ordering of log items will be written to each brick log.  In certain
+failure cases, log items may be re-sent down the chain a second time,
+see xref:failure-middle-brick[].
+
+// JWN: Does the above mechanism "to ensure that a single unique ordering"
+// applies to both common log and private log?
+
+[[chains]]
+=== Chains
+
+A chain is the unit of data replication used by the
+link:http://www.usenix.org/events/osdi04/tech/renesse.html[``chain replication'' technique as described in this paper]:
+
+  Chain Replication for Supporting High Throughput and Availability
+  Robbert van Renesse and Fred B. Schneider
+  USENIX OSDI 2004 conference proceedings
+  http://www.usenix.org/events/osdi04/tech/renesse.html
+
+Data replication algorithms can be separated into two basic families:
+
+* State machine replication
+* Quorum replication
+
+The chain replication algorithm is from the state machine family of
+replication algorithms.  It is a variation of the familiar
+``master/slave'' replication algorithm, where all updates are sent to
+a master node and then copies are sent to zero or more slave nodes.
+
+Chain replication requires a very specific ordering of nodes (which
+store copies of data) and the messages passed between them.  The
+diagram below depicts the "key update" message flow in a chain of
+length three.
+
+[[diagram-write-path-3]]
+.Message flow in a chain for a key update
+svgimage::images/write-path-3[align="center", scaledwidth="80%"]
+
+If a chain is of length one, then the same brick assumes both ``head''
+and ``tail'' roles simultaneously.  In this case, the brick is called
+a ``standalone'' brick.
+
+.Message flow for a key update to a chain of length 1
+svgimage::images/write-path-1[align="center", scaledwidth="30%"]
+
+To maintain the property strong consistency, a client must read data
+from the tail brick in the chain.  A read processed by any other brick
+member would permit the client to read an update that has not yet been
+processed by all bricks and therefore could result in a strong
+consistency violation.  Such a violation is frequently called a
+``dirty read'' in other database systems.
+
+.Message flow for a read-only key query
+svgimage::images/read-path-3[align="center", scaledwidth="80%"]
+
+[[bricks-outside-chain-replication]]
+==== Bricks outside of chain replication
+
+During Hibari's development, we encountered a problem of managing the
+state required by the Admin Server.  If data managed by chain
+replication requires the Admin Server to be running, how can the Admin
+Server read its own data?  There is a ``chicken and the egg''
+dependency problem that must be solved.
+
+// JWN: Why wasn't Mnesia used for the Admin Server's storage
+// implementation?
+
+The solution is simple: do not use chain replication to manage the
+Admin Server's data.  Instead, that data is replicated using a simple
+``quorum replication'' technique.  These bricks all have names starting
+with the string "bootstrap".
+
+A brick must be in ``standalone'' mode to answer queries when it is
+used outside of chain replication.  See xref:brick-roles[] for details
+on the standalone role.
+
+=== Tables
+
+A table is thing that divides the key namespace within Hibari.  If you
+need to have two different keys called "foo" but have different
+values, you store each "foo" key in a separate table.  The same is
+true in other database systems.
+
+Hibari's implementation uses one or more replication chains to store
+the data for one table.
+
+.Relationship between tables, chains, and bricks.
+svgimage::images/table-chain-brick[align="center", scaledwidth="70%"]
+
+[[micro-transactions]]
+=== Micro-Transactions
+
+In a single request, a Hibari client may send multiple update
+operations to the cluster.  The client has the option of requesting
+``micro-transaction'' semantics for those updates: if there are no
+errors, then all updates will be applied atomically.  This behaves
+like the ``transaction commit'' behavior supported by most relational
+databases.
+
+On the other hand, if there is an error while processing one of the
+update operations, then all of update operations will fail.  This
+behaves like the ``transaction abort'' behavior supported by most
+relational databases.
+
+Unlike most relational databases, Hibari does not have a transaction
+manager that can coordinate ACID semantics for arbitrary read and
+write operations across any row in any table.  In fact, Hibari has no
+transaction manager at all.  For this reason, Hibari calls its limited
+transaction feature ``micro-transactions'', to distinguish this
+feature from other database systems.
+
+Hibari's micro-transaction support has two important limitations:
+
+* All keys involved in the transaction must be stored in the same
+  replication chain (and therefore by the same brick(s)).
+* Operations within the micro-transaction cannot see updates by other
+  operations within the the same micro-transaction.
+
+.Four keys in the "footab" table, distributed across two chains of length three.
+[id="footab-example"]
+svgimage::images/micro-transaction-example[align="center", scaledwidth="70%"]
+
+In the diagram above, a micro-transaction can be permitted if it
+operates on only the keys "string1" & "string4" or only the keys
+"string2" and "string3".  If a client were to send a micro-transaction
+that operates on keys "string1" and "string3", the micro-transaction
+will be rejected: key "string3" is not stored by the same chain as the
+key "string1".
+
+.Valid micro-transaction: all keys managed by same chain
+[id="valid-utxn"]
+    [txn,
+     {op = replace, key = "string1", value = "Hello, world!"},
+     {op = delete, key = "string4"}
+    ]
+
+.Invalid micro-transaction: keys managed by different chains
+[id="invalid-utxn"]
+    [txn,
+     {op = replace, key = "string1", value = "Hello, world!"},
+     {op = delete, key = "string2"}
+    ]
+
+The client does not have direct control over how keys are distributed
+across chains.  When a table is defined and created, its configuration
+specifies the algorithm used to map a {TableName, Key} pair to a
+specific chain.
+
+// JWN: This might be a good place to briefly explain the benefits of
+// using a key prefix and how it is beneficial to (some) applications.
+
+NOTE: See
+link:hibari-developer-guide.en.html#add-a-new-table[Hibari Developer's Guide,
+"Add a New Table" section]
+for more information about table configuration.
+
+=== Distribution: Workload Partitioning and Fault Tolerance
+
+[[consistent-hashing-example]]
+==== Partitioning by consistent hashing
+
+To spread computation and storage workloads across all servers in the
+cluster, Hibari uses a technique called ``consistent hashing''.  This
+hashing technique attempts to distribute a table's key space evenly
+across all chains used by that table.
+
+IMPORTANT: The word ``consistent'' has slightly different meanings
+relative to ``consistent hashing'' and ``strong consistency''.  The
+consistent hashing algorithm is a commonly-used algorithm for key ->
+storage location calculations.  Consistent hashing does not affect the
+``eventual consistency'' or ``strong consistency'' semantics of a
+database system.
+
+See the xref:footab-example[] for an example of a table with two
+chains.
+
+See
+link:hibari-developer-guide.en.html#add-a-new-table[Hibari Developer's Guide,
+"Add a New Table" section]
+for details on valid options when creating new tables.
+
+===== Consistent hashing algorithm
+
+Hibari uses the following steps in its consistent hashing algorithm
+implementation: 
+
+* Calculate the ``hashing prefix'', using part or all of the key as
+  input to the next step.
+** This step is configurable, using built-in functions or by providing
+   a custom implementation function.
+** Built-in prefix functions:
+*** Null: use entire key
+*** Fixed length, e.g. 4 byte or 8 byte constant length prefix.
+*** Variable length: use separator character `'/'` (configurable) 
+    such that hash prefix is found between the first two (also
+    configurable) `'/'` characters.  E.g. If the key is `/user/bar`,
+    then the string `/user/` is used as the hash prefix.    
+* Calculate the MD5 checksum of the hashing prefix and then convert
+  the result to the unit interval, 0.0 - 1.0, using floating point
+  arithmetic.
+* Consult the unit interval -> chain map to calculate the chain name.
+** This map contains a tree of `{StartValue, EndValue, ChainName}` tuples.
+   For example, `{0.0, 0.5, footab_ch1}` will map the interval 
+   `(0.0, 0.5]` to the chain named `footab_ch1`.
+*** The mapping tree's construction is affected by the chain weighting
+    factor.  The weighting factor allows some chains to store more
+    than other chains.
+* Use the operation type to calculate the brick name.
+** For read-only operations, choose the tail brick.
+** For update operations, choose the head brick.
+
+===== Consistent hashing algorithm use within the cluster
+
+* Hibari clients use the algorithm to calculate which chain must
+handle operations for a key.  Clients obtain this information via
+updates from the Hibari Admin Server.  These updates allow the client
+to send its request directly to the correct server in most use cases.
+
+* Servers use the algorithm to verify that the client's calculation
+was correct.
+** If a client sends an operation to the wrong brick, the brick will
+forward the operation to the correct brick.
+** If a client sends a list of operations such that some bricks are
+stored on the brick and other keys are not, an error is returned to
+the client.  Micro-transactions are not supported across chains.
+
+===== Changing consistent hashing configuration dynamically
+
+Hibari's Admin Server will allow changes to the consistent hashing
+algorithm without service interruption.  Such changes are applied on a
+per-table basis:
+
+* Adding or removing chains to the unit interval -> chain map.
+* Modifications of the chain weighting factor.
+* Modifying the key -> hashing prefix calculation function.
+
+See the xref:chain-migration[] section for more information.
+
+==== Multiple replicas for fault tolerance
+
+For fault tolerance, data replication is required.  As explained in
+xref:chains[], the basic unit of failure is the brick.  The chain
+replication algorithm will maintain replicas of keys in a strongly
+consistent manner across all bricks: head, middle, and tail bricks.
+
+To be able to tolerate `F` failures without data loss or service
+interruption, each replication chain must be at least `F+1` bricks
+long.  This is in contrast to quorum replication family algorithms,
+which typically require `2F+1` replica bricks.
+
+// JWN: Would it be helpful to put a note that typically "3" is the
+// recommended number of replicas?
+
+===== Changing chain length configuration dynamically
+
+Hibari's Admin Server will allow changes to a chain's length without
+service interruption.  Such changes are applied on a per-chain basis.
+See the xref:chain-length-change[] section for more information.
+
+[[admin-server-app]]
+== The Admin Server Application
+
+The Hibari ``Admin Server'' is an OTP application that runs in an
+active/standby configuration within a Hibari cluster.  The Admin
+Server is responsible for:
+
+* Monitoring the health of each brick in the cluster,
+  see xref:brick-lifecycle-fsm[].
+* Monitoring the status of each chain in the cluster,
+  see xref:chain-lifecycle-fsm[].
+* Managing administrative changes of chain -> brick mappings,
+  see xref:chain-length-change[].
+* Managing data rebalancing, see xref:chain-migration[].
+* Communicating cluster status to Hibari client nodes.
+* Other administrative tasks, such as the creation of new tables.
+
+Only one instance of the Admin Server is permitted to run within the
+cluster at a time.  The Admin Server runs in an ``active/standby''
+configuration that is used in many high-availability clustered
+applications.  The nodes that are eligible to participate in the
+active/standby configuration are configured via the main Hibari
+configuration file; see xref:admin-server-in-central-conf[] and
+xref:central-conf-parameters[] for more details.
+
+=== Admin Server Active/Standby Implementation
+
+The active/standby application failover is handled by the Erlang/OTP
+application controller.  No extra third-party software is required.
+See Chapter 7, "Applications", and Chapter 9, "Distributed
+Applications", in the "OTP Design Principles User's Guide" at
+http://www.erlang.org/doc/design_principles/distributed_applications.html.
+
+[[bootstrap-bricks]]
+=== Admin Server's Private State: the Bootstrap Bricks
+
+On each active and standby node, there is a hint file called
+`Schema.local` which contains the name of the ``bootstrap bricks''.
+These bricks operate outside of the chain replication algorithm to
+provide redundant, persistent state for the Admin Server application.
+See xref:bricks-outside-chain-replication[] for a short summary of
+standalone bricks.
+
+All of the Admin Server's private state is stored in the bootstrap
+bricks.  This includes:
+
+* All table definitions and their configuration, e.g. consistent
+  hashing parameters.
+* Status of all bricks and all chains.
+* Operational history of all bricks and all chains.
+
+With the help of the Erlang/OTP application controller and the Hibari
+Partition Detector application, only a single instance of the Admin
+Server is permitted to run at any one time.  That single application
+instance has full control over the data stored in the bootstrap bricks
+and therefore does not have to manage concurrent updates to bootstrap
+brick data.
+
+=== Admin Server Crash and Restart
+
+When the Admin Server application is stopped (e.g. node shutdown) or
+crashes (e.g. software bug, power failure), all of the tasks outlined
+at the beginning of xref:admin-server-app[] are halted.  In theory,
+the 20-30 seconds that are required for the Admin Server to restart
+could mean 20-30 seconds of negative service impact to Hibari clients.
+
+In practice, however, Hibari clients almost never notice when an Admin
+Server instance crashes and restarts.  Hibari clients do not need the
+Admin Server when the cluster is stable.  The Admin Server is only
+necessary when the state of the cluster changes.  Furthermore, as far
+as clients are concerned, clients are only affected when bricks crash.
+Other cluster change events, such as when chain replication repair
+finished, do not directly impact clients and thus can wait for the
+Admin Server to finish restarting.
+
+A Hibari client will only notice an Admin Server crash if another
+logical brick crashes while the Admin Server is temporarily out of
+service.  The reason is due to the nature of the Admin Server's
+responsibilities.  When chain is broken by a brick failure, the
+remaining bricks must have their roles reconfigured to put the chain
+back into full service.  The Admin Server is the only automated entity
+that is permitted to change the role of a brick.  For more details,
+see:
+
+* xref:brick-lifecycle-fsm[]
+* xref:chain-lifecycle-fsm[], and
+* xref:chain-repair[].
+
+[[admin-server-and-network-partition]]
+=== Admin Server and Network Partition
+
+One feature of the Erlang/OTP application controller is that it is not
+robust in event of a network partition.  To prevent multiple Admin
+Server apps running simultaneously, another application is bundled
+with Hibari: the Partition Detector.  See xref:partition-detector[]
+for an overview and explanation of the 'A' and 'B' physical networks.
+
+As described briefly in xref:cap-theorem-and-hibari[], Hibari does not
+support the "Partition tolerance" aspect of Eric Brewer's CAP theorem.
+More specifically, if a network partition occurs, and a Hibari cluster
+is split into two or more pieces, not all clients on both/all sides of
+the network partition will be able to access Hibari services.
+
+For the sake of discussion, we assume the cluster has been split into
+two fragments by a single partition, though any number of fragments may
+happen in real use.  We also assume that nodes on both sides of the
+partition are configured in standby roles for the Admin Server.
+
+If a network partition event happens, the following events will soon
+follow:
+
+* The OTP application controller for some/all
+  `central.conf`-configured nodes will notice that communication with
+  the formerly active Admin Server is now impossible.
+* Using internal logic, each application controller will make a
+  decision of which standby node should move to active status.
+* Each active status node will start an instance of the Admin Server.
+
+Note that all steps above will happen in parallel on nodes on both
+sides of the partition.  If this situation is permitted to continue,
+the invariant of "Admin Server may only run on one node at a time"
+will be violated.  However, with the help of the Partition Detector
+application, multiple Admin Server instances can be detected and
+halted.
+
+UDP broadcasts on the 'A' and 'B' networks can help the Admin Server
+determine if it was restarted due to an Admin Server crash or by a
+network partition.  In case of a network partition on network 'A', the
+broadcasts on network 'B' can indicate that another Admin Server
+process remains alive.
+
+If multiple Admin Server instances are detected, the following logic
+is used:
+
+* If an Admin Server is in its "running" phase, then any other any
+  Admin Server instance that is still in its "initialization" phase
+  will halt.
+* If multiple Admin Server instances are all in the "initialization"
+  phase, then only the Admin Server instance with the smallest name
+  (in lexicographic sorting order) is permitted to run: all other
+  instances will halt.
+
+==== Importance of two physically separate networks
+
+IMPORTANT: It is possible for both the 'A' and 'B' networks to
+partition simultaneously.  The Admin Server and Partition Detector
+applications cannot always correctly react to such events.  It is
+extremely important that the 'A' and 'B' networks be separate physical
+networks, including: separate physical network interfaces on each
+brick, separate cabling, separate network switches, and all other
+network-related equipment also be physically separate.
+
+It is possible to reduce the reliance on multiple physical networks
+and the Partition Detector application, but such techniques have not
+been added to Hibari yet.  Until an alternative network partition
+mitigation mechanism is implemented, we strongly recommend the proper
+configuration of the Partition Detector app and all of its hardware
+requirements.
+
+=== Admin Server, Network Partition, and Client Access
+
+When a network partition event occurs, there are two cases that affect
+a client's ability to work with the cluster.
+
+* The client machine is on the same side of the partition as the Admin
+  Server.
+* The client machine is on the opposite side of the partition as the
+  Admin Server.
+
+If the client machine is on the same side of the partition, the client
+may see no interruption of service at all.  If the Admin Server is
+restarted in reaction to the partition event, there may be a small
+window of time (e.g. 20-30 seconds) where requests might fail because
+the Admin Server has not yet reconfigured chains on this side of the
+partition.
+
+If the client machine is on the opposite side of the partition, then
+the client will not have access to the Admin Server and may not have
+access to properly configured chains.  If a chain lies entirely
+entirely on the same side of the partition as the client, then the
+client can continue to use that chain successfully.  However, any
+chain that is "cut in two" by the partition cannot support updates by
+any client.
+
+== Hibari System Information: Configuration Files, Etc.
+
+Hibari's system information is stored in one of two places.  The first
+is the application configuration file, `central.conf`.  By default,
+this file is stored in `TODO/{version number}/etc/central.conf`.
+
+The second location is within Hibari server nodes themselves.  This
+kind of configuration, stored inside the "bootstrap" bricks, makes it
+easy to share data with all nodes in the cluster.
+
+Many of configuration values in `central.conf` will be the same on all
+nodes in a Hibari cluster.  Given this reality, why not store those
+items in Hibari itself?  The biggest problem comes when the
+application is first starting.  See
+xref:bricks-outside-chain-replication[] for an overview of why it
+isn't easy to store all configuration data inside Hibari itself.
+
+In the future, it's likely that many of the configuration items in the
+`central.conf` file will move to storage within Hibari itself.
+
+=== `central.conf` File Syntax and Usage
+
+Each line of the `central.conf` file has the form
+
+  parameter: value
+
+where `parameter` is the name of the configuration option being set and
+`value` is the value that the configuration option is being set to.
+
+Valid data types for configuration settings are INT (integer), STRING
+(string), and ATOM (one of a pre-defined set of option names, such as
+`on` or `off`). Apart from data type restrictions, no further valid
+range restrictions are enforced for `central.conf` parameters.
+
+All time values in `central.conf` (such as delivery retry intervals or
+transaction timeouts) must be set as a number of seconds.
+
+Blank lines and lines beginning with the pound sign (#) are ignored.
+
+IMPORTANT: To apply changes that you have made to the `central.conf`
+file, you must restart the server.  There are exceptions to this rule,
+but it's one of the cleanup/janitor tasks to access
+`central.conf` using a standard set of APIs, e.g. always use the
+`gmt_config_svr` API.
+
+[[central-conf-parameters]]
+=== Parameters in the `central.conf` File
+
+A detailed explanation of each of the items in `central.conf` can be
+found at
+link:../misc-files/central-conf.pdf[Hibari `central.conf` Configuration Guide].
+
+=== Admin Server Configuration
+
+Configuration for the Hibari ``Admin Server'' is stored in three
+places:
+
+. The `central.conf` file
+. The `Schema.local` file
+. Inside the ``bootstrap'' bricks
+
+[[admin-server-in-central-conf]]
+==== Admin Server entries in the `central.conf` file
+
+The following entries in the `central.conf` file are used by the
+Hibari Admin Server:
+
+* `admin_server_distributed_nodes`
+** This option specifies which nodes in the Hibari cluster are
+   eligible to run the Admin Server.  Hibari server nodes not included
+   in this list cannot run the Admin Server.
+** Active/standby service is provided by the Erlang/OTP platform's
+   application management facility.
+* The `Schema.local` file
+** This file provides a list of {logical brick, Hibari server node name}
+   tuples that store the Admin Server's private state.  Each brick
+   name in this list starts with the prefix `bootstrap_copy` followed
+   by an integer.
+* The ``bootstrap'' bricks
+** Each of these bricks store an independent copy of all Hibari
+   cluster state: table definitions, table -> chain mappings,
+   start & stop history, etc.
+** Data in each of the bootstrap bricks is not maintained by chain
+   replication.  Rather, quorum-style replication is used.
+   See xref:bricks-outside-chain-replication[].
+
+=== Configuration Not Stored in Editable Config Files
+
+All table and chain configuration parameters are stored within the
+Admin Server's ``schema''.  The schema contains information on:
+
+* Table names and options (e.g. blob values stored in RAM or on disk,
+  sync/async disk logging)
+* Table -> chain mappings
+* Chain -> brick mappings
+
+Much of this information can be seen in HTML form by pointing a Web
+browser at TCP port 23080 (default) of any Hibari server node.  For
+example:
+
+.Admin Server Top-Level Status & Admin URL
+    http://hibari-server-node-hostname:23080/
+
+Your Web browser should be redirected automatically to the Admin
+Server's top-level status & admin page.
+
+NOTE: The APIs that expose this are, for the most part, already
+written.  We need more "friendly" wrapper funcs as part of the "try
+this first" set of APIs for administration.
+
+== The Life of a (Logical) Brick
+
+All logical bricks within a Hibari cluster go through the same set of
+lifecycle events.  Each is described in greater detail in this
+section.
+
+* Brick initialization and operation states, described by a finite
+  state machine.
+* Brick roles within chain replication, also described by a finite
+  state machine.
+* Periodic housekeeping tasks performed by logical bricks and their
+  internal support services, e.g. checkpoints and the ``scavenger''.
+
+[[brick-lifecycle-fsm]]
+=== Brick Lifecycle Finite State Machine
+
+The lifecycle of each Hibari logical brick goes through a set of
+states defined by a finite state machine (OTP `gen_fsm` behavior) that
+is executed by a process within the Admin Server application.
+
+.Logical brick lifecycle finite state machine
+svgimage::images/brick-fsm[align="center"]
+
+.Logical brick lifecycle FSM states
+unknown;;
+  This is the initial state of the FSM.  Because the Admin Server may
+  crash or be restarted at any time, this state is used by the Admin
+  Server when it has not been running long enough to determine the
+  state of the logical brick.
+pre_init;;
+  A brick moves itself to this state when it has finished scanning its
+  private write-ahead log (see xref:write-ahead-logs[]) and therefore
+  knows the state of all keys that it manages.
+repairing;;
+  In chain replication, the repairing state is used to synchronize a
+  a newly started/restart brick with the rest of the chain.  At the
+  end of this state, the brick is 100% in sync with all other active
+  members of the chain.  Repair is initiated by the Admin Server's
+  chain monitor that is responsible for the chain.
+ok;;
+  The brick moves itself to this state when repair has finished.  The
+  brick is now in service and capable of servicing Hibari client
+  requests.  Client requests will be rejected if the brick is in any
+  other state.
+  * If managed by chain replication, this brick is eligible to be put
+    into service as a full member of a replication chain.
+    See xref:brick-roles[].
+  * If managed by quorum replication, some external entity must change
+    the logical brick's state from `pre_init` -> `ok`.  Hibari's Admin
+    Server automates this task for the `bootstrap_copy`* bricks.
+    The present implementation of the Admin Server does not manage
+    quorum replication bricks outside of the Admin Server's private
+    use.
+disk_error;;
+  A disk error has occurred, for example a missing file or directory
+  or MD5 checksum error.  Administrator intervention is required to
+  move a brick out of the `disk_error` state: shut down the entire
+  Hibari server, kill the logical brick manually, or use the
+  brick_chainmon:force_best_first_brick() function manually.
+
+[[chain-lifecycle-fsm]]
+=== Chain Lifecycle Finite State Machine
+
+The chain FSM (OTP `gen_fsm` behavior) is executed by a process within
+the Admin Server application.  All state transitions are triggered by
+changes in the state of each member bricks' state, into or out of the
+`'ok'` state.  See xref:brick-lifecycle-fsm[] for details.
+
+.Chain replication finite state machine
+svgimage::images/chain-fsm[align="center"]
+
+.Chain lifecycle FSM states
+unknown;;
+  The state of the chain is unknown. Information regarding chain members is
+  unavailable. Because the Admin Server may
+  crash or be restarted at any time, this state is used by the Admin
+  Server when it has not been running long enough to determine the
+  state of the chain.
+  It is possible that the chain was in `degraded` or `healthy` state
+  before the crash and therefore Hibari client operations may be
+  serviced while in this state.
+unknown_timeout;;
+  This intermediate state is used by the Admin Server before moving
+  automatically to another state.
+stopped;;
+  All bricks in the chain are crashed or believed to have crashed.
+  Service to Hibari clients will be interrupted.
+degraded;;
+  Some (but not all) bricks in the chain are in service.  The Admin
+  Server will wait for another chain member to enter its `pre_init`
+  state before chain repair can start.
+healthy;;
+  All bricks in the chain are in service.
+
+[[brick-roles]]
+=== Brick ``Roles'' Within A Chain
+
+Each brick within a chain has a role.  The role will be changed by the
+Admin Server whenever it detects that the chain's state has changed.
+These roles are:
+
+head;;
+  The brick is first in the chain, i.e. at the ``head'' of the chain's
+  ordered list of bricks.
+tail;;
+  The brick is last in the chain, i.e. at the ``tail'' of the chain's
+  ordered list of bricks.
+middle;;
+  The brick is neither the ``head'' nor ``tail'' of the chain.
+  Instead, the brick is somewhere in the middle of the chain.
+standalone;;
+  In a chain of length 1, the ``standalone'' brick is a brick that
+  acts both as a ``head'' and ``tail'' brick simultaneously.
+
+There is one additional attribute that is given to a brick in a
+cluster.  Its name ``official tail''.
+
+official tail;;
+  The official tail brick has two duties for the chain:
+  * It handles read-only queries to the chain.
+  * It sends replies to the client for all update operations that are
+  sent to the head of the chain.
+
+////////
+Hrm, using ``official tail'' in this paragraph doesn't work correctly, grrrr.
+It flips to mono font after the closing ''.
+////////
+As far as Hibari clients are concerned, the chain member with the
+the "official tail" role is the brick that they consider the "tail" of
+the chain.  Hibari clients are not aware of "tail" bricks that are
+undergoing repair.  Any client request that is sent to a `repairing`
+state brick will be rejected.
+
+See xref:diagram-write-path-3[] for an example of a healthy chain of
+length three.
+
+[[brick-init]]
+=== Brick Initialization
+
+A logical brick does not maintain an on-disk data structure, such as a
+binary tree or B-tree, to keep track of the keys it stores.  Instead,
+each logical brick maintains that metadata entirely in RAM.
+Therefore, the only time that the metadata in the private write-ahead
+log is ever read is at brick initialization time, i.e. when the brick
+restarts.
+
+The contents of the private write-ahead log are used to repopulate the
+brick's ``key catalog'', the list of all keys (and associated
+metadata) stored by the brick.
+
+When a logical brick is started, all of the log sequence files in
+the private log are read, starting from the oldest and ending with the
+newest.  (See xref:wal-dirs-and-files[].)  The total amount of data
+required at startup can be quite small or it can be hundreds of
+gigabytes.  The factors that influence the amount of data in the
+private log are:
+
+* The total number of keys stored by the logical brick.
+** More keys means that the log sequence file created by a checkpoint
+   operation will be larger.
+* The size of the `brick_check_checkpoint_max_mb` configuration parameter
+  in the `central.conf` config file.
+
+When the log scan is complete, construction of the brick's in-RAM key
+catalog is finished.
+
+See xref:checkpoints[] for details on brick checkpoint operations.
+
+[[chain-repair]]
+=== Chain Repair
+
+When a chain is in the `degraded` state, new bricks that have entered
+their `pre_init` state can become eligible to join the chain.  All
+new bricks are added to the end of the chain and undergo the chain
+repair process.
+
+.Chain of length 2 in `degraded` state, a third brick under repair
+svgimage::images/read-write-path-3-repair[align="center", scaledwidth="80%"]
+
+The protocol used between upstream and downstream bricks is an
+iterative protocol that has two phases in a single iteration.
+
+1. The upstream brick sends a subset of {Key, Timestamp} tuples
+downstream.
+* The downstream brick deletes keys from its key catalog that do not
+appear in the upstream's subset.
+* The downstream brick replies with the list of keys that it does not
+have or have older timestamps.
+2. The upstream bricks sends full information (all key metadata and
+value blobs) for all keys requested by the downstream in step #1.
+* The downstream brick acknowledges the new/replacement keys.
+
+When the repair is finished, the Admin Server will change the roles of
+some/all chain members to make the repairing brick the new tail of the
+chain.
+
+Only one brick may be repaired at one time.  In theory it is possible
+to repair multiple bricks simultaneously, but the extra code
+complexity that would be required to do so has been judged to be too
+expensive (so far).
+
+==== Chain reordering when moving from `degraded` -> `healthy` states
+
+[[chain-reordering-middle-brick-fails]]
+.Chain order after a middle brick fails and is repaired (but not yet reordered)
+svgimage::images/chain-fail-repair-reorder[align="center", scaledwidth="70%"]
+
+After a middle brick fails and is repaired, the chain's ordering is:
+brick 1 -> brick 3 -> brick 2.  According to the algorithm in the
+original Chain Replication paper, the final chain ordering is
+expected.  The Hibari implementation adds another step: reordering the
+chain.
+
+For chains longer than length 1, when the Admin Server moves the chain
+from `degraded` -> `healthy` state, the Admin Server will reorder the
+the chain to match the schema's definition for the healthy chain
+order.  The assumption is that the Hibari administrator wishes the
+chain use a very specific order when it is in the `healthy` state.
+For example, if the chain's workload were extremely read-intensive,
+the machine for logical brick #3 could have faster CPU or faster disks
+than the other bricks in the chain.  To take full advantage of the
+extra capacity, the chain should be reordered as soon as possible.
+
+However, it is not easy to reorder the chain.  The replication of a
+client update during the reordering could get lost and violate Hibari's
+strong consistency guarantees.  The following algorithm is used to
+preserve consistency:
+
+1. Set all bricks to read-only mode.
+2. Wait for all updates to sync to disk at each brick and to progress
+   downstream fully from head -> tail.
+3. Set brick roles to reflect the final desired order.
+4. Set all bricks to read-write mode.
+** Client `do` operations that contain updates will be resubmitted
+   (via the client-side API function brick_server:do()) to the
+   cluster.
+
+Typically, executing this algorithm takes less than one second.
+However, because the head brick is forced temporarily into read-only
+mode, client update requests will be delayed until read-only mode is
+turned off.
+
+Client update requests submitted during read-only mode will be queued
+by the head brick and will be processed when read-only mode is turned
+off.  Client read-only requests are not affected by read-only mode.
+
+// JWN: I think it might be helpful to mention/ to explain (but maybe
+// not here) that Client updates may actually persist even though the
+// client stopped waiting and returned a timeout to the "application".
+// A Timeout on Client updates can not guarantee the change was
+// applied or not applied to the GDSS tables.
+
+[[checkpoints]]
+=== Brick Checkpoint Operations
+
+As updates are received by a brick, those updates are written to the
+brick's private write-ahead log.  During normal operations, private
+write-ahead log is write-only: the data there is only read at logical
+brick initialization time.
+
+The checkpoint operation is used to reclaim disk space in the brick's
+private write-ahead log.  See xref:wal-dirs-and-files[] for a
+description of log sequence files and xref:central-conf-parameters[]
+for details on the `central.conf` configuration file.
+
+.Brick checkpoint processing steps
+1. When the total log size (i.e. total size of all log files in the
+   brick's private log's shortterm storage area) reaches the size of the
+   `brick_check_checkpoint_max_mb` parameter in `central.conf`, a
+   checkpoint operation is started.
+   * Assume that the current log sequence file number is *N*.
+2. Two log sequence files are created, *N+1* and *N+2*.
+3. Checkpoint data is written to log sequence number *N+1*.
+4. New updates by clients and chain replication are written to log
+   sequence number *N+2*.
+5. Contents of the brick's in-RAM key catalog are dumped to log
+   sequence file *N+1*, subject to the bandwidth constraint of the
+   `brick_check_checkpoint_throttle_bytes` configuration parameter.
+6. When the checkpoint is finished and flushed to disk, all log
+   sequence files with a number less than or equal to *N* are deleted.
+
+IMPORTANT: Each logical brick will checkpoint itself as its private
+log grows.  It is possible that multiple logical bricks can schedule
+checkpoint operations simultaneously.  The bandwidth limitation of the
+`brick_check_checkpoint_throttle_bytes` parameter is applied to the
+_sum of all writes by all checkpoint operations_.
+
+[[scavenger]]
+=== The Scavenger
+
+As described in xref:write-ahead-logs[], all updates from all logical
+bricks are first written to the ``common log''.  The most common of
+these updates are:
+
+* Metadata updates, e.g. key insert or key delete, by a logical brick.
+* A new value blob associated with a metadata update such as a Hibari
+client set operation.
+** This type is only applicable if the brick is configured to store
+value blobs on disk.  This configuration is defined (by default) on a
+per-table basis and is then propagated to the chain and brick level by
+the Admin Server.
+
+As explained in xref:write-ahead-logs[], the write-ahead log provides
+infinite storage at a logical level.  But in the physical level, disk
+space must be reclaimed somehow.  Because the common log is shared by
+multiple logical bricks, the technique described in xref:checkpoints[]
+cannot be used by the common log.
+
+A process called the ``scavenger'' is used to reclaim disk space in
+the common log.  By default, the scavenger runs at 03:00 daily.  The
+steps it executes are described below.
+
+.Common log scavenger processing steps
+1. For all bricks that store value blobs on disk, scan each logical
+brick's in-RAM key catalog to create a list of all value blob storage
+locations.
+2. Sort the value blob location list by log sequence number.
+3. Identify all log sequence files with a "live data ratio" of at
+least *X* percent (default = 90%, see
+`brick_skip_live_percentage_greater_than` configuration parameter).
+4. For all log files where live data ratio is less than *X*%, copy
+value blobs to new log sequence files.  This copying is limited by the
+amount of bandwidth configured by `brick_scavenger_throttle_bytes` in
+`central.conf`.
+5. When all blobs have been copied out of an old log sequence file and
+flushed to stable storage, update the storage locations in the in-RAM
+key catalog, then delete the old log sequence file.
+
+ifdef::theme[]
+image:images/scavenger-techpubs.png[]
+endif::theme[]
+ifndef::theme[]
+image:images/scavenger-techpubs.png[width="65%"]
+endif::theme[]
+
+IMPORTANT: The value of the `brick_skip_live_percentage_greater_than`
+configuration parameter determines how much additional disk space is
+required to store *X* gigabytes of live data.  If the parameter is
+*N*, then 100-*N* percent of all common log disk space may be wasted
+by storing dead data.
+
+IMPORTANT: Additional disk space is required to log all updates that
+are made after the scavenger has run.  This includes space in the
+common log as well as in each logical brick private logs (subject to
+the general limit of the `brick_check_checkpoint_max_mb` configuration
+parameter.
+
+IMPORTANT: The current implementation of Hibari requires that
+plenty of disk space _always_ be available for write-ahead logs and
+for scavenger operations.  We strongly recommend that the
+`brick_scavenger_temp_dir` configuration item use a different file
+system than the `application_data_dir` parameter.  This directory
+stores temporary files required for sorting and other operations that
+would otherwise require large amounts of RAM.
+
+== Dynamic Cluster Reconfiguration
+
+[[add-table]]
+=== Adding a Table
+
+A table can be added at any time, using either of two methods:
+
+* Use the Admin Server's HTTP service: follow the "Add a table" hyperlink
+  at the bottom of the top-level page.
++
+* Use the `brick_admin` CLI interface at the Erlang shell.  See
+link:hibari-developer-guide.en.html#add-a-new-table[Hibari Developer's Guide,
+"Add a New Table" section].
+
+[[remove-table]]
+=== Removing a Table
+
+NOTE: The current Hibari implementation does not support removing
+a table.
+
+In theory, most of the work of removing a table is already done:
+chains that are abandoned after a migration are shut down
+* Brick pinger processes are stopped.
+* Chain monitor processes are stopped.
+* Bricks are stopped.
+* Brick data directories are removed.
+
+All that remains is to update the Admin Server's schema to remove
+references to the table.
+
+[[chain-length-change]]
+=== Changing Chain Length (Changing Replication Factor)
+
+The Hibari Admin Server manages each chain as an independent data
+replication entity.  Though Hibari clients view multiple chains that
+are associated with a single table, each chain is actually independent
+of the other chains.  It is possible to change the length of one chain
+without changing any others.  For long term operation, such
+differences do not make sense.  But during short periods of cluster
+reconfiguration, such differences are possible.
+
+A chain's length is determined by specifying a list of bricks that are
+members of that chain.  The order of the list specifies the exact
+chain order when the chain is in the `healthy` state.  By adding or
+removing bricks from a chain definition, the length of the chain can
+be changed.
+
+A chain is defined by the Erlang 2-tuple of
+`{ChainName, ListOfBricks}`, where each brick in `ListOfBricks` is a
+2-tuple `{BrickName, NodeName}`.  For example, a chain of length two
+called `footab_ch1` could be defined as:
+
+  {footab_ch1, [{footab1_ch1_b1, 'gdss1@box-a'}, {footab1_ch1_b1, 'gdss1@box-b'}]}
+
+The current definition of all chains for table `TableName` can be
+retrieved from the Admin Server using the
+`brick_admin:get_table_chain_list()` function, for example:
+
+  %% Get a list of all tables currently defined.
+  > brick_admin:get_tables().
+  [tab1]
+
+  %% Get list of chains in 'tab1' as they are currently in operation.
+  > brick_admin:get_table_chain_list(tab1).
+  {ok,[{tab1_ch1,[{tab1_ch1_b1,'gdss1@machine-1'},
+                  {tab1_ch1_b2,'gdss1@machine-2'}]},
+       {tab1_ch2,[{tab1_ch2_b1,'gdss1@machine-2'},
+                  {tab1_ch2_b2,'gdss1@machine-1'}]}]}
+
+This above chain list for table `tab1` corresponds to the chain and
+brick layout below.
+
+.Table `tab1`: Two chains of length two across two Erlang nodes on two physical machines
+svgimage::images/tab1-2x2[align="center", scaledwidth="70%"]
+
+NOTE: To change the definition of a chain, use the
+`change_chain_length/2` or `change_chain_length/3` functions.  For
+documentation, see
+link:hibari-developer-guide.en.html#changing-chain-length[Hibari Developer's Guide,
+"Changing Chain Length" section]
+
+NOTE: When specifying a new chain definition, at least one brick from
+the current chain must be included.
+
+// JWN: Is it dangerous to allow an admin the opportunity to NOT SPECIFY the head
+// of the chain in the new chain definition or to SPECIFY only a brick
+// that is under repair?  I guess I see an opportunity for some
+// "dynamic" (and not just static) pre-conditions that should/could be
+// checked FIRST before starting to execute the changes.
+
+[[chain-change-same-algorithm]]
+==== Chain changes: same algorithm, different tasks.
+
+The same brick repair technique is used to handle all three of the
+following cases:
+
+* adding a brick to a chain
+* brick failure
+* removing a brick from a chain
+
+==== Adding a brick to a chain
+
+When a brick `B` is added to a chain, that brick is treated as if it
+was a member of the chain that had crashed long ago and has now been
+restarted.  The same repair algorithm is used to synchronize data on
+brick `B` that is used to repair bricks that were formerly in service
+but since crashed and restarted.  See xref:chain-repair[] for a
+description of the Hibari repair mechanism.
+
+==== Brick failure
+
+If a brick fails, the Admin Server must remove it from the chain by
+reordering the chain.  The general order of operations are:
+
+1. Set new roles for the chain's bricks, starting from the end of the
+   chain and working backward.
+2. Broadcast the new chain membership to all Hibari clients.
+
+If a Hibari client attempts to send an operation to a brick during
+step #2 and before the new chain info from step #2 arrives, that
+client may send the operation to the wrong brick.  Hibari servers will
+automatically forward the query to the correct brick.  Due to network
+latencies and asynchronous message passing, it is possible that the
+query be forwarded multiple times before it arrives at the correct
+brick.
+
+Specific details of how chain replication handles brick failure can be
+found in van Renesse and Schneider's paper, see xref:chains[] for
+citation details.
+
+===== Failure of a head brick
+
+If the head brick fails, then the first middle brick is promoted to the
+head role.  If there is no middle brick (i.e. the length of the chain
+was two), then the tail brick is promoted to a standalone role (chain
+length is one).
+
+===== Failure of a tail brick
+
+If the tail brick fails, then the last middle brick is promoted to the
+tail role.  If there is no middle brick (i.e. the length of the chain
+was two), then the head brick is promoted to a standalone role (chain
+length is one).
+
+[[failure-middle-brick]]
+===== Failure of a middle brick
+
+The failure of a middle brick requires the most complex recovery
+procedure.
+
+* Assume that the chain is three bricks: `A` -> `B` -> `C`.
+** If the chain is longer (more bricks upstream of `A` and/or more
+ bricks downstream of `C`), the procedure remains the same.
+* Brick `C` is configured to have its upstream brick be `A`.
+* Brick `A` is configured to have its downstream brick be `C`.
+* The head of the chain (brick `A` or the head brick upstream of `A`)
+  requests a log flush of all unacknowledged writes downstream.  This
+  step is required to re-send updates that were processed by `A` but
+  have not been received by `C` because of middle brick `B`'s
+  failure.
+* Brick `A` waits until it receives a write acknowledgment from the
+  tail of the chain.  Once received, all bricks in the chain have
+  synchronously written all items to their write-ahead logs in the
+  correct order.
+
+==== Removing a brick from a chain
+
+Removing a brick `B` permanently from a chain is a simple operation.
+Brick `B` is
+handled the same way that any other brick failure is handled: the
+chain is simply reconfigured to exclude `B`.  See
+xref:chain-reordering-middle-brick-fails[] for an example.
+
+IMPORTANT: When a brick `B` is removed from a chain, all data from
+brick `B` will be deleted when the operation is successful.  At this
+time, the API does not have an option to allow `B`'s data to be
+preserved.
+
+// JWN: Wah ... a typo could be very dangerous.  Delayed deletion of
+// the data and/or some other protective mechanism could be helpful.
+
+[[chain-migration]]
+=== Chain Migration: Rebalancing Data Across Chains
+
+There are several cases where it is desirable to rebalance data across
+chains and bricks in a Hibari cluster:
+
+* Chains are added or removed from the cluster
+* Brick hardware is changed, e.g. adding extra disk or RAM capacity
+* A change in a table's consistent hashing algorithm configuration
+  forces data (by definition) to another chain.
+
+The same technique is used in all of these cases: chain migration.
+This mirrors the same design philosophy that's used for handling chain
+changes (see xref:chain-change-same-algorithm[]): use the same
+algorithm to handle multiple use cases.
+
+==== Example: Migrating from three chains to four
+
+[[chain-migration-3to4]]
+.Chain migration from 3 chains to 4 chains
+svgimage::images/chain-migration-3to4[align="center", scaledwidth="80%"]
+
+In the example above, both the 3-chain and 4-chain configurations used
+equal weighting factors.  When all chains use the same weighting
+factor (e.g. 100), then the consistent hashing map in the ``before''
+and ``after'' cases look something like the figure below.
+
+[[migration-3to4]]
+.Migration from three chains to four chains
+svgimage::images/migration-3to4[align="center", scaledwidth="70%"]
+
+It doesn't matter that chain #4's total area within the unit interval
+is divided into three regions.  What matters is that chain #4's total
+area is equal to the regions of the other three chains.
+
+==== Example: Migrating from three chains to four with unequal weighting
+
+The diagram xref:migration-3to4[] demonstrates how a migration would
+work when all chains have an equal weighting factor, e.g. 100.  If
+instead, the new chain had a weighting factor of only 50, then the
+distribution of keys to each chain would look like this:
+
+.Migration from three chains to four with unequal chain weighting factors
+[options="header"]
+|=========
+| Chain Name | Total % of keys before/after migration | Total unit interval size before/after migration
+| Chain 1 | 33.3% -> 28.6% | 100/300 -> 100/350
+| Chain 2 | 33.3% -> 28.6% | 100/300 -> 100/350
+| Chain 3 | 33.3% -> 28.6% | 100/300 -> 100/350
+| Chain 4 | 0% -> 14.3% (4.8% in each of 3 regions) | 0/300 -> 50/350 (spread across 3 regions)
+| Total   | 100% -> 100% | 300/300 -> 350/350
+|=========
+
+For the original three chains, the total amount of unit interval
+devoted to those chains is (100+100+100)/350 = 300/350.  The 4th
+chain, because its weighting is only 50, would be assigned 50/350 of
+the unit interval.  Then, an equal amount of unit interval is taken
+from the original chains and reassigned to chain #4, so (50/350)/3 of
+the unit interval must be taken from each original chain.
+
+==== Hotspot migration
+
+With the lowest level API, it is possible to assign "hot" keys to
+specific chains, to try to balance a handful of keys that are very
+frequently accessed from a large number of keys that are very
+infrequently accessed.  The table below gives an example that builds
+upon xref:migration-3to4[].  We assume that our "hot" key is mapped
+onto the unit interval at position 0.5.
+
+.Consistent hashing lookup table with three chains of equal weight and a fourth chain with an extremely small weight
+[options="header"]
+|=========
+| Unit interval start | Unit interval end | Chain name
+| 0.000000            | 0.333333...       | Chain 1
+| 0.333333...         | 0.5               | Chain 2
+| 0.5                 | 0.500000000000001 | Chain 4
+| 0.500000000000001   | 0.666666...       | Chain 2
+| 0.666666...         | 1.0               | Chain 3
+|=========
+
+The table above looks almost exactly like the "Before Migration" half
+of xref:migration-3to4[].  However, there's a very tiny "hole" that is
+punched in chain #2's space that maps key hashes in the range of 0.5
+to 0.500000000000001 to chain #4.
+
+[[adding-removing-client-nodes]]
+=== Adding/Removing Client Nodes
+
+It is not strictly necessary to formally configure a list of all
+Hibari client nodes that may use a Hibari cluster.  However,
+practically speaking, it is useful to do so.
+
+To bootstrap itself to be able to use Hibari servers, a Hibari client
+must be able to:
+
+1. Communicate with other Erlang nodes in the cluster.
+2. Receive "global hash" information from the cluster's Admin
+   Server.
+
+To solve both problems, the Admin Server maintains a list of Hibari
+client nodes.  (Hibari server nodes do not need this mechanism.)  For
+each client node, a monitor process on the Admin Server polls the node
+to see if the `gdss` or `gdss_client` application is running.  If the
+client node is running, then problem #1 (connecting to other nodes in
+the cluster) is automatically solved by using `net_adm:ping/1`.
+Problem #2 is solved by the client monitor calling
+`brick_admin:spam_gh_to_all_nodes/0`.
+
+The Admin Server's client monitor runs approximately once per second,
+so there may be a delay of up to a couple of seconds before a
+newly-started Hibari client node is connected to the rest of the
+cluster and has all of the table info required to start work.
+
+When a client node goes down, an OTP alarm is raised until the client
+is up and running again.
+
+Two methods can be used to view and change the client node monitor
+list:
+
+* Use the Admin Server's HTTP service: follow the "Add/Delete a client
+  node monitor" hyperlink at the bottom of the top-level page.
+* Use the Erlang CLI to use these functions:
+** `brick_admin:add_client_monitor/1`
+** `brick_admin:delete_client_monitor/1`
+** `brick_admin:get_client_monitor_list/0`
+
+[[partition-detector]]
+== The Partition Detector Application
+
+For multi-node Hibari deployments, Hibari includes a network
+monitoring feature that watches for partitions within the cluster, and
+attempts to minimize the database consequences of such partitions.
+This Erlang/OTP application is called the Partition Detector.
+
+You can configure the network monitoring feature in the `central.conf`
+file.  See xref:central-conf-parameters[] for details.
+
+IMPORTANT: Use of this feature is mandatory for a multi-node Hibari
+deployment to prevent data corruption in the event of a network
+partition.  If you don't care about data loss, then as an ancient
+Roman might say, ``Caveat emptor.''
+Or in English, ``Let the buyer beware.''
+
+For the network monitoring feature to work properly, you must first
+set up two separate networks, Network A and Network B, that connect to
+each of your Hibari physical bricks. The networks must be set up as
+follows:
+
+* Network A and Network B must be physically separate networks, with
+different IP and broadcast addresses. See the diagram below for a two
+node cluster.
+* Network A must be the network used for all Hibari data communications.
+* Network A should have as few physical failure points as
+possible. For example, a single switch or load balancer is preferable
+to two switches cabled together.
+* The separate Network B will be used to compare node heartbeat patterns.
+
+IMPORTANT: For the network partition monitor to work properly, your
+network partition monitor configuration settings must match as closely
+as possible.  Each Hibari physical brick must have unique IP addresses
+on its two network interfaces (as required by all IP networks), but
+all configurations must use the same IP subnets for the 'A' and 'B'
+networks, and all configurations must use the same network 'A'
+tiebreaker.
+
+[[a-and-b-network-diagram]]
+.Network 'A' and network 'B' diagram
+svgimage::images/a-and-b-diagram[align="center", scaledwidth="80%"]
+
+=== Partition Detector Heartbeats
+
+Through the partition monitoring application, Hibari nodes send
+heartbeat messages to one another at the configurable
+heartbeat_beacon_interval, and each node keeps track of heartbeat
+history from each of the other nodes in the cluster. The heartbeats
+are transmitted through both Network A and Network B. If node
+`gdss1@machine1` detects that the incoming heartbeats from
+`gdss1@machine2` are absent both on Network A and on Network B, then
+`gdss1@machine2` might have a problem. If the incoming heartbeats from
+`gdss1@machine2` fail on Network A but not on Network B, a partition on
+Network A might be the cause. If heartbeats fail on Network B but not
+Network A, then Network B might have a partition problem, but this is
+less serious because Hibari data communication does not take place on
+Network B.
+
+Configurable timers on each Hibari node determine the interval at
+which the absence of incoming heartbeats from another node is
+considered a problem. If on node `gdss1@machine1` no heartbeat has been
+received from `gdss1@machine2` for the duration of the configurable
+`heartbeat_warning_interval`, then a warning message is
+written to the application log of node `gdss1@machine1`. This warning
+message can be triggered by missing heartbeats either on Network A or
+on Network B; the warning message will indicate which node has not
+been heard from, and over which network.
+
+=== Partition Detector's Tiebreaker
+
+If on node `gdss1@machine1` no heartbeat has been received from
+`gdss1@machine2` via Network A for the duration of the configurable
+`heartbeat_failure_interval`, and if during that period heartbeats
+from `gdss1@machine2` continue to be received via Network B, then a
+network partition is presumed to have occurred in Network A. In this
+scenario, node `gdss1@machine1` will attempt to ping the configurable
+`network_a_tiebreaker` address. If `gdss1@machine1` successfully pings
+the tiebreaker address, then `gdss1@machine1` considers itself to be
+on the "correct" side of the Network A partition, and it continues
+running. If by contrast `gdss1@machine1` cannot successfully ping the
+tiebreaker address, then `gdss1@machine1` considers itself to be on
+the "wrong" side of the Network A partition and shuts itself
+down. Meanwhile, comparable calculations and decisions are being made
+by node `gdss1@machine2`.
+
+In a scenario where the network monitoring application determines that
+a partition has occurred on Network B -- that is, heartbeats are received
+through Network A but not through Network B -- then warnings are written
+to the Hibari nodes' application logs but no node is shut down.
+
+
+== Backup and Disaster Recovery
+
+=== Backup and Recovery Software
+
+At the time of writing, Hibari's largest cluster deployment is:
+
+* Well over 50 physical bricks
+* Well over 4TB of disk space per physical brick
+* Single data center, operated by a telecom carrier and integrated
+  with third-party monitoring and control software
+
+If a backup were made of all data in the cluster, the biggest question
+is, "Where would you store the backup?"  Given the cluster's purpose
+(real-time email/messaging services), the quality of the data center's
+physical and software infrastructures, the length of the Hibari chains
+used for physical data redundancy, the business factors influencing
+the choice not to deploy a "hot backup" data center, and other
+factors, Gemini has not developed the backup and recovery software for
+Hibari.  Gemini's smaller Hibari deployments also resemble the largest
+deployment.
+
+However, we expect that backup and recovery software will be high
+priorities for open source Hibari users.  Together with the open
+source users and developers, we expect this software to be developed
+relatively quickly.
+
+=== Disaster Recovery via Remote Data Centers
+
+==== Single Hibari cluster spanning two data centers
+
+It is certainly possible to deploy a single Hibari cluster across two
+(or more) data centers.  At the moment, however, there is only one way
+of doing it: each chain of data replication must have a brick located
+in each data center.
+
+As a consequence of brick placement, it is mandatory that Hibari
+clients pay the full round-trip latency penalty for each update.  See
+xref:diagram-write-path-3[] for a diagram; the "head" and "tail"
+bricks would be in separate data centers, using WAN network
+connectivity between them.
+
+For some applications, strong consistency is a higher priority than
+low latency (both for writes and possibly for reads, if the client is
+not co-located in the same data center as the chain's tail brick).  In
+those cases, such cross-data-center brick placement can make sense.
+
+However, Hibari's Admin Server cannot handle all failure scenarios,
+especially when WAN connectivity is broken between data centers; more
+programming work is required for the Admin Server to automate the
+handling of all processes.  Furthermore, Hibari's basic design cannot
+tolerate network partitions well, see xref:cap-theorem-and-hibari[]
+and xref:admin-server-and-network-partition[].  If the Admin Server
+were capable of handling WAN network partitions, it's almost certain
+that all Hibari nodes in one of the partitioned data centers would be
+inactive.
+
+==== Multiple Hibari clusters, one per data center
+
+Conceptually, it's possible to run multiple Hibari clusters, one per
+data center.  However, Hibari does not have the software required for
+WAN-scale replication.
+
+In theory, such software isn't too difficult to develop.  The tail
+brick of each chain can maintain a log of recent updates to the
+chain.  Those updates can be transmitted asynchronously across a WAN
+to another Hibari cluster in a remote data center.  Such a scheme is
+depicted in the figure below.
+
+[[async-replication-try1]]
+.A future scenario of asynchronous, cross-data-center Hibari replication
+svgimage::images/async-replication-try1[align="center", scaledwidth="80%"]
+
+This kind of replication makes the most sense if "Data Center #1"
+were in an active role and Data Center #2" were in a hot-standby
+role.  In that case, there would never be a "Data Center #2 Client",
+so there would be no problem of strong consistency violations by
+clients accessing both Hibari clusters simultaneously.  The only
+consistency problem would be one of durability: the replay of async
+update logs every `N` seconds would mean that up to `N` seconds of
+updates within "Data Center #1" could be lost.
+
+However, if clients access both Hibari clusters simultaneously, then
+Hibari's strong consistency guarantee would be violated.  Some
+applications can tolerate weakened consistency.  Other applications,
+however, cannot.  For the those apps that must have strong
+consistency, Hibari will require additional design and code.
+
+TIP: A keen-eyed reader will notice that xref:async-replication-try1[]
+is not fully symmetric.  If clients in "Data Center #2" make updates
+to the chain, then the same async update log maintenance and replay to
+"Data Center #1" would also be necessary.
+
+== Hibari Application Logging
+
+The Hibari application log records application-related alerts,
+warnings, and informational messages, as well as trace messages for
+debugging. By default the application log is written to this file:
+
+  <GDSS_HOME>/var/log/gdss-app.log
+
+=== Format of the Hibari Application Log
+
+Each log entry in the Hibari application log is composed of these
+fields in this order, with vertical bar delimitation:
+
+  <PID>|<<ERLANGPID>>|<DATETIME>|<MODULE>|<LEVEL>|<MESSAGECODE>|<MESSAGE>
+
+This Hibari application log entry format is not configurable.  Each of
+these application log entry fields is described in the table that
+follows.  The ``Position'' column indicates the position of the field
+within a log entry.
+
+[options="header",cols="^,^m,<"]
+|=========
+| Position | Field | Description
+| 1 | <PID> | System-assigned process identifier (PID) of the process that generated the log message.
+| 2 | <ERLANGPID> | Erlang process identifier.
+| 3 | <DATETIME> | Timestamp in format `%Y%m%d%H%M%S`, where `%Y` = four digit year; `%m` = two digit month; `%d` = two digit date; `%H` = two digit hour; `%M` = two digit minute; and `%S` = two digit seconds. For example, `20081103230123`.
+| 4 | <MODULE> | The internal component with which the message is associated. This field is set to a minimum length of 13 characters. If the module name is shorter than 13 characters, spaces will be appended to the module name so that the field reaches the 13 character minimum.
+| 5 | <LEVEL> | The severity level of the message. The level will be one of the following: `ALERT`, a condition requiring immediate correction; `WARNG`, a warning message, indicating a potential problem; `INFO`, an informational message indicating normal activity, and requiring no action; `DEBUG`, a highly granular, process-descriptive message potentially of use when debugging the application.
+| 6 | <MESSAGECODE> | Integer code assigned to all messages of severity level `INFO` or higher.  NOTE: This code is not yet defined in the Hibari open source release.
+| 7 | <MESSAGE> | The message itself, describing the event that has occurred.
+|=========
+
+=== Application Log Example
+
+Items written to the Hibari application log come from multiple sources:
+
+* The Hibari OTP application
+* Other OTP applications bundled with Hibari
+* Other OTP applications within the Erlang runtime system,
+  e.g. `kernel` and `sasl`. 
+
+The `<MESSAGE>` field is free-form text.  Application code can freely
+add newline characters and various white-space padding wherever it
+wishes.  However, the file format dictates that a newline character
+(ASCII 10) appear only at the end of the entire app log message.
+
+The Hibari error logger must therefore reformat the text of the
+`<MESSAGE>` field to remove newlines and to remove whitespace
+padding.  The result is not nearly as readable as the formatting
+presented to the Erlang shell.  For example, within the shell, a
+message can look like this:
+
+  =PROGRESS REPORT==== 12-Apr-2010::17:49:22 ===
+            supervisor: {local,sasl_safe_sup}
+               started: [{pid,<0.43.0>},
+                         {name,alarm_handler},
+                         {mfa,{alarm_handler,start_link,[]}},
+                         {restart_type,permanent},
+                         {shutdown,2000},
+                         {child_type,worker}]
+
+Within the Hibari application log, however, the same message is
+reformatted as line #2 below.  The reformatted version is much more
+difficult for a human to read than the version above, but the purpose
+of the app log file is to be machine-parsable, not human-parsable.
+
+  8955|<0.54.0>|20100412174922|gmt_app      |INFO|2190301|start: normal []
+  8955|<0.55.0>|20100412174922|SASL         |INFO|2199999|progress: [{supervisor,{local,gmt_sup}},{started,[{pid,<0.56.0>},{name,gmt_config_svr},{mfa,{gmt_config_svr,start_link,["../priv/central.conf"]}},{restart_type,permanent},{shutdown,2000},{child_type,worker}]}]
+  8955|<0.55.0>|20100412174922|SASL         |INFO|2199999|progress: [{supervisor,{local,gmt_sup}},{started,[{pid,<0.57.0>},{name,gmt_tlog_svr},{mfa,{gmt_tlog_svr,start_link,[]}},{restart_type,permanent},{shutdown,2000},{child_type,worker}]}]
+  8955|<0.36.0>|20100412174922|SASL         |INFO|2199999|progress: [{supervisor,{local,kernel_safe_sup}},{started,[{pid,<0.59.0>},{name,timer_server},{mfa,{timer,start_link,[]}},{restart_type,permanent},{shutdown,1000},{child_type,worker}]}]
+  [...skipping ahead...]
+  8955|<0.7.0>|20100412174923|SASL         |INFO|2199999|progress: [{application,gdss},{started_at,gdss_dev2@bb3}]
+  8955|<0.98.0>|20100412174923|DEFAULT      |INFO|2199999|brick_sb: Admin Server not registered yet, retrying
+  8955|<0.65.0>|20100412174923|SASL         |INFO|2199999|progress: [{supervisor,{local,brick_admin_sup}},{started,[{pid,<0.98.0>},{name,brick_sb},{mfa,{brick_sb,start_link,[]}},{restart_type,permanent},{shutdown,2000},{child_type,worker}]}]
+  8955|<0.105.0>|20100412174924|DEFAULT      |INFO|2199999|top of init: bootstrap_copy1, [{implementation_module,brick_ets},{default_data_dir,"."}]
+  8955|<0.105.0>|20100412174924|DEFAULT      |INFO|2199999|do_init_second_half: bootstrap_copy1
+  8955|<0.79.0>|20100412174924|SASL         |INFO|2199999|progress: [{supervisor,{local,brick_brick_sup}},{started,[{pid,<0.105.0>},{name,bootstrap_copy1},{mfa,{brick_server,start_link,[bootstrap_copy1,[{default_data_dir,"."}]]}},{restart_type,temporary},{shutdown,2000},{child_type,worker}]}]
+  8955|<0.105.0>|20100412174924|DEFAULT      |INFO|2199999|do_init_second_half: bootstrap_copy1 finished
+
+== Hardware and Software Considerations
+
+As noted in xref:hibari-origins[], at the time of writing, Hibari has
+been deployed exclusively in data centers run by telecom carriers.
+All carriers have very specific requirements for integrating with its
+existing deployment, network monitoring, alarm management, and other
+infrastructures.  As a result, many of those features have been
+omitted to date from Hibari.  With Hibari's release into an "open
+source environment", we expect that these gaps will be closed.
+
+Hibari's carrier-centric heritage has also influenced the types of
+hardware, networking gear, operating system, support software, and
+internal Hibari configuration that have been used successfully to
+date.  Some of these practices will change as Hibari evolves from its
+original use patterns.  Until then, this section discusses some of the
+things that a systems/network administrator must consider when
+deploying a Hibari cluster.
+
+Similarly, application developers must be very familiar with these
+same issues.  An unaware developer can create an application that uses
+too many resources on under-specified hardware, causing problems for
+developers, support staff, and application users alike.  We wish
+Hibari to grow and flourish in its non-relational DB niche.
+
+=== Notes on Brick Hardware
+
+==== Lots of RAM is better
+
+Each Hibari logical brick stores all information about its keys in
+RAM.  Both the logical brick's private write-ahead log and the common
+write-ahead log are not "disk-based data structures" in the typical
+sense, such as on-disk hash tables or B-trees.  Therefore, Hibari
+bricks require a lot of RAM to function.
+
+For more details, see:
+
+* xref:overview-high-performance[]
+* xref:per-table-config-perf-options[] ... if a table stores its value
+  blobs in RAM, it will consume more RAM than if those value blobs are
+  stored on disk.
+* xref:hibari-data-model[]
+* xref:brick-init[]
+
+==== Lots of disk I/O capacity is better
+
+By default, Hibari will write and flush each update to disk before
+sending a reply downstream or back to the client.  Hibari will perform
+better on systems that have higher disk I/O capacity.
+
+* Non-volatile/battery-backed cache on the disk controller(s) is
+  helpful, when combined with a write-back cache policy.  The more
+  cache, the better.  If the read/write ratio of the cache can be
+  changed, a default policy of 10/90 or 0/100 (i.e. skewed to writes)
+  is typically more helpful than a default 50/50 split.
+* On-disk (volatile) cache on individual disks is not helpful.
+* Faster spinning disks are more helpful than slower spinning disks.
+* If using RAID, a large stripe width of e.g. 512KBytes or 1024KBytes
+  is usually more helpful than the (usually) smaller default stripe
+  width on most controllers.
+* If using RAID, a hardware RAID implementation may be very slightly
+  helpful.
+* RAID redundancy (e.g. RAID 1, 10, 5, 6) is not required by Hibari,
+  but it can help reduce the odds of failure of an individual physical
+  brick.  If physical bricks do not use data redundant RAID
+  (e.g. RAID 0, concatenation), it's a good idea to consider using
+  longer replication chains to compensate.
+
+For more details, see:
+
+* xref:the-physical-brick[]
+* xref:per-table-config-perf-options[]
+* xref:hibari-data-model[]
+
+[[high-io-rate-devices]]
+==== High I/O rate devices (e.g. SSD) may be used
+
+Hibari has some support for high I/O rate devices such as solid state
+disks, flash memory disks, flash memory storage cards, et al.  There
+is nothing in Hibari's implementation that would preclude using
+high-speed disk devices as the only storage for Hibari write-ahead
+logs.
+
+Hibari has a feature that can segregate high write I/O with `fsync(2)`
+operations onto a separate high-speed device, and use cheaper &
+lower-speed Winchester disk devices for bulk storage.  This feature
+has not yet been well-tested and optimized.
+
+For more details, see:
+
+* xref:write-ahead-logs[]
+* xref:two-wal-types[]
+
+==== Lots of disk storage capacity may be a secondary concern
+
+More disks of smaller capacity are almost always more helpful than a
+few disks of larger capacity.  RAID 0 (no data redundancy) or RAID 10
+("mirror" data redundancy) is useful for combining the I/O capacity of
+multiple disks into a single logical volume.  Other RAID levels, such
+as 5 or 6, can be used, though at the expense of higher write I/O
+overhead.
+
+For more details, see:
+
+* xref:write-ahead-logs[]
+
+[[considerations-cpu]]
+==== Lots of CPU capacity is a secondary concern
+
+Hibari storage bricks do not, as a general rule, require large amounts
+of CPU capacity.  The largest single source of CPU consumption is in
+MD5 checksum calculation.  If the data objects most commonly written &
+read by your application are small, then multi-socket, multi-core CPUs
+are not required.
+
+Each Hibari logical brick is implemented within the Erlang virtual
+machine as a single `gen_server` process.  Therefore, each logical
+brick can (generally speaking) only fully utilize one CPU core.  If
+your Hibari cluster appears to have CPU-utilization imbalance, then
+the recommended strategy is to change the chain placement policy of
+the chains.  For example, there are two methods for arranging a chain
+of length three across three physical bricks:
+
+[[1-chain-striped-across-3-bricks]]
+The first example shows one chain striped across three physical
+bricks.  If the read/write ratio for the chain is extremely high
+(i.e. most operations are reads), then most of the CPU activity (and
+perhaps disk I/O, if blobs are stored on disk) will be directed to the
+"Chain 1 tail" brick and cause a CPU utilization imbalance.
+
+.One chain striped across three physical bricks
+  | Physical Brick X | Physical Brick Y | Physical Brick Z |
+  ----------------------------------------------------------
+     Chain 1 head   ->  Chain 1 middle ->  Chain 1 tail
+
+[[3-chains-striped-across-3-bricks]]
+The second example shows the same three physical bricks but with three
+chains striped across them.  In this example, each physical brick is
+responsible for three different roles: head, middle, and tail.
+Regardless of the read/write operation ratio, all bricks will utilize
+roughly the same amount of CPU.
+
+.Three chains striped across three physical bricks
+  | Physical Brick T | Physical Brick U | Physical Brick V |
+  ----------------------------------------------------------
+     Chain 1 head   ->  Chain 1 middle ->  Chain 1 tail   ||
+     Chain 2 tail   ||  Chain 2 head   ->  Chain 2 middle ->  
+     Chain 3 middle ->  Chain 3 tail   ||  Chain 3 head   ->  
+
+In multi-CPU and multi-core systems, a side-effect of using more
+chains (and therefore more bricks) is that the Erlang virtual machine
+can schedule more logical brick computation across a larger number of
+cores and CPUs.
+
+=== Notes on Networking
+
+Hibari works quite well using commodity "Gigabit Ethernet" interfaces.
+Lower latency (and higher cost) networking gear, such as Infiniband,
+is not required.
+
+For production use, it is _strongly recommended_ that all Hibari
+servers be configured with two physical network interfaces, cabling,
+switches, etc.  For more details, see:
+
+* xref:partition-detector[]
+
+==== Client protocol load balancing
+
+The native Erlang client, via the `gdss` or `gdss_client` OTP
+applications, do not require any load balancing.  The Erlang client
+already is a participant in the consistent hashing algorithm (see
+xref:consistent-hashing-example[]).  The Admin Server distributes
+updates to a table's consistent hash map each time cluster membership
+or chain/brick status changes.
+
+All other client access protocols are "dumb", by comparison.  Take for
+example the Amazon S3 protocol service.  There is no easy way for a
+Hibari cluster to convey to a generic HTTP client how to calculate
+which brick to send a query to.  The HTTP redirect mechanism could be
+used for this purpose, but other protocols don't have an equivalent
+feature.  Also, the latency overhead of sending a redirect is far
+higher than Hibari's solution to this problem.
+
+Hibari's solution is simple: the Hibari server-side "dumb" protocol
+handler uses the same native Erlang client that any other Hibari
+client app written in Erlang users.  That client is capable of making
+direct routing decisions.  Therefore, the "dumb" protocol handler
+within a Hibari node acts as a translating proxy: it uses the "dumb"
+client access protocol on one side and uses the native Erlang client
+API on the other.
+
+.Hibari "dumb" protocol proxy
+svgimage::images/dumb-protocol-proxy[align="center", scaledwidth="80%"]
+
+The deployed "state of the art" for such dumb protocols is to use a
+TCP load balancer (aka a "layer 4" load balancer) to spread dumb
+client workload across multiple Hibari dumb protocol servers.
+
+=== Notes on Operating System
+
+Hibari servers operate on top of the Erlang virtual machine.  In
+principle, any operating system that is supported by the Erlang
+virtual machine can support Hibari.
+
+==== Supported Operating Systems
+
+In practice, Hibari is supported on the following operating systems:
+
+* Linux (used in production and QA environments within Gemini Mobile)
+* Mac OS X
+* FreeBSD (though not currently in a jail environment, due to some TCP
+  services getting EPROTONOSUPPORT errors)
+
+To take advantage of RAM larger than 3.0, 3.5, or 4.0 gigabytes
+(depending on the OS kernel), we recommended that you use a 64-bit
+version of your OS's kernel, 64-bit versions of the user runtime, and
+a 64-bit version of the Erlang/OTP runtime.
+
+[[os-readahead-configuration]]
+==== OS Readahead Configuration
+
+Some operating systems have support for OS-based "readahead":
+pre-fetching blocks of a file with the expectation that those blocks
+will soon be requested by the application.  Properly configured,
+readahead can substantially raise throughput and reduce latency on
+many read-heavy I/O workloads.
+
+The read I/O workloads for Hibari fall into two major categories:
+
+1. Extremely predictable sequential read-only I/O during brick
+   initialization (see xref:brick-init[]).
+2. Extremely unpredictable random read I/O for fetching value blobs
+   from disk.
+
+The first I/O pattern can usually benefit a great deal from an aggressive
+readahead policy.  However, an aggressive readahead policy can have
+the opposite effect on the second I/O pattern.  Readahead policies
+under Linux, for example, are defined on a per-block device basis and
+does not change in response to application runtime behavior.
+
+If your OS supports readahead policy configuration, we recommend using
+a small read and then measuring its effect with a real or simulated
+workload with the real Hibari server.
+
+[[disk-scheduler-configuration]]
+==== Disk Scheduler Configuration
+
+We recommend that you experiment with disk scheduler configuration on
+relevant OSes such as Linux.  The "deadline" scheduler is likely to
+provide better performance characteristics.
+
+=== Notes on Supporting Software
+
+A typical "server" type installation of a Linux or FreeBSD OS is
+sufficient for Hibari.  The following is an incomplete list of other
+software packages that are necessary for Hibari's installation and/or
+runtime.
+
+* NTP
+* Erlang/OTP version R13B04
+* Either "lynx" or "elinks", a text-based Web browser
+
+// JWN: This seems like a good place to mention patches that are
+// needed beyond R13B04 ... busy dist port?
+
+[[ntp-config-strongly-recommended]]
+==== NTP configuration of all Hibari server and client nodes
+
+It is strongly recommended that all Hibari server and client nodes
+have the NTP daemon (Network Time Protocol) installed, properly
+configured, and running.
+
+* The `brick_simple` client API uses the OS clock for automatic
+  generation of timestamps for each key update.  The application
+  problems caused by badly out-of-sync OS clocks can be easily avoided
+  by NTP.
+* If a client's clock is skewed by more than the
+  `brick_do_op_too_old_timeout` configuration attribute in
+  `central.conf` (units = milliseconds), then the brick will silently
+  discard the client's operation.  The only symptoms of this are:
+** Client-side timeouts when using the `brick_simple`, `brick_server`,
+  or `brick_squorum` APIs.
+** Increasing `n_too_old` statistic counter on the brick.
+
+=== Notes on Hibari Configuration
+
+There are several reasons why disk I/O rates can temporarily increase
+within a Hibari physical brick:
+
+* Logical brick checkpoints for increased write I/O ops, see
+  xref:checkpoints[] 
+* The common log "scavenger" for increased read and write I/O ops,
+  see xref:scavenger[]
+* Chain replication repair, see xref:chain-repair[]
+** As the upstream/"repairer" brick, the extra read I/O ops,
+   if the brick stores value blobs on disk
+** As the downstream/"repairee" brick, extra write I/O ops
+
+The Hibari `central.conf` file contains parameters that can limit the
+amount of disk bandwidth used by most of these operations.
+
+See also:
+
+* xref:considerations-cpu[]
+* xref:central-conf-parameters[]
+
+=== Notes on Monitoring a Hibari Cluster
+
+The Admin Server's status page contains current status information
+regarding all tables, chains, and bricks in the cluster.  By default,
+this service listens to TCP port 23080 and is reachable via HTTP at
+http://any-hibari-node-name:23080/.  HTTP redirect will steer your
+browser to the Admin Server node.
+
+* Hypertext links for each table, chain, and brick can show more
+  detailed info on each entity.
+* The "Dump History" link at the bottom of the Admin Server's HTTP
+  status page can show operations history across multiple bricks,
+  chains, and/or tables by using the regular expression feature.
+* Each logical brick maintains counters of each type of Hibari client
+  op primitive.  At present, these stats are only exposed via the HTTP
+  status server or by the native Erlang interface, but it's possible
+  to expose these stats via SNMP and other protocols in a
+  straightforward manner.
+** Stats include: number of `add`, `replace`, `set`, `get`,
+  `get_many`, `delete`, and micro-transactions.
+
+==== Hibari Admin Server HTTP status
+
+For example screen shots of the Admin Server status pages (a work in
+progress), see link:./misc-screenshots/admin-server-status/index.html[].
+
+See also:
+
+* xref:chain-lifecycle-fsm[]
+* xref:brick-lifecycle-fsm[]

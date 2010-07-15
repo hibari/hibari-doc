@@ -1,0 +1,114 @@
+// -*- Doc -*-
+// vim: set syntax=asciidoc:
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+Hibari Home Page
+================
+
+Hibari is a distributed, high availability key-value data store that
+focuses on the "C"onsistency and "A"vailability aspects of Brewer's
+CAP Theorem.
+
+*Hibari's Main Features*
+
+- A Hibari cluster is a distributed system.
+- A Hibari cluster is linearly scalable.
+- A Hibari cluster is highly available.
+- All updates are durable.
+- All updates are strongly consistent.
+- All client operations are lockless.
+- A Hibari cluster's performance is excellent.
+- Multiple client access protocols are available.
+- Data is repaired automatically after a server failure.
+- Cluster configuration can be changed at any time.
+- Data is automatically rebalanced.
+- Heterogeneous hardware support is easy.
+- Micro-transactions simplify creation of robust client applications.
+- Per-table configurable performance options are available.
+
+Hibari is developed in the Erlang programming language.  Hibari
+requires Erlang/OTP R13B01 or newer.  Hibari has been tested most
+recently with Erlang/OTP R13B04.  Support for Erlang/OTP R14A is
+planned.
+
+Hibari runs on the Linux operating system.  Hibari has been developed
+and tested primarily on RedHat, CentOS, and Fedora Linux
+distributions.  Hibari has been tested most recently with "Red Hat
+Enterprise Linux Server release 5.3".  However, Hibari should port
+easily to other Linux distributions.  Support for the MacXOS and
+FreeBSD operation systems is planned.
+
+TIP: Go back to the link:webpage-README.html[README] page, the
+link:webpage-FAQ.html[FAQ] page, the
+link:http://sourceforge.net/projects/hibari/[Project] page, or the
+link:http://sourceforge.net/projects/hibari/support[Support] page.
+
+*Hibari's Documentation*
+
+The link:webpage-README.html[README] is a good first step to get
+started quickly.  Check the download, the build, and the install
+instructions.
+
+The two key documents are the
+link:hibari-sysadmin-guide.en.html[Hibari System Administrator's
+Guide] and the link:hibari-developer-guide.en.html[Hibari Developer's
+Guide].  Reading the System Administrator's Guide is _STRONGLY_
+recommended.
+
+The documentation is in a state of change and improvement.
+Contributions from the wider world are welcome.  :-)
+
+*Hibari's Origins*
+
+Hibari was originally written by Gemini Mobile Technologies to support
+mobile messaging and email services.  Hibari was released outside of
+Gemini under the Apache Public License version 2.0 in July 2010.
+
+Hibari has been deployed by multiple telecom carriers in Asia and
+Europe.  Hibari may lack some features such as monitoring, event and
+alarm management, and other "production environment" support services.
+Since telecom operator has its own data center support infrastructure,
+Hibari's development has not included many services that would be
+redundant in a carrier environment.  We hope that Hibari's release to
+the open source community will close those functional gaps as Hibari
+spreads outside of carrier data centers.
+
+Gemini Mobile Technologies provides full support, consulting, and
+development services for Hibari.  Please see the
+http://www.geminimobile.com/[Gemini Mobile Technologies Web page] for
+more information.
+
+Gemini Mobile(R) and HyperScale(R) are registered trademarks of Gemini
+Mobile Technologies, Inc. in the United States and other countries.
+
+------
+Copyright (C) 2005-2010 Gemini Mobile Technologies, Inc.  All rights
+reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+------

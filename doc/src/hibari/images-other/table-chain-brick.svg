@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="26cm" height="6cm" viewBox="19 19 501 104" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="238.5,64 269.25,64 269.25,80 290.264,80 "/>
+    <g>
+      <polygon style="fill: #000000" points="297.764,80 287.764,85 290.264,80 287.764,75 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" points="297.764,80 287.764,85 290.264,80 287.764,75 "/>
+    </g>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="297.764,80 287.764,85 290.264,80 287.764,75 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:monospace;font-style:normal;font-weight:normal" x="242.5" y="60">
+      <tspan x="242.5" y="60">1</tspan>
+    </text>
+    <text style="fill: #000000;text-anchor:end;font-size:15.8044;font-family:monospace;font-style:normal;font-weight:normal" x="296" y="76">
+      <tspan x="296" y="76">n</tspan>
+    </text>
+  </g>
+  <g>
+    <g>
+      <rect style="fill: #ffffff" x="20" y="20" width="218.5" height="18"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #ffffff" x="20" y="20" width="218.5" height="18"/>
+    </g>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="20" y="20" width="218.5" height="18"/>
+    <text style="fill: #000000;text-anchor:middle;font-size:13.6257;font-family:sanserif;font-style:normal;font-weight:700" x="129.25" y="34">
+      <tspan x="129.25" y="34">Table</tspan>
+    </text>
+    <g>
+      <rect style="fill: #ffffff" x="20" y="38" width="218.5" height="84"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #ffffff" x="20" y="38" width="218.5" height="84"/>
+    </g>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="20" y="38" width="218.5" height="84"/>
+    <g>
+      <polygon style="fill: #000000" points="23,48 25,51 27,48 25,45 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" points="23,48 25,51 27,48 25,45 "/>
+    </g>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="29" y="54">
+      <tspan x="29" y="54">key</tspan>
+    </text>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="131.4" y="54">
+      <tspan x="131.4" y="54">binary</tspan>
+    </text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="29" y1="55.6" x2="177.6" y2="55.6"/>
+    <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" cx="25" cy="64" rx="2" ry="2"/>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="29" y="70">
+      <tspan x="29" y="70">value</tspan>
+    </text>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="131.4" y="70">
+      <tspan x="131.4" y="70">binary</tspan>
+    </text>
+    <g>
+      <ellipse style="fill: #000000" cx="25" cy="80" rx="2" ry="2"/>
+      <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" cx="25" cy="80" rx="2" ry="2"/>
+    </g>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="29" y="86">
+      <tspan x="29" y="86">timestamp</tspan>
+    </text>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="131.4" y="86">
+      <tspan x="131.4" y="86">integer</tspan>
+    </text>
+    <g>
+      <ellipse style="fill: #000000" cx="25" cy="96" rx="2" ry="2"/>
+      <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" cx="25" cy="96" rx="2" ry="2"/>
+    </g>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="29" y="102">
+      <tspan x="29" y="102">expires_time</tspan>
+    </text>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="131.4" y="102">
+      <tspan x="131.4" y="102">integer</tspan>
+    </text>
+    <g>
+      <ellipse style="fill: #000000" cx="25" cy="112" rx="2" ry="2"/>
+      <ellipse style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" cx="25" cy="112" rx="2" ry="2"/>
+    </g>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="29" y="118">
+      <tspan x="29" y="118">flags</tspan>
+    </text>
+    <text style="fill: #000000;text-anchor:start;font-size:13.6257;font-family:monospace;font-style:normal;font-weight:normal" x="131.4" y="118">
+      <tspan x="131.4" y="118">property list</tspan>
+    </text>
+  </g>
+  <g>
+    <g>
+      <rect style="fill: #ffffff" x="300" y="20" width="80" height="82.6667"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #ffffff" x="300" y="20" width="80" height="82.6667"/>
+    </g>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="20" width="80" height="82.6667"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="300" y="20" width="80" height="82.6667"/>
+  </g>
+  <text style="fill: #000000;text-anchor:start;font-size:14.4498;font-family:sanserif;font-style:normal;font-weight:normal" x="340" y="61.3334">
+    <tspan x="340" y="61.3334"></tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:14.4498;font-family:sanserif;font-style:normal;font-weight:normal" x="340" y="61.3334">
+    <tspan x="340" y="61.3334"></tspan>
+  </text>
+  <text style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:sanserif;font-style:normal;font-weight:normal" x="320" y="60">
+    <tspan x="320" y="60">Chain</tspan>
+  </text>
+  <g>
+    <g>
+      <rect style="fill: #ffffff" x="440" y="20" width="78.8" height="81.4267"/>
+      <rect style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #ffffff" x="440" y="20" width="78.8" height="81.4267"/>
+    </g>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="440" y="20" width="78.8" height="81.4267"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="440" y="20" width="78.8" height="81.4267"/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="380,61.3334 400,61.3334 400,80 430.264,80 "/>
+    <g>
+      <polygon style="fill: #000000" points="437.764,80 427.764,85 430.264,80 427.764,75 "/>
+      <polygon style="fill: none; fill-opacity:0; stroke-width: 0.02; stroke: #000000" points="437.764,80 427.764,85 430.264,80 427.764,75 "/>
+    </g>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="437.764,80 427.764,85 430.264,80 427.764,75 "/>
+    <text style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:monospace;font-style:normal;font-weight:normal" x="384" y="57.3334">
+      <tspan x="384" y="57.3334">1</tspan>
+    </text>
+    <text style="fill: #000000;text-anchor:end;font-size:15.8044;font-family:monospace;font-style:normal;font-weight:normal" x="436" y="76">
+      <tspan x="436" y="76">n</tspan>
+    </text>
+  </g>
+  <text style="fill: #000000;text-anchor:start;font-size:15.8044;font-family:sanserif;font-style:normal;font-weight:normal" x="460" y="60">
+    <tspan x="460" y="60">Brick</tspan>
+  </text>
+</svg>

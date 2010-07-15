@@ -1,0 +1,74 @@
+## -*- mode: graphviz-dot -*-
+## vim: set syntax=dot:
+
+##
+## Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+##
+## Licensed under the Apache License, Version 2.0 (the "License");
+## you may not use this file except in compliance with the License.
+## You may obtain a copy of the License at
+##
+##     http://www.apache.org/licenses/LICENSE-2.0
+##
+## Unless required by applicable law or agreed to in writing, software
+## distributed under the License is distributed on an "AS IS" BASIS,
+## WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+## See the License for the specific language governing permissions and
+## limitations under the License.
+##
+
+msc {
+    CLIENT, HEAD, MIDDLE, TAIL, ADMIN;
+    --- [label="D1 = K1,V1"];
+    CLIENT -> HEAD    [label="add(K1,V1)"];
+    HEAD box HEAD     [label="replay=D1; down=S1"];
+    HEAD -> MIDDLE    [label="ch_replay_v2(K1,V1,S1,S0)"];
+    MIDDLE box MIDDLE [label="replay=D1; up=S1"];
+    MIDDLE -> TAIL    [label="ch_replay_v2(K1,V1,S1,S0)"];
+    TAIL box TAIL     [label="replay=D1; up=S1"];
+    TAIL -> CLIENT    [label="ok"];
+
+    --- [label="D2 is lost between Head and Middle"];
+    CLIENT -> HEAD    [label="add(K2,V2)"];
+    HEAD box HEAD     [label="replay=D1,D2; down=S2"];
+    HEAD :> MIDDLE    [label="MESSAGE LOST: ch_replay_v2(K2,V2,S2,S1)"];
+    ...;
+    CLIENT -> CLIENT  [label="timeout"];
+
+    ...;
+    --- [label="Behaviour has changed from this point"];
+    ...;
+
+    --- [label="D3 = K3,V3"];
+    CLIENT -> HEAD    [label="add(K3,V3)"];
+    HEAD box HEAD     [label="replay=D1,D2,D3; down=S3"];
+    MIDDLE :> MIDDLE  [label="DOWN"];
+    MIDDLE box MIDDLE [label="replay=D1; up=S1; got_down=TRUE"];
+    HEAD -> MIDDLE    [label="ch_replay_v2(K3,V3,S3,S2)"];
+    MIDDLE abox MIDDLE [label="last<S2> != up<S1> && got_down==TRUE"];
+    MIDDLE :> MIDDLE [label="MIDDLE BRICK EXIT"];
+
+    --- [label="Admin changes connections to remove MIDDLE"];
+    TAIL :> TAIL  [label="DOWN"];
+    TAIL box TAIL [label="replay=D1 ; up=S1; got_down=TRUE"];
+    ADMIN -> TAIL [label="role_tail(upstream=HEAD,downstream=)"];
+    TAIL box TAIL [label="replay=D1 ; up=S1; got_down=FALSE"];
+    ADMIN -> HEAD [label="role_head(upstream=,downstream=TAIL)"];
+
+    --- [label="HEAD replays to new DOWNSTREAM TAIL"];
+    HEAD -> TAIL    [label="ch_replay_v2(K1,V1,S1,S0)"];
+    TAIL box TAIL [label="replay=D1; up=S1"];
+    HEAD -> TAIL    [label="ch_replay_v2(K2,V2,S2,S1)"];
+    TAIL box TAIL [label="replay=D1,D2; up=S2"];
+    HEAD -> TAIL    [label="ch_replay_v2(K3,V3,S3,S2)"];
+    TAIL box TAIL [label="replay=D1,D2,D3; up=S3"];
+
+    --- [label="tail acks S3."];
+    TAIL -> TAIL      [label="timer()"];
+    TAIL box TAIL     [label="replay= ; up=S3"];
+    TAIL -> HEAD    [label="ack(S3)"];
+    HEAD box HEAD [label="replay= ; down=S3"];
+
+    --- [label="Head has D1,D2,D3, tail has D1,D2,D3."];
+    --- [label="OLD MIDDLE brick will start repair normall from tail."];
+}

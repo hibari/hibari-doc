@@ -1,0 +1,30 @@
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+digraph data_flow {
+    CH1 [label="Chain 1\nBefore: ~33% total keys\nAfter: ~25% total keys"];
+    CH2 [label="Chain 2\nBefore: ~33% total keys\nAfter: ~25% total keys"];
+    CH3 [label="Chain 3\nBefore: ~33% total keys\nAfter: ~25% total keys"];
+    CH4 [label="Chain 4\nBefore:   0% total keys\nAfter: ~25% total keys"];
+
+    //CH1 -> CH1 [label="~76% local keys remain"];
+    CH1 -> CH4 [label="Moving keys:\n~24% local keys\n~8% total keys"];
+    //CH2 -> CH2 [label="~76% local keys remain"];
+    CH2 -> CH4 [label="Moving keys:\n~24% local keys\n~8% total keys"];
+    //CH3 -> CH3 [label="~76% local keys remain"];
+    CH3 -> CH4 [label="Moving keys:\n~24% local keys\n~8% total keys"];
+};
