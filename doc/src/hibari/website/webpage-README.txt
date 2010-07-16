@@ -41,7 +41,11 @@ link:http://sourceforge.net/projects/hibari/support[Support] page.
 _basic recipe_
 
 ------
-1. Get, setup, and install a Linux environment
+
+1. Get, setup, and install a Linux environment.  If not already,
+   please make sure to have the 'openssl-devel' package installed on
+   your linux system.  OpenSSL is required by Hibari (and before
+   configure and build of your erlang system).
 
    NOTE: Hibari has been developed and tested primarily on RedHat,
    CentOS, and Fedora Linux distributions.  Hibari has been tested
@@ -49,6 +53,9 @@ _basic recipe_
 
    NOTE: Hibari should port easily to other Linux distributions.
    Support for the MacXOS and FreeBSD operation systems is planned.
+
+   NOTE: "yum install openssl-devel" will work on most RedHat, CentOS,
+   and Fedora Linux systems.
 
 2. Get and install Git
    http://git-scm.com/
