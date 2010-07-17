@@ -87,6 +87,11 @@ _basic recipe_
   tools for Hibari.
 ------
 
+TIP: If you don't have Git installed, your firewall/proxy blocks the
+Git protocol, or you simply prefer to download all of the Hibari Git
+repositories at once, download the latest snapshot
+_(hibari-snapshot.tar.gz)_ of Hibari's Git repositories from the
+link:http://sourceforge.net/projects/hibari/files/[Files] page.
 
 *To Build*
 

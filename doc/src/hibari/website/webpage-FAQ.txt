@@ -37,11 +37,16 @@ link:http://sourceforge.net/projects/hibari/support[Support] page.
 
 [qanda]
 
-Where can I download the Hibari binary and/or source code package?::
-    Sorry, Hibari binary and source code packages are not available
-    right now.  Please see link:webpage-README.html[here] for
-    instructions to download the Hibari source code repositories using
-    'Git' and Hibari's 'bom' helper tool.
+Where can I download the Hibari binary code package?::
+    Sorry, Hibari binary packages are not available right now.
+Where can I download the Hibari source code package?::
+    The latest snapshot _(hibari-snapshot.tar.gz)_ of Hibari's Git
+    repositories can be downloaded from the
+    link:http://sourceforge.net/projects/hibari/files/[Files] page.
+How can I download the Hibari source code repositories using Git?::
+    Please see link:webpage-README.html[here] for instructions to
+    download the Hibari source code repositories using 'Git' and
+    Hibari's 'bom' helper tool.
 Why do I need to use Hibari's 'bom' helper tool to download Hibari?::
     Hibari is composed of several independent (but related) Git source
     code repositories.  The bom tool automates the downloading process
@@ -54,10 +59,7 @@ Why does Git cloning of Hibari's Git code repositories sometimes fail when using
     that SourceForge enforces a simultaneous access and/or a bandwidth
     restriction for Git anonymous read-only access.  Inserting a sleep
     before the call to git clone in Hibari's 'bom' helper tool might
-    be one temporary workaround.  Providing a single downloadable
-    'sumo' source package for all of Hibari's Git code repositories
-    might be a good temporary and permanent solution.  Please stay
-    tuned.
+    be one temporary workaround.
 I don't want to use Hibari's 'bom' helper tool to download Hibari. Is there any other way?::
     Yes, you can manually download (but not build) all of Hibari's Git
     code repositories by using Git.
@@ -80,4 +82,12 @@ git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/pkgtools/gif.git
 git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/pkgtools/watcher.git
 git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/top/hibari/GDSS.git
 ------------
-
+What other Git Repositories are used by the Hibari project?::
+    The 'hibari' repository is used for Hibari's sysadmin guide,
+    developer guide, and website documentation.  The 'patches'
+    repository is used for Erlang/OTP system patches.
++
+------------
+git clone git://hibari.git.sourceforge.net/gitroot/hibari/hibari
+git clone git://hibari.git.sourceforge.net/gitroot/hibari/patches
+------------
