@@ -25,7 +25,8 @@ focuses on the "C"onsistency and "A"vailability aspects of Brewer's
 CAP Theorem.
 
 This README is the first step to download, to build, and to install
-Hibari.
+Hibari. Read the link:webpage-CHANGELOG.html[CHANGELOG] page for a
+full list of additions, changes, and bug fixes.
 
 CAUTION: This information plus further detailed instructions has not
 yet been added to link:hibari-developer-guide.en.html[Hibari

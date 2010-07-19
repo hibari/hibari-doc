@@ -1,0 +1,35 @@
+// -*- Doc -*-
+// vim: set syntax=asciidoc:
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+Hibari CHANGELOG Page
+=====================
+
+Hibari is a distributed, high availability key-value data store that
+focuses on the "C"onsistency and "A"vailability aspects of Brewer's
+CAP Theorem.
+
+TIP: Go back to the link:http://hibari.sourceforge.net/[Home] page,
+the link:webpage-README.html[README] page, the
+link:http://sourceforge.net/projects/hibari/[Project] page, or the
+link:http://sourceforge.net/projects/hibari/support[Support] page.
+
+*Open Source (2010-07-13)*
+
+First public release of Hibari's Git Repositories along with Hibari's
+Home Page (http://hibari.sourceforge.net/).
