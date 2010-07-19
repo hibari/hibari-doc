@@ -46,21 +46,22 @@ Where can I download the Hibari source code package?::
 How can I download the Hibari source code repositories using Git?::
     Please see link:webpage-README.html[here] for instructions to
     download the Hibari source code repositories using 'Git' and
-    Hibari's 'bom' helper tool.
-Why do I need to use Hibari's 'bom' helper tool to download Hibari?::
+    Hibari's 'bom.sh' helper tool.
+Why do I need to use Hibari's 'bom.sh' helper tool to download Hibari?::
     Hibari is composed of several independent (but related) Git source
-    code repositories.  The bom tool automates the downloading process
+    code repositories.  The bom.sh tool automates the downloading process
     for all of Hibari's Git code repositories and automates the build
     dependencies between each of the Git code repositories.  The
     Makefiles used to build Hibari require the dependency files
-    created by the bom tool.
-Why does Git cloning of Hibari's Git code repositories sometimes fail when using Hibari's 'bom' helper tool to download Hibari from SourceForge?::
+    created by the bom.sh tool.
+Why does Git cloning of Hibari's Git code repositories sometimes fail when using Hibari's 'bom.sh' helper tool to download Hibari from SourceForge?::
     Not quite sure, yet.  We have noticed this problem too!  It seems
     that SourceForge enforces a simultaneous access and/or a bandwidth
     restriction for Git anonymous read-only access.  Inserting a sleep
-    before the call to git clone in Hibari's 'bom' helper tool might
-    be one temporary workaround.
-I don't want to use Hibari's 'bom' helper tool to download Hibari. Is there any other way?::
+    before the call to git clone in Hibari's 'bom.sh' helper tool
+    might be one temporary workaround.
+
+I don't want to use Hibari's 'bom.sh' helper tool to download Hibari. Is there any other way?::
     Yes, you can manually download (but not build) all of Hibari's Git
     code repositories by using Git.
 +

@@ -64,13 +64,13 @@ _basic recipe_
    NOTE: Hibari requires git version 1.7.x or newer.  Hibari has been
    tested most recently with git version 1.7.1.1.
 
-3. Download the 'bom' tool and then download Hibari
+3. Download the 'bom.sh' tool and then download Hibari
 
     $ mkdir -p ~/work/hibari
     $ cd ~/work/hibari
     $ git clone git://hibari.git.sourceforge.net/gitroot/hibari/bom .
     $ env BOM_GIT=git://hibari.git.sourceforge.net/gitroot/hibari/ \
-      ./bom co src/top/hibari/GDSS
+      ./bom.sh co src/top/hibari/GDSS
 
   NOTE: The Bill of Materials (BOM) system is a way to manage the
   builds of heterougeneous products with shared components using GIT,
@@ -78,9 +78,9 @@ _basic recipe_
   between modules stored in a source code repository.  BOM is
   implemented using bash, make, and other UNIX tools.
 
-  NOTE: The bom commands 'diff' and 'status' can be used to check the
-  differences and status of all components, respectively.  Type './bom
-  help' for further information.
+  NOTE: The bom.sh commands 'diff' and 'status' can be used to check
+  the differences and status of all components, respectively.  Type
+  './bom.sh help' for further information.
 
   NOTE: The BOM system was originally developed by Gemini Mobile
   Technologies as an in-house tool to build and to package it's own
@@ -112,7 +112,7 @@ _basic recipe_
 
 2. Change to your working directory and create the toplevel Makefile
    $ cd ~/work/hibari
-   $ ./bom make
+   $ ./bom.sh make
 
 3. Build Hibari
    $ make ERL=/usr/local/hibari/ert/R13B04/bin/erl
