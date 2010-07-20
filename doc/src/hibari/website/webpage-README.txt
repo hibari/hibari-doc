@@ -37,7 +37,7 @@ the link:webpage-FAQ.html[FAQ] page, the
 link:http://sourceforge.net/projects/hibari/[Project] page, or the
 link:http://sourceforge.net/projects/hibari/support[Support] page.
 
-*To Download*
+== Hibari - To Download
 
 _basic recipe_
 
@@ -94,7 +94,7 @@ repositories at once, download the latest snapshot
 _(hibari-snapshot.tar.gz)_ of Hibari's Git repositories from the
 link:http://sourceforge.net/projects/hibari/files/[Files] page.
 
-*To Build*
+== Hibari - To Build
 
 _basic recipe_
 
@@ -107,7 +107,7 @@ _basic recipe_
    Erlang/OTP R14A is planned.
 
    NOTE: Patching your erlang system is _STRONGLY_ recommended.
-   Hibari's erlang patches are mirrored on SourceForge
+   Hibari's Erlang/OTP patches are mirrored on SourceForge
    (git://hibari.git.sourceforge.net/gitroot/hibari/patches).
 
 2. Change to your working directory and create the toplevel Makefile
@@ -128,8 +128,11 @@ _basic recipe_
    $ make ERL=/usr/local/hibari/ert/R13B04/bin/erl test
 ------
 
+TIP: If you need help to download, to build, and to install your
+erlang system, please see the link:webpage-README-ERL.html[Erlang/OTP
+README] page for information.
 
-*To Build*
+== Hibari - To Build
 
 _optional features_
 
@@ -169,7 +172,7 @@ E. Run dialyzer for one module (and it dependencies)
 ------
 
 
-*To Install*
+== Hibari - To Install
 
 _basic recipe_
 
@@ -209,6 +212,8 @@ _basic recipe_
    (http://localhost:23080/)
 ------
 
+NOTE: Please setup sudo access before attempting to install Hibari (or
+login as root to install Hibari).
 
 Please check the link:hibari-sysadmin-guide.en.html[Hibari System
 Administrator's Guide] for further information.

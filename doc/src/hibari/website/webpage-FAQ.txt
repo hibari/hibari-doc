@@ -86,7 +86,7 @@ git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/top/hibari/GDSS.gi
 What other Git Repositories are used by the Hibari project?::
     The 'hibari' repository is used for Hibari's sysadmin guide,
     developer guide, and website documentation.  The 'patches'
-    repository is used for Erlang/OTP system patches.
+    repository is used primarily for Erlang/OTP system patches.
 +
 ------------
 git clone git://hibari.git.sourceforge.net/gitroot/hibari/hibari
