@@ -1,0 +1,50 @@
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+digraph data_flow {
+	// {rank=same; brick_sup};
+	// // top
+	// brick_sup;
+	// // admin
+	// brick_admin_sup;
+	// brick_mon_sup;
+	// brick_sb;
+	// brick_admin;
+	// chainmon_XXX;
+	// pinger_YYY;
+	// // data
+	// brick_data_sup;
+	// brick_brick_sup;
+	// bootstrap_copyN;
+	// // supervision tree
+	// brick_sup -> brick_admin_sup [style=dotted];
+	// brick_sup -> brick_data_sup [style=dotted];
+	// brick_admin_sup -> brick_mon_sup [style=dotted];
+	// brick_admin_sup -> brick_sb [style=dotted];
+	// brick_admin_sup -> brick_admin [style=dotted];
+	// brick_mon_sup -> chainmon_XXX [style=dotted];
+	// brick_mon_sup -> pinger_YYY [style=dotted];
+	// brick_data_sup -> brick_brick_sup [style=dotted];
+	// brick_brick_sup -> bootstrap_copyN [style=dotted];
+	// calls
+	chainmon_XXX -> brick_sb [label="get_multiple_statuses(brick)"];
+	chainmon_XXX -> brick_sb [label="report_chain_status"];
+	pinger_YYY -> brick_sb [label="report_brick_status"];
+	brick_sb -> bootstrap_copyN [label="squorom\noperations"];
+	brick_sb -> brick_admin [label="load_bootstrap_data"];
+	brick_admin -> bootstrap_copyN [label="squorom\noperations"];
+}
