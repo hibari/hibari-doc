@@ -116,3 +116,74 @@ _basic recipe_
 
 NOTE: Please setup sudo access before attempting to install Erlang/OTP
 (or login as root to install Erlang/OTP).
+
+== Linux
+
+=== Debian - Lenny
+
+Depending on your needs, the following additional instructions for
+Debian users may help with the setup of your environment *before*
+building Erlang/OTP and/or Hibari.
+
+-----
+1. setup /etc/apt/sources.lists
+
+  deb http://ftp.debian.org/debian/ unstable main
+  deb-src http://ftp.debian.org/debian/ unstable main
+
+2. Create /etc/apt/preferences with the following contents:
+
+  Package: git-core
+  Pin: release a=unstable
+  Pin-Priority: 1002
+
+  Package: git
+  Pin: release a=unstable
+  Pin-Priority: 1002
+
+  Package: fop
+  Pin: release a=unstable
+  Pin-Priority: 1002
+
+  Package: libbatik-java
+  Pin: release a=unstable
+  Pin-Priority: 1002
+
+  Package: java-wrappers
+  Pin: release a=unstable
+  Pin-Priority: 1002
+
+  Package: *
+  Pin: release a=stable
+  Pin-Priority: 1001
+
+  Package: *
+  Pin: release a=testing
+  Pin-Priority: 60
+
+  Package: *
+  Pin: release a=unstable
+  Pin-Priority: 50
+
+3. Install additional stable packages
+
+  apt-get install autoconf
+  apt-get install g++
+  apt-get install gawk
+  apt-get install gcc
+  apt-get install libncurses5-dev
+  apt-get install libssl-dev
+  apt-get install libtool
+  apt-get install make
+  apt-get install ncompress
+  apt-get install openssl
+  apt-get install unixodbc-dev
+
+4. Install additional unstable packages
+
+  apt-get -t testing install fop
+  apt-get -t unstable install git-core
+-----
+
+NOTE: Please setup the appropriate source urls depending on your needs
+and location.
