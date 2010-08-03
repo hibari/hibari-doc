@@ -18,7 +18,7 @@
 ASCIIDOC_PATH = ../../make
 include $(ASCIIDOC_PATH)/asciidoc.mk
 
-all: html pdf
+all: html
 
 html: public-html-hack
 
