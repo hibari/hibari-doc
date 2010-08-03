@@ -16,35 +16,42 @@
 //
 
 digraph data_flow {
-	// {rank=same; brick_sup};
-	// // top
-	// brick_sup;
-	// // admin
-	// brick_admin_sup;
-	// brick_mon_sup;
-	// brick_sb;
-	// brick_admin;
-	// chainmon_XXX;
-	// pinger_YYY;
-	// // data
-	// brick_data_sup;
-	// brick_brick_sup;
-	// bootstrap_copyN;
-	// // supervision tree
-	// brick_sup -> brick_admin_sup [style=dotted];
-	// brick_sup -> brick_data_sup [style=dotted];
-	// brick_admin_sup -> brick_mon_sup [style=dotted];
-	// brick_admin_sup -> brick_sb [style=dotted];
-	// brick_admin_sup -> brick_admin [style=dotted];
-	// brick_mon_sup -> chainmon_XXX [style=dotted];
-	// brick_mon_sup -> pinger_YYY [style=dotted];
-	// brick_data_sup -> brick_brick_sup [style=dotted];
-	// brick_brick_sup -> bootstrap_copyN [style=dotted];
-	// calls
-	chainmon_XXX -> brick_sb [label="get_multiple_statuses(brick)"];
+	node [shape="ellipse"];
+        nodesep = 0.5;
+	{rank="source"; pinger_YYY; chainmon_XXX; };
+	{rank="sink"; bootstrap_copyN; };
+	// misc
+	bootstrap_copyN [shape="record"];
+	// servers
+        subgraph servers1 {
+		node [style=filled, color=grey];
+		{rank=sink; brick_server_YYY};
+		pingee_YYY;
+		brick_server_YYY [shape="record"];
+		brick_server_YYY -> pingee_YYY [label="set_{chain_ok_time,start_time,repair_state}"];
+	}
+	// clients
+        subgraph clients1 {
+		node [style=filled, color=orange];
+		{rank=sink; brick_client_ZZZ};
+		clientmon_ZZZ;
+		brick_client_ZZZ [shape="record"];
+		clientmon_ZZZ -> brick_client_ZZZ [style="dashed", label="polling\ncheck_status"];
+	}
+	// chain monitor
+	chainmon_XXX -> brick_sb [style="dashed", label="polling\nget_multiple_statuses(brick)"];
 	chainmon_XXX -> brick_sb [label="report_chain_status"];
+	// client monitor
+	clientmon_ZZZ -> brick_admin [label="event==up -> spam_gh_to_all_nodes"];
+	// pinger -> pingee -> brick_server
 	pinger_YYY -> brick_sb [label="report_brick_status"];
+	pinger_YYY -> pingee_YYY [style="dashed", label="polling\nget_brick_{repair_state,start_time}"];
+	// scoreboard
 	brick_sb -> bootstrap_copyN [label="squorom\noperations"];
 	brick_sb -> brick_admin [label="load_bootstrap_data"];
+	brick_sb -> brick_admin [label="chain_status_change"];
+	// admin
 	brick_admin -> bootstrap_copyN [label="squorom\noperations"];
+	brick_admin -> brick_client_ZZZ [label="global_hash"];
+	brick_admin -> brick_server_YYY [label="global_hash"];
 }
