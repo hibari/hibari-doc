@@ -18,7 +18,7 @@
 digraph data_flow {
 	node [shape="ellipse"];
         nodesep = 0.5;
-	{rank="source"; pinger_YYY; chainmon_XXX; };
+	{rank="source"; pinger_YYY; chainmon_XXX; application};
 	{rank="sink"; bootstrap_copyN; };
 	// misc
 	bootstrap_copyN [shape="record"];
@@ -28,15 +28,18 @@ digraph data_flow {
 		{rank=sink; brick_server_YYY};
 		pingee_YYY;
 		brick_server_YYY [shape="record"];
+		brick_server_yyy [shape="record"];
 		brick_server_YYY -> pingee_YYY [label="set_{chain_ok_time,start_time,repair_state}"];
+		brick_server_YYY -> brick_server_yyy [label="*"];
+		brick_server_yyy -> brick_server_YYY [label="*"];
 	}
 	// clients
         subgraph clients1 {
 		node [style=filled, color=orange];
-		{rank=sink; brick_client_ZZZ};
+		{rank=sink; brick_simple_ZZZ};
 		clientmon_ZZZ;
-		brick_client_ZZZ [shape="record"];
-		clientmon_ZZZ -> brick_client_ZZZ [style="dashed", label="polling\ncheck_status"];
+		brick_simple_ZZZ [shape="record"];
+		clientmon_ZZZ -> brick_simple_ZZZ [style="dashed", label="polling\ncheck_status"];
 	}
 	// chain monitor
 	chainmon_XXX -> brick_sb [style="dashed", label="polling\nget_multiple_statuses(brick)"];
@@ -52,6 +55,10 @@ digraph data_flow {
 	brick_sb -> brick_admin [label="chain_status_change"];
 	// admin
 	brick_admin -> bootstrap_copyN [label="squorom\noperations"];
-	brick_admin -> brick_client_ZZZ [label="global_hash"];
-	brick_admin -> brick_server_YYY [label="global_hash"];
+	brick_admin -> brick_simple_ZZZ [label="set_gh"];
+	brick_admin -> brick_server_YYY [label="chain_hack_set_global_hash"];
+	// application
+	application -> brick_simple_ZZZ [label="! {current_gh_version, Tab, self(), Ref}"];	
+	application -> brick_simple_ZZZ [label="get_gh"];
+	application -> brick_server_YYY [label="gen_server:call(..{do, ...}..)"];
 }
