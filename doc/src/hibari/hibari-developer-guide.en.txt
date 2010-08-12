@@ -3016,23 +3016,44 @@ are assorted functions for querying the schema, such as
 Changes to chain length and chain addition/deletion/reweighting are
 also available here.
 
+===== Global Hash spamming
 [[spamming-the-global-hash]]
 When a chain health monitor process makes a major state transition, it
 will notify the Admin Server of the change.  The Admin Server will
 then broadcast, or "spam" status notifications to all server and
 client nodes.  The data structure spammed is a `#g_hash_r` record, or
-simply a "global hash record".  For Erlang nodes running the full
-Hibari application, these pushes are automatic and require no extra
-configuration.
+simply a "global hash record". This record is maintained by the admin
+server per table. Each table has its own unique global hash record.
 
-For Erlang nodes that run only the Hibari client application (called
-`gdss_client`), additional configuration is required to add that
-node's name to the client spam list.  See:
+****
+For Erlang nodes running the full Hibari application, these global
+hash pushes are automatic and require no extra configuration.
+
+For Erlang nodes that run only the Hibari client application
+(called `gdss_client`), *additional configuration is required* to add that
+node's name to the client spam list. This is because the admin server 
+uses the output of the nodes() function to know what clients it needs to
+spam the global hash to. Client monitoring causes nodes which are alive to
+be connected to the admin server automatically. See:
 
 * The "Client monitoring API" comment in the exports section at the
 top of brick_admin.erl
 * and/or the "Add/Delete a client node monitor" link at the bottom of
 the Admin Server HTTP top-level status page at port 23080.
+****
+
+NOTE: Among other things, the global hash contains the bricks
+and their roles in each chain. In this manner, a gdss client can
+know which chain a key belongs to and what brick in that chain
+is acting as head or tail. In this manner they can talk directly
+to the correct brick for a given operation.
+
+NOTE: The admin server increments a minor revision number in the global hash
+for each update. Bricks and clients can then compare this revision number
+to what they already have to ensure that they don't revert to using
+an older global hash.
+
+===== "Fast Sync" utility
 
 The `brick_admin:fast_sync()` family of functions are an attempt to
 help Hibari cluster administrators to perform bulk-copies of data from
@@ -3046,8 +3067,6 @@ upstream brick for long periods of time, e.g. several days for
 terabytes of data.  The `fast_sync()` function attempts to minimize
 the amount of random disk I/O by copying keys & values in file+offset
 sorted order.
-
-===== "Fast Sync" utility
 
 See xref:scavenger-and-code-reuse[].
 
