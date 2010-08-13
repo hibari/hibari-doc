@@ -20,9 +20,10 @@
 Hibari README Page
 ==================
 
-Hibari is a distributed, high availability key-value data store that
-focuses on the "C"onsistency and "A"vailability aspects of Brewer's
-CAP Theorem.
+Hibari is a production-ready, distributed, key-value, big data
+store. Hibari uses chain replication for strong consistency,
+high-availability, and durability. Hibari has excellent performance
+especially for read and large value operations.
 
 This README is the first step to download, to build, and to install
 Hibari. Read the link:webpage-CHANGELOG.html[CHANGELOG] page for a
