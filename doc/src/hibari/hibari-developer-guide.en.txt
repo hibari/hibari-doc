@@ -1902,6 +1902,7 @@ repo.or.cz. To clone it and build it, use:
 git clone git://repo.or.cz/py_interface.git
 cd py_interface
 autoconf
+./configure
 make
 pwd
 -------------------
