@@ -179,8 +179,8 @@ _basic recipe_
 
 ------
 1. If not already, please make sure to have the UNIX 'compress' tool
-   installed on your linux system.  The 'compress' tool is required by
-   Hibari's installer.
+   installed on your linux system.  The 'compress' tool is required at
+   build time and by Hibari's installer.
 
    NOTE: "yum install compress" will work on most RedHat, CentOS,
    and Fedora Linux systems.
