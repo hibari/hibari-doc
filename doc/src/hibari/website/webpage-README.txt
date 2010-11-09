@@ -74,7 +74,7 @@ _basic recipe_
       ./bom.sh co src/top/hibari/GDSS
 
   NOTE: The Bill of Materials (BOM) system is a way to manage the
-  builds of heterougeneous products with shared components using GIT,
+  builds of heterogeneous products with shared components using GIT,
   GIT-SVN, SVN, or CVS.  BOM maintains hierarchical dependencies
   between modules stored in a source code repository.  BOM is
   implemented using bash, make, and other UNIX tools.
@@ -111,7 +111,7 @@ _basic recipe_
    Hibari's Erlang/OTP patches are mirrored on SourceForge
    (git://hibari.git.sourceforge.net/gitroot/hibari/patches).
 
-2. Change to your working directory and create the toplevel Makefile
+2. Change to your working directory and create the top-level Makefile
    $ cd ~/work/hibari
    $ ./bom.sh make
 
