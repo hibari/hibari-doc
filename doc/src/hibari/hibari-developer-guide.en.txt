@@ -157,15 +157,15 @@ directory and start Hibari in developer mode.
 
 You'll see a bunch of messages sent to the shell console, with the
 ending looking something like this (though the order of the two might
-be reversed).  
+be reversed).
 
 .The end of Hibari application startup (interactive)
 ---------------------------------
   =GMT INFO REPORT==== 14-Apr-2010::19:19:25 ===
   progress: [{application,gdss},{started_at,gdss_dev2@bb3}]
-  
+
   Eshell V5.7.5  (abort with ^G)
-  (hibari1@bb3)1> 
+  (hibari1@bb3)1>
 ---------------------------------
 
 If you see the INFO report above, then the Hibari application is
@@ -256,7 +256,7 @@ Storage Brick Web Administration
 
 Admin Server
 
-The Hibari Admin Server is running on node: hibari1@bb3 
+The Hibari Admin Server is running on node: hibari1@bb3
 
 The current date and time is: {2010,4,14} {20,2,14}
 [...]
@@ -386,7 +386,7 @@ timestamp is generated automatically by the `brick_simple` API and is
 based on the OS's system clock (i.e. wall-clock time).
 
 -----------
-(hibari1@bb3)2> brick_simple:add(tab1, <<"foo">>, <<"bummer!">>).      
+(hibari1@bb3)2> brick_simple:add(tab1, <<"foo">>, <<"bummer!">>).
 {key_exists,1271542959131192}
 
 (hibari1@bb3)3> brick_simple:add(tab1, "another", "yes!").
@@ -397,10 +397,10 @@ Now we'll try using `replace`.  The first case will succeed this time,
 but the second one will fail because the key doesn't exist.
 
 -----------
-(hibari1@bb3)4> brick_simple:replace(tab1, "foo", "Howdy!").               
+(hibari1@bb3)4> brick_simple:replace(tab1, "foo", "Howdy!").
 ok
 
-(hibari1@bb3)5> brick_simple:replace(tab1, "not here", "ouch").  
+(hibari1@bb3)5> brick_simple:replace(tab1, "not here", "ouch").
 key_not_exist
 -----------
 
@@ -419,7 +419,7 @@ key_not_exist
 -----------
 
 Now we'll try asking for many keys using the `get_many` operation.
-The success return value is below.  The 
+The success return value is below.  The
 
   Return = {ok, {ListOfKeysAndValues, boolean()}}
   ListOfKeysAndValues = {Key, Timestamp, Value, ExpiryTime, FlagsList}
@@ -444,7 +444,7 @@ could trigger slow, expensive disk I/O), we can use the 'witness'
 flag.
 
 -----------
-(hibari1@bb3)10> brick_simple:get(tab1, "foo", []).       
+(hibari1@bb3)10> brick_simple:get(tab1, "foo", []).
 {ok,1271543165272987,<<"Howdy!">>}
 
 (hibari1@bb3)11> brick_simple:get(tab1, "foo", [witness]).
@@ -547,9 +547,9 @@ micro-transaction to abort, then we'll see a very different return
 result.
 
 -----------
-(hibari1@bb3)20> Do2b = brick_server:make_get("not exist", [must_exist]).   
+(hibari1@bb3)20> Do2b = brick_server:make_get("not exist", [must_exist]).
 {get,<<"not exist">>,[must_exist]}
-(hibari1@bb3)21> brick_simple:do(tab1, [brick_server:make_txn(), Do1, Do2b]). 
+(hibari1@bb3)21> brick_simple:do(tab1, [brick_server:make_txn(), Do1, Do2b]).
 {txn_fail,[{2,key_not_exist}]}
 -----------
 
@@ -684,7 +684,7 @@ brick name and node name.
 Chain definition = {ChainName, [BrickDef1, BrickDef2, ...]}
 Brick definition = {BrickName, NodeName}
 
-Example chain definition, chain length=1  
+Example chain definition, chain length=1
     {tab1_ch1, [{tab1_ch1_b1, hibari1@bb3}]}
 ------------
 
@@ -756,7 +756,7 @@ and new brick list is empty, the command will fail.
 The procedure for creating new chains, deleting existing chains, and
 reweighing existing chains, and rehashing is done using the the
 `brick_admin:start_migration()` function.  The chain definitions are
-specified in the same way as changing chain lengths, see 
+specified in the same way as changing chain lengths, see
 xref:changing-chain-length[] for details.
 
 The data structure required by `brick_admin:start_migration/2` is more
@@ -804,7 +804,7 @@ later.
 {ok,[{name,tab1},
     ...lots of stuff omitted...
 
-(hibari1@bb3)53> Opts = proplists:get_value(brick_options, TabInfo).      
+(hibari1@bb3)53> Opts = proplists:get_value(brick_options, TabInfo).
 [{hash_init,#Fun<brick_hash.chash_init.3>},
  {old_float_map,[]},
  {new_chainweights,[{tab1_ch1,100}]},
@@ -821,7 +821,7 @@ later.
 (hibari1@bb3)58> PrefixMethod = lists:keyfind(prefix_method, 1, Opts).
 {prefix_method,var_prefix}
 
-(hibari1@bb3)59> NumSep = lists:keyfind(num_separators, 1, Opts).     
+(hibari1@bb3)59> NumSep = lists:keyfind(num_separators, 1, Opts).
 {num_separators,3}
 
 (hibari1@bb3)60> PrefixSep = lists:keyfind(prefix_separator, 1, Opts).
@@ -979,7 +979,7 @@ and 287 keys, respectively.
 == Client API: Native Erlang
 
 Data types:: See xref:erlang-data-types-single[] and
-  xref:erlang-data-types-multi[] 
+  xref:erlang-data-types-multi[]
 Insert operations:: See xref:brick-simple-add[], xref:brick-simple-replace[],
   xref:brick-simple-set[]
 Retrieve operations:: See xref:brick-simple-get[] and
@@ -992,7 +992,7 @@ Micro-transactions:: See xref:brick-simple-do[]
 === Erlang data types for single-operation `brick_simple` API
 
 The data types defined in this section are cumulative, meaning that
-they may refer to a type defined in an earlier section.  For example, 
+they may refer to a type defined in an earlier section.  For example,
 xref:erlang-data-types-single-call[] refers to the `proplist()` type
 that is defined in xref:erlang-data-types-single-return[].
 
@@ -1074,7 +1074,7 @@ In response, the server will (normally) return a list of
 `do1_res_ok()` and `do1_res_fail()` types, one for each of the
 primitive operations in the client's call.  See
 xref:example-complex-do-call[] that returns a list of two
-`do1_res_ok()` responses. 
+`do1_res_ok()` responses.
 
 [[erlang-data-types-multi-call]]
 .Data types for Hibari client multi-operation call arguments
@@ -1514,7 +1514,7 @@ integers (ASCII byte values) and/or binaries.
 A UBF contract makes a distinction between a string, list, and
 binary.  In the case of a string, UBF(A) encodes a string using the
 notation `{'#S', "Hello, world!"}` to represent the string "Hello,
-world!". 
+world!".
 
 This string encoding is cumbersome to use for developers; in Erlang,
 the `ubf.hrl` header file includes a macro `?S("Hello, world!")` as a
@@ -1628,7 +1628,7 @@ contract is stateless, the `UBF_StateName` will always be the atom
 .Use the UBF metaprotocol to request the "gdss" contract
 ----------------------------
 (asdf@bb3)55> ubf_client:rpc(P1, {startSession, {'#S', "gdss"}, []}).
-{reply,{ok,ok},none}         
+{reply,{ok,ok},none}
 ----------------------------
 
 Now that the UBF connection is set up, we can use it to set a key "foo".
@@ -1672,7 +1672,7 @@ the connection if the client forgets to call or cannot call `stop/1`.
 .Close the UBF connection
 ----------------------------
 (asdf@bb3)92> ubf_client:stop(P1).
-ok                           
+ok
 ----------------------------
 
 [[using-ubf-java-client]]
@@ -2194,9 +2194,9 @@ version 1.1.
 
 A rough implementation of JSON-RPC in Ruby is included with this
 documentation bundle, see
-link:./ruby-json-rpc-client.rb[ruby-json-rpc-client.rb].  This script
-will send a single JSON-RPC call and decode its response.  See the
-comments at the top of the file that describe its Ruby "gem"
+link:./misc-codes/ruby-json-rpc-client.rb[ruby-json-rpc-client.rb].
+This script will send a single JSON-RPC call and decode its response.
+See the comments at the top of the file that describe its Ruby "gem"
 dependency and the variables that require editing.
 
 [[mapping-ubf-contract-types-to-json]]
@@ -2244,7 +2244,7 @@ All requests to a Hibari UBF contract take the same tuple form:
 * A variable number of arguments are stored in other elements of the
   tuple.
 
-.The Hibari UBF contract's `get_req()` request 
+.The Hibari UBF contract's `get_req()` request
 -----------------------------------
 get_req()         = {get, table(), key(), flags_list(), timeout()};
 -----------------------------------
@@ -2256,7 +2256,7 @@ properties be present in a JSON object that represents the RPC call:
 
 version:: The Hibari JSON-RPC server be the JSON string "1.1".
 id:: The request id can be any JSON type.  It is used to match the
-response with the request that the server is replying to.  
+response with the request that the server is replying to.
 method:: A JSON string that names the RPC method to be called.
 params:: A JSON array that contains the arguments for the RPC method.
 
@@ -2321,13 +2321,13 @@ the details of the call are returned in an JSON object.
   `foo_req()` call.
 ** Note that a Hibari operation can fail, but the return result will
    still appear in the JSON reply `result` member, e.g. a `set`
-   operation that fails due to a timestamp error (see 
+   operation that fails due to a timestamp error (see
    xref:json-rpc-response-contract-ok[]).
 * If a fault occurred during processing, the object's "error" member
   contains an arbitrary term that describes the error.
 ** The `code` member values of 100 and 102 signify that the client's
    call that violated the UBF contract (see
-   xref:json-rpc-response-contract-error[]), 
+   xref:json-rpc-response-contract-error[]),
 ** The `code` member values of 101 and 103 signify that the
    server's response violated the UBF contract.  This type of
    error should not happen -- please contact the Hibari development
@@ -2397,7 +2397,7 @@ NOTE: See the EDoc documentation for the
 .Erlang client JSON-RPC requests for the UBF contract's `get_req()` and `set_req()` commands
 ------------------------------------
 > ubf_jsonrpc_inets_httpc_simple:do("http://localhost:7583/gdss", ubf_gdss_plugin,
-      {get, tab1, <<"foo">>, [], 4000}, <<"my id #">>, [], [], false). 
+      {get, tab1, <<"foo">>, [], 4000}, <<"my id #">>, [], [], false).
 {ok,{ok,1273090192965707,<<"foo val">>}, undefined,<<"my id #">>}
 
 > ubf_jsonrpc_inets_httpc_simple:do("http://localhost:7583/gdss", ubf_gdss_plugin,
@@ -2618,7 +2618,7 @@ The application developer then makes the following decisions:
    will be slower than if value blobs were stored in RAM, but the
    limited RAM capacity of bricks does not give us a choice.
 3. We have two machines, `boxA` and `boxB`, available for hosting the
-   table's logical bricks.  
+   table's logical bricks.
    We want to be able to survive at least one physical brick failure,
    therefore all chains have a minimum length of 2.
 ** We will use two chains, so that each physical machine (when up and
@@ -2652,7 +2652,7 @@ brick_admin:add_table(stack, ChainList, Opts).
 See xref:examples-using-the-stack[] for sample usage code.
 
 [[types-of-brick-admin-add-table]]
-==== Types for brick_admin:add_table() 
+==== Types for brick_admin:add_table()
 
 ----------------------------
 add_table(Name, ChainList)
@@ -2679,7 +2679,7 @@ bigdata_option()    = {'bigdata_dir', string()}
 brick()             = {logical_brick(), node()}
 brick_option()      = chash_prop() |
                       custom_prop() |
-                      fixed_prefix_prop() | 
+                      fixed_prefix_prop() |
                       {'hash_init', fun/3} |
                       var_prefix_prop()
 brick_options()     = [brick_option]
@@ -2763,13 +2763,13 @@ used for consistent hashing:
 ** `fixed_prefix'`: Use a fixed-length prefix of the key
 +
 `{'prefix_is_integer_hack', boolean()}`::
-(For `brick_admin:fixed_prefix_init/3`) 
+(For `brick_admin:fixed_prefix_init/3`)
 If true, the prefix should be interpreted
 as an ASCII representation of a base 10 integer for use as the
 hash calculation.
 +
 `{'prefix_length', integer()}`::
-(For `brick_admin:fixed_prefix_init/3`) 
+(For `brick_admin:fixed_prefix_init/3`)
 For a fixed-prefix hashes, this option specifies the prefix length.
 +
 `{'prefix_separator', integer()}`::
@@ -3005,7 +3005,7 @@ other evolved slowly over several years.
 
 * Server (aka the brick)
 * Chain replication
-* Consistent hashing 
+* Consistent hashing
 * Client
 * Admin Server
 * Miscellaneous
@@ -3084,7 +3084,7 @@ application.
 
 * `brick_admin.erl` provides the major external API to most of the
   Admin Server's function as well as basic table management
-  functions. 
+  functions.
 * `brick_bp.erl` implements the ``brick pinger'' processes.  Each
   pinger process is responsible for monitoring the health of a single
   Hibari logical brick.
@@ -3209,7 +3209,7 @@ hash pushes are automatic and require no extra configuration.
 
 For Erlang nodes that run only the Hibari client application
 (called `gdss_client`), *additional configuration is required* to add that
-node's name to the client spam list. This is because the admin server 
+node's name to the client spam list. This is because the admin server
 uses the output of the nodes() function to know what clients it needs to
 spam the global hash to. Client monitoring causes nodes which are alive to
 be connected to the admin server automatically. See:
@@ -3417,11 +3417,11 @@ Each brick's scoreboard status is converted to an internal status:
 `repairing`:: The monitor has chosen this brick to be the next
   brick to resume service in the chain.  Its local storage is actively
   being repaired by chain's current tail.
-`repair_overload`::  If a brick was in `repairing' state and was 
-  determined to be overloaded (usually by too much disk I/O), 
-  the node can be switched to this state to halt repair. 
+`repair_overload`::  If a brick was in `repairing' state and was
+  determined to be overloaded (usually by too much disk I/O),
+  the node can be switched to this state to halt repair.
 `ok`:: The brick is fully in-sync with the rest of the chain
-  and is in service in its correct chain role. 
+  and is in service in its correct chain role.
 
 There are times when the chain monitor detects a chain that has zero
 running bricks.  It must then examine the operational history of all
@@ -3684,7 +3684,7 @@ initialization function execute in a short amount of time.
 The second-to-last statement in `brick_ets:init/1` is this:
 
     self() ! do_init_second_half,
-  
+
 Then the `handle_info/3` callback can take as much time as is
 necessary to read & process the updates in the private write-ahead
 log.
@@ -3896,7 +3896,7 @@ to perform disk I/O.  The model goes something like this:
 
 1. The main server process/thread wishes to read file X.
 2. The main server process/thread sends a request to the I/O worker
-pool to read X. 
+pool to read X.
 3. A process (or thread) in the worker pool opens X, reads X's data,
 and closes X.
 4. The worker process/thread notifies the main server thread that the
@@ -3941,7 +3941,7 @@ There is plenty of opportunity for refactoring here.  The
 current implementation has been "good and fast enough", but there's
 almost certainly room for optimization, especially if very large blobs
 (greater than 4MB, approximately) are routinely used.  Some possible
-optimizations would included: 
+optimizations would included:
 
 * Use Erlang NIF functions to use `mmap(2)` and `mincore(2)` system calls.
 * Use the `readahead(2)` system call on Linux platforms.  Try to find
@@ -4439,7 +4439,7 @@ There are two types of flags that can be sent with a `do` op:
 * Flags bundled in the `make_op`* function, which affect only that
   particular operation.
 ** See the EDoc description of `encode_op_flags/1` for valid op flag
-   names. 
+   names.
 * Flags that affect all ops in the `do` list.
 ** See the EDoc description of `do/5` for valid `DoFlags` names.
 
@@ -4788,7 +4788,7 @@ two operations:
 * A `replace` operation to update the key
 * A "pass-through" 2-tuple to tell the client the current value of the
   counter.  Because this 2-tuple isn't a valid brick operation, the
-  term is returned to the client as-is.  
+  term is returned to the client as-is.
 
 Here is an example that uses the SSF above.  It assumes that the shell
 variable `F` has been bound to the fun above.  A cut-and-paste of the
@@ -4796,13 +4796,13 @@ code above will work well, assuming that `F` is not already bound to a
 shell variable and that the final "end," is replaced with "end.".
 
   (hibari_dev@bb3)13> brick_simple:set(tab1, "c1", term_to_binary(0)).
-  ok                          
+  ok
 
   (hibari_dev@bb3)14> Op = brick_server:make_ssf("c1", F).
   {ssf,<<"c1">>,[#Fun<erl_eval.4.105156089>]}
 
   (hibari_dev@bb3)15> brick_simple:do(tab1, [Op]).
-  [ok,{current_val,0}]        
+  [ok,{current_val,0}]
 
   (hibari_dev@bb3)16> brick_simple:do(tab1, [Op]).
   [ok,{current_val,1}]
@@ -5124,7 +5124,7 @@ First, let's have a short review of Hibari brick disk storage
 properties and goals.  See the
 link:hibari-sysadmin-guide.en.html#write-ahead-logs[Hibari Sysadmin
 Guide, "Write-Ahead Logs" section]
-and also the 
+and also the
 link:hibari-sysadmin-guide.en.html#brick-init["Brick Initialization" section]
 for background info.
 
@@ -5136,7 +5136,7 @@ for background info.
 3. The write-ahead log is not, by itself, a random-access data
    structure in the way that a disk-based B-tree or hash table.
 4. It is desirable to eliminate as much random disk I/O as much as
-   possible. 
+   possible.
 5. After a crash, it is desirable to have the logical brick restart as
    quickly as possible.
 
@@ -5148,7 +5148,7 @@ As a consequence of these properties:
 * To meet the goal of restarting quickly, it would be helpful to
   reduce the the amount of data that must be scanned sequentially.
 * It is quite difficult to fully support Items #4 and #5
-  simultaneously. 
+  simultaneously.
 ** Item #4 suggests that both types of data hunks, key metadata and
    value blobs, be written into the same log to reduce disk I/O.
 ** Item #5 suggests that both types of data hunks be written in
@@ -5342,7 +5342,7 @@ exercise could be useful here.
 [[gmt-hlog-erl-processes]]
 ===== Processes created by gmt_hlog.erl
 
-* Very short-lived processes to finish `{read_hunk,...}` 
+* Very short-lived processes to finish `{read_hunk,...}`
   `{get_all_seqnums}`, and `{sync}`  calls.
 
 [[gmt-hlog-common-erl]]
