@@ -1,0 +1,88 @@
+// -*- Doc -*-
+// vim: set syntax=asciidoc:
+
+//
+// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+= Hibari User's Guide *DRAFT - IN PROGRESS*
+:Date: 2010/12/21
+:Revision: 0.1
+:Copyright: Copyright (C) 2006-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+
+<<<
+== Introduction
+- History
+- Why NoSQL?
+- Why Hibari?
+
+== Getting Started
+- Installation
+- Starting a Single Node Cluster
+- Starting a Multi Node Cluster
+- Admin Server
+
+== Data and Storage Model
+- Key, Value, Table
+- Key Meta Data
+- Memory+Disk Storage
+- Disk Only Storage
+
+== Replication and Recovery Mechanisms
+- Consistent Hashing and Chains
+- Chain Replication and Repair
+- Recovery Mechanisms
+
+== Client API Model
+- Data Insertion
+- Data Deletion
+- Data Retrieval
+- Test-n-Set
+- Micro-Transactions
+
+== Client API Implementations
+- Native Erlang
+- UBF/EBF/JSF over TCP/IP - Erlang
+- Thrift over TCP/IP - C++, Java, Erlang, ...
+- S3 over HTTP
+- JSON-RPC over HTTP
+
+== Configuration
+- central.conf File and Parameters
+  * static
+  * dynamic
+- Others
+
+== Operations
+- Adding Tables
+- Adding/Removing Data Nodes
+- Adding/Removing/Modifying Chains
+  * Modifying Chain Lengths
+  * Data Rebalancing via Chain Migration
+- Adding/Removing Client Nodes
+- Adding/Removing Admin Nodes
+- Scavenger
+- Checkpoint
+- Monitoring
+
+== Utilities
+- cluster_dump
+- gh_tool
+- Yahoo's Cloud Serving Benchmark (YCSB)
+- Basho Bench (BB)
+
+== Applications
+- Hello World - Erlang
+- Hello World - Java
