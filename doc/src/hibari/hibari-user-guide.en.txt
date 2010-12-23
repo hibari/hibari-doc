@@ -30,6 +30,9 @@
 
 == Getting Started
 - Installation
+  * Downloading
+  * Installing
+  * Configuring
 - Starting a Single Node Cluster
 - Starting a Multi Node Cluster
 - Admin Server
@@ -86,3 +89,184 @@
 == Applications
 - Hello World - Erlang
 - Hello World - Java
+
+== Developers
+
+If you would rather build your Hibari release package, this section
+illustrates how to build your own Erlang/OTP and/or Hibari system.
+
+Please refer to the following links for futher information:
+
+- AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
+- Erlang - http://www.erlang.org/download.html
+- Git - http://git-scm.com/
+- OpenSSL - http://www.openssl.org/
+- Rebar - https://github.com/basho/rebar/wiki
+- Repo - http://source.android.com/source/git-repo.html
+
+=== Erlang/OTP System
+
+This section is the first step to download, to build, and to install
+your own Erlang/OTP system.
+
+. Downloading _basic recipe_
+  .. Please make sure to have the 'openssl-devel' package installed on
+     your system.  OpenSSL is required by Hibari (and before
+     configuring and building of your Erlang/OTP system).
+  .. Get and install Git
+  .. Change to your working directory and then download Hibari's
+     Erlang/OTP patches.
++
+------
+$ mkdir -p otp-working-directory-name
+$ cd otp-working-directory-name
+$ git clone git://github.com/hibari/patches.git
+------
++
+  .. Download the source code for your Erlang/OTP system
++
+------
+$ cd otp-working-directory-name
+$ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
+------
++
+  .. Untar the source code for your Erlang/OTP system and then apply
+     Hibari's Erlang/OTP patches.
++
+------
+$ cd otp-working-directory-name
+$ tar -xzf otp_src_R14B01.tar.gz
+$ cd otp_src_R14B01
+$ for i in ../patches/otp_src_R14B01*.patch ; do patch -p2 < $i; done
+------
++
+. Building _basic recipe_
+  .. Change to your working directory and configure Erlang/OTP
++
+------
+$ cd otp-working-directory-name/otp_src_R14B01
+$ ./configure --prefix=otp-installing-directory-name
+------
++
+  .. Build Erlang/OTP
++
+------
+$ cd otp-working-directory-name/otp_src_R14B01
+$ make
+------
++
+. Installing _basic recipe_
++
+------
+$ cd otp-working-directory-name/otp_src_R14B01
+$ sudo make install
+------
+
+CAUTION: Please make sure "otp-installing-directory-name/bin" is added
+to your $PATH environment.
+
+=== Hibari System
+
+This section is the first step to download, to build, to _eunit_ test,
+and to package your own Hibari.
+
+. Downloading _basic recipe_
+  .. Install Repo
++
+------
+$ curl http://android.git.kernel.org/repo > ~/bin/repo
+$ chmod a+x ~/bin/repo
+------
++
+  .. Create working directory for your Hibari
++
+------
+$ mkdir hibari-working-directory-name
+$ cd hibari-working-directory-name
+$ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
+------
++
+NOTE: Team members having read-write access are recommended to use
+  "repo init -u git@github.com:hibari/manifests.git -m hibari-rw.xml".
++
+  .. Download the source code for your Hibari
++
+------
+$ cd hibari-working-directory-name
+$ repo sync
+------
++
+. Building _basic recipe_
++
+------
+$ cd hibari-working-directory-name
+$ ./rebar compile
+------
++
+. EUnit Testing _basic recipe_
++
+------
+$ cd hibari-working-directory-name
+$ ./rebar eunit
+------
++
+. Release Generating _basic recipe_
++
+*TO BE ADDED*
++
+. Release Packaging _basic recipe_
++
+*TO BE ADDED*
+
+=== Hibari Documentation
+
+This section is the first step to download and to build your own
+Hibari documentation.
+
+. Downloading _basic recipe_
++
+------
+$ mkdir hibaridoc-working-directory-name
+$ cd hibaridoc-working-directory-name
+$ git clone git://github.com/hibari/hibari.git
+------
++
+. Building _basic recipe_
++
+------
+$ cd hibaridoc-working-directory-name/hibari/doc/src/hibari
+$ make clean -OR- make realclean
+$ make
+------
++
+NOTE: HTML documentation is written in the "./public_html" directory.
+
+Hibari's documentation is authored using AsciiDoc and a few auxillary
+tools:
+
+- ImageMagick
+- docbook
+- graphviz
+- mscgen
+- xmlto
+
+Hibari's documentation has been generated with asciidoc 8.6.1 and a
+manually modified version of the a2x tool.
+
+------
+$ diff -u /usr/local/Cellar/asciidoc/8.6.1/bin/a2x.orig /usr/local/Cellar/asciidoc/8.6.1/bin/a2x
+--- /usr/local/Cellar/asciidoc/8.6.1/bin/a2x.orig	2010-12-22 00:01:56.000000000 +0900
++++ /usr/local/Cellar/asciidoc/8.6.1/bin/a2x	2010-12-22 00:01:41.000000000 +0900
+@@ -156,7 +156,10 @@
+ def shell_copy(src, dst):
+     verbose('copying "%s" to "%s"' % (src,dst))
+     if not OPTIONS.dry_run:
+-        shutil.copy(src, dst)
++        try:
++		shutil.copy(src, dst)
++	except shutil.Error:
++		return
+
+ def shell_rm(path):
+     if not os.path.exists(path):
+------
