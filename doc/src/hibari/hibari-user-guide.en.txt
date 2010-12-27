@@ -200,7 +200,7 @@ $ repo sync
 +
 ------
 $ cd hibari-working-directory-name
-$ ./rebar compile
+$ ./rebar compile debug_info=1
 ------
 +
 . EUnit Testing _basic recipe_
@@ -209,6 +209,19 @@ $ ./rebar compile
 $ cd hibari-working-directory-name
 $ ./rebar eunit
 ------
++
+. Dialyzer Testing _basic recipe_
++
+------
+$ cd hibari-working-directory-name
+$ ./rebar dialyze
+------
++
+TIP: Dialyzer's PLT must be built before running the dialyze command.
+To create and to configure a shared PLT file, execute "./rebar
+build-plt" once successfully, execute "mv \~/.*_plt
+\~/.dialyzer_plt.RXX", and finally uncomment the line "{dialyzer_opts,
+[{plt, "~/.dialyzer_plt.RXX"}]}" in the toplevel rebar.config file.
 +
 . Release Generating _basic recipe_
 +
@@ -228,13 +241,13 @@ Hibari documentation.
 ------
 $ mkdir hibaridoc-working-directory-name
 $ cd hibaridoc-working-directory-name
-$ git clone git://github.com/hibari/hibari.git
+$ git clone git://github.com/hibari/hibari-doc.git
 ------
 +
 . Building _basic recipe_
 +
 ------
-$ cd hibaridoc-working-directory-name/hibari/doc/src/hibari
+$ cd hibaridoc-working-directory-name/hibari-doc/src/hibari
 $ make clean -OR- make realclean
 $ make
 ------
