@@ -35,13 +35,13 @@ TO BE ADDED
 
 $ mkdir working-directory-name
 $ cd working-directory-name
-$ git clone git://github.com/hibari/hibari.git
+$ git clone git://github.com/hibari/hibari-doc.git
 
 
 == Build Hibari's documentation guides
 
 $ mkdir working-directory-name
-$ cd working-directory-name/hibari/doc/src/hibari
+$ cd working-directory-name/hibari-doc/src/hibari
 $ make clean -OR- make realclean
 $ make
 
@@ -51,7 +51,7 @@ HTML documentation is written in the "./public_html" directory.
 == Build Hibari's website pages
 
 $ mkdir working-directory-name
-$ cd working-directory-name/hibari/doc/src/hibari/website
+$ cd working-directory-name/hibari-doc/src/hibari/website
 $ make clean -OR- make realclean
 $ make
 
