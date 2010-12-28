@@ -200,7 +200,7 @@ $ repo sync
 +
 ------
 $ cd hibari-working-directory-name
-$ ./rebar compile debug_info=1
+$ ./rebar compile
 ------
 +
 . EUnit Testing _basic recipe_
@@ -211,17 +211,55 @@ $ ./rebar eunit
 ------
 +
 . Dialyzer Testing _basic recipe_
+  .. Build Dialyzer's PLT _(required once)_
 +
 ------
 $ cd hibari-working-directory-name
-$ ./rebar dialyze
+$ dialyzer --build_plt --output_plt ~/.dialyzer_plt.R14B01 --apps \
+    asn1 \
+    compiler \
+    crypto \
+    dialyzer \
+    edoc \
+    erts \
+    et \
+    eunit \
+    gs \
+    hipe \
+    inets \
+    kernel \
+    mnesia \
+    observer \
+    odbc \
+    parsetools \
+    public_key \
+    runtime_tools \
+    sasl \
+    ssl \
+    stdlib \
+    syntax_tools \
+    tools \
+    webtool \
+    wx \
+    xmerl
 ------
 +
-TIP: Dialyzer's PLT must be built before running the dialyze command.
-To create and to configure a shared PLT file, execute "./rebar
-build-plt" once successfully, execute "mv \~/.*_plt
-\~/.dialyzer_plt.RXX", and finally uncomment the line "{dialyzer_opts,
-[{plt, "~/.dialyzer_plt.RXX"}]}" in the toplevel rebar.config file.
+TIP: If needed, custom the list of applications to be included in the
+PLT file.  Check dialyzer's documentation for further information.
++
+  .. Dialyze Hibari without specs
++
+------
+$ cd hibari-working-directory-name
+$ dialyzer --plt ~/.dialyzer_plt.R14B01 -r . --no_spec
+------
++
+  .. Dialyze Hibari with specs
++
+------
+$ cd hibari-working-directory-name
+$ dialyzer --plt ~/.dialyzer_plt.R14B01 -r .
+------
 +
 . Release Generating _basic recipe_
 +
