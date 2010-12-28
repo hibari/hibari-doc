@@ -177,6 +177,7 @@ The working directory has the following layout structure:
   |- hibari/
     |- .git/
     |- .gitignore
+    |- Makefile
     |- lib/
       |- <application_name>/
         |- .git/
@@ -245,14 +246,14 @@ $ repo sync
 +
 ------
 $ cd working-directory-name/hibari
-$ ./rebar compile
+$ make compile
 ------
 +
 . EUnit Testing _basic recipe_
 +
 ------
 $ cd working-directory-name/hibari
-$ ./rebar eunit
+$ make eunit
 ------
 +
 . Dialyzer Testing _basic recipe_
@@ -260,79 +261,46 @@ $ ./rebar eunit
 +
 ------
 $ cd working-directory-name/hibari
-$ dialyzer --build_plt --output_plt ~/.dialyzer_plt.R14B01 --apps \
-    asn1 \
-    compiler \
-    crypto \
-    dialyzer \
-    edoc \
-    erts \
-    et \
-    eunit \
-    gs \
-    hipe \
-    inets \
-    kernel \
-    mnesia \
-    observer \
-    odbc \
-    parsetools \
-    public_key \
-    runtime_tools \
-    sasl \
-    ssl \
-    stdlib \
-    syntax_tools \
-    tools \
-    webtool \
-    wx \
-    xmerl
+$ make build-plt
 ------
 +
-TIP: If needed, custom the list of applications to be included in the
-PLT file.  Check dialyzer's documentation for further information.
+TIP: Check Makefile and dialyzer's documentation for further
+information.
 +
   .. Dialyze Hibari without specs
 +
 ------
 $ cd working-directory-name/hibari
-$ dialyzer --plt ~/.dialyzer_plt.R14B01 -r ./lib --no_spec
+$ make dialyze
 ------
 +
   .. Dialyze Hibari with specs
 +
 ------
 $ cd working-directory-name/hibari
-$ dialyzer --plt ~/.dialyzer_plt.R14B01 -r ./lib
+$ make dialyze-spec
 ------
 +
-TIP: The "-Wunmatched_returns", "-Werror_handling",
-"-Wrace_conditions", and "-Wbehaviours" dialyzer options may also be
-helpful.
-+
 . Release Generating _basic recipe_
-  .. Prepare application lib directories _(required once)_
 +
 ------
 $ cd working-directory-name/hibari
-$ find ./lib -name svn -type l | xargs rm -f
-$ find ./lib -name rr-cache -type l | xargs rm -f
+$ make generate
 ------
 +
 CAUTION: Due to an incompatibility between Google's repo tool and
 Erlang/OTP's reltool, 'svn' and 'rr-cache' broken symlinks underneath
 the lib directory must be removed before generating the release.
-+
-  .. Generate the release
-+
-------
-$ cd working-directory-name/hibari
-$ rebar generate
-------
+Check Makefile for futher details.
 +
 . Release Packaging _basic recipe_
 +
-*TO BE ADDED*
+------
+$ cd working-directory-name/hibari
+$ make package
+------
++
+*TO BE ADDED ... UNDER CONSTRUCTION*
 
 === Hibari Documentation
 
