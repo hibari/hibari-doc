@@ -118,15 +118,15 @@ your own Erlang/OTP system.
      Erlang/OTP patches.
 +
 ------
-$ mkdir -p otp-working-directory-name
-$ cd otp-working-directory-name
+$ mkdir -p working-directory-name
+$ cd working-directory-name
 $ git clone git://github.com/hibari/patches.git
 ------
 +
   .. Download the source code for your Erlang/OTP system
 +
 ------
-$ cd otp-working-directory-name
+$ cd working-directory-name
 $ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
 ------
 +
@@ -134,7 +134,7 @@ $ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
      Hibari's Erlang/OTP patches.
 +
 ------
-$ cd otp-working-directory-name
+$ cd working-directory-name
 $ tar -xzf otp_src_R14B01.tar.gz
 $ cd otp_src_R14B01
 $ for i in ../patches/otp_src_R14B01*.patch ; do patch -p2 < $i; done
@@ -144,21 +144,21 @@ $ for i in ../patches/otp_src_R14B01*.patch ; do patch -p2 < $i; done
   .. Change to your working directory and configure Erlang/OTP
 +
 ------
-$ cd otp-working-directory-name/otp_src_R14B01
+$ cd working-directory-name/otp_src_R14B01
 $ ./configure --prefix=otp-installing-directory-name
 ------
 +
   .. Build Erlang/OTP
 +
 ------
-$ cd otp-working-directory-name/otp_src_R14B01
+$ cd working-directory-name/otp_src_R14B01
 $ make
 ------
 +
 . Installing _basic recipe_
 +
 ------
-$ cd otp-working-directory-name/otp_src_R14B01
+$ cd working-directory-name/otp_src_R14B01
 $ sudo make install
 ------
 
@@ -169,6 +169,51 @@ to your $PATH environment.
 
 This section is the first step to download, to build, to _eunit_ test,
 and to package your own Hibari.
+
+The working directory has the following layout structure:
+
+-----
+<working-directory-name>
+  |- hibari/
+    |- .git/
+    |- .gitignore
+    |- lib/
+      |- <application_name>/
+        |- .git/
+        |- .gitignore
+        |- ebin/
+        |- include/
+          |- *.hrl
+        |- priv/
+        |- rebar.config
+        |- src/
+          |- <application_name>.app.src
+          |- *.erl
+        |- test/
+          |- eunit/
+            |- *.erl
+          |- eqc/
+            |- *.erl
+      :
+    |- rebar
+    |- rebar.config
+    |- rel/
+      |- files/
+        |- app.config
+        |- erl
+        |- hibari
+        |- nodetool
+        |- vm.args
+      |- hibari/
+        :
+        |- releases/
+          |- <release_vsn>/
+            :
+          :
+        :
+      |- reltool.config
+  |- .repo/
+-----
 
 . Downloading _basic recipe_
   .. Install Repo
@@ -181,32 +226,32 @@ $ chmod a+x ~/bin/repo
   .. Create working directory for your Hibari
 +
 ------
-$ mkdir hibari-working-directory-name
-$ cd hibari-working-directory-name
+$ mkdir working-directory-name
+$ cd working-directory-name
 $ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
 ------
 +
 NOTE: Team members having read-write access are recommended to use
-  "repo init -u git@github.com:hibari/manifests.git -m hibari-rw.xml".
+"repo init -u git@github.com:hibari/manifests.git -m hibari-rw.xml".
 +
   .. Download the source code for your Hibari
 +
 ------
-$ cd hibari-working-directory-name
+$ cd working-directory-name
 $ repo sync
 ------
 +
 . Building _basic recipe_
 +
 ------
-$ cd hibari-working-directory-name
+$ cd working-directory-name/hibari
 $ ./rebar compile
 ------
 +
 . EUnit Testing _basic recipe_
 +
 ------
-$ cd hibari-working-directory-name
+$ cd working-directory-name/hibari
 $ ./rebar eunit
 ------
 +
@@ -214,7 +259,7 @@ $ ./rebar eunit
   .. Build Dialyzer's PLT _(required once)_
 +
 ------
-$ cd hibari-working-directory-name
+$ cd working-directory-name/hibari
 $ dialyzer --build_plt --output_plt ~/.dialyzer_plt.R14B01 --apps \
     asn1 \
     compiler \
@@ -250,20 +295,40 @@ PLT file.  Check dialyzer's documentation for further information.
   .. Dialyze Hibari without specs
 +
 ------
-$ cd hibari-working-directory-name
-$ dialyzer --plt ~/.dialyzer_plt.R14B01 -r . --no_spec
+$ cd working-directory-name/hibari
+$ dialyzer --plt ~/.dialyzer_plt.R14B01 -r ./lib --no_spec
 ------
 +
   .. Dialyze Hibari with specs
 +
 ------
-$ cd hibari-working-directory-name
-$ dialyzer --plt ~/.dialyzer_plt.R14B01 -r .
+$ cd working-directory-name/hibari
+$ dialyzer --plt ~/.dialyzer_plt.R14B01 -r ./lib
 ------
 +
-. Release Generating _basic recipe_
+TIP: The "-Wunmatched_returns", "-Werror_handling",
+"-Wrace_conditions", and "-Wbehaviours" dialyzer options may also be
+helpful.
 +
-*TO BE ADDED*
+. Release Generating _basic recipe_
+  .. Prepare application lib directories _(required once)_
++
+------
+$ cd working-directory-name/hibari
+$ find ./lib -name svn -type l | xargs rm -f
+$ find ./lib -name rr-cache -type l | xargs rm -f
+------
++
+CAUTION: Due to an incompatibility between Google's repo tool and
+Erlang/OTP's reltool, 'svn' and 'rr-cache' broken symlinks underneath
+the lib directory must be removed before generating the release.
++
+  .. Generate the release
++
+------
+$ cd working-directory-name/hibari
+$ rebar generate
+------
 +
 . Release Packaging _basic recipe_
 +
@@ -277,15 +342,15 @@ Hibari documentation.
 . Downloading _basic recipe_
 +
 ------
-$ mkdir hibaridoc-working-directory-name
-$ cd hibaridoc-working-directory-name
+$ mkdir working-directory-name
+$ cd working-directory-name
 $ git clone git://github.com/hibari/hibari-doc.git
 ------
 +
 . Building _basic recipe_
 +
 ------
-$ cd hibaridoc-working-directory-name/hibari-doc/src/hibari
+$ cd working-directory-name/hibari-doc/src/hibari
 $ make clean -OR- make realclean
 $ make
 ------
