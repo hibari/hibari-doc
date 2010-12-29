@@ -92,83 +92,40 @@
 
 == Developers
 
-If you would rather build your Hibari release package, this section
-illustrates how to build your own Erlang/OTP and/or Hibari system.
+This section describes the basic recipes to build the following items:
 
-Please refer to the following links for futher information:
+- Hibari Release Package
+- Hibari Documentation
+- Erlang/OTP System
 
-- AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
-- Erlang - http://www.erlang.org/download.html
-- Git - http://git-scm.com/
-- OpenSSL - http://www.openssl.org/
-- Rebar - https://github.com/basho/rebar/wiki
-- Repo - http://source.android.com/source/git-repo.html
-
-=== Erlang/OTP System
-
-This section is the first step to download, to build, and to install
-your own Erlang/OTP system.
+The first step is to download the Git repositories from GitHub.
 
 . Downloading _basic recipe_
-  .. Please make sure to have the 'openssl-devel' package installed on
-     your system.  OpenSSL is required by Hibari (and before
-     configuring and building of your Erlang/OTP system).
-  .. Get and install Git
-  .. Change to your working directory and then download Hibari's
-     Erlang/OTP patches.
+  .. Install Repo
 +
 ------
-$ mkdir -p working-directory-name
+$ curl http://android.git.kernel.org/repo > ~/bin/repo
+$ chmod a+x ~/bin/repo
+------
++
+  .. Create working directory
++
+------
+$ mkdir working-directory-name
 $ cd working-directory-name
-$ git clone git://github.com/hibari/patches.git
+$ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
 ------
 +
-  .. Download the source code for your Erlang/OTP system
+NOTE: Team members having read-write access are recommended to use
+"repo init -u git@github.com:hibari/manifests.git -m hibari-rw.xml".
 +
-------
-$ cd working-directory-name
-$ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
-------
-+
-  .. Untar the source code for your Erlang/OTP system and then apply
-     Hibari's Erlang/OTP patches.
+  .. Download Git repositories
 +
 ------
 $ cd working-directory-name
-$ tar -xzf otp_src_R14B01.tar.gz
-$ cd otp_src_R14B01
-$ for i in ../patches/otp_src_R14B01*.patch ; do patch -p2 < $i; done
+$ repo sync
 ------
 +
-. Building _basic recipe_
-  .. Change to your working directory and configure Erlang/OTP
-+
-------
-$ cd working-directory-name/otp_src_R14B01
-$ ./configure --prefix=otp-installing-directory-name
-------
-+
-  .. Build Erlang/OTP
-+
-------
-$ cd working-directory-name/otp_src_R14B01
-$ make
-------
-+
-. Installing _basic recipe_
-+
-------
-$ cd working-directory-name/otp_src_R14B01
-$ sudo make install
-------
-
-CAUTION: Please make sure "otp-installing-directory-name/bin" is added
-to your $PATH environment.
-
-=== Hibari System
-
-This section is the first step to download, to build, to _eunit_ test,
-and to package your own Hibari.
 
 The working directory has the following layout structure:
 
@@ -178,7 +135,7 @@ The working directory has the following layout structure:
     |- .git/
     |- .gitignore
     |- Makefile
-    |- lib/
+    |- lib/                             <1>
       |- <application_name>/
         |- .git/
         |- .gitignore
@@ -198,7 +155,7 @@ The working directory has the following layout structure:
       :
     |- rebar
     |- rebar.config
-    |- rel/
+    |- rel/                             <2>
       |- files/
         |- app.config
         |- erl
@@ -213,35 +170,34 @@ The working directory has the following layout structure:
           :
         :
       |- reltool.config
+  |- hibari-doc/                        <3>
+    :
+  |- patches/                           <4>
+    :
   |- .repo/
+    :
 -----
 
-. Downloading _basic recipe_
-  .. Install Repo
-+
-------
-$ curl http://android.git.kernel.org/repo > ~/bin/repo
-$ chmod a+x ~/bin/repo
-------
-+
-  .. Create working directory for your Hibari
-+
-------
-$ mkdir working-directory-name
-$ cd working-directory-name
-$ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
-------
-+
-NOTE: Team members having read-write access are recommended to use
-"repo init -u git@github.com:hibari/manifests.git -m hibari-rw.xml".
-+
-  .. Download the source code for your Hibari
-+
-------
-$ cd working-directory-name
-$ repo sync
-------
-+
+<1> Applications
+<2> Releases
+<3> Documentation
+<4> Patches
+
+For futher information and help for related tools, please refer to the
+following links:
+
+- AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
+- Erlang - http://www.erlang.org/download.html
+- Git - http://git-scm.com/
+- OpenSSL - http://www.openssl.org/
+- Rebar - https://github.com/basho/rebar/wiki
+- Repo - http://source.android.com/source/git-repo.html
+
+=== Hibari Release Package
+
+This section is the first step to build, to _eunit_ test, and to
+package your own Hibari.
+
 . Building _basic recipe_
 +
 ------
@@ -307,18 +263,18 @@ $ make package
 This section is the first step to download and to build your own
 Hibari documentation.
 
-. Downloading _basic recipe_
-+
-------
-$ mkdir working-directory-name
-$ cd working-directory-name
-$ git clone git://github.com/hibari/hibari-doc.git
-------
-+
-. Building _basic recipe_
+. Building Hibari's "Guides" _basic recipe_
 +
 ------
 $ cd working-directory-name/hibari-doc/src/hibari
+$ make clean -OR- make realclean
+$ make
+------
++
+. Building Hibari's "Website" _basic recipe_
++
+------
+$ cd working-directory-name/hibari-doc/src/hibari/website
 $ make clean -OR- make realclean
 $ make
 ------
@@ -354,3 +310,56 @@ $ diff -u /usr/local/Cellar/asciidoc/8.6.1/bin/a2x.orig /usr/local/Cellar/asciid
  def shell_rm(path):
      if not os.path.exists(path):
 ------
+
+=== Erlang/OTP System
+
+This section is the first step to download, to build, and to install
+your own Erlang/OTP system.
+
+. Downloading _basic recipe_
+  .. Please make sure to have the 'openssl-devel' package installed on
+     your system.  OpenSSL is required by Hibari (and before
+     configuring and building of your Erlang/OTP system).
+  .. Get and install Git
++
+  .. Download the source code for your Erlang/OTP system
++
+------
+$ cd working-directory-name
+$ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
+------
++
+  .. Untar the source code for your Erlang/OTP system and then apply
+     Hibari's Erlang/OTP patches.
++
+------
+$ cd working-directory-name
+$ tar -xzf otp_src_R14B01.tar.gz
+$ cd otp_src_R14B01
+$ for i in ../patches/otp_src_R14B01*.patch ; do patch -p2 < $i; done
+------
++
+. Building _basic recipe_
+  .. Change to your working directory and configure Erlang/OTP
++
+------
+$ cd working-directory-name/otp_src_R14B01
+$ ./configure --prefix=otp-installing-directory-name
+------
++
+  .. Build Erlang/OTP
++
+------
+$ cd working-directory-name/otp_src_R14B01
+$ make
+------
++
+. Installing _basic recipe_
++
+------
+$ cd working-directory-name/otp_src_R14B01
+$ sudo make install
+------
+
+CAUTION: Please make sure "otp-installing-directory-name/bin" is added
+to your $PATH environment.
