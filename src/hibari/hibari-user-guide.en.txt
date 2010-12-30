@@ -29,13 +29,24 @@
 - Why Hibari?
 
 == Getting Started
-- Installation
-  * Downloading
-  * Installing
-  * Configuring
-- Starting a Single Node Cluster
-- Starting a Multi Node Cluster
-- Admin Server
+=== Installation
+- Downloading
+- Installing
+- Configuring
+
+*TO BE ADDED ... UNDER CONSTRUCTION*
+
+=== Starting a Single Node Cluster
+
+*TO BE ADDED ... UNDER CONSTRUCTION*
+
+=== Starting a Multi Node Cluster
+
+*TO BE ADDED ... UNDER CONSTRUCTION*
+
+=== Admin Server
+
+*TO BE ADDED ... UNDER CONSTRUCTION*
 
 == Data and Storage Model
 - Key, Value, Table
@@ -258,10 +269,74 @@ Check Makefile for futher details.
 +
 ------
 $ cd working-directory-name/hibari
-$ make package
+$ make package VSN="version-number" DIST="distribution-name"
 ------
 +
-*TO BE ADDED ... UNDER CONSTRUCTION*
+NOTE: A release package tarball "hibari_VSN-DIST-ARCH-WORDSIZE.tgz"
+and shasum file "hibari_VSN-DIST-ARCH-WORDSIZE-shasum.txt" are written
+to working-directory-name.
++
+. Release "Smoke Test" _basic recipe (optional)_
+  .. Unpack Hibari Release (in temporary directory)
++
+------
+$ cd working-directory-name/hibari
+$ rm -rf tmp
+$ mkdir tmp
+$ tar -C tmp -xzf ../hibari_VSN-DIST-ARCH-WORDSIZE.tgz
+------
++
+  .. Start Hibari
++
+------
+$ cd working-directory-name/hibari
+$ ./tmp/hibari/bin/hibari start
+------
++
+  .. Attach to running Hibari
++
+------
+$ cd working-directory-name/hibari
+$ ./tmp/hibari/bin/hibari attach
+Attaching to working-directory-name/hibari/tmp/hibari/erlang.pipe.1 (^D to exit)
+(hibari@127.0.0.1)1>
+------
++
+  .. Start Admin Server
++
+------
+(hibari@127.0.0.1)1> brick_admin_sup:start_link().
+{ok,<0.176.01)
+(hibari@127.0.0.1)2>
+------
++
+  .. Bootstrap "Test" Cluster
++
+------
+(hibari@127.0.0.1)2> brick_admin:bootstrap_local([], true, $/, 3, 1, 1, []).
+ok
+(hibari@127.0.0.1)3>
+------
++
+  .. Detach from running Hibari ... enter ^D
++
+------
+(hibari@127.0.0.1)3> ^D [Quit]
+------
++
+  .. Open "Hibari Web Administration" Page
++
+------
+$ your-favorite-browser http://127.0.0.1:23080/
+------
++
+ .. Stop Hibari
++
+------
+$ cd working-directory-name/hibari
+$ ./tmp/hibari/bin/hibari stop
+ok
+------
 
 === Hibari Documentation
 
