@@ -117,7 +117,7 @@ $ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
 ------
 +
 NOTE: Team members having read-write access are recommended to use
-"repo init -u git@github.com:hibari/manifests.git -m hibari-rw.xml".
+"repo init -u git@github.com:hibari/manifests.git -m hibari-default-rw.xml".
 +
   .. Download Git repositories
 +
