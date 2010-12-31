@@ -18,8 +18,8 @@
 //
 
 = Hibari User's Guide *DRAFT - IN PROGRESS*
-:Date: 2010/12/21
-:Revision: 0.1
+:Date: 2010/12/31
+:Revision: 0.1.1
 :Copyright: Copyright (C) 2006-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
@@ -198,9 +198,19 @@ For futher information and help for related tools, please refer to the
 following links:
 
 - AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
-- Erlang - http://www.erlang.org/download.html
+  * *asciidoc 8.6.1 has been tested most recently*
+- Erlang - http://www.erlang.org/
+  * *R14B01 has been tested most recently*
+  * *R13B04 or newer*
 - Git - http://git-scm.com/
+  * *Git 1.5.4 or newer*
+  * _required for Repo and GitHub_
+- GitHub - https://github.com
 - OpenSSL - http://www.openssl.org/
+  * _required for Erlang_
+- Python - http://www.python.org
+  * *Python 2.4 or newer (CAUTION: Python 3.x might be too new)*
+  * _required for AsciiDoc and Repo_
 - Rebar - https://github.com/basho/rebar/wiki
 - Repo - http://source.android.com/source/git-repo.html
 
