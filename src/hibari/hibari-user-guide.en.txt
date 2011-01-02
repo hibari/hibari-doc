@@ -198,7 +198,7 @@ For futher information and help for related tools, please refer to the
 following links:
 
 - AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
-  * *asciidoc 8.6.1 has been tested most recently*
+  * *asciidoc 8.6.3 has been tested most recently*
 - Erlang - http://www.erlang.org/
   * *R14B01 has been tested most recently*
   * *R13B04 or newer*
@@ -380,22 +380,22 @@ tools:
 - mscgen
 - xmlto
 
-Hibari's documentation has been generated with asciidoc 8.6.1 and a
+Hibari's documentation has been generated with asciidoc 8.6.3 and a
 manually modified version of the a2x tool.
 
 ------
-$ diff -u /usr/local/Cellar/asciidoc/8.6.1/bin/a2x.orig /usr/local/Cellar/asciidoc/8.6.1/bin/a2x
---- /usr/local/Cellar/asciidoc/8.6.1/bin/a2x.orig	2010-12-22 00:01:56.000000000 +0900
-+++ /usr/local/Cellar/asciidoc/8.6.1/bin/a2x	2010-12-22 00:01:41.000000000 +0900
+$ diff -u /usr/local/Cellar/asciidoc/8.6.3/bin/a2x{.orig,}
+--- /usr/local/Cellar/asciidoc/8.6.3/bin/a2x.orig	2011-01-02 18:09:35.000000000 +0900
++++ /usr/local/Cellar/asciidoc/8.6.3/bin/a2x	2011-01-02 18:11:19.000000000 +0900
 @@ -156,7 +156,10 @@
  def shell_copy(src, dst):
      verbose('copying "%s" to "%s"' % (src,dst))
      if not OPTIONS.dry_run:
 -        shutil.copy(src, dst)
 +        try:
-+		shutil.copy(src, dst)
-+	except shutil.Error:
-+		return
++            shutil.copy(src, dst)
++        except shutil.Error:
++            return
 
  def shell_rm(path):
      if not os.path.exists(path):
