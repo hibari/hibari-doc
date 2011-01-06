@@ -285,7 +285,7 @@ Check Makefile for futher details.
 +
 ------
 $ cd working-directory-name/hibari
-$ make package VSN="version-number" DIST="distribution-name"
+$ make package VSN="VSN" DIST="DIST"
 ------
 +
 NOTE: A release package tarball "hibari_VSN-DIST-ARCH-WORDSIZE.tgz"
