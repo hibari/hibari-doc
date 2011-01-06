@@ -183,7 +183,11 @@ The working directory has the following layout structure:
       |- reltool.config
   |- hibari-doc/                        <3>
     :
-  |- patches/                           <4>
+  |- manifests/                         <4>
+    :
+  |- patches/                           <5>
+    :
+  |- rebar/                             <6>
     :
   |- .repo/
     :
@@ -192,7 +196,9 @@ The working directory has the following layout structure:
 <1> Applications
 <2> Releases
 <3> Documentation
-<4> Patches
+<4> Manifests
+<5> Patches
+<6> Rebar
 
 For futher information and help for related tools, please refer to the
 following links:
