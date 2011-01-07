@@ -167,7 +167,7 @@ details.
 <<<
 ===  Copyright Notices
 
-Copyright (C) 2005-2010 Gemini Mobile Technologies, Inc.  All rights
+Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights
 reserved.
 
 Gemini Mobile(R) and HyperScale(R) are registered trademarks of Gemini
