@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="595pt" height="573pt" version="1.1" viewBox="0 0 595 573"
+ viewBox="0 0 595 573"
+ xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"
+ stroke-width="1" text-rendering="geometricPrecision">
+<polygon fill="white" points="23,6 59,6 59,16 23,16"/>
+<text x="42" y="15" textLength="34" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+GDSS
+</text>
+<polygon fill="white" points="25,17 57,17 57,27 25,27"/>
+<text x="42" y="26" textLength="30" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Client
+</text>
+<polygon fill="white" points="108,6 144,6 144,16 108,16"/>
+<text x="127" y="15" textLength="34" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+GDSS
+</text>
+<polygon fill="white" points="111,17 141,17 141,27 111,27"/>
+<text x="127" y="26" textLength="28" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Head
+</text>
+<polygon fill="white" points="193,17 229,17 229,27 193,27"/>
+<text x="212" y="26" textLength="35" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+H Disk
+</text>
+<polygon fill="white" points="278,6 314,6 314,16 278,16"/>
+<text x="297" y="15" textLength="34" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+GDSS
+</text>
+<polygon fill="white" points="278,17 314,17 314,27 278,27"/>
+<text x="297" y="26" textLength="35" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Middle
+</text>
+<polygon fill="white" points="362,17 400,17 400,27 362,27"/>
+<text x="382" y="26" textLength="36" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+M Disk
+</text>
+<polygon fill="white" points="448,6 484,6 484,16 448,16"/>
+<text x="467" y="15" textLength="34" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+GDSS
+</text>
+<polygon fill="white" points="456,17 476,17 476,27 456,27"/>
+<text x="467" y="26" textLength="19" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Tail
+</text>
+<polygon fill="white" points="534,17 568,17 568,27 534,27"/>
+<text x="552" y="26" textLength="33" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+T Disk
+</text>
+<line x1="42" y1="33" x2="42" y2="60" stroke="black"/>
+<line x1="127" y1="33" x2="127" y2="60" stroke="black"/>
+<line x1="212" y1="33" x2="212" y2="60" stroke="black"/>
+<line x1="297" y1="33" x2="297" y2="60" stroke="black"/>
+<line x1="382" y1="33" x2="382" y2="60" stroke="black"/>
+<line x1="467" y1="33" x2="467" y2="60" stroke="black"/>
+<line x1="552" y1="33" x2="552" y2="60" stroke="black"/>
+<line x1="42" y1="46" x2="127" y2="46" stroke="black"/>
+<line x1="127" y1="46" x2="117" y2="52" stroke="black"/>
+<polygon fill="white" points="51,35 117,35 117,45 51,45"/>
+<text x="52" y="44" textLength="64" font-family="Helvetica" font-size="12" fill="black">
+[1] add(K,V)
+</text>
+<line x1="42" y1="60" x2="42" y2="87" stroke="black"/>
+<line x1="127" y1="60" x2="127" y2="87" stroke="black"/>
+<line x1="212" y1="60" x2="212" y2="87" stroke="black"/>
+<line x1="297" y1="60" x2="297" y2="87" stroke="black"/>
+<line x1="382" y1="60" x2="382" y2="87" stroke="black"/>
+<line x1="467" y1="60" x2="467" y2="87" stroke="black"/>
+<line x1="552" y1="60" x2="552" y2="87" stroke="black"/>
+<line x1="127" y1="73" x2="212" y2="73" stroke="black"/>
+<line x1="212" y1="73" x2="202" y2="79" stroke="black"/>
+<polygon fill="white" points="137,62 202,62 202,72 137,72"/>
+<text x="138" y="71" textLength="63" font-family="Helvetica" font-size="12" fill="black">
+[2.1] write V
+</text>
+<line x1="42" y1="87" x2="42" y2="114" stroke="black"/>
+<line x1="127" y1="87" x2="127" y2="114" stroke="black"/>
+<line x1="212" y1="87" x2="212" y2="114" stroke="black"/>
+<line x1="297" y1="87" x2="297" y2="114" stroke="black"/>
+<line x1="382" y1="87" x2="382" y2="114" stroke="black"/>
+<line x1="467" y1="87" x2="467" y2="114" stroke="black"/>
+<line x1="552" y1="87" x2="552" y2="114" stroke="black"/>
+<line x1="212" y1="100" x2="127" y2="100" stroke="black"/>
+<line x1="127" y1="100" x2="137" y2="106" stroke="black"/>
+<polygon fill="white" points="149,89 190,89 190,99 149,99"/>
+<text x="150" y="98" textLength="39" font-family="Helvetica" font-size="12" fill="black">
+[2.2] ok
+</text>
+<line x1="42" y1="114" x2="42" y2="141" stroke="black"/>
+<line x1="127" y1="114" x2="127" y2="141" stroke="black"/>
+<line x1="212" y1="114" x2="212" y2="141" stroke="black"/>
+<line x1="297" y1="114" x2="297" y2="141" stroke="black"/>
+<line x1="382" y1="114" x2="382" y2="141" stroke="black"/>
+<line x1="467" y1="114" x2="467" y2="141" stroke="black"/>
+<line x1="552" y1="114" x2="552" y2="141" stroke="black"/>
+<line x1="127" y1="127" x2="212" y2="127" stroke="black"/>
+<line x1="212" y1="127" x2="202" y2="133" stroke="black"/>
+<polygon fill="white" points="137,116 202,116 202,126 137,126"/>
+<text x="138" y="125" textLength="63" font-family="Helvetica" font-size="12" fill="black">
+[2.3] write K
+</text>
+<line x1="42" y1="141" x2="42" y2="168" stroke="black"/>
+<line x1="127" y1="141" x2="127" y2="168" stroke="black"/>
+<line x1="212" y1="141" x2="212" y2="168" stroke="black"/>
+<line x1="297" y1="141" x2="297" y2="168" stroke="black"/>
+<line x1="382" y1="141" x2="382" y2="168" stroke="black"/>
+<line x1="467" y1="141" x2="467" y2="168" stroke="black"/>
+<line x1="552" y1="141" x2="552" y2="168" stroke="black"/>
+<line x1="212" y1="154" x2="127" y2="154" stroke="black"/>
+<line x1="127" y1="154" x2="137" y2="160" stroke="black"/>
+<polygon fill="white" points="149,143 190,143 190,153 149,153"/>
+<text x="150" y="152" textLength="39" font-family="Helvetica" font-size="12" fill="black">
+[2.4] ok
+</text>
+<line x1="42" y1="168" x2="42" y2="195" stroke="black"/>
+<line x1="127" y1="168" x2="127" y2="195" stroke="black"/>
+<line x1="212" y1="168" x2="212" y2="195" stroke="black"/>
+<line x1="297" y1="168" x2="297" y2="195" stroke="black"/>
+<line x1="382" y1="168" x2="382" y2="195" stroke="black"/>
+<line x1="467" y1="168" x2="467" y2="195" stroke="black"/>
+<line x1="552" y1="168" x2="552" y2="195" stroke="black"/>
+<line x1="127" y1="181" x2="297" y2="181" stroke="black"/>
+<line x1="297" y1="181" x2="287" y2="187" stroke="black"/>
+<polygon fill="white" points="192,170 230,170 230,180 192,180"/>
+<text x="193" y="179" textLength="36" font-family="Helvetica" font-size="12" fill="black">
+[3] ???
+</text>
+<line x1="42" y1="195" x2="42" y2="222" stroke="black"/>
+<line x1="127" y1="195" x2="127" y2="222" stroke="black"/>
+<line x1="212" y1="195" x2="212" y2="222" stroke="black"/>
+<line x1="297" y1="195" x2="297" y2="222" stroke="black"/>
+<line x1="382" y1="195" x2="382" y2="222" stroke="black"/>
+<line x1="467" y1="195" x2="467" y2="222" stroke="black"/>
+<line x1="552" y1="195" x2="552" y2="222" stroke="black"/>
+<line x1="297" y1="208" x2="382" y2="208" stroke="black"/>
+<line x1="382" y1="208" x2="372" y2="214" stroke="black"/>
+<polygon fill="white" points="307,197 372,197 372,207 307,207"/>
+<text x="308" y="206" textLength="63" font-family="Helvetica" font-size="12" fill="black">
+[4.1] write V
+</text>
+<line x1="42" y1="222" x2="42" y2="249" stroke="black"/>
+<line x1="127" y1="222" x2="127" y2="249" stroke="black"/>
+<line x1="212" y1="222" x2="212" y2="249" stroke="black"/>
+<line x1="297" y1="222" x2="297" y2="249" stroke="black"/>
+<line x1="382" y1="222" x2="382" y2="249" stroke="black"/>
+<line x1="467" y1="222" x2="467" y2="249" stroke="black"/>
+<line x1="552" y1="222" x2="552" y2="249" stroke="black"/>
+<line x1="382" y1="235" x2="297" y2="235" stroke="black"/>
+<line x1="297" y1="235" x2="307" y2="241" stroke="black"/>
+<polygon fill="white" points="319,224 360,224 360,234 319,234"/>
+<text x="320" y="233" textLength="39" font-family="Helvetica" font-size="12" fill="black">
+[4.2] ok
+</text>
+<line x1="42" y1="249" x2="42" y2="276" stroke="black"/>
+<line x1="127" y1="249" x2="127" y2="276" stroke="black"/>
+<line x1="212" y1="249" x2="212" y2="276" stroke="black"/>
+<line x1="297" y1="249" x2="297" y2="276" stroke="black"/>
+<line x1="382" y1="249" x2="382" y2="276" stroke="black"/>
+<line x1="467" y1="249" x2="467" y2="276" stroke="black"/>
+<line x1="552" y1="249" x2="552" y2="276" stroke="black"/>
+<line x1="297" y1="262" x2="382" y2="262" stroke="black"/>
+<line x1="382" y1="262" x2="372" y2="268" stroke="black"/>
+<polygon fill="white" points="307,251 372,251 372,261 307,261"/>
+<text x="308" y="260" textLength="63" font-family="Helvetica" font-size="12" fill="black">
+[4.3] write K
+</text>
+<line x1="42" y1="276" x2="42" y2="303" stroke="black"/>
+<line x1="127" y1="276" x2="127" y2="303" stroke="black"/>
+<line x1="212" y1="276" x2="212" y2="303" stroke="black"/>
+<line x1="297" y1="276" x2="297" y2="303" stroke="black"/>
+<line x1="382" y1="276" x2="382" y2="303" stroke="black"/>
+<line x1="467" y1="276" x2="467" y2="303" stroke="black"/>
+<line x1="552" y1="276" x2="552" y2="303" stroke="black"/>
+<line x1="382" y1="289" x2="297" y2="289" stroke="black"/>
+<line x1="297" y1="289" x2="307" y2="295" stroke="black"/>
+<polygon fill="white" points="319,278 360,278 360,288 319,288"/>
+<text x="320" y="287" textLength="39" font-family="Helvetica" font-size="12" fill="black">
+[4.4] ok
+</text>
+<line x1="42" y1="303" x2="42" y2="330" stroke="black"/>
+<line x1="127" y1="303" x2="127" y2="330" stroke="black"/>
+<line x1="212" y1="303" x2="212" y2="330" stroke="black"/>
+<line x1="297" y1="303" x2="297" y2="330" stroke="black"/>
+<line x1="382" y1="303" x2="382" y2="330" stroke="black"/>
+<line x1="467" y1="303" x2="467" y2="330" stroke="black"/>
+<line x1="552" y1="303" x2="552" y2="330" stroke="black"/>
+<line x1="297" y1="316" x2="467" y2="316" stroke="black"/>
+<line x1="467" y1="316" x2="457" y2="322" stroke="black"/>
+<polygon fill="white" points="362,305 400,305 400,315 362,315"/>
+<text x="363" y="314" textLength="36" font-family="Helvetica" font-size="12" fill="black">
+[5] ???
+</text>
+<line x1="42" y1="330" x2="42" y2="357" stroke="black"/>
+<line x1="127" y1="330" x2="127" y2="357" stroke="black"/>
+<line x1="212" y1="330" x2="212" y2="357" stroke="black"/>
+<line x1="297" y1="330" x2="297" y2="357" stroke="black"/>
+<line x1="382" y1="330" x2="382" y2="357" stroke="black"/>
+<line x1="467" y1="330" x2="467" y2="357" stroke="black"/>
+<line x1="552" y1="330" x2="552" y2="357" stroke="black"/>
+<line x1="467" y1="343" x2="552" y2="343" stroke="black"/>
+<line x1="552" y1="343" x2="542" y2="349" stroke="black"/>
+<polygon fill="white" points="477,332 542,332 542,342 477,342"/>
+<text x="478" y="341" textLength="63" font-family="Helvetica" font-size="12" fill="black">
+[6.1] write V
+</text>
+<line x1="42" y1="357" x2="42" y2="384" stroke="black"/>
+<line x1="127" y1="357" x2="127" y2="384" stroke="black"/>
+<line x1="212" y1="357" x2="212" y2="384" stroke="black"/>
+<line x1="297" y1="357" x2="297" y2="384" stroke="black"/>
+<line x1="382" y1="357" x2="382" y2="384" stroke="black"/>
+<line x1="467" y1="357" x2="467" y2="384" stroke="black"/>
+<line x1="552" y1="357" x2="552" y2="384" stroke="black"/>
+<line x1="552" y1="370" x2="467" y2="370" stroke="black"/>
+<line x1="467" y1="370" x2="477" y2="376" stroke="black"/>
+<polygon fill="white" points="489,359 530,359 530,369 489,369"/>
+<text x="490" y="368" textLength="39" font-family="Helvetica" font-size="12" fill="black">
+[6.2] ok
+</text>
+<line x1="42" y1="384" x2="42" y2="411" stroke="black"/>
+<line x1="127" y1="384" x2="127" y2="411" stroke="black"/>
+<line x1="212" y1="384" x2="212" y2="411" stroke="black"/>
+<line x1="297" y1="384" x2="297" y2="411" stroke="black"/>
+<line x1="382" y1="384" x2="382" y2="411" stroke="black"/>
+<line x1="467" y1="384" x2="467" y2="411" stroke="black"/>
+<line x1="552" y1="384" x2="552" y2="411" stroke="black"/>
+<line x1="467" y1="397" x2="552" y2="397" stroke="black"/>
+<line x1="552" y1="397" x2="542" y2="403" stroke="black"/>
+<polygon fill="white" points="477,386 542,386 542,396 477,396"/>
+<text x="478" y="395" textLength="63" font-family="Helvetica" font-size="12" fill="black">
+[6.3] write K
+</text>
+<line x1="42" y1="411" x2="42" y2="438" stroke="black"/>
+<line x1="127" y1="411" x2="127" y2="438" stroke="black"/>
+<line x1="212" y1="411" x2="212" y2="438" stroke="black"/>
+<line x1="297" y1="411" x2="297" y2="438" stroke="black"/>
+<line x1="382" y1="411" x2="382" y2="438" stroke="black"/>
+<line x1="467" y1="411" x2="467" y2="438" stroke="black"/>
+<line x1="552" y1="411" x2="552" y2="438" stroke="black"/>
+<line x1="552" y1="424" x2="467" y2="424" stroke="black"/>
+<line x1="467" y1="424" x2="477" y2="430" stroke="black"/>
+<polygon fill="white" points="489,413 530,413 530,423 489,423"/>
+<text x="490" y="422" textLength="39" font-family="Helvetica" font-size="12" fill="black">
+[6.4] ok
+</text>
+<line x1="42" y1="438" x2="42" y2="465" stroke="black"/>
+<line x1="127" y1="438" x2="127" y2="465" stroke="black"/>
+<line x1="212" y1="438" x2="212" y2="465" stroke="black"/>
+<line x1="297" y1="438" x2="297" y2="465" stroke="black"/>
+<line x1="382" y1="438" x2="382" y2="465" stroke="black"/>
+<line x1="467" y1="438" x2="467" y2="465" stroke="black"/>
+<line x1="552" y1="438" x2="552" y2="465" stroke="black"/>
+<line x1="467" y1="451" x2="297" y2="451" stroke="black"/>
+<line x1="297" y1="451" x2="307" y2="457" stroke="black"/>
+<polygon fill="white" points="362,440 400,440 400,450 362,450"/>
+<text x="363" y="449" textLength="36" font-family="Helvetica" font-size="12" fill="black">
+[7] ???
+</text>
+<line x1="42" y1="465" x2="42" y2="492" stroke="black"/>
+<line x1="127" y1="465" x2="127" y2="492" stroke="black"/>
+<line x1="212" y1="465" x2="212" y2="492" stroke="black"/>
+<line x1="297" y1="465" x2="297" y2="492" stroke="black"/>
+<line x1="382" y1="465" x2="382" y2="492" stroke="black"/>
+<line x1="467" y1="465" x2="467" y2="492" stroke="black"/>
+<line x1="552" y1="465" x2="552" y2="492" stroke="black"/>
+<line x1="297" y1="478" x2="127" y2="478" stroke="black"/>
+<line x1="127" y1="478" x2="137" y2="484" stroke="black"/>
+<polygon fill="white" points="192,467 230,467 230,477 192,477"/>
+<text x="193" y="476" textLength="36" font-family="Helvetica" font-size="12" fill="black">
+[8] ???
+</text>
+<line x1="42" y1="492" x2="42" y2="519" stroke="black"/>
+<line x1="127" y1="492" x2="127" y2="519" stroke="black"/>
+<line x1="212" y1="492" x2="212" y2="519" stroke="black"/>
+<line x1="297" y1="492" x2="297" y2="519" stroke="black"/>
+<line x1="382" y1="492" x2="382" y2="519" stroke="black"/>
+<line x1="467" y1="492" x2="467" y2="519" stroke="black"/>
+<line x1="552" y1="492" x2="552" y2="519" stroke="black"/>
+<line x1="127" y1="505" x2="297" y2="505" stroke="black"/>
+<line x1="297" y1="505" x2="287" y2="511" stroke="black"/>
+<polygon fill="white" points="192,494 230,494 230,504 192,504"/>
+<text x="193" y="503" textLength="36" font-family="Helvetica" font-size="12" fill="black">
+[9] ???
+</text>
+<line x1="42" y1="519" x2="42" y2="546" stroke="black"/>
+<line x1="127" y1="519" x2="127" y2="546" stroke="black"/>
+<line x1="212" y1="519" x2="212" y2="546" stroke="black"/>
+<line x1="297" y1="519" x2="297" y2="546" stroke="black"/>
+<line x1="382" y1="519" x2="382" y2="546" stroke="black"/>
+<line x1="467" y1="519" x2="467" y2="546" stroke="black"/>
+<line x1="552" y1="519" x2="552" y2="546" stroke="black"/>
+<line x1="297" y1="532" x2="467" y2="532" stroke="black"/>
+<line x1="467" y1="532" x2="457" y2="538" stroke="black"/>
+<polygon fill="white" points="359,521 404,521 404,531 359,531"/>
+<text x="360" y="530" textLength="43" font-family="Helvetica" font-size="12" fill="black">
+[10] ???
+</text>
+<line x1="42" y1="546" x2="42" y2="573" stroke="black"/>
+<line x1="127" y1="546" x2="127" y2="573" stroke="black"/>
+<line x1="212" y1="546" x2="212" y2="573" stroke="black"/>
+<line x1="297" y1="546" x2="297" y2="573" stroke="black"/>
+<line x1="382" y1="546" x2="382" y2="573" stroke="black"/>
+<line x1="467" y1="546" x2="467" y2="573" stroke="black"/>
+<line x1="552" y1="546" x2="552" y2="573" stroke="black"/>
+<line x1="467" y1="559" x2="42" y2="559" stroke="black"/>
+<line x1="42" y1="559" x2="52" y2="565" stroke="black"/>
+<polygon fill="white" points="235,548 273,548 273,558 235,558"/>
+<text x="236" y="557" textLength="36" font-family="Helvetica" font-size="12" fill="black">
+[11] ok
+</text>
+</svg>

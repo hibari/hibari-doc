@@ -1,0 +1,156 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+ viewBox="0 0 600 233"
+ xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"
+ stroke-width="1" text-rendering="geometricPrecision">
+<polygon fill="white" points="9,17 89,17 89,27 9,27"/>
+<text x="50" y="26" textLength="79" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Dumb Protocol
+</text>
+<polygon fill="white" points="33,28 65,28 65,38 33,38"/>
+<text x="50" y="37" textLength="30" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Client
+</text>
+<polygon fill="white" points="109,17 189,17 189,27 109,27"/>
+<text x="150" y="26" textLength="79" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Dumb Protocol
+</text>
+<polygon fill="white" points="131,28 167,28 167,38 131,38"/>
+<text x="150" y="37" textLength="35" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Server
+</text>
+<polygon fill="white" points="217,6 281,6 281,16 217,16"/>
+<text x="250" y="15" textLength="62" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Hibari client
+</text>
+<polygon fill="white" points="203,17 295,17 295,27 203,27"/>
+<text x="250" y="26" textLength="90" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+(proxy/consistent
+</text>
+<polygon fill="white" points="208,28 290,28 290,38 208,38"/>
+<text x="250" y="37" textLength="80" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+hashing router)
+</text>
+<polygon fill="white" points="328,17 370,17 370,27 328,27"/>
+<text x="350" y="26" textLength="41" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Chain 1
+</text>
+<polygon fill="white" points="329,28 369,28 369,38 329,38"/>
+<text x="350" y="37" textLength="38" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Brick X
+</text>
+<polygon fill="white" points="428,17 470,17 470,27 428,27"/>
+<text x="450" y="26" textLength="41" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Chain 2
+</text>
+<polygon fill="white" points="429,28 469,28 469,38 429,38"/>
+<text x="450" y="37" textLength="38" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Brick Y
+</text>
+<polygon fill="white" points="527,17 571,17 571,27 527,27"/>
+<text x="550" y="26" textLength="43" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Chain N
+</text>
+<polygon fill="white" points="530,28 568,28 568,38 530,38"/>
+<text x="550" y="37" textLength="37" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+Brick Z
+</text>
+<line x1="50" y1="44" x2="50" y2="71" stroke="black"/>
+<line x1="150" y1="44" x2="150" y2="71" stroke="black"/>
+<line x1="250" y1="44" x2="250" y2="71" stroke="black"/>
+<line x1="350" y1="44" x2="350" y2="71" stroke="black"/>
+<line x1="450" y1="44" x2="450" y2="71" stroke="black"/>
+<line x1="550" y1="44" x2="550" y2="71" stroke="black"/>
+<line x1="50" y1="57" x2="150" y2="57" stroke="black"/>
+<line x1="150" y1="57" x2="140" y2="63" stroke="black"/>
+<polygon fill="white" points="66,46 133,46 133,56 66,56"/>
+<text x="67" y="55" textLength="65" font-family="Helvetica" font-size="12" fill="black">
+Dumb query
+</text>
+<line x1="50" y1="71" x2="50" y2="98" stroke="black"/>
+<line x1="150" y1="71" x2="150" y2="98" stroke="black"/>
+<line x1="250" y1="71" x2="250" y2="98" stroke="black"/>
+<line x1="350" y1="71" x2="350" y2="98" stroke="black"/>
+<line x1="450" y1="71" x2="450" y2="98" stroke="black"/>
+<line x1="550" y1="71" x2="550" y2="98" stroke="black"/>
+<line x1="150" y1="84" x2="250" y2="84" stroke="black"/>
+<polygon fill="black" points="250,84 240,90 240,78"/>
+<polygon fill="white" points="161,73 238,73 238,83 161,83"/>
+<text x="162" y="82" textLength="75" font-family="Helvetica" font-size="12" fill="black">
+Hibari API call
+</text>
+<line x1="50" y1="98" x2="50" y2="125" stroke="black"/>
+<line x1="150" y1="98" x2="150" y2="125" stroke="black"/>
+<line x1="250" y1="98" x2="250" y2="125" stroke="black"/>
+<line x1="350" y1="98" x2="350" y2="125" stroke="black"/>
+<line x1="450" y1="98" x2="450" y2="125" stroke="black"/>
+<line x1="550" y1="98" x2="550" y2="125" stroke="black"/>
+<polygon fill="white" points="105,105 494,105 494,115 105,115"/>
+<text x="106" y="114" textLength="387" font-family="Helvetica" font-size="12" fill="black">
+Proxy calculates the {Table,Key,OpList} -&gt; Chain mapping, e.g. Chain #2
+</text>
+<line x1="25" y1="111" x2="105" y2="111" stroke="black" stroke-dasharray="2,2"/>
+<line x1="496" y1="111" x2="575" y2="111" stroke="black" stroke-dasharray="2,2"/>
+<line x1="50" y1="125" x2="50" y2="152" stroke="black"/>
+<line x1="150" y1="125" x2="150" y2="152" stroke="black"/>
+<line x1="250" y1="125" x2="250" y2="152" stroke="black"/>
+<line x1="350" y1="125" x2="350" y2="152" stroke="black"/>
+<line x1="450" y1="125" x2="450" y2="152" stroke="black"/>
+<line x1="550" y1="125" x2="550" y2="152" stroke="black"/>
+<line x1="250" y1="138" x2="450" y2="138" stroke="black"/>
+<line x1="450" y1="138" x2="440" y2="144" stroke="black"/>
+<polygon fill="white" points="316,127 382,127 382,137 316,137"/>
+<text x="317" y="136" textLength="64" font-family="Helvetica" font-size="12" fill="black">
+Hibari query
+</text>
+<line x1="50" y1="152" x2="50" y2="179" stroke="black"/>
+<line x1="150" y1="152" x2="150" y2="179" stroke="black"/>
+<line x1="250" y1="152" x2="250" y2="179" stroke="black"/>
+<line x1="350" y1="152" x2="350" y2="179" stroke="black"/>
+<line x1="450" y1="152" x2="450" y2="179" stroke="black"/>
+<line x1="550" y1="152" x2="550" y2="179" stroke="black"/>
+<line x1="450" y1="165" x2="250" y2="165" stroke="black"/>
+<line x1="250" y1="165" x2="260" y2="171" stroke="black"/>
+<polygon fill="white" points="318,154 380,154 380,164 318,164"/>
+<text x="319" y="163" textLength="60" font-family="Helvetica" font-size="12" fill="black">
+Hibari reply
+</text>
+<line x1="50" y1="179" x2="50" y2="206" stroke="black"/>
+<line x1="150" y1="179" x2="150" y2="206" stroke="black"/>
+<line x1="250" y1="179" x2="250" y2="206" stroke="black"/>
+<line x1="350" y1="179" x2="350" y2="206" stroke="black"/>
+<line x1="450" y1="179" x2="450" y2="206" stroke="black"/>
+<line x1="550" y1="179" x2="550" y2="206" stroke="black"/>
+<line x1="250" y1="192" x2="150" y2="192" stroke="black"/>
+<polygon fill="black" points="150,192 160,198 160,186"/>
+<polygon fill="white" points="154,181 244,181 244,191 154,191"/>
+<text x="155" y="190" textLength="88" font-family="Helvetica" font-size="12" fill="black">
+Hibari API return
+</text>
+<line x1="50" y1="206" x2="50" y2="233" stroke="black"/>
+<line x1="150" y1="206" x2="150" y2="233" stroke="black"/>
+<line x1="250" y1="206" x2="250" y2="233" stroke="black"/>
+<line x1="350" y1="206" x2="350" y2="233" stroke="black"/>
+<line x1="450" y1="206" x2="450" y2="233" stroke="black"/>
+<line x1="550" y1="206" x2="550" y2="233" stroke="black"/>
+<line x1="150" y1="219" x2="50" y2="219" stroke="black"/>
+<line x1="50" y1="219" x2="60" y2="225" stroke="black"/>
+<polygon fill="white" points="68,208 131,208 131,218 68,218"/>
+<text x="69" y="217" textLength="61" font-family="Helvetica" font-size="12" fill="black">
+Dumb reply
+</text>
+</svg>

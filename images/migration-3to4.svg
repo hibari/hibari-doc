@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" baseProfile="full" id="body" width="8in" height="8in" viewBox="0 0 1 1" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:ev="http://www.w3.org/2001/xml-events">
+<title>SVG drawing</title>
+<desc>This was produced by version 4.2 of GNU libplot, a free library for exporting 2-D vector graphics.</desc>
+<rect id="background" x="0" y="0" width="1" height="1" stroke="none" fill="white"/>
+<g id="content" transform="translate(-0.03125,1.1875) scale(1,-1) scale(0.0017361) " xml:space="preserve" stroke="black" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10.433" stroke-dasharray="none" stroke-dashoffset="0" stroke-opacity="1" fill="none" fill-rule="even-odd" fill-opacity="1" font-style="normal" font-variant="normal" font-weight="normal" font-stretch="normal" font-size-adjust="none" letter-spacing="normal" word-spacing="normal" text-anchor="start">
+<polygon points="25.398,303.5 137.9,303.5 137.9,393.5 25.398,393.5 " stroke-width="1.8" />
+<text transform="translate(43.4,362) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Chain 1</text>
+<text transform="translate(34.4,317) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~25% total keys</text>
+<text transform="translate(137.9,371) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Ch</text>
+<text transform="translate(137.9,343.1) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >  4</text>
+<polygon points="137.9,303.5 169.4,303.5 169.4,393.5 137.9,393.5 " stroke-width="1.8" />
+<text transform="translate(137.9,317) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~8%</text>
+<polygon points="169.4,303.5 281.9,303.5 281.9,393.5 169.4,393.5 " stroke-width="1.8" />
+<text transform="translate(182.9,362) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Chain 2</text>
+<text transform="translate(173.9,317) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~25% total keys</text>
+<text transform="translate(281.9,371) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Ch</text>
+<text transform="translate(281.9,343.1) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >  4</text>
+<polygon points="281.9,303.5 313.4,303.5 313.4,393.5 281.9,393.5 " stroke-width="1.8" />
+<text transform="translate(281.9,317) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~8%</text>
+<polygon points="313.4,303.5 425.9,303.5 425.9,393.5 313.4,393.5 " stroke-width="1.8" />
+<text transform="translate(326.9,362) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Chain 3</text>
+<text transform="translate(317.9,317) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~25% total keys</text>
+<text transform="translate(425.9,371) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Ch</text>
+<text transform="translate(425.9,343.1) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >  4</text>
+<polygon points="425.9,303.5 457.4,303.5 457.4,393.5 425.9,393.5 " stroke-width="1.8" />
+<text transform="translate(425.9,317) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~8%</text>
+<polygon points="25.398,438.5 169.4,438.5 169.4,528.5 25.398,528.5 " stroke-width="1.8" />
+<text transform="translate(56.9,492.5) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Chain 1</text>
+<text transform="translate(43.4,452) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~33% total keys</text>
+<text transform="translate(200.9,492.5) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Chain 2</text>
+<polygon points="169.4,438.5 313.4,438.5 313.4,528.5 169.4,528.5 " stroke-width="1.8" />
+<text transform="translate(191.9,452) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~33% total keys</text>
+<polygon points="313.4,438.5 457.4,438.5 457.4,528.5 313.4,528.5 " stroke-width="1.8" />
+<text transform="translate(344.9,492.5) scale(1,-1) scale(1.2) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Chain 3</text>
+<text transform="translate(331.4,452) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >~33% total keys</text>
+<text transform="translate(340.4,420.5) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Not</text>
+<text transform="translate(340.4,402.5) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >migrated</text>
+<polygon points="313.4,393.5 425.9,393.5 425.9,438.5 313.4,438.5 " stroke-width="0.9" stroke-dasharray="5.4"/>
+<text transform="translate(196.4,420.5) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Not</text>
+<text transform="translate(196.4,402.5) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >migrated</text>
+<polygon points="169.4,393.5 281.9,393.5 281.9,438.5 169.4,438.5 " stroke-width="0.9" stroke-dasharray="5.4"/>
+<text transform="translate(52.4,420.5) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Not</text>
+<text transform="translate(52.4,402.5) scale(1,-1) scale(0.69999) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >migrated</text>
+<polygon points="25.398,393.5 137.9,393.5 137.9,438.5 25.398,438.5 " stroke-width="0.9" stroke-dasharray="5.4"/>
+<text transform="translate(461.9,488) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Before</text>
+<text transform="translate(461.9,469.1) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Migration</text>
+<text transform="translate(461.9,354.8) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >After</text>
+<text transform="translate(461.9,335.9) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Migration</text>
+<line x1="25.398" y1="276.5" x2="25.398" y2="303.5" stroke-width="0.9" />
+<polygon points="27.199,292.4 25.398,299.6 23.602,292.4 " stroke-width="0" fill="black" />
+<polygon points="27.199,292.4 25.398,299.6 23.602,292.4 " stroke-width="1.8" />
+<line x1="241.4" y1="276.5" x2="241.4" y2="303.5" stroke-width="0.9" />
+<polygon points="243.2,292.4 241.4,299.6 239.6,292.4 " stroke-width="0" fill="black" />
+<polygon points="243.2,292.4 241.4,299.6 239.6,292.4 " stroke-width="1.8" />
+<line x1="137.9" y1="276.5" x2="137.9" y2="303.5" stroke-width="0.9" />
+<polygon points="139.7,292.4 137.9,299.6 136.1,292.4 " stroke-width="0" fill="black" />
+<polygon points="139.7,292.4 137.9,299.6 136.1,292.4 " stroke-width="1.8" />
+<line x1="457.4" y1="276.5" x2="457.4" y2="303.5" stroke-width="0.9" />
+<polygon points="459.2,292.4 457.4,299.6 455.6,292.4 " stroke-width="0" fill="black" />
+<polygon points="459.2,292.4 457.4,299.6 455.6,292.4 " stroke-width="1.8" />
+<line x1="349.4" y1="276.5" x2="349.4" y2="303.5" stroke-width="0.9" />
+<polygon points="351.2,292.4 349.4,299.6 347.6,292.4 " stroke-width="0" fill="black" />
+<polygon points="351.2,292.4 349.4,299.6 347.6,292.4 " stroke-width="1.8" />
+<text transform="translate(20.9,258.5) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >0.00</text>
+<text transform="translate(425.9,258.5) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >1.00</text>
+<text transform="translate(119.9,258.5) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >0.25</text>
+<text transform="translate(227.9,258.5) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >0.50</text>
+<text transform="translate(331.4,258.5) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >0.75</text>
+<text transform="translate(56.9,240.5) scale(1,-1) scale(0.9) " font-family="Times-Bold,Times,serif" font-weight="bold" font-size="20px" stroke="none" fill="black" >Hash of key/partial key, mapped to unit interval</text>
+</g>
+</svg>

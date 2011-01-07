@@ -1,0 +1,350 @@
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1"
+ viewBox="0 0 600 832"
+ xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"
+ stroke-width="1" text-rendering="geometricPrecision">
+<polygon fill="white" points="52,6 96,6 96,16 52,16"/>
+<text x="75" y="15" textLength="42" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+CLIENT
+</text>
+<polygon fill="white" points="207,6 241,6 241,16 207,16"/>
+<text x="225" y="15" textLength="33" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+HEAD
+</text>
+<polygon fill="white" points="351,6 397,6 397,16 351,16"/>
+<text x="375" y="15" textLength="45" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+MIDDLE
+</text>
+<polygon fill="white" points="511,6 537,6 537,16 511,16"/>
+<text x="525" y="15" textLength="25" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+
+TAIL
+</text>
+<line x1="75" y1="22" x2="75" y2="49" stroke="black"/>
+<line x1="225" y1="22" x2="225" y2="49" stroke="black"/>
+<line x1="375" y1="22" x2="375" y2="49" stroke="black"/>
+<line x1="525" y1="22" x2="525" y2="49" stroke="black"/>
+<polygon fill="white" points="268,29 331,29 331,39 268,39"/>
+<text x="269" y="38" textLength="61" font-family="Helvetica" font-size="12" fill="black">
+D1 = K1,V1
+</text>
+<line x1="37" y1="35" x2="268" y2="35" stroke="black" stroke-dasharray="2,2"/>
+<line x1="333" y1="35" x2="563" y2="35" stroke="black" stroke-dasharray="2,2"/>
+<line x1="75" y1="49" x2="75" y2="76" stroke="black"/>
+<line x1="225" y1="49" x2="225" y2="76" stroke="black"/>
+<line x1="375" y1="49" x2="375" y2="76" stroke="black"/>
+<line x1="525" y1="49" x2="525" y2="76" stroke="black"/>
+<line x1="75" y1="62" x2="225" y2="62" stroke="black"/>
+<line x1="225" y1="62" x2="215" y2="68" stroke="black"/>
+<polygon fill="white" points="118,51 180,51 180,61 118,61"/>
+<text x="119" y="60" textLength="60" font-family="Helvetica" font-size="12" fill="black">
+add(K1,V1)
+</text>
+<line x1="75" y1="76" x2="75" y2="103" stroke="black"/>
+<line x1="225" y1="76" x2="225" y2="103" stroke="black"/>
+<line x1="375" y1="76" x2="375" y2="103" stroke="black"/>
+<line x1="525" y1="76" x2="525" y2="103" stroke="black"/>
+<polygon fill="white" points="158,76 292,76 292,101 158,101"/>
+<line x1="158" y1="76" x2="292" y2="76" stroke="black"/>
+<line x1="158" y1="101" x2="292" y2="101" stroke="black"/>
+<line x1="158" y1="76" x2="158" y2="101" stroke="black"/>
+<line x1="292" y1="76" x2="292" y2="101" stroke="black"/>
+<polygon fill="white" points="167,83 281,83 281,93 167,93"/>
+<text x="168" y="92" textLength="112" font-family="Helvetica" font-size="12" fill="black">
+replay=D1; down=S1
+</text>
+<line x1="75" y1="103" x2="75" y2="130" stroke="black"/>
+<line x1="225" y1="103" x2="225" y2="130" stroke="black"/>
+<line x1="375" y1="103" x2="375" y2="130" stroke="black"/>
+<line x1="525" y1="103" x2="525" y2="130" stroke="black"/>
+<line x1="225" y1="116" x2="375" y2="116" stroke="black"/>
+<line x1="375" y1="116" x2="365" y2="122" stroke="black"/>
+<polygon fill="white" points="243,105 355,105 355,115 243,115"/>
+<text x="244" y="114" textLength="110" font-family="Helvetica" font-size="12" fill="black">
+ch_replay(K1,V1,S1)
+</text>
+<line x1="75" y1="130" x2="75" y2="157" stroke="black"/>
+<line x1="225" y1="130" x2="225" y2="157" stroke="black"/>
+<line x1="375" y1="130" x2="375" y2="157" stroke="black"/>
+<line x1="525" y1="130" x2="525" y2="157" stroke="black"/>
+<polygon fill="white" points="308,130 442,130 442,155 308,155"/>
+<line x1="308" y1="130" x2="442" y2="130" stroke="black"/>
+<line x1="308" y1="155" x2="442" y2="155" stroke="black"/>
+<line x1="308" y1="130" x2="308" y2="155" stroke="black"/>
+<line x1="442" y1="130" x2="442" y2="155" stroke="black"/>
+<polygon fill="white" points="325,137 423,137 423,147 325,147"/>
+<text x="326" y="146" textLength="96" font-family="Helvetica" font-size="12" fill="black">
+replay=D1; up=S1
+</text>
+<line x1="75" y1="157" x2="75" y2="184" stroke="black"/>
+<line x1="225" y1="157" x2="225" y2="184" stroke="black"/>
+<line x1="375" y1="157" x2="375" y2="184" stroke="black"/>
+<line x1="525" y1="157" x2="525" y2="184" stroke="black"/>
+<line x1="375" y1="170" x2="525" y2="170" stroke="black"/>
+<line x1="525" y1="170" x2="515" y2="176" stroke="black"/>
+<polygon fill="white" points="393,159 505,159 505,169 393,169"/>
+<text x="394" y="168" textLength="110" font-family="Helvetica" font-size="12" fill="black">
+ch_replay(K1,V1,S1)
+</text>
+<line x1="75" y1="184" x2="75" y2="211" stroke="black"/>
+<line x1="225" y1="184" x2="225" y2="211" stroke="black"/>
+<line x1="375" y1="184" x2="375" y2="211" stroke="black"/>
+<line x1="525" y1="184" x2="525" y2="211" stroke="black"/>
+<polygon fill="white" points="458,184 592,184 592,209 458,209"/>
+<line x1="458" y1="184" x2="592" y2="184" stroke="black"/>
+<line x1="458" y1="209" x2="592" y2="209" stroke="black"/>
+<line x1="458" y1="184" x2="458" y2="209" stroke="black"/>
+<line x1="592" y1="184" x2="592" y2="209" stroke="black"/>
+<polygon fill="white" points="475,191 573,191 573,201 475,201"/>
+<text x="476" y="200" textLength="96" font-family="Helvetica" font-size="12" fill="black">
+replay=D1; up=S1
+</text>
+<line x1="75" y1="211" x2="75" y2="238" stroke="black"/>
+<line x1="225" y1="211" x2="225" y2="238" stroke="black"/>
+<line x1="375" y1="211" x2="375" y2="238" stroke="black"/>
+<line x1="525" y1="211" x2="525" y2="238" stroke="black"/>
+<line x1="525" y1="224" x2="75" y2="224" stroke="black"/>
+<line x1="75" y1="224" x2="85" y2="230" stroke="black"/>
+<polygon fill="white" points="292,213 306,213 306,223 292,223"/>
+<text x="293" y="222" textLength="12" font-family="Helvetica" font-size="12" fill="black">
+ok
+</text>
+<line x1="75" y1="238" x2="75" y2="265" stroke="black"/>
+<line x1="225" y1="238" x2="225" y2="265" stroke="black"/>
+<line x1="375" y1="238" x2="375" y2="265" stroke="black"/>
+<line x1="525" y1="238" x2="525" y2="265" stroke="black"/>
+<polygon fill="white" points="202,245 396,245 396,255 202,255"/>
+<text x="203" y="254" textLength="192" font-family="Helvetica" font-size="12" fill="black">
+D2 is lost between Head and Middle
+</text>
+<line x1="37" y1="251" x2="202" y2="251" stroke="black" stroke-dasharray="2,2"/>
+<line x1="398" y1="251" x2="563" y2="251" stroke="black" stroke-dasharray="2,2"/>
+<line x1="75" y1="265" x2="75" y2="292" stroke="black"/>
+<line x1="225" y1="265" x2="225" y2="292" stroke="black"/>
+<line x1="375" y1="265" x2="375" y2="292" stroke="black"/>
+<line x1="525" y1="265" x2="525" y2="292" stroke="black"/>
+<line x1="75" y1="278" x2="225" y2="278" stroke="black"/>
+<line x1="225" y1="278" x2="215" y2="284" stroke="black"/>
+<polygon fill="white" points="118,267 180,267 180,277 118,277"/>
+<text x="119" y="276" textLength="60" font-family="Helvetica" font-size="12" fill="black">
+add(K2,V2)
+</text>
+<line x1="75" y1="292" x2="75" y2="319" stroke="black"/>
+<line x1="225" y1="292" x2="225" y2="319" stroke="black"/>
+<line x1="375" y1="292" x2="375" y2="319" stroke="black"/>
+<line x1="525" y1="292" x2="525" y2="319" stroke="black"/>
+<polygon fill="white" points="158,292 292,292 292,317 158,317"/>
+<line x1="158" y1="292" x2="292" y2="292" stroke="black"/>
+<line x1="158" y1="317" x2="292" y2="317" stroke="black"/>
+<line x1="158" y1="292" x2="158" y2="317" stroke="black"/>
+<line x1="292" y1="292" x2="292" y2="317" stroke="black"/>
+<polygon fill="white" points="158,299 290,299 290,309 158,309"/>
+<text x="159" y="308" textLength="130" font-family="Helvetica" font-size="12" fill="black">
+replay=D1,D2; down=S2
+</text>
+<line x1="75" y1="319" x2="75" y2="346" stroke="black"/>
+<line x1="225" y1="319" x2="225" y2="346" stroke="black"/>
+<line x1="375" y1="319" x2="375" y2="346" stroke="black"/>
+<line x1="525" y1="319" x2="525" y2="346" stroke="black"/>
+<line x1="225" y1="331" x2="375" y2="331" stroke="black"/>
+<line x1="225" y1="333" x2="375" y2="333" stroke="black"/>
+<polygon fill="black" points="375,332 365,338 365,326"/>
+<polygon fill="white" points="193,321 406,321 406,331 193,331"/>
+<text x="194" y="330" textLength="211" font-family="Helvetica" font-size="12" fill="black">
+MESSAGE LOST: ch_replay(K2,V2,S2)
+</text>
+<line x1="75" y1="346" x2="75" y2="373" stroke="black" stroke-dasharray="2,2"/>
+<line x1="225" y1="346" x2="225" y2="373" stroke="black" stroke-dasharray="2,2"/>
+<line x1="375" y1="346" x2="375" y2="373" stroke="black" stroke-dasharray="2,2"/>
+<line x1="525" y1="346" x2="525" y2="373" stroke="black" stroke-dasharray="2,2"/>
+<line x1="75" y1="373" x2="75" y2="400" stroke="black"/>
+<line x1="225" y1="373" x2="225" y2="400" stroke="black"/>
+<line x1="375" y1="373" x2="375" y2="400" stroke="black"/>
+<line x1="525" y1="373" x2="525" y2="400" stroke="black"/>
+<path d="M 74 392 A73,6 0 0,1 75,379" stroke="black" fill="none"/><line x1="75" y1="392" x2="65" y2="398" stroke="black"/>
+<polygon fill="white" points="75,375 116,375 116,385 75,385"/>
+<text x="76" y="384" textLength="39" font-family="Helvetica" font-size="12" fill="black">
+timeout
+</text>
+<line x1="75" y1="400" x2="75" y2="427" stroke="black"/>
+<line x1="225" y1="400" x2="225" y2="427" stroke="black"/>
+<line x1="375" y1="400" x2="375" y2="427" stroke="black"/>
+<line x1="525" y1="400" x2="525" y2="427" stroke="black"/>
+<polygon fill="white" points="268,407 331,407 331,417 268,417"/>
+<text x="269" y="416" textLength="61" font-family="Helvetica" font-size="12" fill="black">
+D3 = K3,V3
+</text>
+<line x1="37" y1="413" x2="268" y2="413" stroke="black" stroke-dasharray="2,2"/>
+<line x1="333" y1="413" x2="563" y2="413" stroke="black" stroke-dasharray="2,2"/>
+<line x1="75" y1="427" x2="75" y2="454" stroke="black"/>
+<line x1="225" y1="427" x2="225" y2="454" stroke="black"/>
+<line x1="375" y1="427" x2="375" y2="454" stroke="black"/>
+<line x1="525" y1="427" x2="525" y2="454" stroke="black"/>
+<line x1="75" y1="440" x2="225" y2="440" stroke="black"/>
+<line x1="225" y1="440" x2="215" y2="446" stroke="black"/>
+<polygon fill="white" points="118,429 180,429 180,439 118,439"/>
+<text x="119" y="438" textLength="60" font-family="Helvetica" font-size="12" fill="black">
+add(K3,V3)
+</text>
+<line x1="75" y1="454" x2="75" y2="481" stroke="black"/>
+<line x1="225" y1="454" x2="225" y2="481" stroke="black"/>
+<line x1="375" y1="454" x2="375" y2="481" stroke="black"/>
+<line x1="525" y1="454" x2="525" y2="481" stroke="black"/>
+<polygon fill="white" points="158,454 292,454 292,479 158,479"/>
+<line x1="158" y1="454" x2="292" y2="454" stroke="black"/>
+<line x1="158" y1="479" x2="292" y2="479" stroke="black"/>
+<line x1="158" y1="454" x2="158" y2="479" stroke="black"/>
+<line x1="292" y1="454" x2="292" y2="479" stroke="black"/>
+<polygon fill="white" points="149,461 300,461 300,471 149,471"/>
+<text x="150" y="470" textLength="149" font-family="Helvetica" font-size="12" fill="black">
+replay=D1,D2,D3; down=S3
+</text>
+<line x1="75" y1="481" x2="75" y2="508" stroke="black"/>
+<line x1="225" y1="481" x2="225" y2="508" stroke="black"/>
+<line x1="375" y1="481" x2="375" y2="508" stroke="black"/>
+<line x1="525" y1="481" x2="525" y2="508" stroke="black"/>
+<line x1="225" y1="494" x2="375" y2="494" stroke="black"/>
+<line x1="375" y1="494" x2="365" y2="500" stroke="black"/>
+<polygon fill="white" points="243,483 355,483 355,493 243,493"/>
+<text x="244" y="492" textLength="110" font-family="Helvetica" font-size="12" fill="black">
+ch_replay(K3,V3,S3)
+</text>
+<line x1="75" y1="508" x2="75" y2="535" stroke="black"/>
+<line x1="225" y1="508" x2="225" y2="535" stroke="black"/>
+<line x1="375" y1="508" x2="375" y2="535" stroke="black"/>
+<line x1="525" y1="508" x2="525" y2="535" stroke="black"/>
+<polygon fill="white" points="308,508 442,508 442,533 308,533"/>
+<line x1="308" y1="508" x2="442" y2="508" stroke="black"/>
+<line x1="308" y1="533" x2="442" y2="533" stroke="black"/>
+<line x1="308" y1="508" x2="308" y2="533" stroke="black"/>
+<line x1="442" y1="508" x2="442" y2="533" stroke="black"/>
+<polygon fill="white" points="316,515 433,515 433,525 316,525"/>
+<text x="317" y="524" textLength="115" font-family="Helvetica" font-size="12" fill="black">
+replay=D1,D3; up=S3
+</text>
+<line x1="75" y1="535" x2="75" y2="562" stroke="black"/>
+<line x1="225" y1="535" x2="225" y2="562" stroke="black"/>
+<line x1="375" y1="535" x2="375" y2="562" stroke="black"/>
+<line x1="525" y1="535" x2="525" y2="562" stroke="black"/>
+<line x1="375" y1="548" x2="525" y2="548" stroke="black"/>
+<line x1="525" y1="548" x2="515" y2="554" stroke="black"/>
+<polygon fill="white" points="393,537 505,537 505,547 393,547"/>
+<text x="394" y="546" textLength="110" font-family="Helvetica" font-size="12" fill="black">
+ch_replay(K3,V3,S3)
+</text>
+<line x1="75" y1="562" x2="75" y2="589" stroke="black"/>
+<line x1="225" y1="562" x2="225" y2="589" stroke="black"/>
+<line x1="375" y1="562" x2="375" y2="589" stroke="black"/>
+<line x1="525" y1="562" x2="525" y2="589" stroke="black"/>
+<polygon fill="white" points="458,562 592,562 592,587 458,587"/>
+<line x1="458" y1="562" x2="592" y2="562" stroke="black"/>
+<line x1="458" y1="587" x2="592" y2="587" stroke="black"/>
+<line x1="458" y1="562" x2="458" y2="587" stroke="black"/>
+<line x1="592" y1="562" x2="592" y2="587" stroke="black"/>
+<polygon fill="white" points="466,569 583,569 583,579 466,579"/>
+<text x="467" y="578" textLength="115" font-family="Helvetica" font-size="12" fill="black">
+replay=D1,D3; up=S3
+</text>
+<line x1="75" y1="589" x2="75" y2="616" stroke="black"/>
+<line x1="225" y1="589" x2="225" y2="616" stroke="black"/>
+<line x1="375" y1="589" x2="375" y2="616" stroke="black"/>
+<line x1="525" y1="589" x2="525" y2="616" stroke="black"/>
+<line x1="525" y1="602" x2="75" y2="602" stroke="black"/>
+<line x1="75" y1="602" x2="85" y2="608" stroke="black"/>
+<polygon fill="white" points="292,591 306,591 306,601 292,601"/>
+<text x="293" y="600" textLength="12" font-family="Helvetica" font-size="12" fill="black">
+ok
+</text>
+<line x1="75" y1="616" x2="75" y2="643" stroke="black"/>
+<line x1="225" y1="616" x2="225" y2="643" stroke="black"/>
+<line x1="375" y1="616" x2="375" y2="643" stroke="black"/>
+<line x1="525" y1="616" x2="525" y2="643" stroke="black"/>
+<polygon fill="white" points="266,623 332,623 332,633 266,633"/>
+<text x="267" y="632" textLength="64" font-family="Helvetica" font-size="12" fill="black">
+tail acks S3.
+</text>
+<line x1="37" y1="629" x2="266" y2="629" stroke="black" stroke-dasharray="2,2"/>
+<line x1="334" y1="629" x2="563" y2="629" stroke="black" stroke-dasharray="2,2"/>
+<line x1="75" y1="643" x2="75" y2="670" stroke="black"/>
+<line x1="225" y1="643" x2="225" y2="670" stroke="black"/>
+<line x1="375" y1="643" x2="375" y2="670" stroke="black"/>
+<line x1="525" y1="643" x2="525" y2="670" stroke="black"/>
+<path d="M 525 649 A75,6 0 0,1 524,662" stroke="black" fill="none"/><line x1="525" y1="662" x2="535" y2="668" stroke="black"/>
+<polygon fill="white" points="487,645 523,645 523,655 487,655"/>
+<text x="488" y="654" textLength="34" font-family="Helvetica" font-size="12" fill="black">
+timer()
+</text>
+<line x1="75" y1="670" x2="75" y2="697" stroke="black"/>
+<line x1="225" y1="670" x2="225" y2="697" stroke="black"/>
+<line x1="375" y1="670" x2="375" y2="697" stroke="black"/>
+<line x1="525" y1="670" x2="525" y2="697" stroke="black"/>
+<polygon fill="white" points="458,670 592,670 592,695 458,695"/>
+<line x1="458" y1="670" x2="592" y2="670" stroke="black"/>
+<line x1="458" y1="695" x2="592" y2="695" stroke="black"/>
+<line x1="458" y1="670" x2="458" y2="695" stroke="black"/>
+<line x1="592" y1="670" x2="592" y2="695" stroke="black"/>
+<polygon fill="white" points="481,677 567,677 567,687 481,687"/>
+<text x="482" y="686" textLength="84" font-family="Helvetica" font-size="12" fill="black">
+replay= ; up=S3
+</text>
+<line x1="75" y1="697" x2="75" y2="724" stroke="black"/>
+<line x1="225" y1="697" x2="225" y2="724" stroke="black"/>
+<line x1="375" y1="697" x2="375" y2="724" stroke="black"/>
+<line x1="525" y1="697" x2="525" y2="724" stroke="black"/>
+<line x1="525" y1="710" x2="375" y2="710" stroke="black"/>
+<line x1="375" y1="710" x2="385" y2="716" stroke="black"/>
+<polygon fill="white" points="428,699 471,699 471,709 428,709"/>
+<text x="429" y="708" textLength="41" font-family="Helvetica" font-size="12" fill="black">
+ack(S3)
+</text>
+<line x1="75" y1="724" x2="75" y2="751" stroke="black"/>
+<line x1="225" y1="724" x2="225" y2="751" stroke="black"/>
+<line x1="375" y1="724" x2="375" y2="751" stroke="black"/>
+<line x1="525" y1="724" x2="525" y2="751" stroke="black"/>
+<polygon fill="white" points="308,724 442,724 442,749 308,749"/>
+<line x1="308" y1="724" x2="442" y2="724" stroke="black"/>
+<line x1="308" y1="749" x2="442" y2="749" stroke="black"/>
+<line x1="308" y1="724" x2="308" y2="749" stroke="black"/>
+<line x1="442" y1="724" x2="442" y2="749" stroke="black"/>
+<polygon fill="white" points="331,731 417,731 417,741 331,741"/>
+<text x="332" y="740" textLength="84" font-family="Helvetica" font-size="12" fill="black">
+replay= ; up=S3
+</text>
+<line x1="75" y1="751" x2="75" y2="778" stroke="black"/>
+<line x1="225" y1="751" x2="225" y2="778" stroke="black"/>
+<line x1="375" y1="751" x2="375" y2="778" stroke="black"/>
+<line x1="525" y1="751" x2="525" y2="778" stroke="black"/>
+<line x1="375" y1="764" x2="225" y2="764" stroke="black"/>
+<line x1="225" y1="764" x2="235" y2="770" stroke="black"/>
+<polygon fill="white" points="278,753 321,753 321,763 278,763"/>
+<text x="279" y="762" textLength="41" font-family="Helvetica" font-size="12" fill="black">
+ack(S3)
+</text>
+<line x1="75" y1="778" x2="75" y2="805" stroke="black"/>
+<line x1="225" y1="778" x2="225" y2="805" stroke="black"/>
+<line x1="375" y1="778" x2="375" y2="805" stroke="black"/>
+<line x1="525" y1="778" x2="525" y2="805" stroke="black"/>
+<polygon fill="white" points="158,778 292,778 292,803 158,803"/>
+<line x1="158" y1="778" x2="292" y2="778" stroke="black"/>
+<line x1="158" y1="803" x2="292" y2="803" stroke="black"/>
+<line x1="158" y1="778" x2="158" y2="803" stroke="black"/>
+<line x1="292" y1="778" x2="292" y2="803" stroke="black"/>
+<polygon fill="white" points="173,785 275,785 275,795 173,795"/>
+<text x="174" y="794" textLength="100" font-family="Helvetica" font-size="12" fill="black">
+replay= ; down=S3
+</text>
+<line x1="75" y1="805" x2="75" y2="832" stroke="black"/>
+<line x1="225" y1="805" x2="225" y2="832" stroke="black"/>
+<line x1="375" y1="805" x2="375" y2="832" stroke="black"/>
+<line x1="525" y1="805" x2="525" y2="832" stroke="black"/>
+<polygon fill="white" points="148,812 450,812 450,822 148,822"/>
+<text x="149" y="821" textLength="300" font-family="Helvetica" font-size="12" fill="black">
+HEAD has D1,D2,D3 but MIDDLE&amp;TAIL are missing D2.
+</text>
+<line x1="37" y1="818" x2="148" y2="818" stroke="black" stroke-dasharray="2,2"/>
+<line x1="452" y1="818" x2="563" y2="818" stroke="black" stroke-dasharray="2,2"/>
+</svg>
