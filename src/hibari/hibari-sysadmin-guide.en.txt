@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,13 +17,15 @@
 // limitations under the License.
 //
 
-= Hibari System Administrator's Guide
-:Date: 2010/07/05
-:Revision: 0.5
-:Copyright: Copyright (C) 2006-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+= Hibari System Administrator's Guide  *DRAFT - IN PROGRESS*
+:Date: 2011/01/07
+:Revision: 0.5.1
+:Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
 == Introduction
+
+CAUTION: This document is under re-construction - beware!
 
 === The Problem
 
@@ -54,7 +56,7 @@ CREATE TABLE foo (
 -----------------------------------------------------
 
 In truth, each key stored in Hibari has three additional fields
-associated with it. See xref:hibari-data-model[] and 
+associated with it. See xref:hibari-data-model[] and
 link:hibari-developer-guide.en.html[Hibari Developer's Guide] for details.
 
 [[hibari-origins]]
@@ -139,7 +141,7 @@ distributed database world is not black and white, and it is important
 to know where the gray areas are.
 
 See the
-link:http://en.wikipedia.org/wiki/CAP_theorem[Wikipedia article about the CAP theorem] 
+link:http://en.wikipedia.org/wiki/CAP_theorem[Wikipedia article about the CAP theorem]
 for a summary of the theorem, its proof, and related links.
 
   CAP Theorem (postulated by Eric Brewer, Inktomi, 2000)
@@ -410,7 +412,7 @@ brick can be blocked for many seconds if it tried to operate on (for
 example) even a single 4GB blob.  In addition, other processes can be
 blocked by `'busy_dist_port'` events while processing big value blobs.
 
-=== Hibari's Client Operations 
+=== Hibari's Client Operations
 
 Hibari's basic client operations are enumerated below.
 
@@ -425,11 +427,11 @@ Hibari's basic client operations are enumerated below.
 Each operation can be accompanied by operation-specific flags.  Some
 of these flags include:
 
-`witness`:: Do not return the value blob. (`get`, `get_many`) 
+`witness`:: Do not return the value blob. (`get`, `get_many`)
 `must_exist`:: Abort micro-transaction if key does not exist.
 `must_not_exist`:: Abort micro-transaction if key does exist.
 `{testset, TS}`:: Perform the action only if the key's current timestamp
-exactly matches `TS`. (`delete`, `replace`, `set`, micro-transaction) 
+exactly matches `TS`. (`delete`, `replace`, `set`, micro-transaction)
 
 For details of these operations and lesser-used per-operation flags,
 see:
@@ -823,7 +825,7 @@ for details on valid options when creating new tables.
 ===== Consistent hashing algorithm
 
 Hibari uses the following steps in its consistent hashing algorithm
-implementation: 
+implementation:
 
 * Calculate the ``hashing prefix'', using part or all of the key as
   input to the next step.
@@ -832,16 +834,16 @@ implementation:
 ** Built-in prefix functions:
 *** Null: use entire key
 *** Fixed length, e.g. 4 byte or 8 byte constant length prefix.
-*** Variable length: use separator character `'/'` (configurable) 
+*** Variable length: use separator character `'/'` (configurable)
     such that hash prefix is found between the first two (also
     configurable) `'/'` characters.  E.g. If the key is `/user/bar`,
-    then the string `/user/` is used as the hash prefix.    
+    then the string `/user/` is used as the hash prefix.
 * Calculate the MD5 checksum of the hashing prefix and then convert
   the result to the unit interval, 0.0 - 1.0, using floating point
   arithmetic.
 * Consult the unit interval -> chain map to calculate the chain name.
 ** This map contains a tree of `{StartValue, EndValue, ChainName}` tuples.
-   For example, `{0.0, 0.5, footab_ch1}` will map the interval 
+   For example, `{0.0, 0.5, footab_ch1}` will map the interval
    `(0.0, 0.5]` to the chain named `footab_ch1`.
 *** The mapping tree's construction is affected by the chain weighting
     factor.  The weighting factor allows some chains to store more
@@ -2077,7 +2079,7 @@ Items written to the Hibari application log come from multiple sources:
 * The Hibari OTP application
 * Other OTP applications bundled with Hibari
 * Other OTP applications within the Erlang runtime system,
-  e.g. `kernel` and `sasl`. 
+  e.g. `kernel` and `sasl`.
 
 The `<MESSAGE>` field is free-form text.  Application code can freely
 add newline characters and various white-space padding wherever it
@@ -2262,8 +2264,8 @@ roughly the same amount of CPU.
   | Physical Brick T | Physical Brick U | Physical Brick V |
   ----------------------------------------------------------
      Chain 1 head   ->  Chain 1 middle ->  Chain 1 tail   ||
-     Chain 2 tail   ||  Chain 2 head   ->  Chain 2 middle ->  
-     Chain 3 middle ->  Chain 3 tail   ||  Chain 3 head   ->  
+     Chain 2 tail   ||  Chain 2 head   ->  Chain 2 middle ->
+     Chain 3 middle ->  Chain 3 tail   ||  Chain 3 head   ->
 
 In multi-CPU and multi-core systems, a side-effect of using more
 chains (and therefore more bricks) is that the Erlang virtual machine
@@ -2406,7 +2408,7 @@ There are several reasons why disk I/O rates can temporarily increase
 within a Hibari physical brick:
 
 * Logical brick checkpoints for increased write I/O ops, see
-  xref:checkpoints[] 
+  xref:checkpoints[]
 * The common log "scavenger" for increased read and write I/O ops,
   see xref:scavenger[]
 * Chain replication repair, see xref:chain-repair[]

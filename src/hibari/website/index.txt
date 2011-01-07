@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -44,32 +44,26 @@ especially for read and large value operations.
 
 Hibari is developed in the Erlang programming language.  Hibari
 requires Erlang/OTP R13B01 or newer.  Hibari has been tested most
-recently with Erlang/OTP R13B04.  Support for Erlang/OTP R14A is
-planned.
-
-Hibari runs on the Linux operating system.  Hibari has been developed
-and tested primarily on RedHat, CentOS, and Fedora Linux
-distributions.  Hibari has been tested most recently with "Red Hat
-Enterprise Linux Server release 5.3".  However, Hibari should port
-easily to other Linux distributions.  Support for the MacXOS and
-FreeBSD operation systems is planned.
-
-TIP: Go back to the link:webpage-README.html[README] page, the
-link:webpage-FAQ.html[FAQ] page, the
-link:http://sourceforge.net/projects/hibari/[Project] page, or the
-link:http://sourceforge.net/projects/hibari/support[Support] page.
+recently with Erlang/OTP R13B04.  Support for Erlang/OTP R14B01 in
+progress.
 
 *Hibari's Documentation*
 
-The link:webpage-README.html[README] is a good first step to get
-started quickly.  Check the download, the build, and the install
-instructions.
+The link:hibari-user-guide.en.html[Hibari User's Guide] is a good
+first step to get started quickly.  Check the download, the build, and
+the install instructions.
 
 The two key documents are the
 link:hibari-sysadmin-guide.en.html[Hibari System Administrator's
 Guide] and the link:hibari-developer-guide.en.html[Hibari Developer's
 Guide].  Reading the System Administrator's Guide is _STRONGLY_
 recommended.
+
+Read the link:webpage-CHANGELOG.html[CHANGELOG] page for a full list
+of additions, changes, and bug fixes.
+
+Read the link:webpage-FAQ.html[FAQ] page for common questions and
+answers.
 
 The documentation is in a state of change and improvement.
 Contributions from the wider world are welcome.  :-)
@@ -79,6 +73,7 @@ Contributions from the wider world are welcome.  :-)
 Hibari was originally written by Gemini Mobile Technologies to support
 mobile messaging and email services.  Hibari was released outside of
 Gemini under the Apache Public License version 2.0 in July 2010.
+Hibari was moved from SourceForge to GitHub in January 2011.
 
 Hibari has been deployed by multiple telecom carriers in Asia and
 Europe.  Hibari may lack some features such as monitoring, event and
@@ -98,7 +93,7 @@ Gemini Mobile(R) and HyperScale(R) are registered trademarks of Gemini
 Mobile Technologies, Inc. in the United States and other countries.
 
 ------
-Copyright (C) 2005-2010 Gemini Mobile Technologies, Inc.  All rights
+Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights
 reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");

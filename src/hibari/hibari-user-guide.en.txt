@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 //
 
 = Hibari User's Guide *DRAFT - IN PROGRESS*
-:Date: 2010/12/31
-:Revision: 0.1.1
-:Copyright: Copyright (C) 2006-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+:Date: 2011/01/07
+:Revision: 0.1.2
+:Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
 == Introduction
@@ -34,19 +34,19 @@
 - Installing
 - Configuring
 
-*TO BE ADDED ... UNDER CONSTRUCTION*
+_Under Construction - To Be Updated_
 
 === Starting a Single Node Cluster
 
-*TO BE ADDED ... UNDER CONSTRUCTION*
+_Under Construction - To Be Updated_
 
 === Starting a Multi Node Cluster
 
-*TO BE ADDED ... UNDER CONSTRUCTION*
+_Under Construction - To Be Updated_
 
 === Admin Server
 
-*TO BE ADDED ... UNDER CONSTRUCTION*
+_Under Construction - To Be Updated_
 
 == Data and Storage Model
 - Key, Value, Table
@@ -422,7 +422,7 @@ your own Erlang/OTP system.
 +
 ------
 $ cd working-directory-name
-$ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
+$ curl http://www.erlang.org/download/otp_src_R14B01.tar.gz
 ------
 +
   .. Untar the source code for your Erlang/OTP system and then apply

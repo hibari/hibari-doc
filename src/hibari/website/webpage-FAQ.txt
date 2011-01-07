@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,14 +25,7 @@ store. Hibari uses chain replication for strong consistency,
 high-availability, and durability. Hibari has excellent performance
 especially for read and large value operations.
 
-This FAQ may help answer some of your questions.  If not, please
-link:http://sourceforge.net/projects/hibari/support[subscribe] and
-send your question to the appropriate Hibari 'question' mailing list.
-
-TIP: Go back to the link:http://hibari.sourceforge.net/[Home] page,
-the link:webpage-README.html[README] page, the
-link:http://sourceforge.net/projects/hibari/[Project] page, or the
-link:http://sourceforge.net/projects/hibari/support[Support] page.
+This FAQ may help answer some of your questions.
 
 === Downloads
 
@@ -40,56 +33,8 @@ link:http://sourceforge.net/projects/hibari/support[Support] page.
 
 Where can I download the Hibari binary code package?::
     Sorry, Hibari binary packages are not available right now.
-Where can I download the Hibari source code package?::
-    The latest snapshot _(hibari-snapshot.tar.gz)_ of Hibari's Git
-    repositories can be downloaded from the
-    link:http://sourceforge.net/projects/hibari/files/[Files] page.
 How can I download the Hibari source code repositories using Git?::
-    Please see link:webpage-README.html[here] for instructions to
-    download the Hibari source code repositories using 'Git' and
-    Hibari's 'bom.sh' helper tool.
-Why do I need to use Hibari's 'bom.sh' helper tool to download Hibari?::
-    Hibari is composed of several independent (but related) Git source
-    code repositories.  The bom.sh tool automates the downloading process
-    for all of Hibari's Git code repositories and automates the build
-    dependencies between each of the Git code repositories.  The
-    Makefiles used to build Hibari require the dependency files
-    created by the bom.sh tool.
-Why does Git cloning of Hibari's Git code repositories sometimes fail when using Hibari's 'bom.sh' helper tool to download Hibari from SourceForge?::
-    Not quite sure, yet.  We have noticed this problem too!  It seems
-    that SourceForge enforces a simultaneous access and/or a bandwidth
-    restriction for Git anonymous read-only access.  Inserting a sleep
-    before the call to git clone in Hibari's 'bom.sh' helper tool
-    might be one temporary workaround.
+    Please see link:index.html[here] for pointers to download the
+    Hibari source code repositories using 'Git' and Google's 'repo'
+    helper tool.
 
-I don't want to use Hibari's 'bom.sh' helper tool to download Hibari. Is there any other way?::
-    Yes, you can manually download (but not build) all of Hibari's Git
-    code repositories by using Git.
-+
-------------
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/devtools/pkg.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-apps/cluster-info.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-apps/congestion-watcher.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-apps/gdss-json-rpc-proto.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-apps/gdss-s3-proto.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-apps/gdss-ubf-proto.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-apps/gdss.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-apps/gmt-util.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-apps/partition-detector.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-third-party/mochiweb.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-tools/gmt-bom.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-tools/ubf-jsonrpc.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/erl-tools/ubf.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/pkgtools/gif.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/pkgtools/watcher.git
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/src/top/hibari/GDSS.git
-------------
-What other Git Repositories are used by the Hibari project?::
-    The 'hibari' repository is used for Hibari's sysadmin guide,
-    developer guide, and website documentation.  The 'patches'
-    repository is used primarily for Erlang/OTP system patches.
-+
-------------
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/hibari
-git clone git://hibari.git.sourceforge.net/gitroot/hibari/patches
-------------

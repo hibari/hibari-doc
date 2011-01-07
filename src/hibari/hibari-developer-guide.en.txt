@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,13 +17,15 @@
 // limitations under the License.
 //
 
-= Hibari Developer's Guide
-:Date: 2010/07/05
-:Revision: 0.5
-:Copyright: Copyright (C) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+= Hibari Developer's Guide  *DRAFT - IN PROGRESS*
+:Date: 2011/01/07
+:Revision: 0.5.1
+:Copyright: Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
 == Introduction
+
+CAUTION: This document is under re-construction - beware!
 
 This document's goal is to describe the software architecture of the
 Hibari key-value database, discuss parts of its implementation, and to
@@ -123,14 +125,7 @@ and know how to download the Hibari package, install it, start the
 Hibari daemon, and bootstrap the Admin server.  So skip ahead to
 xref:data-model[].
 
-If you haven't done so already, download the Hibari's source code:
-
-  git clone git:TODO
-
-Then follow the instructions in the `README*` files.  You don't need
-to do the final step of installing Hibari (via the `Install.sh`
-script).  The examples below will use the source & compiled code in
-your local workspace instead.
+_Under Construction - To Be Updated_
 
 [[ntp-reminder]]
 === Reminder: Configure NTP (Network Time Protocol)
@@ -146,54 +141,7 @@ vs. server clock skew is likely the cause.
 [[starting-hibari-1st-time]]
 === Starting Hibari for the first time
 
-In your Git workspace, run the following commands to change working
-directory and start Hibari in developer mode.
-
-.Running the Hibari application in developer interactive mode
----------------------------------
-  $ cd gdss/src
-  $ make run-app1-interactive
----------------------------------
-
-You'll see a bunch of messages sent to the shell console, with the
-ending looking something like this (though the order of the two might
-be reversed).
-
-.The end of Hibari application startup (interactive)
----------------------------------
-  =GMT INFO REPORT==== 14-Apr-2010::19:19:25 ===
-  progress: [{application,gdss},{started_at,gdss_dev2@bb3}]
-
-  Eshell V5.7.5  (abort with ^G)
-  (hibari1@bb3)1>
----------------------------------
-
-If you see the INFO report above, then the Hibari application is
-running.  Press the `ENTER` key a few times to see the shell's prompt,
-if you cannot see it.  If you cannot see the Erlang shell prompt, see
-xref:problem-multiple-hibari-apps[] for some hints.
-
-But the app is not yet configured and bootstrapped, so it isn't
-possible to do much with it.  That's for the next section, so read on,
-read on!
-
-[NOTE]
-====================================
-This method of running Hibari interactively will not start the
-Erlang/OTP applications that run other Hibari services, such as the
-UBF server or the JSON-RPC server.  Use this cut-and-paste recipe:
-
-.TODO Review this recipe
-------------------------------------
-> code:add_pathz("../../TODO-ignore-me-ubf/ebin").
-> code:add_pathz("../../TODO-ignore-me-rfc4627/ebin").
-> code:add_pathz("../../gdss-json-rpc-proto/ebin").
-> code:add_pathz("../../gdss-s3-proto/ebin").
-> code:add_pathz("../../gdss-ubf-proto/ebin").
-> application:start(gdss_ubf_proto).
-> application:start(TODO).
-------------------------------------
-====================================
+_Under Construction - To Be Updated_
 
 === Bootstrapping the Hibari "cluster" on your local machine
 

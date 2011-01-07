@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2010 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -25,10 +25,11 @@ store. Hibari uses chain replication for strong consistency,
 high-availability, and durability. Hibari has excellent performance
 especially for read and large value operations.
 
-TIP: Go back to the link:http://hibari.sourceforge.net/[Home] page,
-the link:webpage-README.html[README] page, the
-link:http://sourceforge.net/projects/hibari/[Project] page, or the
-link:http://sourceforge.net/projects/hibari/support[Support] page.
+*Open Source Renewal (2011-01-07)*
+
+Second public release of Hibari's Git Repositories along with Hibari's
+Project Page (https://github.com/hibari/) and Documentation Page
+(http://hibari.github.com/hibari-doc).
 
 *Open Source (2010-07-13)*
 
