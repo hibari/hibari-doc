@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-= Hibari Developer's Guide  *DRAFT - IN PROGRESS*
+= Hibari Contributor's Guide  *DRAFT - IN PROGRESS*
 :Date: 2011/01/07
 :Revision: 0.5.1
 :Copyright: Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.

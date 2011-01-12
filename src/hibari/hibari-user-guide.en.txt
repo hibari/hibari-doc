@@ -17,91 +17,117 @@
 // limitations under the License.
 //
 
-= Hibari User's Guide *DRAFT - IN PROGRESS*
-:Date: 2011/01/07
-:Revision: 0.1.2
+= Hibari Application Developer's Guide *DRAFT - IN PROGRESS*
+:Date: 2011/01/11
+:Revision: 0.1.3
 :Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
 == Introduction
-- History
-- Why NoSQL?
-- Why Hibari?
+_Under Construction_
+
+=== Why NoSQL?
+_to be added_
+
+=== Why Hibari?
+_to be added_
+
+=== How Hibari Works
+
+==== Data Model
+
+==== Partitioning Across Chains
+
+==== Replication Within Chains
+
+==== RAM and Disc Storage
+
+==== Admin Server
+
 
 == Getting Started
-=== Installation
-- Downloading
-- Installing
-- Configuring
+_Under Construction_
 
-_Under Construction - To Be Updated_
+=== Requirements
 
-=== Starting a Single Node Cluster
+==== System Requirements
 
-_Under Construction - To Be Updated_
+==== Required Software
 
-=== Starting a Multi Node Cluster
+=== Downloading Hibari
+_to be added_
 
-_Under Construction - To Be Updated_
+=== Installing Hibari
+_to be added_
 
-=== Admin Server
+=== Deploying a Simple Habari System
 
-_Under Construction - To Be Updated_
+==== Basic Configuration
 
-== Data and Storage Model
-- Key, Value, Table
-- Key Meta Data
-- Memory+Disk Storage
-- Disk Only Storage
+==== Starting a Single Node Cluster
 
-== Replication and Recovery Mechanisms
-- Consistent Hashing and Chains
-- Chain Replication and Repair
-- Recovery Mechanisms
+==== Creating Tables
+
+==== Verifying Your System
+- A few simple operations to verify system is set up properly.
+
+==== Stopping a Single Node Cluster
+
 
 == Client API Model
-- Data Insertion
-- Data Deletion
-- Data Retrieval
-- Test-n-Set
-- Micro-Transactions
+_Under Construction_
+
+=== Data Insertion
+_to be added_
+
+=== Data Deletion
+_to be added_
+
+=== Data Retrieval
+_to be added_
+
+=== Test-n-Set
+_to be added_
+
+=== Micro-Transactions
+_to be added_
 
 == Client API Implementations
-- Native Erlang
-- UBF/EBF/JSF over TCP/IP - Erlang
-- Thrift over TCP/IP - C++, Java, Erlang, ...
-- S3 over HTTP
-- JSON-RPC over HTTP
+_Under Construction_
 
-== Configuration
-- central.conf File and Parameters
-  * static
-  * dynamic
-- Others
+=== Native Erlang
+_to be added_
 
-== Operations
-- Adding Tables
-- Adding/Removing Data Nodes
-- Adding/Removing/Modifying Chains
-  * Modifying Chain Lengths
-  * Data Rebalancing via Chain Migration
-- Adding/Removing Client Nodes
-- Adding/Removing Admin Nodes
-- Scavenger
-- Checkpoint
-- Monitoring
+=== UBF/EBF/JSF over TCP/IP
+_to be added_
 
-== Utilities
-- cluster_dump
-- gh_tool
-- Yahoo's Cloud Serving Benchmark (YCSB)
-- Basho Bench (BB)
+=== Thrift over TCP/IP
+_to be added_
 
-== Applications
-- Hello World - Erlang
-- Hello World - Java
+=== S3 over HTTP
+_to be added_
 
-== Developers
+=== JSON-RPC over HTTP
+_to be added_
+
+== Developer Utilities
+_Under Construction_
+
+=== cluster_dump
+_to be added_
+
+=== gh_tool
+_to be added_
+
+=== Yahoo! Cloud Serving Benchmark
+_to be added_
+
+=== Basho Bench
+_to be added_
+
+
+== Building Hibari from Source
+_Under Construction_
 
 This section describes the basic recipes to build the following items:
 
@@ -459,3 +485,6 @@ $ sudo make install
 
 CAUTION: Please make sure "otp-installing-directory-name/bin" is added
 to your $PATH environment.
+
+== Sample Application
+_Under Construction_
