@@ -47,8 +47,13 @@ certain choices were made ... and what parts need more work.
 
 === Topics Covered
 
-This document is divided into four major sections:
+This document is divided into five major sections:
 
+* Contributing to Hibari
+** GitHub, Git, and Repo
+** Code, Branch, and Version Management
+** Documentation
+** Submitting Patches
 * Introduction for application developers via the Erlang shell
 ** This document assumes that many early users of Hibari will be
    developing some or all of their applications in Erlang.  If that
@@ -108,6 +113,60 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ------------
 <<<
+
+== Contributing to Hibari
+
+=== GitHub, Git, and Repo
+
+_TO BE ADDED_
+
+List the working directories for all of Hibari's "projects":
+------
+$ repo forall -c "pwd"
+------
+
+NOTE: Each project has a corresponding Git repository and (default)
+revision.  Check the "manifests/hibari-default.xml" file for details.
+
+Start a new topic (e.g. new-topic-name) branch:
+------
+$ repo start new-topic-name `repo forall -c "pwd" | xargs echo`
+------
+
+Abandon an existing topic (e.g. topic-name) branch:
+------
+$ repo abandon topic-name `repo forall -c "pwd" | xargs echo`
+------
+
+Track and checkout the master branch:
+------
+$ repo forall -c "git branch --track master github/master"
+$ repo forall -c "git checkout master"
+------
+
+Track and checkout the dev (i.e Development) branch:
+------
+$ repo forall -c "git branch --track dev github/dev"
+$ repo forall -c "git checkout dev"
+------
+
+Track and checkout the pu (i.e Proposed Updates) branch:
+------
+$ repo forall -c "git branch --track pu github/pu"
+$ repo forall -c "git checkout pu"
+------
+
+=== Code, Branch, and Version Management
+
+_TO BE ADDED_
+
+=== Documentation
+
+_TO BE ADDED_
+
+=== Submitting Patches
+
+_TO BE ADDED_
 
 == Getting Started with Hibari and Erlang
 
