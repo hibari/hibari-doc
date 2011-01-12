@@ -70,10 +70,12 @@ Hibari's Admin Server plays a role like Name Node of Hadoop...::
    In theory, the 20-30 seconds that are required for the Admin Server
    to restart could mean 20-30 seconds of negative service impact to
    Hibari clients. In practice, however, Hibari clients almost never
-   notice when an Admin Server instance crashes and restarts. Hibari
-   clients do not need the Admin Server when the cluster is
-   stable. The Admin Server is only necessary when the state of the
-   cluster changes.
+   notice when an Admin Server instance crashes and
+   restarts. Everytime any change happens in Hibari clients (data
+   nodes), then master Admin Server will update the information into
+   memory and also both bootstrap bricks of master and standby Admin
+   Server at the same time. Sync between Master and Standby will be
+   done everytime there is any change in Hibari clients side.
 Hibari's Admin Server stores what state...::
 - *Question:* In case of Name Node of Hadoop, since all inode
   information is stored in its memory, a huge memory needs to be
