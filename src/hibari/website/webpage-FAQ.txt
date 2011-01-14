@@ -38,3 +38,97 @@ How can I download the Hibari source code repositories using Git?::
     Hibari source code repositories using 'Git' and Google's 'repo'
     helper tool.
 
+
+=== Hibari and Hadoop/HDFS
+
+[qanda]
+
+Chain Replication is one of Hibari's characteristics...::
+- *Question:* Chain Replication is one of Hibari's
+  characteristics. HDFS of Hadoop has similar characteristics.  I'm
+  not able to understand the difference.  Please describe specific
+  differences?
+- *Answer:* Sorry, we are not familiar with the implementation of
+  HDFS.  We need to schedule time to research and to understand the
+  implementation of HDFS.  Thank you in advance for your patience.
+Hibari's Admin Server plays a role like Name Node of Hadoop...::
+- *Question:* We understand Hibari's Admin Server plays a role like
+  Name Node of Hadoop and controls chains under a master and slave
+  configuration. If the Hibari Admin server abnormally stops, a
+  standby needs to replace it and continue operations.  To what extent
+  is Hibari's Admin Server and standbys are synced? Is it a level of
+  full sync to enable a shift to a standby without any data loss?
+  Also, how long would a shift to a standby take (out-of-service
+  time)?
+- *Answer:* Yes, a standby for Hibari's Admin Server can resume full
+   service without any data loss.  All of Hibari's Admin Server's
+   private state is stored in bootstrap bricks on disk. The storage of
+   the boostrap bricks is managed by quorom replication.  When the
+   Admin Server is stopped (e.g. node shutdown) or crashes (e.g. power
+   failure), a standy Admin server will take over, assume the master
+   role, and restore the cluster's state from the bootstrap bricks.
+   In theory, the 20-30 seconds that are required for the Admin Server
+   to restart could mean 20-30 seconds of negative service impact to
+   Hibari clients. In practice, however, Hibari clients almost never
+   notice when an Admin Server instance crashes and
+   restarts. Everytime any change happens in Hibari clients (data
+   nodes), then master Admin Server will update the information into
+   memory and also both bootstrap bricks of master and standby Admin
+   Server at the same time. Sync between Master and Standby will be
+   done everytime there is any change in Hibari clients side.
+Hibari's Admin Server stores what state...::
+- *Question:* In case of Name Node of Hadoop, since all inode
+  information is stored in its memory, a huge memory needs to be
+  implemented in alignment with the number of blocks within a whole
+  cluster.  Does Hibari similarly have tough memory requirements?  Or,
+  does Hibari store chain control information (equivalent to inode
+  information), not in a memory, but in disks?
+- *Answer:* No, Hibari's Admin Server does not have any tough memory
+  requirements.  Hibari's Admin Server only keeps the following
+  private state in memory (and on disk):
+    * All table definitions and their configuration, e.g. consistent
+      hashing parameters.
+    * Status of all bricks and all chains.
+    * Operational history of all bricks and all chains.
+What about data locality...::
+- *Question:* Hibari provides API's that can be used like Hbase and
+  Big Table. You also said linkage with Map Reduce is theoretically
+  possible but not yet implemented.  What we do not understand is data
+  locality.  Map reduce focuses on data locality and improves
+  processing efficiency by processing on a node the data that the node
+  has. Suppose that you need to develop a map-reduce framework for
+  Hibari, is it possible to design that data locality is recognized?
+  I.e., Does / can Hibari provide API or others to retrieve data from
+  chains on a certain node or to retreive data from a group of nodes
+  that constitute certain chains?
+- *Answer:* Yes. Hibari has APIs to retrieve data (keys or
+  keys+values) across all chains and to retrieve data from single or
+  multiple single chains.  Using Hibari's consistent hashing algorithm
+  implementation, the application can control how keys are mapped to
+  chains by a key hashing prefix and can control the relative chain
+  storage by a chain weighting factor.
+Hibari's Thrift API...::
+- *Question:* Hibari also supports Thrift API.  How much gap in
+  execution speed is there when using Erlang API and Thrift API?
+- *Answer:* So far, there has been no measurable performance gain or
+  loss found between Hibari's native Erlang, UBF/EBF, and Thrift API
+  implementations.
+Tools for multiple clusters...::
+- *Question:* Does Hibari provide tools to maintain many clusters?
+- *Answer:* No, not currently.
+Maximum number of clusters...::
+- *Question:* What is the maximum number of structured clusters that
+  are theoretically possible? What is the max number of clusters that
+  are actually proven?
+- *Answer:* Each Hibari cluster is an independent entity.  There is no
+  limit since there is no sharing between Hibari clusters.
+Maximum number of nodes ...::
+- *Question:* What is the maximum number of nodes within a Hibari
+  cluster that are theoretically possible? What is the max number of
+  nodes that are actually proven?
+- *Answer:* There is no known theoretical limit.  The maximum size of
+  a Hibari cluster has not yet been determined.  A practical limit of
+  approximately 200-250 nodes is likely.  This limit is currently
+  governed by the implementation of Hibari's Admin Server and by the
+  implementation of Erlang's distribution.  The largest proven
+  deployment of Hibari is 50-60 nodes.
