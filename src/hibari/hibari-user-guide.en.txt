@@ -289,7 +289,7 @@ $ make package VSN="VSN" DIST="DIST"
 ------
 +
 NOTE: A release package tarball "hibari_VSN-DIST-ARCH-WORDSIZE.tgz"
-and shasum file "hibari_VSN-DIST-ARCH-WORDSIZE-shasum.txt" are written
+and md5sum file "hibari_VSN-DIST-ARCH-WORDSIZE-md5sum.txt" are written
 to working-directory-name.
 +
 . Release "Smoke Test" _basic recipe (optional)_
