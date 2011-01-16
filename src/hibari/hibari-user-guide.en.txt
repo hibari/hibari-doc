@@ -69,20 +69,40 @@ _to be added_
 
 === Deploying a Simple Hibari System
 
-==== Basic Configuration
+==== Single Node
+
+===== Basic Configuration
 _to be added_
 
-==== Starting a Single Node Cluster
+===== Starting a Single Node Cluster
 _to be added_
 
-==== Creating Tables
+===== Creating Tables
 _to be added_
 
-==== Verifying Your System
+===== Verifying Your System
 - A few simple operations to verify system is set up properly.
 
-==== Stopping a Single Node Cluster
+===== Stopping a Single Node Cluster
 _to be added_
+
+==== Multi Node
+
+===== Basic Configuration
+_to be added_
+
+===== Starting a Multi Node Cluster
+_to be added_
+
+===== Creating Tables
+_to be added_
+
+===== Verifying Your System
+- A few simple operations to verify system is set up properly.
+
+===== Stopping a Multi Node Cluster
+_to be added_
+
 
 == Client API Model
 _Under Construction_
