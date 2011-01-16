@@ -43,11 +43,12 @@ _to be added_
 ==== Replication Within Chains
 _to be added_
 
-==== RAM and Disc Storage
+==== RAM and Disk Storage
 _to be added_
 
 ==== Admin Server
 _to be added_
+
 
 == Getting Started
 _Under Construction_
@@ -66,7 +67,7 @@ _to be added_
 === Installing Hibari
 _to be added_
 
-=== Deploying a Simple Habari System
+=== Deploying a Simple Hibari System
 
 ==== Basic Configuration
 _to be added_
@@ -101,6 +102,7 @@ _to be added_
 === Micro-Transactions
 _to be added_
 
+
 == Client API Implementations
 _Under Construction_
 
@@ -119,14 +121,9 @@ _to be added_
 === JSON-RPC over HTTP
 _to be added_
 
+
 == Developer Utilities
 _Under Construction_
-
-=== cluster_dump
-_to be added_
-
-=== gh_tool
-_to be added_
 
 === Yahoo! Cloud Serving Benchmark
 _to be added_
@@ -333,7 +330,7 @@ This means "make build-plt" was done successfully.
 TIP: Check Makefile and dialyzer's documentation for further
 information.
 +
-  .. Dialyze Hibari without specs
+  .. Dialyze Hibari (with specs)
 +
 ------
 $ cd working-directory-name/hibari
@@ -350,11 +347,11 @@ CAUTION: If you manually run dialyzer with the "-r" option, execute
 underneath rebar's .eunit directory.  Check Makefile for further
 information.
 +
-  .. Dialyze Hibari with specs
+  .. Dialyze Hibari without specs
 +
 ------
 $ cd working-directory-name/hibari
-$ make dialyze-spec
+$ make dialyze-nospec
 ------
 +
 . Release Generating _basic recipe_
@@ -559,6 +556,7 @@ $ sudo make install
 
 CAUTION: Please make sure "otp-installing-directory-name/bin" is added
 to your $PATH environment.
+
 
 == Sample Application
 _Under Construction_
