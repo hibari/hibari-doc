@@ -118,7 +118,7 @@ limitations under the License.
 
 === GitHub, Git, and Repo
 
-_TO BE ADDED_
+_to be added_
 
 List the working directories for all of Hibari's "projects":
 ------
@@ -152,15 +152,15 @@ $ repo forall -c "git checkout dev"
 
 === Code, Branch, and Version Management
 
-_TO BE ADDED_
+_to be added_
 
 === Documentation
 
-_TO BE ADDED_
+_to be added_
 
 === Submitting Patches
 
-_TO BE ADDED_
+_to be added_
 
 == Getting Started with Hibari and Erlang
 
@@ -178,7 +178,7 @@ and know how to download the Hibari package, install it, start the
 Hibari daemon, and bootstrap the Admin server.  So skip ahead to
 xref:data-model[].
 
-_Under Construction - To Be Updated_
+_Under Construction_
 
 [[ntp-reminder]]
 === Reminder: Configure NTP (Network Time Protocol)
@@ -194,7 +194,7 @@ vs. server clock skew is likely the cause.
 [[starting-hibari-1st-time]]
 === Starting Hibari for the first time
 
-_Under Construction - To Be Updated_
+_Under Construction_
 
 === Bootstrapping the Hibari "cluster" on your local machine
 
