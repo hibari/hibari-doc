@@ -249,6 +249,8 @@ The working directory has the following layout structure:
     |- .git/
     |- .gitignore
     |- Makefile
+    |- dialyze-ignore-warnings.txt
+    |- dialyze-nospec-ignore-warnings.txt
     |- lib/                             <1>
       |- <application_name>/
         |- .git/
@@ -312,162 +314,23 @@ package your own Hibari.
 +
 ------
 $ cd working-directory-name/hibari
-$ make compile
-
-CAUTION: if the response is "make: erl: Command not found", plese make sure
-have been installed the Erlang/OTP and make sure
-"otp-installing-directory-name/bin" is added to your $PATH environment.
+$ make
 ------
 +
-. EUnit Testing _basic recipe_
-+
-------
-$ cd working-directory-name/hibari
-$ make eunit
-
-CAUTION: The end of the make eunit as below:
-module 'httpd_request_handler' There were no tests to run.
-==> rel (eunit)
-==> hibari (eunit)
-
-------
-+
-. Dialyzer Testing _basic recipe_
-  .. Build Dialyzer's PLT _(required once)_
-+
-------
-$ cd working-directory-name/hibari
-$ make build-plt
-
-This step needs about 30-45 mins to complete, please be patient.
-
-The end of the response is "done (warnings were emitted)
-make: *** [/root/.dialyzer_plt.R14B01] Error 2"
-
-This means "make build-plt" was done successfully.
-------
-+
-TIP: Check Makefile and dialyzer's documentation for further
-information.
-+
-  .. Dialyze Hibari (with specs)
-+
-------
-$ cd working-directory-name/hibari
-$ make dialyze
-
-This step needs about 5 mins to complete.
-
-The end of the response is "done (warnings were emitted)
-make: *** [dialyze-spec] Error 2"
-------
-+
-CAUTION: If you manually run dialyzer with the "-r" option, execute
-"make clean compile" first to avoid finding duplicate beam files
-underneath rebar's .eunit directory.  Check Makefile for further
-information.
-+
-  .. Dialyze Hibari without specs
-+
-------
-$ cd working-directory-name/hibari
-$ make dialyze-nospec
-------
-+
-. Release Generating _basic recipe_
-+
-------
-$ cd working-directory-name/hibari
-$ make generate
-------
-+
-CAUTION: Due to an incompatibility between Google's Repo tool and
-Erlang/OTP's reltool, 'svn' and 'rr-cache' broken symlinks underneath
-the lib directory must be removed before generating the release.
-Check Makefile for futher details.
+TIP: If the response is "make: erl: Command not found", please make
+sure Erlang/OTP is installed and "otp-installing-directory-name/bin"
+is added to your $PATH environment.
 +
 . Release Packaging _basic recipe_
 +
 ------
 $ cd working-directory-name/hibari
-$ make package VSN="VSN" DIST="DIST"
+$ make package
 ------
 +
-NOTE: A release package tarball "hibari_VSN-DIST-ARCH-WORDSIZE.tgz"
-and md5sum file "hibari_VSN-DIST-ARCH-WORDSIZE-md5sum.txt" are written
+NOTE: A release package tarball "hibari-X.Y.Z-dev-ARCH-WORDSIZE.tgz"
+and md5sum file "hibari-X.Y.Z-dev-ARCH-WORDSIZE-md5sum.txt" is written
 to working-directory-name.
-+
-. Release "Smoke Test" _basic recipe (optional)_
-  .. Unpack Hibari Release (in temporary directory)
-+
-------
-$ cd working-directory-name/hibari
-$ rm -rf tmp
-$ mkdir tmp
-$ tar -C tmp -xzf ../hibari_VSN-DIST-ARCH-WORDSIZE.tgz
-------
-+
-  .. Start Hibari
-+
-------
-$ cd working-directory-name/hibari
-$ ./tmp/hibari/bin/hibari start
-------
-+
-  .. Attach to running Hibari
-+
-------
-$ cd working-directory-name/hibari
-$ ./tmp/hibari/bin/hibari attach
-Attaching to working-directory-name/hibari/tmp/hibari/erlang.pipe.1 (^D to exit)
-(hibari@127.0.0.1)1>
-------
-+
-  .. Start Admin Server
-+
-------
-(hibari@127.0.0.1)1> brick_admin_sup:start_link().
-{ok,<0.176.01)
-(hibari@127.0.0.1)2>
-------
-+
-  .. Bootstrap "Test" Cluster
-+
-------
-(hibari@127.0.0.1)2> brick_admin:bootstrap_local([], true, $/, 3, 1, 1, []).
-=ERROR REPORT==== 11-Jan-2011::12:25:51 ===
-    module: brick_admin
-    line: 822
-    msg: "ERROR: partition_detector application is not running!  This should
-not happen in a production environment."
-
-=INFO REPORT==== 11-Jan-2011::12:25:51 ===
-    alarm_handler: {set,{{app_disabled,partition_detector},
-                         "This application must run in production
-environments."}}
-ok
-(hibari@127.0.0.1)3>
-------
-+
-  .. Detach from running Hibari ... enter ^D
-+
-------
-(hibari@127.0.0.1)3> ^D [Quit]
-------
-+
-  .. Open "Hibari Web Administration" Page
-+
-------
-$ your-favorite-browser http://127.0.0.1:23080/ or http://YOUR_SERVER_IP:23080/
-------
-+
- .. Stop Hibari
-+
-------
-$ cd working-directory-name/hibari
-$ ./tmp/hibari/bin/hibari stop
-ok
-------
 
 [[HibariAsciiDoc]]
 === Hibari Documentation
