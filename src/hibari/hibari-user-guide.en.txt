@@ -135,20 +135,20 @@ _to be added_
 === Thrift over TCP/IP
 _to be added_
 
-=== S3 over HTTP
+=== JSON-RPC over HTTP
 _to be added_
 
-=== JSON-RPC over HTTP
+=== S3 over HTTP
 _to be added_
 
 
 == Developer Utilities
 _Under Construction_
 
-=== Yahoo! Cloud Serving Benchmark
+=== Basho Bench
 _to be added_
 
-=== Basho Bench
+=== Yahoo! Cloud Serving Benchmark
 _to be added_
 
 
