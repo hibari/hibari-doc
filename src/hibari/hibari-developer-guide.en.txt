@@ -144,16 +144,10 @@ $ repo forall -c "git branch --track master github/master"
 $ repo forall -c "git checkout master"
 ------
 
-Track and checkout the dev (i.e Development) branch:
+Track and checkout the dev (i.e. Development) branch:
 ------
 $ repo forall -c "git branch --track dev github/dev"
 $ repo forall -c "git checkout dev"
-------
-
-Track and checkout the pu (i.e Proposed Updates) branch:
-------
-$ repo forall -c "git branch --track pu github/pu"
-$ repo forall -c "git checkout pu"
 ------
 
 === Code, Branch, and Version Management
