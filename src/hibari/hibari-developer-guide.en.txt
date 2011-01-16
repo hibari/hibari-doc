@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-= Hibari Developer's Guide  *DRAFT - IN PROGRESS*
+= Hibari Contributor's Guide  *DRAFT - IN PROGRESS*
 :Date: 2011/01/07
 :Revision: 0.5.1
 :Copyright: Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
@@ -47,8 +47,13 @@ certain choices were made ... and what parts need more work.
 
 === Topics Covered
 
-This document is divided into four major sections:
+This document is divided into five major sections:
 
+* Contributing to Hibari
+** GitHub, Git, and Repo
+** Code, Branch, and Version Management
+** Documentation
+** Submitting Patches
 * Introduction for application developers via the Erlang shell
 ** This document assumes that many early users of Hibari will be
    developing some or all of their applications in Erlang.  If that
@@ -109,6 +114,54 @@ limitations under the License.
 ------------
 <<<
 
+== Contributing to Hibari
+
+=== GitHub, Git, and Repo
+
+_to be added_
+
+List the working directories for all of Hibari's "projects":
+------
+$ repo forall -c "pwd"
+------
+
+NOTE: Each project has a corresponding Git repository and (default)
+revision.  Check the "manifests/hibari-default.xml" file for details.
+
+Start a new topic (e.g. new-topic-name) branch:
+------
+$ repo start new-topic-name `repo forall -c "pwd" | xargs echo`
+------
+
+Abandon an existing topic (e.g. topic-name) branch:
+------
+$ repo abandon topic-name `repo forall -c "pwd" | xargs echo`
+------
+
+Track and checkout the master branch:
+------
+$ repo forall -c "git branch --track master github/master"
+$ repo forall -c "git checkout master"
+------
+
+Track and checkout the dev (i.e. Development) branch:
+------
+$ repo forall -c "git branch --track dev github/dev"
+$ repo forall -c "git checkout dev"
+------
+
+=== Code, Branch, and Version Management
+
+_to be added_
+
+=== Documentation
+
+_to be added_
+
+=== Submitting Patches
+
+_to be added_
+
 == Getting Started with Hibari and Erlang
 
 All readers, familiar with Erlang or not, should have little
@@ -125,7 +178,7 @@ and know how to download the Hibari package, install it, start the
 Hibari daemon, and bootstrap the Admin server.  So skip ahead to
 xref:data-model[].
 
-_Under Construction - To Be Updated_
+_Under Construction_
 
 [[ntp-reminder]]
 === Reminder: Configure NTP (Network Time Protocol)
@@ -141,7 +194,7 @@ vs. server clock skew is likely the cause.
 [[starting-hibari-1st-time]]
 === Starting Hibari for the first time
 
-_Under Construction - To Be Updated_
+_Under Construction_
 
 === Bootstrapping the Hibari "cluster" on your local machine
 
