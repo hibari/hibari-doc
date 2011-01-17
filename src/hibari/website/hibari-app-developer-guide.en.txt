@@ -1,0 +1,445 @@
+// -*- Doc -*-
+// vim: set syntax=asciidoc:
+
+//
+// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+//
+
+= Hibari Application Developer's Guide *DRAFT - IN PROGRESS*
+:Date: 2011/01/17
+:Revision: 0.1.4
+:Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+
+<<<
+== Introduction
+_Under Construction_
+
+=== Why NoSQL?
+_to be added_
+
+=== Why Hibari?
+_to be added_
+
+=== How Hibari Works
+
+==== Data Model
+_to be added_
+
+==== Partitioning Across Chains
+_to be added_
+
+==== Replication Within Chains
+_to be added_
+
+==== RAM and Disk Storage
+_to be added_
+
+==== Admin Server
+_to be added_
+
+
+== Getting Started
+_Under Construction_
+
+=== Requirements
+
+==== System Requirements
+_to be added_
+
+==== Required Software
+_to be added_
+
+=== Downloading Hibari
+_to be added_
+
+=== Installing Hibari
+_to be added_
+
+=== Deploying a Simple Hibari System
+
+==== Single Node
+
+===== Basic Configuration
+_to be added_
+
+===== Starting a Single Node Cluster
+_to be added_
+
+===== Creating Tables
+_to be added_
+
+===== Verifying Your System
+- A few simple operations to verify system is set up properly.
+
+===== Stopping a Single Node Cluster
+_to be added_
+
+==== Multi Node
+
+===== Basic Configuration
+_to be added_
+
+===== Starting a Multi Node Cluster
+_to be added_
+
+===== Creating Tables
+_to be added_
+
+===== Verifying Your System
+- A few simple operations to verify system is set up properly.
+
+===== Stopping a Multi Node Cluster
+_to be added_
+
+
+== Client API Model
+_Under Construction_
+
+=== Data Insertion
+_to be added_
+
+=== Data Deletion
+_to be added_
+
+=== Data Retrieval
+_to be added_
+
+=== Test-n-Set
+_to be added_
+
+=== Micro-Transactions
+_to be added_
+
+
+== Client API Implementations
+_Under Construction_
+
+=== Native Erlang
+_to be added_
+
+=== UBF/EBF/JSF over TCP/IP
+_to be added_
+
+=== Thrift over TCP/IP
+_to be added_
+
+=== JSON-RPC over HTTP
+_to be added_
+
+=== S3 over HTTP
+_to be added_
+
+
+== Developer Utilities
+_Under Construction_
+
+=== Basho Bench
+_to be added_
+
+=== Yahoo! Cloud Serving Benchmark
+_to be added_
+
+
+== Building Hibari from Source
+_Under Construction_
+
+This section describes the basic recipes to build the following items:
+
+- Hibari Release Package
+- Hibari Documentation
+- Erlang/OTP System
+
+Before getting started, review this checklist of tools and software.
+Please install and setup as needed.
+
+Git (Mandatory)::
+- Git - http://git-scm.com/
+  * *Git 1.5.4 or newer, Git 1.7.3.4 has been tested recently*
+  * _required for Repo and GitHub_
+- GitHub - https://github.com
+  * Anonymous read-only access using the GIT protocol is default.
+  * Team members having read-write access should add his/her ssh
+    public key under your GitHub account.
+Erlang/OTP (Mandatory)::
+- OpenSSL - http://www.openssl.org/
+  * _required for Erlang_
+- Erlang - http://www.erlang.org/
+  * *R13B04 or newer*
+  * *R14B01 has been tested most recently*
+  * If needed, see <<ErlangOTP>> for instructions to build Erlang/OTP
+    from source.
+Python (Mandatory)::
+- Python - http://www.python.org
+  * *Python 2.4 or newer, Python 2.7 has been tested most recently
+     (CAUTION: Python 3.x might be too new)*
+  * _required for Repo and AsciiDoc_
+AsciiDoc (Optional)::
+- AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
+  * *asciidoc 8.6.1 and asciidoc 9.6.3 have been tested most recently*
+  * plus the following tools:
+    ** ImageMagick - http://www.imagemagick.org/
+    ** graphviz - http://www.graphviz.org/
+    ** mscgen - http://www.mcternan.me.uk/mscgen/
+  * Mandatory for building Hibari's documentation. See
+    <<HibariAsciiDoc>> for further details.
+- docbook - http://www.docbook.org/
+  * Optional for building _pdf_ version of Hibari's documentation
+- xmlto - https://fedorahosted.org/xmlto/
+  * Optional for building _text_ version of Hibari's documentation
+
+In addition to the above list, Hibari also depends on two tools to
+automate the downloading and the packaging steps.
+
+- Repo - http://source.android.com/source/git-repo.html
+- Rebar - https://github.com/basho/rebar/wiki
+
+Instructions for downloading the Repo tool are described next.  The
+Rebar tool is included in Hibari's git repositories so there is no
+need to download it separately.  Please refer to the above sites for
+further information regarding the usage of these tools.
+
+The first step is to download the Git repositories from GitHub.
+
+. Downloading _basic recipe_
+  .. Install Repo
++
+------
+$ curl http://android.git.kernel.org/repo > ~/bin/repo
+$ chmod a+x ~/bin/repo
+------
++
+  .. Create working directory
++
+------
+$ mkdir working-directory-name
+$ cd working-directory-name
+$ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
+------
++
+NOTE: Your "Git" identity is needed during the init step.  Please
+enter the name and email of your GitHub account if you have one.  Team
+members having read-write access are recommended to use "repo init -u
+git@github.com:hibari/manifests.git -m hibari-default-rw.xml".
++
+  .. Download Git repositories
++
+------
+$ cd working-directory-name
+$ repo sync
+------
++
+
+The working directory has the following layout structure:
+
+-----
+<working-directory-name>
+  |- hibari/
+    |- .git/
+    |- .gitignore
+    |- Makefile
+    |- dialyze-ignore-warnings.txt
+    |- dialyze-nospec-ignore-warnings.txt
+    |- lib/                             <1>
+      |- <application_name>/
+        |- .git/
+        |- .gitignore
+        |- ebin/
+        |- include/
+          |- *.hrl
+        |- priv/
+        |- rebar.config
+        |- src/
+          |- <application_name>.app.src
+          |- *.erl
+        |- test/
+          |- eunit/
+            |- *.erl
+          |- eqc/
+            |- *.erl
+      :
+    |- rebar
+    |- rebar.config
+    |- rel/                             <2>
+      |- files/
+        |- app.config
+        |- erl
+        |- hibari
+        |- nodetool
+        |- vm.args
+      |- hibari/
+        :
+        |- releases/
+          |- <release_vsn>/
+            :
+          :
+        :
+      |- reltool.config
+  |- hibari-doc/                        <3>
+    :
+  |- manifests/                         <4>
+    :
+  |- patches/                           <5>
+    :
+  |- rebar/                             <6>
+    :
+  |- .repo/
+    :
+-----
+
+<1> Applications
+<2> Releases
+<3> Documentation
+<4> Manifests
+<5> Patches
+<6> Rebar
+
+=== Hibari Release Package
+
+This section is the first step to build, to _eunit_ test, and to
+package your own Hibari.
+
+. Building _basic recipe_
++
+------
+$ cd working-directory-name/hibari
+$ make
+------
++
+TIP: If the response is "make: erl: Command not found", please make
+sure Erlang/OTP is installed and "otp-installing-directory-name/bin"
+is added to your $PATH environment.
++
+. Release Packaging _basic recipe_
++
+------
+$ cd working-directory-name/hibari
+$ make package
+------
++
+NOTE: A release package tarball "hibari-X.Y.Z-dev-ARCH-WORDSIZE.tgz"
+and md5sum file "hibari-X.Y.Z-dev-ARCH-WORDSIZE-md5sum.txt" is written
+to working-directory-name.
+
+[[HibariAsciiDoc]]
+=== Hibari Documentation
+
+This section is the first step to download and to build your own
+Hibari documentation.
+
+. Building Hibari's "Guides" _basic recipe_
++
+------
+$ cd working-directory-name/hibari-doc/src/hibari
+$ make clean -OR- make realclean
+$ make
+------
++
+. Building Hibari's "Website" _basic recipe_
++
+------
+$ cd working-directory-name/hibari-doc/src/hibari/website
+$ make clean -OR- make realclean
+$ make
+------
++
+NOTE: HTML documentation is written in the "./public_html" directory.
+
+Hibari's documentation is authored using AsciiDoc and a few auxillary
+tools:
+
+- ImageMagick
+- docbook
+- graphviz
+- mscgen
+- xmlto
+
+Hibari's documentation is generated with asciidoc 8.6.3 and a manually
+modified version of the a2x tool.
+
+------
+$ diff -u /usr/local/Cellar/asciidoc/8.6.3/bin/a2x{.orig,}
+--- /usr/local/Cellar/asciidoc/8.6.3/bin/a2x.orig	2011-01-02 18:09:35.000000000 +0900
++++ /usr/local/Cellar/asciidoc/8.6.3/bin/a2x	2011-01-02 18:11:19.000000000 +0900
+@@ -156,7 +156,10 @@
+ def shell_copy(src, dst):
+     verbose('copying "%s" to "%s"' % (src,dst))
+     if not OPTIONS.dry_run:
+-        shutil.copy(src, dst)
++        try:
++            shutil.copy(src, dst)
++        except shutil.Error:
++            return
+
+ def shell_rm(path):
+     if not os.path.exists(path):
+------
+
+[[ErlangOTP]]
+=== Erlang/OTP System
+
+This section is the first step to download, to build, and to install
+your own Erlang/OTP system.
+
+. Downloading _basic recipe_
+  .. Please make sure to have the 'openssl-devel' package installed on
+     your system.  OpenSSL is required by Hibari (and before
+     configuring and building of your Erlang/OTP system).
+  .. Get and install Git
++
+  .. Download the source code for your Erlang/OTP system
++
+------
+$ cd working-directory-name
+$ curl http://www.erlang.org/download/otp_src_R14B01.tar.gz
+------
++
+  .. Untar the source code for your Erlang/OTP system and then apply
+     Hibari's Erlang/OTP patches.
++
+------
+$ cd working-directory-name
+$ tar -xzf otp_src_R14B01.tar.gz
+$ cd otp_src_R14B01
+$ for i in ../patches/otp_src_R14B01*.patch ; do patch -p2 < $i; done
+------
++
+. Building _basic recipe_
+  .. Change to your working directory and configure Erlang/OTP
++
+------
+$ cd working-directory-name/otp_src_R14B01
+$ ./configure --prefix=otp-installing-directory-name
+------
++
+  .. Build Erlang/OTP
++
+------
+$ cd working-directory-name/otp_src_R14B01
+$ make
+------
++
+. Installing _basic recipe_
++
+------
+$ cd working-directory-name/otp_src_R14B01
+$ sudo make install
+------
+
+CAUTION: Please make sure "otp-installing-directory-name/bin" is added
+to your $PATH environment.
+
+
+== Sample Application
+_Under Construction_

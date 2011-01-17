@@ -49,13 +49,13 @@ progress.
 
 *Hibari's Documentation*
 
-The link:hibari-user-guide.en.html[Hibari User's Guide] is a good
+The link:hibari-app-developer-guide.en.html[Hibari Application Developer's Guide] is a good
 first step to get started quickly.  Check the download, the build, and
 the install instructions.
 
 The two key documents are the
 link:hibari-sysadmin-guide.en.html[Hibari System Administrator's
-Guide] and the link:hibari-developer-guide.en.html[Hibari Developer's
+Guide] and the link:hibari-contributor-guide.en.html[Hibari Contributor's
 Guide].  Reading the System Administrator's Guide is _STRONGLY_
 recommended.
 

@@ -57,7 +57,7 @@ CREATE TABLE foo (
 
 In truth, each key stored in Hibari has three additional fields
 associated with it. See xref:hibari-data-model[] and
-link:hibari-developer-guide.en.html[Hibari Developer's Guide] for details.
+link:hibari-contributor-guide.en.html[Hibari Contributor's Guide] for details.
 
 [[hibari-origins]]
 === Hibari's Origins
@@ -437,7 +437,7 @@ For details of these operations and lesser-used per-operation flags,
 see:
 
 * xref:micro-transactions[]
-* link:hibari-developer-guide.en.html[Hibari Developer's Guide]
+* link:hibari-contributor-guide.en.html[Hibari Contributor's Guide]
 
 === Indexes
 
@@ -456,7 +456,7 @@ New tables can be created by two different methods:
 
 For details on the Erlang shell API and detailed explanations of the
 table options presented in the Admin server's HTTP interface, see the
-link:hibari-developer-guide.en.html[Hibari Developer's Guide]
+link:hibari-contributor-guide.en.html[Hibari Contributor's Guide]
 
 [[hibari-architecture]]
 == Hibari Architecture
@@ -793,7 +793,7 @@ specific chain.
 // using a key prefix and how it is beneficial to (some) applications.
 
 NOTE: See
-link:hibari-developer-guide.en.html#add-a-new-table[Hibari Developer's Guide,
+link:hibari-contributor-guide.en.html#add-a-new-table[Hibari Contributor's Guide,
 "Add a New Table" section]
 for more information about table configuration.
 
@@ -818,7 +818,7 @@ See the xref:footab-example[] for an example of a table with two
 chains.
 
 See
-link:hibari-developer-guide.en.html#add-a-new-table[Hibari Developer's Guide,
+link:hibari-contributor-guide.en.html#add-a-new-table[Hibari Contributor's Guide,
 "Add a New Table" section]
 for details on valid options when creating new tables.
 
@@ -1560,7 +1560,7 @@ A table can be added at any time, using either of two methods:
   at the bottom of the top-level page.
 +
 * Use the `brick_admin` CLI interface at the Erlang shell.  See
-link:hibari-developer-guide.en.html#add-a-new-table[Hibari Developer's Guide,
+link:hibari-contributor-guide.en.html#add-a-new-table[Hibari Contributor's Guide,
 "Add a New Table" section].
 
 [[remove-table]]
@@ -1627,7 +1627,7 @@ svgimage::images/tab1-2x2[align="center", scaledwidth="70%"]
 NOTE: To change the definition of a chain, use the
 `change_chain_length/2` or `change_chain_length/3` functions.  For
 documentation, see
-link:hibari-developer-guide.en.html#changing-chain-length[Hibari Developer's Guide,
+link:hibari-contributor-guide.en.html#changing-chain-length[Hibari Contributor's Guide,
 "Changing Chain Length" section]
 
 NOTE: When specifying a new chain definition, at least one brick from
