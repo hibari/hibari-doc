@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Application Developer’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="article" title="Hibari Application Developer’s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id318827"></a>Hibari Application Developer’s Guide <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 0.1.4</td><td align="left">2011/01/17</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_why_nosql">1.1. Why NoSQL?</a></span></dt><dt><span class="section"><a href="#_why_hibari">1.2. Why Hibari?</a></span></dt><dt><span class="section"><a href="#_how_hibari_works">1.3. How Hibari Works</a></span></dt></dl></dd><dt><span class="section"><a href="#_getting_started">2. Getting Started</a></span></dt><dd><dl><dt><span class="section"><a href="#_requirements">2.1. Requirements</a></span></dt><dt><span class="section"><a href="#_downloading_hibari">2.2. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#_installing_hibari">2.3. Installing Hibari</a></span></dt><dt><span class="section"><a href="#_deploying_a_simple_hibari_system">2.4. Deploying a Simple Hibari System</a></span></dt></dl></dd><dt><span class="section"><a href="#_client_api_model">3. Client API Model</a></span></dt><dd><dl><dt><span class="section"><a href="#_data_insertion">3.1. Data Insertion</a></span></dt><dt><span class="section"><a href="#_data_deletion">3.2. Data Deletion</a></span></dt><dt><span class="section"><a href="#_data_retrieval">3.3. Data Retrieval</a></span></dt><dt><span class="section"><a href="#_test_n_set">3.4. Test-n-Set</a></span></dt><dt><span class="section"><a href="#_micro_transactions">3.5. Micro-Transactions</a></span></dt></dl></dd><dt><span class="section"><a href="#_client_api_implementations">4. Client API Implementations</a></span></dt><dd><dl><dt><span class="section"><a href="#_native_erlang">4.1. Native Erlang</a></span></dt><dt><span class="section"><a href="#_ubf_ebf_jsf_over_tcp_ip">4.2. UBF/EBF/JSF over TCP/IP</a></span></dt><dt><span class="section"><a href="#_thrift_over_tcp_ip">4.3. Thrift over TCP/IP</a></span></dt><dt><span class="section"><a href="#_json_rpc_over_http">4.4. JSON-RPC over HTTP</a></span></dt><dt><span class="section"><a href="#_s3_over_http">4.5. S3 over HTTP</a></span></dt></dl></dd><dt><span class="section"><a href="#_developer_utilities">5. Developer Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#_basho_bench">5.1. Basho Bench</a></span></dt><dt><span class="section"><a href="#_yahoo_cloud_serving_benchmark">5.2. Yahoo! Cloud Serving Benchmark</a></span></dt></dl></dd><dt><span class="section"><a href="#_building_hibari_from_source">6. Building Hibari from Source</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_release_package">6.1. Hibari Release Package</a></span></dt><dt><span class="section"><a href="#HibariAsciiDoc">6.2. Hibari Documentation</a></span></dt><dt><span class="section"><a href="#ErlangOTP">6.3. Erlang/OTP System</a></span></dt></dl></dd><dt><span class="section"><a href="#_sample_application">7. Sample Application</a></span></dt></dl></div><div class="section" title="1. Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="1.1. Why NoSQL?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_nosql"></a>1.1. Why NoSQL?</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.2. Why Hibari?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_hibari"></a>1.2. Why Hibari?</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.3. How Hibari Works"><div class="titlepage"><div><div><h3 class="title"><a id="_how_hibari_works"></a>1.3. How Hibari Works</h3></div></div></div><div class="section" title="1.3.1. Data Model"><div class="titlepage"><div><div><h4 class="title"><a id="_data_model"></a>1.3.1. Data Model</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.3.2. Partitioning Across Chains"><div class="titlepage"><div><div><h4 class="title"><a id="_partitioning_across_chains"></a>1.3.2. Partitioning Across Chains</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.3.3. Replication Within Chains"><div class="titlepage"><div><div><h4 class="title"><a id="_replication_within_chains"></a>1.3.3. Replication Within Chains</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.3.4. RAM and Disk Storage"><div class="titlepage"><div><div><h4 class="title"><a id="_ram_and_disk_storage"></a>1.3.4. RAM and Disk Storage</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.3.5. Admin Server"><div class="titlepage"><div><div><h4 class="title"><a id="_admin_server"></a>1.3.5. Admin Server</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div></div><div class="section" title="2. Getting Started"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_getting_started"></a>2. Getting Started</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="2.1. Requirements"><div class="titlepage"><div><div><h3 class="title"><a id="_requirements"></a>2.1. Requirements</h3></div></div></div><div class="section" title="2.1.1. System Requirements"><div class="titlepage"><div><div><h4 class="title"><a id="_system_requirements"></a>2.1.1. System Requirements</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.1.2. Required Software"><div class="titlepage"><div><div><h4 class="title"><a id="_required_software"></a>2.1.2. Required Software</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="2.2. Downloading Hibari"><div class="titlepage"><div><div><h3 class="title"><a id="_downloading_hibari"></a>2.2. Downloading Hibari</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.3. Installing Hibari"><div class="titlepage"><div><div><h3 class="title"><a id="_installing_hibari"></a>2.3. Installing Hibari</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.4. Deploying a Simple Hibari System"><div class="titlepage"><div><div><h3 class="title"><a id="_deploying_a_simple_hibari_system"></a>2.4. Deploying a Simple Hibari System</h3></div></div></div><div class="section" title="2.4.1. Single Node"><div class="titlepage"><div><div><h4 class="title"><a id="_single_node"></a>2.4.1. Single Node</h4></div></div></div><div class="section" title="2.4.1.1. Basic Configuration"><div class="titlepage"><div><div><h5 class="title"><a id="_basic_configuration"></a>2.4.1.1. Basic Configuration</h5></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.4.1.2. Starting a Single Node Cluster"><div class="titlepage"><div><div><h5 class="title"><a id="_starting_a_single_node_cluster"></a>2.4.1.2. Starting a Single Node Cluster</h5></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.4.1.3. Creating Tables"><div class="titlepage"><div><div><h5 class="title"><a id="_creating_tables"></a>2.4.1.3. Creating Tables</h5></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.4.1.4. Verifying Your System"><div class="titlepage"><div><div><h5 class="title"><a id="_verifying_your_system"></a>2.4.1.4. Verifying Your System</h5></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+A few simple operations to verify system is set up properly.
+</li></ul></div></div><div class="section" title="2.4.1.5. Stopping a Single Node Cluster"><div class="titlepage"><div><div><h5 class="title"><a id="_stopping_a_single_node_cluster"></a>2.4.1.5. Stopping a Single Node Cluster</h5></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="2.4.2. Multi Node"><div class="titlepage"><div><div><h4 class="title"><a id="_multi_node"></a>2.4.2. Multi Node</h4></div></div></div><div class="section" title="2.4.2.1. Basic Configuration"><div class="titlepage"><div><div><h5 class="title"><a id="_basic_configuration_2"></a>2.4.2.1. Basic Configuration</h5></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.4.2.2. Starting a Multi Node Cluster"><div class="titlepage"><div><div><h5 class="title"><a id="_starting_a_multi_node_cluster"></a>2.4.2.2. Starting a Multi Node Cluster</h5></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.4.2.3. Creating Tables"><div class="titlepage"><div><div><h5 class="title"><a id="_creating_tables_2"></a>2.4.2.3. Creating Tables</h5></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="2.4.2.4. Verifying Your System"><div class="titlepage"><div><div><h5 class="title"><a id="_verifying_your_system_2"></a>2.4.2.4. Verifying Your System</h5></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+A few simple operations to verify system is set up properly.
+</li></ul></div></div><div class="section" title="2.4.2.5. Stopping a Multi Node Cluster"><div class="titlepage"><div><div><h5 class="title"><a id="_stopping_a_multi_node_cluster"></a>2.4.2.5. Stopping a Multi Node Cluster</h5></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div></div></div><div class="section" title="3. Client API Model"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_client_api_model"></a>3. Client API Model</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="3.1. Data Insertion"><div class="titlepage"><div><div><h3 class="title"><a id="_data_insertion"></a>3.1. Data Insertion</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.2. Data Deletion"><div class="titlepage"><div><div><h3 class="title"><a id="_data_deletion"></a>3.2. Data Deletion</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.3. Data Retrieval"><div class="titlepage"><div><div><h3 class="title"><a id="_data_retrieval"></a>3.3. Data Retrieval</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.4. Test-n-Set"><div class="titlepage"><div><div><h3 class="title"><a id="_test_n_set"></a>3.4. Test-n-Set</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.5. Micro-Transactions"><div class="titlepage"><div><div><h3 class="title"><a id="_micro_transactions"></a>3.5. Micro-Transactions</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="4. Client API Implementations"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_client_api_implementations"></a>4. Client API Implementations</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="4.1. Native Erlang"><div class="titlepage"><div><div><h3 class="title"><a id="_native_erlang"></a>4.1. Native Erlang</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="4.2. UBF/EBF/JSF over TCP/IP"><div class="titlepage"><div><div><h3 class="title"><a id="_ubf_ebf_jsf_over_tcp_ip"></a>4.2. UBF/EBF/JSF over TCP/IP</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="4.3. Thrift over TCP/IP"><div class="titlepage"><div><div><h3 class="title"><a id="_thrift_over_tcp_ip"></a>4.3. Thrift over TCP/IP</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="4.4. JSON-RPC over HTTP"><div class="titlepage"><div><div><h3 class="title"><a id="_json_rpc_over_http"></a>4.4. JSON-RPC over HTTP</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="4.5. S3 over HTTP"><div class="titlepage"><div><div><h3 class="title"><a id="_s3_over_http"></a>4.5. S3 over HTTP</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="5. Developer Utilities"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_developer_utilities"></a>5. Developer Utilities</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="5.1. Basho Bench"><div class="titlepage"><div><div><h3 class="title"><a id="_basho_bench"></a>5.1. Basho Bench</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="5.2. Yahoo! Cloud Serving Benchmark"><div class="titlepage"><div><div><h3 class="title"><a id="_yahoo_cloud_serving_benchmark"></a>5.2. Yahoo! Cloud Serving Benchmark</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="6. Building Hibari from Source"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_building_hibari_from_source"></a>6. Building Hibari from Source</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><p>This section describes the basic recipes to build the following items:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Hibari Release Package
+</li><li class="listitem">
+Hibari Documentation
+</li><li class="listitem">
+Erlang/OTP System
+</li></ul></div><p>Before getting started, review this checklist of tools and software.
+Please install and setup as needed.</p><div class="variablelist"><dl><dt><span class="term">
+Git (Mandatory)
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Git - <a class="ulink" href="http://git-scm.com/" target="_top">http://git-scm.com/</a>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<span class="strong"><strong>Git 1.5.4 or newer, Git 1.7.3.4 has been tested recently</strong></span>
+</li><li class="listitem">
+<span class="emphasis"><em>required for Repo and GitHub</em></span>
+</li></ul></div></li><li class="listitem"><p class="simpara">
+GitHub - <a class="ulink" href="https://github.com" target="_top">https://github.com</a>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Anonymous read-only access using the GIT protocol is default.
+</li><li class="listitem">
+Team members having read-write access should add his/her ssh
+    public key under your GitHub account.
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+Erlang/OTP (Mandatory)
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<span class="emphasis"><em>required for Erlang</em></span>
+</li></ul></div></li><li class="listitem"><p class="simpara">
+Erlang - <a class="ulink" href="http://www.erlang.org/" target="_top">http://www.erlang.org/</a>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<span class="strong"><strong>R13B04 or newer</strong></span>
+</li><li class="listitem">
+<span class="strong"><strong>R14B01 has been tested most recently</strong></span>
+</li><li class="listitem">
+If needed, see <a class="xref" href="#ErlangOTP" title="6.3. Erlang/OTP System">Section 6.3, “Erlang/OTP System”</a> for instructions to build Erlang/OTP
+    from source.
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+Python (Mandatory)
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Python - <a class="ulink" href="http://www.python.org" target="_top">http://www.python.org</a>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<span class="strong"><strong>Python 2.4 or newer, Python 2.7 has been tested most recently
+     (CAUTION: Python 3.x might be too new)</strong></span>
+</li><li class="listitem">
+<span class="emphasis"><em>required for Repo and AsciiDoc</em></span>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+AsciiDoc (Optional)
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+AsciiDoc - <a class="ulink" href="http://www.methods.co.nz/asciidoc/index.html" target="_top">http://www.methods.co.nz/asciidoc/index.html</a>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<span class="strong"><strong>asciidoc 8.6.1 and asciidoc 9.6.3 have been tested most recently</strong></span>
+</li><li class="listitem"><p class="simpara">
+plus the following tools:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+ImageMagick - <a class="ulink" href="http://www.imagemagick.org/" target="_top">http://www.imagemagick.org/</a>
+</li><li class="listitem">
+graphviz - <a class="ulink" href="http://www.graphviz.org/" target="_top">http://www.graphviz.org/</a>
+</li><li class="listitem">
+mscgen - <a class="ulink" href="http://www.mcternan.me.uk/mscgen/" target="_top">http://www.mcternan.me.uk/mscgen/</a>
+</li></ul></div></li><li class="listitem">
+Mandatory for building Hibari’s documentation. See
+    <a class="xref" href="#HibariAsciiDoc" title="6.2. Hibari Documentation">Section 6.2, “Hibari Documentation”</a> for further details.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+docbook - <a class="ulink" href="http://www.docbook.org/" target="_top">http://www.docbook.org/</a>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Optional for building <span class="emphasis"><em>pdf</em></span> version of Hibari’s documentation
+</li></ul></div></li><li class="listitem"><p class="simpara">
+xmlto - <a class="ulink" href="https://fedorahosted.org/xmlto/" target="_top">https://fedorahosted.org/xmlto/</a>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Optional for building <span class="emphasis"><em>text</em></span> version of Hibari’s documentation
+</li></ul></div></li></ul></div></dd></dl></div><p>In addition to the above list, Hibari also depends on two tools to
+automate the downloading and the packaging steps.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Repo - <a class="ulink" href="http://source.android.com/source/git-repo.html" target="_top">http://source.android.com/source/git-repo.html</a>
+</li><li class="listitem">
+Rebar - <a class="ulink" href="https://github.com/basho/rebar/wiki" target="_top">https://github.com/basho/rebar/wiki</a>
+</li></ul></div><p>Instructions for downloading the Repo tool are described next.  The
+Rebar tool is included in Hibari’s git repositories so there is no
+need to download it separately.  Please refer to the above sites for
+further information regarding the usage of these tools.</p><p>The first step is to download the Git repositories from GitHub.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+Downloading <span class="emphasis"><em>basic recipe</em></span>
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem"><p class="simpara">
+Install Repo
+</p><pre class="screen">$ curl http://android.git.kernel.org/repo &gt; ~/bin/repo
+$ chmod a+x ~/bin/repo</pre></li><li class="listitem"><p class="simpara">
+Create working directory
+</p><pre class="screen">$ mkdir working-directory-name
+$ cd working-directory-name
+$ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Your "Git" identity is needed during the init step.  Please
+enter the name and email of your GitHub account if you have one.  Team
+members having read-write access are recommended to use "repo init -u
+<a class="ulink" href="mailto:git@github.com" target="_top">git@github.com</a>:hibari/manifests.git -m hibari-default-rw.xml".</p></td></tr></table></div></li><li class="listitem"><p class="simpara">
+Download Git repositories
+</p><pre class="screen">$ cd working-directory-name
+$ repo sync</pre><p class="simpara">The working directory has the following layout structure:</p></li></ol></div></li></ol></div><pre class="screen">&lt;working-directory-name&gt;
+  |- hibari/
+    |- .git/
+    |- .gitignore
+    |- Makefile
+    |- dialyze-ignore-warnings.txt
+    |- dialyze-nospec-ignore-warnings.txt
+    |- lib/                             <a id="CO1-1"></a><img src="./images/icons/callouts/1.png" alt="1" border="0" />
+      |- &lt;application_name&gt;/
+        |- .git/
+        |- .gitignore
+        |- ebin/
+        |- include/
+          |- *.hrl
+        |- priv/
+        |- rebar.config
+        |- src/
+          |- &lt;application_name&gt;.app.src
+          |- *.erl
+        |- test/
+          |- eunit/
+            |- *.erl
+          |- eqc/
+            |- *.erl
+      :
+    |- rebar
+    |- rebar.config
+    |- rel/                             <a id="CO1-2"></a><img src="./images/icons/callouts/2.png" alt="2" border="0" />
+      |- files/
+        |- app.config
+        |- erl
+        |- hibari
+        |- nodetool
+        |- vm.args
+      |- hibari/
+        :
+        |- releases/
+          |- &lt;release_vsn&gt;/
+            :
+          :
+        :
+      |- reltool.config
+  |- hibari-doc/                        <a id="CO1-3"></a><img src="./images/icons/callouts/3.png" alt="3" border="0" />
+    :
+  |- manifests/                         <a id="CO1-4"></a><img src="./images/icons/callouts/4.png" alt="4" border="0" />
+    :
+  |- patches/                           <a id="CO1-5"></a><img src="./images/icons/callouts/5.png" alt="5" border="0" />
+    :
+  |- rebar/                             <a id="CO1-6"></a><img src="./images/icons/callouts/6.png" alt="6" border="0" />
+    :
+  |- .repo/
+    :</pre><div class="calloutlist"><table border="0" summary="Callout list"><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-1"><img src="./images/icons/callouts/1.png" alt="1" border="0" /></a> </p></td><td valign="top" align="left">
+Applications
+</td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-2"><img src="./images/icons/callouts/2.png" alt="2" border="0" /></a> </p></td><td valign="top" align="left">
+Releases
+</td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-3"><img src="./images/icons/callouts/3.png" alt="3" border="0" /></a> </p></td><td valign="top" align="left">
+Documentation
+</td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-4"><img src="./images/icons/callouts/4.png" alt="4" border="0" /></a> </p></td><td valign="top" align="left">
+Manifests
+</td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-5"><img src="./images/icons/callouts/5.png" alt="5" border="0" /></a> </p></td><td valign="top" align="left">
+Patches
+</td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-6"><img src="./images/icons/callouts/6.png" alt="6" border="0" /></a> </p></td><td valign="top" align="left">
+Rebar
+</td></tr></table></div><div class="section" title="6.1. Hibari Release Package"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_release_package"></a>6.1. Hibari Release Package</h3></div></div></div><p>This section is the first step to build, to <span class="emphasis"><em>eunit</em></span> test, and to
+package your own Hibari.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+Building <span class="emphasis"><em>basic recipe</em></span>
+</p><pre class="screen">$ cd working-directory-name/hibari
+$ make</pre><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="./images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>If the response is "make: erl: Command not found", please make
+sure Erlang/OTP is installed and "otp-installing-directory-name/bin"
+is added to your $PATH environment.</p></td></tr></table></div></li><li class="listitem"><p class="simpara">
+Release Packaging <span class="emphasis"><em>basic recipe</em></span>
+</p><pre class="screen">$ cd working-directory-name/hibari
+$ make package</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>A release package tarball "hibari-X.Y.Z-dev-ARCH-WORDSIZE.tgz"
+and md5sum file "hibari-X.Y.Z-dev-ARCH-WORDSIZE-md5sum.txt" is written
+to working-directory-name.</p></td></tr></table></div></li></ol></div></div><div class="section" title="6.2. Hibari Documentation"><div class="titlepage"><div><div><h3 class="title"><a id="HibariAsciiDoc"></a>6.2. Hibari Documentation</h3></div></div></div><p>This section is the first step to download and to build your own
+Hibari documentation.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+Building Hibari’s "Guides" <span class="emphasis"><em>basic recipe</em></span>
+</p><pre class="screen">$ cd working-directory-name/hibari-doc/src/hibari
+$ make clean -OR- make realclean
+$ make</pre></li><li class="listitem"><p class="simpara">
+Building Hibari’s "Website" <span class="emphasis"><em>basic recipe</em></span>
+</p><pre class="screen">$ cd working-directory-name/hibari-doc/src/hibari/website
+$ make clean -OR- make realclean
+$ make</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>HTML documentation is written in the "./public_html" directory.</p></td></tr></table></div></li></ol></div><p>Hibari’s documentation is authored using AsciiDoc and a few auxillary
+tools:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+ImageMagick
+</li><li class="listitem">
+docbook
+</li><li class="listitem">
+graphviz
+</li><li class="listitem">
+mscgen
+</li><li class="listitem">
+xmlto
+</li></ul></div><p>Hibari’s documentation is generated with asciidoc 8.6.3 and a manually
+modified version of the a2x tool.</p><pre class="screen">$ diff -u /usr/local/Cellar/asciidoc/8.6.3/bin/a2x{.orig,}
+--- /usr/local/Cellar/asciidoc/8.6.3/bin/a2x.orig       2011-01-02 18:09:35.000000000 +0900
++++ /usr/local/Cellar/asciidoc/8.6.3/bin/a2x    2011-01-02 18:11:19.000000000 +0900
+@@ -156,7 +156,10 @@
+ def shell_copy(src, dst):
+     verbose('copying "%s" to "%s"' % (src,dst))
+     if not OPTIONS.dry_run:
+-        shutil.copy(src, dst)
++        try:
++            shutil.copy(src, dst)
++        except shutil.Error:
++            return
+
+ def shell_rm(path):
+     if not os.path.exists(path):</pre></div><div class="section" title="6.3. Erlang/OTP System"><div class="titlepage"><div><div><h3 class="title"><a id="ErlangOTP"></a>6.3. Erlang/OTP System</h3></div></div></div><p>This section is the first step to download, to build, and to install
+your own Erlang/OTP system.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+Downloading <span class="emphasis"><em>basic recipe</em></span>
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+Please make sure to have the <span class="emphasis"><em>openssl-devel</em></span> package installed on
+     your system.  OpenSSL is required by Hibari (and before
+     configuring and building of your Erlang/OTP system).
+</li><li class="listitem">
+Get and install Git
+</li><li class="listitem"><p class="simpara">
+Download the source code for your Erlang/OTP system
+</p><pre class="screen">$ cd working-directory-name
+$ curl http://www.erlang.org/download/otp_src_R14B01.tar.gz</pre></li><li class="listitem"><p class="simpara">
+Untar the source code for your Erlang/OTP system and then apply
+     Hibari’s Erlang/OTP patches.
+</p><pre class="screen">$ cd working-directory-name
+$ tar -xzf otp_src_R14B01.tar.gz
+$ cd otp_src_R14B01
+$ for i in ../patches/otp_src_R14B01*.patch ; do patch -p2 &lt; $i; done</pre></li></ol></div></li><li class="listitem"><p class="simpara">
+Building <span class="emphasis"><em>basic recipe</em></span>
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem"><p class="simpara">
+Change to your working directory and configure Erlang/OTP
+</p><pre class="screen">$ cd working-directory-name/otp_src_R14B01
+$ ./configure --prefix=otp-installing-directory-name</pre></li><li class="listitem"><p class="simpara">
+Build Erlang/OTP
+</p><pre class="screen">$ cd working-directory-name/otp_src_R14B01
+$ make</pre></li></ol></div></li><li class="listitem"><p class="simpara">
+Installing <span class="emphasis"><em>basic recipe</em></span>
+</p><pre class="screen">$ cd working-directory-name/otp_src_R14B01
+$ sudo make install</pre></li></ol></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="./images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Please make sure "otp-installing-directory-name/bin" is added
+to your $PATH environment.</p></td></tr></table></div></div></div><div class="section" title="7. Sample Application"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_sample_application"></a>7. Sample Application</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p></div></div></body></html>

@@ -22,7 +22,11 @@ body div {
   margin: 0;
 }
 
-h1, h2, h3, h4, h5, h6
+h1, h2, h3, h4, h5, h6,
+div.toc p b,
+div.list-of-figures p b,
+div.list-of-tables p b,
+div.abstract p.title
 {
   color: #527bbd;
   font-family: tahoma, verdana, sans-serif;
@@ -31,13 +35,8 @@ h1, h2, h3, h4, h5, h6
 div.toc p:first-child,
 div.list-of-figures p:first-child,
 div.list-of-tables p:first-child,
-div.list-of-examples p:first-child,
-div.example p.title,
-div.sidebar p.title
+div.example p.title
 {
-  font-weight: bold;
-  color: #527bbd;
-  font-family: tahoma, verdana, sans-serif;
   margin-bottom: 0.2em;
 }
 
@@ -147,6 +146,7 @@ div.sidebar {
 div.sidebar * { padding: 0; }
 div.sidebar div { margin: 0; }
 div.sidebar p.title {
+  font-family: sans-serif;
   margin-top: 0.5em;
   margin-bottom: 0.2em;
 }
@@ -247,8 +247,8 @@ div.informaltable tfoot,
 div.informaltable tbody
 {
     /* No effect in IE6. */
-    border-top: 3px solid #527bbd;
-    border-bottom: 3px solid #527bbd;
+    border-top: 2px solid #527bbd;
+    border-bottom: 2px solid #527bbd;
 }
 div.table thead, div.table tfoot,
 div.informaltable thead, div.informaltable tfoot
@@ -257,18 +257,13 @@ div.informaltable thead, div.informaltable tfoot
 }
 
 div.mediaobject img {
+    border: 1px solid silver;
     margin-bottom: 0.8em;
 }
 div.figure p.title,
 div.table p.title
 {
   margin-top: 1em;
-  margin-bottom: 0.4em;
-}
-
-div.calloutlist p
-{
-  margin-top: 0em;
   margin-bottom: 0.4em;
 }
 
