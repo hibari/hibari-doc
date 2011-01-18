@@ -213,9 +213,17 @@ further information regarding the usage of these tools.
 The first step is to download the Git repositories from GitHub.
 
 . Downloading _basic recipe_
+  .. Configure your e-mail and name for Git
++
+------
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
+------
++
   .. Install Repo
 +
 ------
+$ mkdir -p ~/bin
 $ curl http://android.git.kernel.org/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
 ------
