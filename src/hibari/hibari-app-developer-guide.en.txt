@@ -25,6 +25,8 @@
 <<<
 == Introduction
 _Under Construction_
+- _Dave S. to write, drawing from various materials._
+- _Will solicit info and review from Dev and Marketing as needed._
 
 === Why NoSQL?
 _to be added_
@@ -52,6 +54,8 @@ _to be added_
 
 == Getting Started
 _Under Construction_
+- _KK Dev to provide initial content._
+- _Dave to review, edit, and solicit additional info as needed._
 
 === Requirements
 
@@ -106,6 +110,8 @@ _to be added_
 
 == Client API Model
 _Under Construction_
+- _Dave to import content from pre-existing "Developer's Guide", review and revise as needed._
+- _Will solicit info and review from Dev as needed._
 
 === Data Insertion
 _to be added_
@@ -125,6 +131,8 @@ _to be added_
 
 == Client API Implementations
 _Under Construction_
+- _Dave to import content from pre-existing "Developer's Guide", review and revise as needed._
+- _Will solicit info and review from Dev as needed._
 
 === Native Erlang
 _to be added_
@@ -144,6 +152,8 @@ _to be added_
 
 == Developer Utilities
 _Under Construction_
+- _KK Dev to provide initial content._
+- _Dave to review, edit, and solicit additional info as needed._
 
 === Basho Bench
 _to be added_
@@ -154,6 +164,8 @@ _to be added_
 
 == Building Hibari from Source
 _Under Construction_
+- _KK Dev to provide initial content._
+- _Dave to review, edit, and solicit additional info as needed._
 
 This section describes the basic recipes to build the following items:
 
@@ -443,3 +455,5 @@ to your $PATH environment.
 
 == Sample Application
 _Under Construction_
+- _KK Dev to provide initial content._
+- _Likely deferred to future date._
