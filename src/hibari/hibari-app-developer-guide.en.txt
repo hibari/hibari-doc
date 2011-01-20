@@ -302,7 +302,9 @@ The working directory has the following layout structure:
         |- app.config
         |- erl
         |- hibari
+        |- hibari-admin
         |- nodetool
+        |- nodetool-admin
         |- vm.args
       |- hibari/
         :
