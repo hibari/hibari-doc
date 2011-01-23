@@ -102,6 +102,255 @@ $ tar -C running-directory-name -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
 
 ==== Multi Node
 
+Cluster is a simple tool for installing, configuring, and
+bootstrapping a cluster of Hibari nodes. The cluster tool requires one
+installer node and one or more target nodes for the Hibari cluster.
+The installer node can be a different node or can be one of the target
+nodes.  The cluster tool requires an installing user (that is you) and
+it must be different than the user for Hibari on the target nodes.
+
+NOTE: This tool should meet the needs of most users.  However, this
+tool's "target node" recipe is currently Linux-centric (e.g. useradd,
+userdel, ...).  Patches and contributions for other OS and platforms
+are welcome.  For non-Linux deployments, the cluster tool is rather
+simple so installation can be done manually by following the tool's
+recipe.
+
+Your Hibari installer node must have following tools/environments
+ready.  For further information and help for related tools, please
+refer to the following links:
+
+- Bash - http://www.gnu.org/software/bash/
+- Expect - http://www.nist.gov/el/msid/expect.cfm
+- Git - http://git-scm.com/
+  * *Git 1.5.4 or newer*
+  * _required for GitHub_
+- Perl - http://www.perl.org/
+- SSH (client) - http://www.openssh.com/
+
+Your Hibari target nodes must have following tools/environments ready.
+For further information and help for related tools, please refer to
+the following links:
+
+- SSH (server) - http://www.openssh.com/
+
+So far, there are no "known" version requirements for Bash, Expect,
+Perl, and SSH.
+
+===== Prerequisites and Assumptions
+
+A. 1 installer node
+   * Bash, Expect, Git, Perl, Python, and SSH (client) is installed
+     on installer node
+   * Your login account ($USER) exists on installer node with ssh
+     private/public keys and ssh agent setup to enable password-less
+     ssh login
+   * /etc/hosts file on installer node contains entries for all
+     target nodes
+B. 1 or more cluster target nodes (e.g. dev1, dev2, dev3)
+   * Your login account ($USER) exists on target nodes
+   * Your login account ($USER) is enabled with password-less sudo
+     access on target nodes
+   * Your login account ($USER) is accessible with password-less ssh
+     login on target nodes
+   * SSH (server) is installed on target nodes
+   * /etc/hosts file on target nodes contains entries for all target
+     nodes
+   * Network A and Network B is setup and active (see note below)
+C. Cluster configuration file. This will show up as hibari.config in
+   latter explanation.  You have to manually create it on installer
+   node and later provide it's location as an input to the cluster
+   tool.
+   * Hibari Admin nodes
+   * Hibari Brick nodes
+   * Hibari Bricks per Chain value (i.e. replication factor)
+   * All Hibari nodes (union of Admin and Brick nodes)
+   * All Hibari nodes Network A and Network B ip addresses plus
+     Network broadcast addresses and Network A tiebreaker address
+   * All Heartbeat UDP ports
++
+Example configuration file (hibari.config) for a three node cluster
+that uses the same physical network for Network A and Network B (see
+note below):
++
+------
+ADMIN_NODES=(dev1 dev2 dev3)
+BRICK_NODES=(dev1 dev2 dev3)
+BRICKS_PER_CHAIN=2
+
+ALL_NODES=(dev1 dev2 dev3)
+ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232")
+ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232")
+ALL_NETA_BCAST="10.181.165.255"
+ALL_NETB_BCAST="10.181.165.255"
+ALL_NETA_TIEBREAKER="10.181.165.1"
+
+ALL_HEART_UDP_PORT="63099"
+ALL_HEART_XMIT_UDP_PORT="63100"
+------
++
+Example /etc/hosts file entries for above configuration:
++
+------
+10.181.165.230  dev1.your-domain.com    dev1
+10.181.165.231  dev2.your-domain.com    dev2
+10.181.165.232  dev3.your-domain.com    dev3
+------
++
+NOTE: See
+http://hibari.github.com/hibari-doc/hibari-sysadmin-guide.en.html#partition-detector
+for further information regarding the network partition detector
+application, Network A, and Network B.  Additional information for the
+application's configuration is embedded in the partition-detector's
+OTP application source file
+(https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src).
++
+CAUTION: In a production setting, Network A and Network B should be
+physically different networks and network interfaces.  However, the
+same network can be used (as in this example) for Network A and
+Network B for testing and development purposes.
++
+CAUTION: Currently hostname must not contain "-" (minus).  If hostname
+contain "-", like dev-1 for example, your Hibari cluster will not
+startup. This will be fixed in future release and this sentence will
+be deleted at that time. Thanks for your patience.
+
+===== Example how to prepare installing user
+
+Setup your user (i.e. your login - $USER) on all Hibari nodes if not
+already existing.  This user will only be used for Hibari installation
+purposes.
+
+1. As root user, add your user to all of the Hibari nodes and grant
+   sudo access for your user.
++
+------
+$ useradd $USER
+$ passwd $USER
+$ visudo
+# append the following line and save it
+$USER  ALL=(ALL)       NOPASSWD: ALL
+------
++
+NOTE: If you get "sudo: sorry, you must have a tty to run sudo" error
+while testing 'sudo', consider to comment out following line inside of
+the /etc/sudoers file:
++
+------
+$ visudo
+Defaults    requiretty
+------
++
+2. Create a new ssh private/public key for your user on the installer
+   node.
++
+------
+$ ssh-keygen
+# enter your password for the private key
+$ eval `ssh-agent`
+$ ssh-add ~/.ssh/id_rsa
+# re-enter your password for the private key
+------
++
+3. Append an entry for the installer node to your \~/.ssh/known_hosts
+   file on each of the Hibari nodes and append an entry to your
+   ~/.ssh/authorized_keys file on all of the Hibari nodes for your
+   public ssh key.
++
+------
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3
+------
++
+NOTE: If your installer node will be one of the Hibari cluster nodes,
+make sure that you ssh-copy-id to the installer node also.
++
+4. Confirm password-less access to the each of the Hibari nodes works
+as expected.
++
+------
+$ ssh $USER@dev1
+$ ssh $USER@dev2
+$ ssh $USER@dev3
+------
+
+TIP: If needed, check
+http://inside.mines.edu/~gmurray/HowTo/sshNotes.html for further SSH
+setup help.
+
+===== Example how to prepare installer node
+
+1. Configure your e-mail and name for Git
++
+------
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
+------
++
+2. Create working directory
++
+------
+$ mkdir working-directory-name
+------
++
+3. Download cluster tool's Git repository
++
+------
+$ cd working-directory-name
+$ git clone git://github.com/hibari/clus.git
+------
++
+4. Place a copy of the Hibari pre-built release and your hibari.config
+   file into the working directory.
++
+------
+$ cd working-directory-name
+$ ls -1
+clus
+hibari-X.Y.Z-DIST-ARCH-WORDSIZE-md5sum.txt
+hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+hibari.config
+$
+------
+
+===== Example how to create all Hibari nodes
+
+All of the operations below are run on the installer node via two Bash
+scripts (i.e. clus.sh and clus-hibari.sh).
+
+1. Create (or re-create) "hibari" user on all Hibari nodes
++
+NOTE: If your ssh private key is protected by a password, please make
+sure your private key is registered with the ssh agent before
+proceeding.
++
+------
+$ cd working-directory-name
+$ for i in dev1 dev2 dev3 ; do ./clus/priv/clus.sh -f init hibari $i ; done
+hibari@dev1
+hibari@dev2
+hibari@dev3
+------
++
+CAUTION: The -f option will forcefully delete and then re-create
+the "hibari" user on the target node.
++
+2. Copy pre-built release to all Hibari nodes and then setup Hibari
+   package on all Hibari nodes via the "hibari" user.
++
+------
+$ cd working-directory-name
+$ ./clus/priv/clus-hibari.sh -f init hibari hibari.config hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+hibari@dev1
+hibari@dev2
+hibari@dev3
+------
+
+TIP: As described in the next section, the clus-hibari.sh script can
+be used for starting and stopping of a Hibari multi node cluster even
+after it's creation.
+
 === Deploying a Simple Hibari System
 
 ==== Single Node
@@ -156,16 +405,64 @@ $ running-directory-name/hibari/bin/hibari stop
 _to be added_
 
 ===== Starting a Multi Node Cluster
-_to be added_
+
+. Start Hibari on all Hibari nodes via the "hibari" user
++
+------
+$ cd working-directory-name
+$ ./clus/priv/clus-hibari.sh -f start hibari hibari.config
+hibari@dev1
+hibari@dev2
+hibari@dev3
+------
++
+. Bootstrap Hibari on first Hibari admin node via the "hibari" user
++
+------
+$ cd working-directory-name
+$ ./clus/priv/clus-hibari.sh -f bootstrap hibari hibari.config
+hibari@dev1 => hibari@dev1 hibari@dev2 hibari@dev3
+------
++
+The Hibari bootstrap process starts Hibari's admin server on the first
+admin node and creates a single table "tab1" serving as Hibari's
+default table.
++
+NOTE: If bootstrapping fails due to "another_admin_server_running"
+error, please stop the other Hibari cluster(s) running on the network
+or repeat the installation from the beginning with udp ports
+(i.e. ALL_HEART_UDP_PORT and ALL_HEART_XMIT_UDP_PORT) that are not in
+use by other applications or another Hibari cluster.
 
 ===== Verifying Your System
-- A few simple operations to verify system is set up properly.
+
+A few simple operations to verify system is set up properly.
+
+. Open "Hibari Web Administration" Page
++
+------
+$ your-favorite-browser http://dev1:23080
+------
+
+_to be added_
 
 ===== Creating Other Tables
 _to be added_
 
 ===== Stopping a Multi Node Cluster
-_to be added_
+
+. Stop Hibari on all Hibari nodes via the "hibari" user
++
+------
+$ cd working-directory-name
+$ ./clus/priv/clus-hibari.sh -f stop hibari hibari.config
+ok
+ok
+ok
+hibari@dev1
+hibari@dev2
+hibari@dev3
+------
 
 
 == Client API Model
