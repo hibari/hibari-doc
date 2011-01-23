@@ -18,16 +18,16 @@
 //
 
 = Hibari Application Developer's Guide *DRAFT - IN PROGRESS*
-:Date: 2011/01/17
-:Revision: 0.1.4
+:Date: 2011/01/23
+:Revision: 0.1.5
 :Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
 == Introduction
 _Under Construction_
 
-- _Dave S. to write, drawing from various materials._
-- _Will solicit info and review from Dev and Marketing as needed._
+// - _Dave S. to write, drawing from various materials._
+// - _Will solicit info and review from Dev and Marketing as needed._
 
 === Why NoSQL?
 _to be added_
@@ -56,8 +56,8 @@ _to be added_
 == Getting Started
 _Under Construction_
 
-- _KK Dev to provide initial content._
-- _Dave S. to review, edit, and solicit additional info as needed._
+// - _KK Dev to provide initial content._
+// - _Dave S. to review, edit, and solicit additional info as needed._
 
 === Requirements
 
@@ -65,13 +65,42 @@ _Under Construction_
 _to be added_
 
 ==== Required Software
-_to be added_
+
+- OpenSSL - http://www.openssl.org/
+  * _required for Erlang's crypto module_
 
 === Downloading Hibari
-_to be added_
+
+A Hibari pre-built release has 2 files:
+
+- a tarball package "hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz"
+- a md5sum file "hibari-X.Y.Z-DIST-ARCH-WORDSIZE-md5sum.txt"
+
+_X.Y.Z_ is the release version, _DIST_ is the release distribution,
+_ARCH_ is the release architecture, and _WORDSIZE_ is the release
+wordsize.
+
+Hibari pre-built releases are not available for download yet.  See
+<<HibariBuildingSource>> for instructions to build Hibari from source
+for your target platform.
 
 === Installing Hibari
-_to be added_
+
+==== Single Node
+
+. Create directory for running Hibari
++
+------
+$ mkdir running-directory-name
+------
++
+. Untar release files
++
+------
+$ tar -C running-directory-name -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+------
+
+==== Multi Node
 
 === Deploying a Simple Hibari System
 
@@ -81,16 +110,45 @@ _to be added_
 _to be added_
 
 ===== Starting a Single Node Cluster
-_to be added_
 
-===== Creating Tables
-_to be added_
+. Start Hibari
++
+------
+$ running-directory-name/hibari/bin/hibari start
+------
++
+. Bootstrap Hibari
++
+------
+$ running-directory-name/hibari/bin/hibari-admin bootstrap
+------
++
+The Hibari bootstrap process starts Hibari's Admin server on the
+single node and creates a single table "tab1" serving as Hibari's
+default table.
 
 ===== Verifying Your System
-- A few simple operations to verify system is set up properly.
+
+A few simple operations to verify system is set up properly.
+
+. Open "Hibari Web Administration" Page
++
+------
+$ your-favorite-browser http://127.0.0.1:23080
+------
+
+_to be added_
+
+===== Creating Other Tables
+_to be added_
 
 ===== Stopping a Single Node Cluster
-_to be added_
+
+. Stop Hibari
++
+------
+$ running-directory-name/hibari/bin/hibari stop
+------
 
 ==== Multi Node
 
@@ -100,11 +158,11 @@ _to be added_
 ===== Starting a Multi Node Cluster
 _to be added_
 
-===== Creating Tables
-_to be added_
-
 ===== Verifying Your System
 - A few simple operations to verify system is set up properly.
+
+===== Creating Other Tables
+_to be added_
 
 ===== Stopping a Multi Node Cluster
 _to be added_
@@ -113,8 +171,8 @@ _to be added_
 == Client API Model
 _Under Construction_
 
-- _Dave to import content from pre-existing "Developer's Guide", review and revise as needed._
-- _Will solicit info and review from Dev as needed._
+// - _Dave to import content from pre-existing "Developer's Guide", review and revise as needed._
+// - _Will solicit info and review from Dev as needed._
 
 === Data Insertion
 _to be added_
@@ -135,8 +193,8 @@ _to be added_
 == Client API Implementations
 _Under Construction_
 
-- _Dave to import content from pre-existing "Developer's Guide", review and revise as needed._
-- _Will solicit info and review from Dev as needed._
+// - _Dave to import content from pre-existing "Developer's Guide", review and revise as needed._
+// - _Will solicit info and review from Dev as needed._
 
 === Native Erlang
 _to be added_
@@ -157,8 +215,8 @@ _to be added_
 == Developer Utilities
 _Under Construction_
 
-- _KK Dev to provide initial content._
-- _Dave to review, edit, and solicit additional info as needed._
+// - _KK Dev to provide initial content._
+// - _Dave to review, edit, and solicit additional info as needed._
 
 === Basho Bench
 _to be added_
@@ -167,11 +225,12 @@ _to be added_
 _to be added_
 
 
+[[HibariBuildingSource]]
 == Building Hibari from Source
 _Under Construction_
 
-- _KK Dev to provide initial content._
-- _Dave to review, edit, and solicit additional info as needed._
+// - _KK Dev to provide initial content._
+// - _Dave to review, edit, and solicit additional info as needed._
 
 This section describes the basic recipes to build the following items:
 
@@ -192,7 +251,7 @@ Git (Mandatory)::
     public key under your GitHub account.
 Erlang/OTP (Mandatory)::
 - OpenSSL - http://www.openssl.org/
-  * _required for Erlang_
+  * _required for Erlang's crypto module_
 - Erlang - http://www.erlang.org/
   * *R13B04 or newer*
   * *R14B01 has been tested most recently*
@@ -242,7 +301,7 @@ $ git config --global user.name "Your Name"
 +
 ------
 $ mkdir -p ~/bin
-$ curl http://android.git.kernel.org/repo > ~/bin/repo
+$ wget -O - http://android.git.kernel.org/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
 ------
 +
@@ -430,17 +489,14 @@ your own Erlang/OTP system.
 +
 ------
 $ cd working-directory-name
-$ curl http://www.erlang.org/download/otp_src_R14B01.tar.gz
+$ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
 ------
 +
-  .. Untar the source code for your Erlang/OTP system and then apply
-     Hibari's Erlang/OTP patches.
+  .. Untar the source code for your Erlang/OTP system.
 +
 ------
 $ cd working-directory-name
 $ tar -xzf otp_src_R14B01.tar.gz
-$ cd otp_src_R14B01
-$ for i in ../patches/otp_src_R14B01*.patch ; do patch -p2 < $i; done
 ------
 +
 . Building _basic recipe_
@@ -472,5 +528,5 @@ to your $PATH environment.
 == Sample Application
 _Under Construction_
 
-- _KK Dev to provide initial content._
-- _Likely deferred to future date._
+// - _KK Dev to provide initial content._
+// - _Likely deferred to future date._
