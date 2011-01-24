@@ -380,10 +380,16 @@ default table.
 
 A few simple operations to verify system is set up properly.
 
-. Open "Hibari Web Administration" Page
+. Open "Hibari Web Administration" page
 +
 ------
 $ your-favorite-browser http://127.0.0.1:23080
+------
++
+. Ping node to check the health.
++
+------
+$ running-directory-name/hibari/bin/hibari ping
 ------
 
 _to be added_
@@ -438,10 +444,20 @@ use by other applications or another Hibari cluster.
 
 A few simple operations to verify system is set up properly.
 
-. Open "Hibari Web Administration" Page
+. Open "Hibari Web Administration" page
 +
 ------
 $ your-favorite-browser http://dev1:23080
+------
++
+. Ping each of the nodes to check the health.
++
+------
+$ cd working-directory-name
+$ ./clus/priv/clus-hibari.sh -f ping hibari hibari.config
+hibari@dev1 ... pong
+hibari@dev2 ... pong
+hibari@dev3 ... pong
 ------
 
 _to be added_
