@@ -1444,7 +1444,7 @@ off.  Client read-only requests are not affected by read-only mode.
 // not here) that Client updates may actually persist even though the
 // client stopped waiting and returned a timeout to the "application".
 // A Timeout on Client updates can not guarantee the change was
-// applied or not applied to the GDSS tables.
+// applied or not applied to the Hibari tables.
 
 [[checkpoints]]
 === Brick Checkpoint Operations

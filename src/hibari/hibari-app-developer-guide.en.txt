@@ -2212,7 +2212,7 @@ timestamp and new value.
 "TBF" is a link:https://github.com/apache/thrift[Thrift
 protocol] defined by UBF contract
 xref:the-hibari-ubf-protocol-contract[].  This section attempts to
-describe the Hibari Thrift API which allows users to access GDSS with
+describe the Hibari Thrift API which allows users to access Hibari with
 Thrift clients in any Thrift supported programming languages, and how
 to extend the API for application uses.
 
