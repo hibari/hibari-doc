@@ -1639,6 +1639,252 @@ Failed operation with transaction semantics. Because transaction semantics are u
 {txn_fail,[{2,key_not_exist}]}
 ------
 
+[[brick-simple-fold-table]]
+=== brick_simple:fold_table/7
+
+_Under Construction_
+
+SYNOPSIS
+
+ ::
+*brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags, MaxParallel, Timeout).*
+
+DESCRIPTION
+
+ ::
+Attempt a fold operation across all keys in a table.
+
+IMPORTANT: Do not execute this operation while a data migration is being performed.
+
+PARAMETERS
+
+ ::
+*Tab*
+
+- Name of the table across which to perform the fold operation.
+- Mandatory.
+- Type:
+  * `Tab = table()`
+  * `table() = atom()`
+ 
+ ::
+*Fun*
+
+- _description to be added_.
+- Mandatory.
+- Type: 
+  * `Fun  = fun_arity_2()`
+  * `fun_arity_2()` arguments = 
+   ** `{ChainName, Tuple_from_get_many}`
+     *** `Tuple_From_get_many` is a single result tuple from a link:#brick-simple-get-many[brick_simple:get_many()] result. Its format can vary according to the `Flags` argument, which is passed as-is to a `get_many()` call. For example, if `Flags` = `[]`, then `Tuple_From_get_many` will match `{Key, TS, Value}`. If `Flags` = `[witness]`, then `Tuple_From_get_many` will match `{Key, TS}`.
+   ** `UserAccumulatorTerm`
+
+ ::
+*Acc*
+
+- _description to be added_.
+- Mandatory.
+- Type: 
+  * `Acc  = term()`
+
+ ::
+*NumItems*
+
+- _description to be added_.
+- Mandatory.
+- Type: 
+  * `NumItems  = integer()`
+
+ ::
+*Flags*
+
+- List of operational flags to apply to the `fold_table' operation. The supported flags are the same as those for link:#brick-simple-get-many[brick_simple:get_many()].
+- Mandatory.
+- Type:
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag() | property()]`
+  * `do_op_flag() = 'get_all_attribs' | 'witness' | {'binary_prefix', binary()} | {'max_bytes', integer()}`
+  * `property() = atom() | {term(), term()}`
+- Operational flag usage
+  * `'get_all_attribs'`
+    ** Return all attributes of each key. May be used in combination with the `witness` flag.
+  * `'witness'`
+    ** Do not return the value blobs in the result. This flag will guarantee that the brick does not require disk access to satisfy this request.
+  * `{'binary_prefix', binary()}`
+    ** Return only keys that have a
+binary prefix that is exactly equal to `binary()`.
+  * `{'max_bytes', integer()}`
+    ** Return only as many keys as the sum of the sizes of their corresponding value blobs does not exceed `integer()` bytes.
+
+ ::
+*MaxParallel*
+
+- If `MaxParallel` = 0, a true fold will be performed. If `MaxParallel` >= 1, then an independent fold will be performed on each chain, with up to `MaxParallel` number of folds running in parallel. The result from each chain fold will be returned to the caller as-is, i.e. will *not* be combined like in a "reduce" phase of a map-reduce cycle.
+- Optional; defaults to 0.
+- Type:
+  * `MaxParallel = integer()`
+
+ ::
+*Timeout*
+
+- Operation timeout in milliseconds.
+- Optional; defaults to 5000.
+- Type:
+  * `Timeout = timeout()`
+  * `timeout() = integer()
+
+RETURNS
+
+_more info to be added_
+
+- `term() | {term(), integer(), integer(), integer()}`
+
+ALIASES
+
+ ::
+- brick_simple:fold_table/5
+  * `brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags).`
+- brick_simple:fold_table/6
+  * `brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags, MaxParallel).`
+
+EXAMPLES
+
+_to be added_
+
+[[brick-simple-fold-key]]
+=== brick_simple:fold_key_prefix/9
+
+_Under Construction_
+
+SYNOPSIS
+
+ ::
+*brick_simple:fold_key_prefix(Tab, Prefix, StartKey, Fun, Acc, Flags0, NumItems,SleepTime,Timeout).*
+
+DESCRIPTION
+
+ ::
+For a binary key prefix `Prefix`, fold over all keys in table `Tab` starting with `StartKey`, sleeping for `SleepTime` milliseconds between iterations and using `Flags` and `NumItems` as arguments to link:#brick-simple-get-many[brick_simple:get_many()].
+
+IMPORTANT: Do not execute this operation while a data migration is being performed.
+
+PARAMETERS
+
+ ::
+*Tab*
+
+- Name of the table in which to perform the fold operation.
+- Mandatory.
+- Type:
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Prefix*
+
+- Key prefix for which to perform the fold operation.
+- Mandatory.
+- Type:
+  * `Prefix = binary()`
+
+ ::
+*StartKey*
+
+- Key at which to initiate the fold operation.
+- Optional; defaults to equal your specified `Prefix`.
+- Type:
+  * `StartKey = binary()`
+ 
+ ::
+*Fun*
+
+- _description to be added_.
+- Mandatory.
+- Type: 
+  * `Fun  = fun_arity_2()`
+  * `fun_arity_2()` arguments = 
+   ** `Tuple_from_get_many`
+     *** `Tuple_From_get_many` is a single result tuple from a link:#brick-simple-get-many[brick_simple:get_many()] result. Its format can vary according to the `Flags0` argument, which is passed as-is to a `get_many()` call. For example, if `Flags0` = `[]`, then `Tuple_From_get_many` will match `{Key, TS, Value}`. If `Flags0` = `[witness]`, then `Tuple_From_get_many` will match `{Key, TS}`.
+   ** `UserAccumulatorTerm`
+
+ ::
+*Acc*
+
+- _description to be added_.
+- Mandatory.
+- Type: 
+  * `Acc  = term()`
+
+ ::
+*Flags0*
+
+- List of operational flags to apply to the `fold_key_prefix` operation. The supported flags are the same as those for link:#brick-simple-get-many[brick_simple:get_many()], excluding the `{'binary_prefix', binary()}` flag. This flag is inappropriate since the key prefix is passed directly through the `Prefix` argument of `brick_simple:fold_key_prefix()`. 
+- Mandatory.
+- Type:
+  * `Flags0 = 'get_all_attribs' | 'witness' | {'max_bytes', integer()}`
+- Operational flag usage
+  * `'get_all_attribs'`
+    ** Return all attributes of each key. May be used in combination with the `witness` flag.
+  * `'witness'`
+    ** Do not return the value blobs in the result. This flag will guarantee that the brick does not require disk access to satisfy this request.
+  * `{'max_bytes', integer()}`
+    ** Return only as many keys as the sum of the sizes of their corresponding value blobs does not exceed `integer()` bytes.
+
+ ::
+*NumItems*
+
+- _description to be added_.
+- Optional; defaults to 100.
+- Type: 
+  * `NumItems  = integer()`
+
+ ::
+*SleepTime*
+
+- Sleep time between interations, in milliseconds.
+- Optional; defaults to 0.
+- Type:
+  * `SleepTime = integer()`
+
+ ::
+*Timeout*
+
+- Operation timeout in milliseconds.
+- Optional; defaults to 15000.
+- Type:
+  * `Timeout = timeout()`
+  * `timeout() = integer()
+
+RETURNS
+
+_more info to be added_
+
+ ::
+Success return
+
+- `{ok, Acc, Iterations}`
+  * `Acc = term()`
+  * `Iterations = integer()`
+
+ ::
+Error return
+
+- `{error, GdssError, Acc, Iterations}`
+  * `GdssError = term()`
+  * `Acc = term()`
+  * `Iterations = integer()`
+
+ALIASES
+
+ ::
+- brick_simple:fold_key_prefix/5
+  * `brick_simple:fold_key_prefix(Tab, Prefix, Fun, Acc, Flags).`
+
+EXAMPLES
+
+_to be added_
+
+
 
 [[client-api-ubf]]
 == Client API: UBF
