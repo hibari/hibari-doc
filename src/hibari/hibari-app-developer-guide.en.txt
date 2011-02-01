@@ -515,6 +515,13 @@ More specifically, Hibari's client API supports the operations listed below. For
  - Execute a specified list of operations, optionally as an all-or-nothing transaction:
   * link:#brick-simple-do[brick_simple:do/4]
 
+*Fold Operations*
+
+ - Implement a fold operation across all keys in a table:
+  * link:#brick-simple-fold-table[brick_simple:fold_table/7]
+ - Implement a fold operation across all keys having a specified prefix:
+  * link:#brick-simple-fold-key[brick_simple:fold_key_prefix/9]
+
 If desired, clients can apply a "test 'n set" logic to data insertion, retrieval, and deletion operations so that the operation will be executed only if the target key has the exact timestamp specified in the request.
 
 ==== Erlang Basic Data Types
