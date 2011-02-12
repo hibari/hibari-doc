@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Application Developer’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" href="docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="article" title="Hibari Application Developer&#x2019;s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36104938"></a>Hibari Application Developer’s Guide <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 0.1.6</td><td align="left">2011/01/30</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_why_nosql">1.1. Why NoSQL?</a></span></dt><dt><span class="section"><a href="#_why_hibari">1.2. Why Hibari?</a></span></dt><dt><span class="section"><a href="#_how_hibari_works">1.3. How Hibari Works</a></span></dt></dl></dd><dt><span class="section"><a href="#_getting_started">2. Getting Started</a></span></dt><dd><dl><dt><span class="section"><a href="#_requirements">2.1. Requirements</a></span></dt><dt><span class="section"><a href="#_downloading_hibari">2.2. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#_installing_hibari">2.3. Installing Hibari</a></span></dt><dt><span class="section"><a href="#_deploying_a_simple_hibari_system">2.4. Deploying a Simple Hibari System</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. Client API: Native Erlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_overview">3.1. Overview</a></span></dt><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. Client API: UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. The Hibari Server’s Implementation of the UBF Protocol Stack</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBF representation of strings vs. binaries</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. Steps for Using a UBF-based Protocol in Any Language</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. The Hibari UBF Protocol Contract</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Using the UBF Client Library for Erlang</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Using the UBF Client Library for Java</a></span></dt><dt><span class="section"><a href="#using-ubf-python-client">4.7. Using the EBF Client Library for Python</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. Client API: Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_the_hibari_thrift_api">5.1. The Hibari Thrift API</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_types_to_thrift_types">5.2. Mapping UBF Contract Types to Thrift Types</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_to_thrift_service">5.3. Mapping UBF Contract to Thrift Service</a></span></dt><dt><span class="section"><a href="#_examples_of_using_a_thrift_client">5.4. Examples of using a Thrift client</a></span></dt><dt><span class="section"><a href="#_mapping_tbf_contract_responses_from_thrift_client">5.5. Mapping TBF Contract Responses From Thrift Client</a></span></dt></dl></dd><dt><span class="section"><a href="#_developer_utilities">6. Developer Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#_basho_bench">6.1. Basho Bench</a></span></dt><dt><span class="section"><a href="#_yahoo_cloud_serving_benchmark">6.2. Yahoo! Cloud Serving Benchmark</a></span></dt></dl></dd><dt><span class="section"><a href="#HibariBuildingSource">7. Building Hibari from Source</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_release_package">7.1. Hibari Release Package</a></span></dt><dt><span class="section"><a href="#HibariAsciiDoc">7.2. Hibari Documentation</a></span></dt><dt><span class="section"><a href="#ErlangOTP">7.3. Erlang/OTP System</a></span></dt></dl></dd><dt><span class="section"><a href="#_sample_application">8. Sample Application</a></span></dt></dl></div><p></p><div class="section" title="1.&#xA0;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="1.1.&#xA0;Why NoSQL?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_nosql"></a>1.1. Why NoSQL?</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.2.&#xA0;Why Hibari?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_hibari"></a>1.2. Why Hibari?</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.3.&#xA0;How Hibari Works"><div class="titlepage"><div><div><h3 class="title"><a id="_how_hibari_works"></a>1.3. How Hibari Works</h3></div></div></div><div class="section" title="Data Model"><div class="titlepage"><div><div><h4 class="title"><a id="_data_model"></a>Data Model</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="Partitioning Across Chains"><div class="titlepage"><div><div><h4 class="title"><a id="_partitioning_across_chains"></a>Partitioning Across Chains</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="Replication Within Chains"><div class="titlepage"><div><div><h4 class="title"><a id="_replication_within_chains"></a>Replication Within Chains</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="RAM and Disk Storage"><div class="titlepage"><div><div><h4 class="title"><a id="_ram_and_disk_storage"></a>RAM and Disk Storage</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="Admin Server"><div class="titlepage"><div><div><h4 class="title"><a id="_admin_server"></a>Admin Server</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div></div><div class="section" title="2.&#xA0;Getting Started"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_getting_started"></a>2. Getting Started</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="2.1.&#xA0;Requirements"><div class="titlepage"><div><div><h3 class="title"><a id="_requirements"></a>2.1. Requirements</h3></div></div></div><div class="section" title="System Requirements"><div class="titlepage"><div><div><h4 class="title"><a id="_system_requirements"></a>System Requirements</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="Required Software"><div class="titlepage"><div><div><h4 class="title"><a id="_required_software"></a>Required Software</h4></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Application Developer’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" href="docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="article" title="Hibari Application Developer&#x2019;s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36104938"></a>Hibari Application Developer’s Guide <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 0.1.7</td><td align="left">2011/02/11</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_why_nosql">1.1. Why NoSQL?</a></span></dt><dt><span class="section"><a href="#_why_hibari">1.2. Why Hibari?</a></span></dt><dt><span class="section"><a href="#_how_hibari_works">1.3. How Hibari Works</a></span></dt></dl></dd><dt><span class="section"><a href="#_getting_started">2. Getting Started</a></span></dt><dd><dl><dt><span class="section"><a href="#_requirements">2.1. Requirements</a></span></dt><dt><span class="section"><a href="#_downloading_hibari">2.2. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#_installing_hibari">2.3. Installing Hibari</a></span></dt><dt><span class="section"><a href="#_deploying_a_simple_hibari_system">2.4. Deploying a Simple Hibari System</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. Client API: Native Erlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_overview">3.1. Overview</a></span></dt><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. Client API: UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. The Hibari Server’s Implementation of the UBF Protocol Stack</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBF representation of strings vs. binaries</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. Steps for Using a UBF-based Protocol in Any Language</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. The Hibari UBF Protocol Contract</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Using the UBF Client Library for Erlang</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Using the UBF Client Library for Java</a></span></dt><dt><span class="section"><a href="#using-ubf-python-client">4.7. Using the EBF Client Library for Python</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. Client API: Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_the_hibari_thrift_api">5.1. The Hibari Thrift API</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_types_to_thrift_types">5.2. Mapping UBF Contract Types to Thrift Types</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_to_thrift_service">5.3. Mapping UBF Contract to Thrift Service</a></span></dt><dt><span class="section"><a href="#_examples_of_using_a_thrift_client">5.4. Examples of using a Thrift client</a></span></dt><dt><span class="section"><a href="#_mapping_tbf_contract_responses_from_thrift_client">5.5. Mapping TBF Contract Responses From Thrift Client</a></span></dt></dl></dd><dt><span class="section"><a href="#_developer_utilities">6. Developer Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#_basho_bench">6.1. Basho Bench</a></span></dt><dt><span class="section"><a href="#_yahoo_cloud_serving_benchmark">6.2. Yahoo! Cloud Serving Benchmark</a></span></dt></dl></dd><dt><span class="section"><a href="#HibariBuildingSource">7. Building Hibari from Source</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_release_package">7.1. Hibari Release Package</a></span></dt><dt><span class="section"><a href="#HibariAsciiDoc">7.2. Hibari Documentation</a></span></dt><dt><span class="section"><a href="#ErlangOTP">7.3. Erlang/OTP System</a></span></dt></dl></dd><dt><span class="section"><a href="#_sample_application">8. Sample Application</a></span></dt></dl></div><p></p><div class="section" title="1.&#xA0;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="1.1.&#xA0;Why NoSQL?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_nosql"></a>1.1. Why NoSQL?</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.2.&#xA0;Why Hibari?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_hibari"></a>1.2. Why Hibari?</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="1.3.&#xA0;How Hibari Works"><div class="titlepage"><div><div><h3 class="title"><a id="_how_hibari_works"></a>1.3. How Hibari Works</h3></div></div></div><div class="section" title="Data Model"><div class="titlepage"><div><div><h4 class="title"><a id="_data_model"></a>Data Model</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="Partitioning Across Chains"><div class="titlepage"><div><div><h4 class="title"><a id="_partitioning_across_chains"></a>Partitioning Across Chains</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="Replication Within Chains"><div class="titlepage"><div><div><h4 class="title"><a id="_replication_within_chains"></a>Replication Within Chains</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="RAM and Disk Storage"><div class="titlepage"><div><div><h4 class="title"><a id="_ram_and_disk_storage"></a>RAM and Disk Storage</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="Admin Server"><div class="titlepage"><div><div><h4 class="title"><a id="_admin_server"></a>Admin Server</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div></div><div class="section" title="2.&#xA0;Getting Started"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_getting_started"></a>2. Getting Started</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="2.1.&#xA0;Requirements"><div class="titlepage"><div><div><h3 class="title"><a id="_requirements"></a>2.1. Requirements</h3></div></div></div><div class="section" title="System Requirements"><div class="titlepage"><div><div><h4 class="title"><a id="_system_requirements"></a>System Requirements</h4></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="Required Software"><div class="titlepage"><div><div><h4 class="title"><a id="_required_software"></a>Required Software</h4></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <span class="emphasis"><em>required for Erlang’s crypto module</em></span>
@@ -265,6 +265,14 @@ Delete a key-value pair and associated flags:
 Execute a specified list of operations, optionally as an all-or-nothing transaction:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <a class="ulink" href="#brick-simple-do" target="_top">brick_simple:do/4</a>
+</li></ul></div></li></ul></div><p><span class="strong"><strong>Fold Operations</strong></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Implement a fold operation across all keys in a table:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<a class="ulink" href="#brick-simple-fold-table" target="_top">brick_simple:fold_table/7</a>
+</li></ul></div></li><li class="listitem"><p class="simpara">
+Implement a fold operation across all keys having a specified prefix:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<a class="ulink" href="#brick-simple-fold-key" target="_top">brick_simple:fold_key_prefix/9</a>
 </li></ul></div></li></ul></div><p>If desired, clients can apply a "test 'n set" logic to data insertion, retrieval, and deletion operations so that the operation will be executed only if the target key has the exact timestamp specified in the request.</p><div class="section" title="Erlang Basic Data Types"><div class="titlepage"><div><div><h4 class="title"><a id="_erlang_basic_data_types"></a>Erlang Basic Data Types</h4></div></div></div><p>The following provides a high level introduction to Erlang basic data types that are referenced in this chapter. This material is excerpted with minor modifications from the <a class="ulink" href="http://www.erlang.org/doc/reference_manual/data_types.html" target="_top">official Erlang documentation on data types</a>. For further information, see the official Erlang documentation.</p><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>All Erlang commands must conclude with a period (.).</p></td></tr></table></div><div class="variablelist"><dl><dt><span class="term">
 Term
 </span></dt><dd>
@@ -1571,7 +1579,318 @@ Failed operation with transaction semantics. Because transaction semantics are u
 &gt; Do2b = brick_server:make_get("foo2", [must_exist]).
 {get,&lt;&lt;"foo2"&gt;&gt;,[must_exist]}
 &gt; brick_simple:do(tab1, [brick_server:make_txn(), Do1b, Do2b]).
-{txn_fail,[{2,key_not_exist}]}</pre></dd></dl></div></div></div><div class="section" title="4.&#xA0;Client API: UBF"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-ubf"></a>4. Client API: UBF</h2></div></div></div><p><a class="ulink" href="http://github.com/norton/ubf" target="_top">The UBF protocol</a> is a
+{txn_fail,[{2,key_not_exist}]}</pre></dd></dl></div></div><div class="section" title="3.9.&#xA0;brick_simple:fold_table/7"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-table"></a>3.9. brick_simple:fold_table/7</h3></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags, MaxParallel, Timeout).</strong></span>
+</dd></dl></div><p>DESCRIPTION</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+Attempt a fold operation across all keys in a table.
+</dd></dl></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Do not execute this operation while a data migration is being performed.</p></td></tr></table></div><p>PARAMETERS</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Name of the table across which to perform the fold operation.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Tab = table()</code>
+</li><li class="listitem">
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Fun</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>description to be added</em></span>.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Fun  = fun_arity_2()</code>
+</li><li class="listitem"><p class="simpara">
+<code class="literal">fun_arity_2()</code> arguments =
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem"><p class="simpara">
+<code class="literal">{ChainName, Tuple_from_get_many}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">Tuple_From_get_many</code> is a single result tuple from a <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a> result. Its format can vary according to the <code class="literal">Flags</code> argument, which is passed as-is to a <code class="literal">get_many()</code> call. For example, if <code class="literal">Flags</code> = <code class="literal">[]</code>, then <code class="literal">Tuple_From_get_many</code> will match <code class="literal">{Key, TS, Value}</code>. If <code class="literal">Flags</code> = <code class="literal">[witness]</code>, then <code class="literal">Tuple_From_get_many</code> will match <code class="literal">{Key, TS}</code>.
+</li></ul></div></li><li class="listitem">
+<code class="literal">UserAccumulatorTerm</code>
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Acc</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>description to be added</em></span>.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Acc  = term()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>NumItems</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>description to be added</em></span>.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">NumItems  = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Flags</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+List of operational flags to apply to the ‘fold_table’ operation. The supported flags are the same as those for <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a>.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Flags = flags_list()</code>
+</li><li class="listitem">
+<code class="literal">flags_list() = [do_op_flag() | property()]</code>
+</li><li class="listitem">
+<code class="literal">do_op_flag() = 'get_all_attribs' | 'witness' | {'binary_prefix', binary()} | {'max_bytes', integer()}</code>
+</li><li class="listitem">
+<code class="literal">property() = atom() | {term(), term()}</code>
+</li></ul></div></li><li class="listitem"><p class="simpara">
+Operational flag usage
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
+<code class="literal">'get_all_attribs'</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+Return all attributes of each key. May be used in combination with the <code class="literal">witness</code> flag.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+<code class="literal">'witness'</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+Do not return the value blobs in the result. This flag will guarantee that the brick does not require disk access to satisfy this request.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+<code class="literal">{'binary_prefix', binary()}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+Return only keys that have a
+binary prefix that is exactly equal to <code class="literal">binary()</code>.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+<code class="literal">{'max_bytes', integer()}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+Return only as many keys as the sum of the sizes of their corresponding value blobs does not exceed <code class="literal">integer()</code> bytes.
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>MaxParallel</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+If <code class="literal">MaxParallel</code> = 0, a true fold will be performed. If <code class="literal">MaxParallel</code> &gt;= 1, then an independent fold will be performed on each chain, with up to <code class="literal">MaxParallel</code> number of folds running in parallel. The result from each chain fold will be returned to the caller as-is, i.e. will <span class="strong"><strong>not</strong></span> be combined like in a "reduce" phase of a map-reduce cycle.
+</li><li class="listitem">
+Optional; defaults to 0.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">MaxParallel = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Operation timeout in milliseconds.
+</li><li class="listitem">
+Optional; defaults to 5000.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Timeout = timeout()</code>
+</li><li class="listitem">
+`timeout() = integer()
+</li></ul></div></li></ul></div></dd></dl></div><p>RETURNS</p><p><span class="emphasis"><em>more info to be added</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">term() | {term(), integer(), integer(), integer()}</code>
+</li></ul></div><p>ALIASES</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+brick_simple:fold_table/5
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags).</code>
+</li></ul></div></li><li class="listitem"><p class="simpara">
+brick_simple:fold_table/6
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags, MaxParallel).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>EXAMPLES</p><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.10.&#xA0;brick_simple:fold_key_prefix/9"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-key"></a>3.10. brick_simple:fold_key_prefix/9</h3></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:fold_key_prefix(Tab, Prefix, StartKey, Fun, Acc, Flags0, NumItems,SleepTime,Timeout).</strong></span>
+</dd></dl></div><p>DESCRIPTION</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+For a binary key prefix <code class="literal">Prefix</code>, fold over all keys in table <code class="literal">Tab</code> starting with <code class="literal">StartKey</code>, sleeping for <code class="literal">SleepTime</code> milliseconds between iterations and using <code class="literal">Flags</code> and <code class="literal">NumItems</code> as arguments to <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a>.
+</dd></dl></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Do not execute this operation while a data migration is being performed.</p></td></tr></table></div><p>PARAMETERS</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Name of the table in which to perform the fold operation.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Tab = table()</code>
+</li><li class="listitem">
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Prefix</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Key prefix for which to perform the fold operation.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Prefix = binary()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>StartKey</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Key at which to initiate the fold operation.
+</li><li class="listitem">
+Optional; defaults to equal your specified <code class="literal">Prefix</code>.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">StartKey = binary()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Fun</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>description to be added</em></span>.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Fun  = fun_arity_2()</code>
+</li><li class="listitem"><p class="simpara">
+<code class="literal">fun_arity_2()</code> arguments =
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem"><p class="simpara">
+<code class="literal">Tuple_from_get_many</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">Tuple_From_get_many</code> is a single result tuple from a <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a> result. Its format can vary according to the <code class="literal">Flags0</code> argument, which is passed as-is to a <code class="literal">get_many()</code> call. For example, if <code class="literal">Flags0</code> = <code class="literal">[]</code>, then <code class="literal">Tuple_From_get_many</code> will match <code class="literal">{Key, TS, Value}</code>. If <code class="literal">Flags0</code> = <code class="literal">[witness]</code>, then <code class="literal">Tuple_From_get_many</code> will match <code class="literal">{Key, TS}</code>.
+</li></ul></div></li><li class="listitem">
+<code class="literal">UserAccumulatorTerm</code>
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Acc</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>description to be added</em></span>.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Acc  = term()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Flags0</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+List of operational flags to apply to the <code class="literal">fold_key_prefix</code> operation. The supported flags are the same as those for <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a>, excluding the <code class="literal">{'binary_prefix', binary()}</code> flag. This flag is inappropriate since the key prefix is passed directly through the <code class="literal">Prefix</code> argument of <code class="literal">brick_simple:fold_key_prefix()</code>.
+</li><li class="listitem">
+Mandatory.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Flags0 = 'get_all_attribs' | 'witness' | {'max_bytes', integer()}</code>
+</li></ul></div></li><li class="listitem"><p class="simpara">
+Operational flag usage
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
+<code class="literal">'get_all_attribs'</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+Return all attributes of each key. May be used in combination with the <code class="literal">witness</code> flag.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+<code class="literal">'witness'</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+Do not return the value blobs in the result. This flag will guarantee that the brick does not require disk access to satisfy this request.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+<code class="literal">{'max_bytes', integer()}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+Return only as many keys as the sum of the sizes of their corresponding value blobs does not exceed <code class="literal">integer()</code> bytes.
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>NumItems</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>description to be added</em></span>.
+</li><li class="listitem">
+Optional; defaults to 100.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">NumItems  = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>SleepTime</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Sleep time between interations, in milliseconds.
+</li><li class="listitem">
+Optional; defaults to 0.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">SleepTime = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Operation timeout in milliseconds.
+</li><li class="listitem">
+Optional; defaults to 15000.
+</li><li class="listitem"><p class="simpara">
+Type:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Timeout = timeout()</code>
+</li><li class="listitem">
+`timeout() = integer()
+</li></ul></div></li></ul></div></dd></dl></div><p>RETURNS</p><p><span class="emphasis"><em>more info to be added</em></span></p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+Success return
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+<code class="literal">{ok, Acc, Iterations}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Acc = term()</code>
+</li><li class="listitem">
+<code class="literal">Iterations = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+Error return
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+<code class="literal">{error, GdssError, Acc, Iterations}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">GdssError = term()</code>
+</li><li class="listitem">
+<code class="literal">Acc = term()</code>
+</li><li class="listitem">
+<code class="literal">Iterations = integer()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>ALIASES</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+brick_simple:fold_key_prefix/5
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">brick_simple:fold_key_prefix(Tab, Prefix, Fun, Acc, Flags).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>EXAMPLES</p><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="4.&#xA0;Client API: UBF"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-ubf"></a>4. Client API: UBF</h2></div></div></div><p><a class="ulink" href="http://github.com/norton/ubf" target="_top">The UBF protocol</a> is a
 formally-specified family of protocols that are supported by a large
 number of client languages.  This section attempts to describe the
 layers of the UBF protocol stack, how to use the UBF client in Erlang
@@ -2207,7 +2526,8 @@ $ cd working-directory-name
 $ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Your "Git" identity is needed during the init step.  Please
 enter the name and email of your GitHub account if you have one.  Team
 members having read-write access are recommended to use "repo init -u
-<a class="ulink" href="mailto:git@github.com" target="_top">git@github.com</a>:hibari/manifests.git -m hibari-default-rw.xml".</p></td></tr></table></div></li><li class="listitem"><p class="simpara">
+<a class="ulink" href="mailto:git@github.com" target="_top">git@github.com</a>:hibari/manifests.git -m hibari-default-rw.xml".</p></td></tr></table></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>If you want to checkout the latest development version of Hibari,
+please append " -b dev" to the repo init command.</p></td></tr></table></div></li><li class="listitem"><p class="simpara">
 Download Git repositories
 </p><pre class="screen">$ cd working-directory-name
 $ repo sync</pre><p class="simpara">The working directory has the following layout structure:</p></li></ol></div></li></ol></div><pre class="screen">&lt;working-directory-name&gt;
