@@ -18,8 +18,8 @@
 //
 
 = Hibari Application Developer's Guide *DRAFT - IN PROGRESS*
-:Date: 2011/01/30
-:Revision: 0.1.6
+:Date: 2011/02/11
+:Revision: 0.1.7
 :Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
@@ -592,13 +592,13 @@ PARAMETERS
 - Type:
   * `Tab = table()`
   * `table() = atom()`
- 
+
  ::
 *Key*
 
 - Key to add to the table, in association with a paired value.
 - Mandatory.
-- Type: 
+- Type:
   * `Key = key()`
   * `key() = iodata()`
   * `iodata() = iolist() | binary()`
@@ -640,7 +640,7 @@ NOTE: While the `Key` may be specified as either `iolist()` or `binary()`, it wi
   * `property() = atom() | {term(), term()}`
 - Operational flag usage
   * `'value_in_ram'`
-    ** Store the value blob in RAM, overriding the default storage location of the brick.  
+    ** Store the value blob in RAM, overriding the default storage location of the brick.
 +
 NOTE: This flag has not yet been extensively tested by Gemini QA.
 +
@@ -744,13 +744,13 @@ PARAMETERS
 - Type:
   * `Tab = table()`
   * `table() = atom()`
- 
+
  ::
 *Key*
 
 - Key to replace in the table, in association with a new paired value.
 - Mandatory.
-- Type: 
+- Type:
   * `Key = key()`
   * `key() = iodata()`
   * `iodata() = iolist() | binary()`
@@ -793,7 +793,7 @@ NOTE: While the `Key` may be specified as either `iolist()` or `binary()`, it wi
   * `property() = atom() | {term(), term()}`
 - Operational flag usage
   * `{'testset', timestamp()}`
-    ** Fail the operation if the existing key's timestamp is not exactly equal to `timestamp()`.  If used inside a link:#brick-simple-do[micro-transaction], abort the transaction if the key's timestamp is not exactly equal to `timestamp()`.  
+    ** Fail the operation if the existing key's timestamp is not exactly equal to `timestamp()`.  If used inside a link:#brick-simple-do[micro-transaction], abort the transaction if the key's timestamp is not exactly equal to `timestamp()`.
   * `'value_in_ram'`
     ** Store the value blob in RAM, overriding the default storage location of the brick.
 +
@@ -919,13 +919,13 @@ PARAMETERS
 - Type:
   * `Tab = table()`
   * `table() = atom()`
- 
+
  ::
 *Key*
 
 - Key to set in the table, in association with a paired value.
 - Mandatory.
-- Type: 
+- Type:
   * `Key = key()`
   * `key() = iodata()`
   * `iodata() = iolist() | binary()`
@@ -968,7 +968,7 @@ NOTE: While the `Key` may be specified as either `iolist()` or `binary()`, it wi
   * `property() = atom() | {term(), term()}`
 - Operational flag usage
   * `{'testset', timestamp()}`
-    ** Fail the operation if the existing key's timestamp is not exactly equal to `timestamp()`.  If used inside a link:#brick-simple-do[micro-transaction], abort the transaction if the key's timestamp is not exactly equal to `timestamp()`. Using this flag with `set` will result in an error if the key does not already exist or if the key exists but has a non-matching timestamp. 
+    ** Fail the operation if the existing key's timestamp is not exactly equal to `timestamp()`.  If used inside a link:#brick-simple-do[micro-transaction], abort the transaction if the key's timestamp is not exactly equal to `timestamp()`. Using this flag with `set` will result in an error if the key does not already exist or if the key exists but has a non-matching timestamp.
   * `'value_in_ram'`
     ** Store the value blob in RAM, overriding the default storage location of the brick.
 +
@@ -1076,13 +1076,13 @@ PARAMETERS
 - Type:
   * `Tab = table()`
   * `table() = atom()`
- 
+
  ::
 *Key*
 
 - Key to retrieve from the table.
 - Mandatory.
-- Type: 
+- Type:
   * `Key = key()`
   * `key() = iodata()`
   * `iodata() = iolist() | binary()`
@@ -1225,13 +1225,13 @@ PARAMETERS
 - Type:
   * `Tab = table()`
   * `table() = atom()`
- 
+
  ::
 *Key*
 
 - Key at which to start the `get_many` retrieval, proceeding in lexicographic order.
 - Mandatory.
-- Type: 
+- Type:
   * `Key = key()`
   * `key() = iodata()`
   * `iodata() = iolist() | binary()`
@@ -1379,13 +1379,13 @@ PARAMETERS
 - Type:
   * `Tab = table()`
   * `table() = atom()`
- 
+
  ::
 *Key*
 
 - Key to delete from the table.
 - Mandatory.
-- Type: 
+- Type:
   * `Key = key()`
   * `key() = iodata()`
   * `iodata() = iolist() | binary()`
@@ -1407,7 +1407,7 @@ NOTE: While the `Key` may be specified as either `iolist()` or `binary()`, it wi
   * `property() = atom() | {term(), term()}`
 - Operational flag usage
   * `{'testset', timestamp()}`
-    ** Fail the operation if the existing key's timestamp is not exactly equal to `timestamp()`.  If used inside a link:#brick-simple-do[micro-transaction], abort the transaction if the key's timestamp is not exactly equal to `timestamp()`. Using this flag with `set` will result in an error if the key does not already exist or if the key exists but has a non-matching timestamp. 
+    ** Fail the operation if the existing key's timestamp is not exactly equal to `timestamp()`.  If used inside a link:#brick-simple-do[micro-transaction], abort the transaction if the key's timestamp is not exactly equal to `timestamp()`. Using this flag with `set` will result in an error if the key does not already exist or if the key exists but has a non-matching timestamp.
   * `'must_exist'`
     ** For use inside a link:#brick-simple-do[micro-transaction]: abort the transaction if the key does not exist.
   * `'must_not_exist'`
@@ -1529,13 +1529,13 @@ PARAMETERS
 - Type:
   * `Tab = table()`
   * `table() = atom()`
- 
+
  ::
 *OpList*
 
-- List of primitive operations to perform. Each primitive is invoked using the `brick_server:make_*()` API. 
+- List of primitive operations to perform. Each primitive is invoked using the `brick_server:make_*()` API.
 - Mandatory.
-- Type: 
+- Type:
   * `OpList = do_op_list()`
   * `do_op_list() = [do1_op()]`
   * `do1_op() =`
@@ -1547,7 +1547,7 @@ PARAMETERS
     ** `brick_server:make_delete(Key, Flags)`
     ** `brick_server:make_txn()`
        *** Include `brick_server:make_txn()` as the first item in your `OpList` if you want the `do` operation to be executed as an all-or-nothing transaction.
-    ** Note that the arguments for each primitive are the same as those for the primitives when they are executed on their own, with the exclusion of the `Tab` and `Timeout` arguments, both of which serve as arguments to the overall `do` operation rather than as arguments to the primitives. For example, an `add` on its own is `brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout)`, whereas in the context of a `do` operation an `add` primitive is `brick_server:make_add(Key, Value, ExpTime, Flags)`. 
+    ** Note that the arguments for each primitive are the same as those for the primitives when they are executed on their own, with the exclusion of the `Tab` and `Timeout` arguments, both of which serve as arguments to the overall `do` operation rather than as arguments to the primitives. For example, an `add` on its own is `brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout)`, whereas in the context of a `do` operation an `add` primitive is `brick_server:make_add(Key, Value, ExpTime, Flags)`.
     ** For further information about each primitive, see link:#brick-simple-add[brick_simple:add/6], link:#brick-simple-replace[brick_simple:replace/6], link:#brick-simple-set[brick_simple:set/6], link:#brick-simple-get[brick_simple:get/4], link:#brick-simple-get-many[brick_simple:get_many/5], and link:#brick-simple-delete[brick_simple:delete/4].
 
  ::
@@ -1673,15 +1673,15 @@ PARAMETERS
 - Type:
   * `Tab = table()`
   * `table() = atom()`
- 
+
  ::
 *Fun*
 
 - _description to be added_.
 - Mandatory.
-- Type: 
+- Type:
   * `Fun  = fun_arity_2()`
-  * `fun_arity_2()` arguments = 
+  * `fun_arity_2()` arguments =
    ** `{ChainName, Tuple_from_get_many}`
      *** `Tuple_From_get_many` is a single result tuple from a link:#brick-simple-get-many[brick_simple:get_many()] result. Its format can vary according to the `Flags` argument, which is passed as-is to a `get_many()` call. For example, if `Flags` = `[]`, then `Tuple_From_get_many` will match `{Key, TS, Value}`. If `Flags` = `[witness]`, then `Tuple_From_get_many` will match `{Key, TS}`.
    ** `UserAccumulatorTerm`
@@ -1691,7 +1691,7 @@ PARAMETERS
 
 - _description to be added_.
 - Mandatory.
-- Type: 
+- Type:
   * `Acc  = term()`
 
  ::
@@ -1699,7 +1699,7 @@ PARAMETERS
 
 - _description to be added_.
 - Mandatory.
-- Type: 
+- Type:
   * `NumItems  = integer()`
 
  ::
@@ -1801,15 +1801,15 @@ PARAMETERS
 - Optional; defaults to equal your specified `Prefix`.
 - Type:
   * `StartKey = binary()`
- 
+
  ::
 *Fun*
 
 - _description to be added_.
 - Mandatory.
-- Type: 
+- Type:
   * `Fun  = fun_arity_2()`
-  * `fun_arity_2()` arguments = 
+  * `fun_arity_2()` arguments =
    ** `Tuple_from_get_many`
      *** `Tuple_From_get_many` is a single result tuple from a link:#brick-simple-get-many[brick_simple:get_many()] result. Its format can vary according to the `Flags0` argument, which is passed as-is to a `get_many()` call. For example, if `Flags0` = `[]`, then `Tuple_From_get_many` will match `{Key, TS, Value}`. If `Flags0` = `[witness]`, then `Tuple_From_get_many` will match `{Key, TS}`.
    ** `UserAccumulatorTerm`
@@ -1819,13 +1819,13 @@ PARAMETERS
 
 - _description to be added_.
 - Mandatory.
-- Type: 
+- Type:
   * `Acc  = term()`
 
  ::
 *Flags0*
 
-- List of operational flags to apply to the `fold_key_prefix` operation. The supported flags are the same as those for link:#brick-simple-get-many[brick_simple:get_many()], excluding the `{'binary_prefix', binary()}` flag. This flag is inappropriate since the key prefix is passed directly through the `Prefix` argument of `brick_simple:fold_key_prefix()`. 
+- List of operational flags to apply to the `fold_key_prefix` operation. The supported flags are the same as those for link:#brick-simple-get-many[brick_simple:get_many()], excluding the `{'binary_prefix', binary()}` flag. This flag is inappropriate since the key prefix is passed directly through the `Prefix` argument of `brick_simple:fold_key_prefix()`.
 - Mandatory.
 - Type:
   * `Flags0 = 'get_all_attribs' | 'witness' | {'max_bytes', integer()}`
@@ -1842,7 +1842,7 @@ PARAMETERS
 
 - _description to be added_.
 - Optional; defaults to 100.
-- Type: 
+- Type:
   * `NumItems  = integer()`
 
  ::
@@ -2742,6 +2742,9 @@ NOTE: Your "Git" identity is needed during the init step.  Please
 enter the name and email of your GitHub account if you have one.  Team
 members having read-write access are recommended to use "repo init -u
 git@github.com:hibari/manifests.git -m hibari-default-rw.xml".
++
+TIP: If you want to checkout the latest development version of Hibari,
+please append " -b dev" to the repo init command.
 +
   .. Download Git repositories
 +
