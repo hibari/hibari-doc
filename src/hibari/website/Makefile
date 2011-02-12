@@ -29,3 +29,9 @@ public-html-hack:
 	(cd ./public_html && ln -sf ../misc-files ./)
 	(cd ./public_html && ln -sf ../misc-codes ./)
 	(cd ./public_html && ln -sf ../misc-screenshots ./)
+
+stage-gh-pages: html
+	-rm -rf gh-pages
+	git clone -b gh-pages git@github.com:hibari/hibari-doc.git gh-pages
+	rsync -aL --delete --exclude=.git public_html/ gh-pages/
+	(cd gh-pages && git status)
