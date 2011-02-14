@@ -1194,6 +1194,7 @@ NOTE: The APIs that expose this are, for the most part, already
 written.  We need more "friendly" wrapper funcs as part of the "try
 this first" set of APIs for administration.
 
+[[life-of-brick]]
 == The Life of a (Logical) Brick
 
 All logical bricks within a Hibari cluster go through the same set of
@@ -1549,6 +1550,7 @@ system than the `application_data_dir` parameter.  This directory
 stores temporary files required for sorting and other operations that
 would otherwise require large amounts of RAM.
 
+[[dynamic-cluster-reconfiguration]]
 == Dynamic Cluster Reconfiguration
 
 [[add-table]]
