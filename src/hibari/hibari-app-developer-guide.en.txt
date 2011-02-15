@@ -25,7 +25,7 @@
 <<<
 == Introduction
 
-Hibari is a production-ready, distributed, key-value, big data store. In the emerging field of "NoSQL" solutions to today's mass-scale data storage challenges, Hibari stands out for several reasons:
+Hibari is a production-ready, distributed, key-value, big data store. In the emerging field of "NOSQL" solutions to today's mass-scale data storage challenges, Hibari stands out for several reasons:
 
 - Hibari is the *only open source key-value database to couple Erlang engineering with innovative chain replication technology*. Erlang is the ideal programming foundation on which to build a robust, high-performance distributed storage solution. Chain replication delivers high throughput and availability without sacrificing data consistency.
 - Hibari is the *only open source KVDB built to the exacting standards of the carrier-class telecom sector, and proven in multi-million user telecom production environments*.
@@ -38,13 +38,13 @@ Hibari is a production-ready, distributed, key-value, big data store. In the eme
   * Support for live code upgrades
   * Multiple client API implementations
 
-This introductory chapter will briefly address the recent emergence of NoSQL solutions to the challenges posed by the "Big Data" era before turning to describe more fully the distinctive benefits that Hibari provides to developers, administrators, and users of data-intensive applications.
+This introductory chapter will briefly address the recent emergence of NOSQL solutions to the challenges posed by the "Big Data" era before turning to describe more fully the distinctive benefits that Hibari provides to developers, administrators, and users of data-intensive applications.
 
-=== Why NoSQL?
+=== Why NOSQL?
 
-The NoSQL "movement" is, first off, not an outright rejection of traditional relational database management systems (RDBMS) but rather a growing recognition that today's data environment requires a diverse storage toolset that is "Not only SQL (NoSQL)". Relational and NoSQL data storage solutions should be viewed as complements, with each approach better suited toward different types of applications and services.
+The NOSQL "movement" is, first off, not an outright rejection of traditional relational database management systems (RDBMS) but rather a growing recognition that today's data environment requires a diverse storage toolset that is "Not Only SQL (NOSQL)". Relational and NOSQL data storage solutions should be viewed as complements, with each approach better suited toward different types of applications and services.
 
-The main driver of NoSQL has been the proliferation of applications and services that must store and serve terabytes or petabytes of data, often while striving to guarantee "always-on" availability and low latencies for end users. Organizations in many market sectors are grappling with the advent of Big Data, including but not limited to:
+The main driver of NOSQL has been the proliferation of applications and services that must store and serve terabytes or petabytes of data, often while striving to guarantee "always-on" availability and low latencies for end users. Organizations in many market sectors are grappling with the advent of Big Data, including but not limited to:
 
 - Web properties  - coping with the massive data requirements of search, e-commerce, social media, and user-generated content.
 - Telecoms -- managing and analyzing network logs and call data records for multi-millions of subscribers.
@@ -62,15 +62,15 @@ Wanting Big Data capacity without crippling cost and complexity, some innovative
 
 In short, recent years have seen a proliferation of services that require more data, with less structure.
 
-Not surprisingly, some of the leading web enterprise have been at the forefront of the NoSQL movement. In particular, Google with its http://labs.google.com/papers/bigtable.html[BigTable paper] in 2006 and Amazon with its http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf[Dynamo paper] in 2007 had a profound effect on the NoSQL market. A number of NoSQL solutions have drawn inspiration from either BigTable or Dynamo or both, and in the past couple years several solutions have been released into the open source community.
+Not surprisingly, some of the leading web enterprise have been at the forefront of the NOSQL movement. In particular, Google with its http://labs.google.com/papers/bigtable.html[BigTable paper] in 2006 and Amazon with its http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf[Dynamo paper] in 2007 had a profound effect on the NOSQL market. A number of NOSQL solutions have drawn inspiration from either BigTable or Dynamo or both, and in the past couple years several solutions have been released into the open source community.
 
-While NoSQL data storage solutions vary in their particulars, they have these basic traits in common:
+While NOSQL data storage solutions vary in their particulars, they have these basic traits in common:
 
-- A simplified data model. Data models vary across specific solutions, and sometimes form the basis of  a tripartite classification of NoSQL systems into 1) key-value data stores (such as Dynamo and Hibari); 2) column-oriented data stores (such as BigTable); and 3) document-oriented data stores (such as CouchDB). All variants, however, are simpler and more flexible in data model than the traditional RDBMS. That simplification tends to carry over to client APIs as well.
+- A simplified data model. Data models vary across specific solutions, and sometimes form the basis of  a tripartite classification of NOSQL systems into 1) key-value data stores (such as Dynamo and Hibari); 2) column-oriented data stores (such as BigTable); and 3) document-oriented data stores (such as CouchDB). All variants, however, are simpler and more flexible in data model than the traditional RDBMS. That simplification tends to carry over to client APIs as well.
 - Distribution across multiple nodes based on commodity PCs. Affordable Big Data capacity is achieved by scaling out across tens, hundreds, or even thousands of commodity PCs. Data partitioning schemes coupled with parallel processing of incoming requests deliver the needed high performance.
 - Replication of data objects across multiple nodes, to ensure high availability in the event of component failures.
 
-For much more on the history, merits, and design issues associated with NoSQL storage solutions, consult with your favorite search engine.
+For much more on the history, merits, and design issues associated with NOSQL storage solutions, consult with your favorite search engine.
 
 === Why Hibari?
 
@@ -164,7 +164,7 @@ Several features work in combination to drive high performance in a Hibari stora
 - Hibari's chain replication implementation further aids performance by assigning storage bricks differentiated processing roles as head, middle, or tail. This division of labor particularly benefits read performance, as read requests are processed by "tail" bricks that do not bear the load of initial processing of write requests (since that work is done by "head" bricks).
 - Hibari supports a number of performance-tuning options on a per-table basis. For example, while some distributed KVDBs support only disk-based storage or only RAM-based storage of value blobs, Hibari lets you choose disk-based or RAM-based storage on a per-table basis, depending on your application needs. Whichever storage option you choose, all data changes are logged to disk to ensure data durability in the event of power failures. A batch commit technique is used to minimize disk I/O.
 
-Leveraging this feature set, Hibari is able to deliver scalable high performance that is competitive with leading open source NoSQL storage systems, while also providing the data durability and strong consistency that many systems lack. Hibari's performance relative to other NoSQL systems is particularly strong for reads and for large value (> 200KB) operations. Hibari's consistently high performance even for large values distinguishes the system from solutions that are tailored toward small value operations.
+Leveraging this feature set, Hibari is able to deliver scalable high performance that is competitive with leading open source NOSQL storage systems, while also providing the data durability and strong consistency that many systems lack. Hibari's performance relative to other NOSQL systems is particularly strong for reads and for large value (> 200KB) operations. Hibari's consistently high performance even for large values distinguishes the system from solutions that are tailored toward small value operations.
 
 As one example of real-world performance, in a multi-million user webmail deployment Hibari is processing about 2200 transactions per second, with read latencies averaging between 1 and 20 milliseconds and write latencies averaging between 20 and 80 milliseconds.
 
