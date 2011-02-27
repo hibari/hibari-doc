@@ -317,8 +317,9 @@ Perl, and SSH.
 ===== Prerequisites and Assumptions
 
 A. 1 installer node
-   * Bash, Expect, Git, Perl, Python, and SSH (client) is installed
-     on installer node
+   * Bash, Expect, Git, Perl, and SSH (client) is installed on
+     installer node
+
    * Your login account ($USER) exists on installer node with ssh
      private/public keys and ssh agent setup to enable password-less
      ssh login
