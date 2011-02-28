@@ -2145,6 +2145,7 @@ too many resources on under-specified hardware, causing problems for
 developers, support staff, and application users alike.  We wish
 Hibari to grow and flourish in its non-relational DB niche.
 
+[[brick-hardware]]
 === Notes on Brick Hardware
 
 ==== Lots of RAM is better

@@ -18,8 +18,8 @@
 //
 
 = Hibari Application Developer's Guide *DRAFT - IN PROGRESS*
-:Date: 2011/02/17
-:Revision: 0.1.8
+:Date: 2011/02/27
+:Revision: 0.1.9
 :Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
@@ -230,127 +230,261 @@ For system administrators, Hibari provides valuable operational automations that
 
 For businesses as a whole, Hibari offers affordable Big Data scalability while delivering the high availability and low latencies that service users demand. Hibari is an appropriate storage solution for a range of data-intensive service scenarios including but not limited to large-scale messaging, social media, and archiving. Hibari offers particular value in environments that require strong data consistency and/or high performance across a variety of object types and sizes.
 
+[[getting-started]]
 == Getting Started
-_Under Construction_
 
-// - _KK Dev to provide initial content._
-// - _Dave S. to review, edit, and solicit additional info as needed._
+This section covers the following topics to help you get up and running with Hibari:
 
-=== Requirements
+- link:#system-requirements[System Requirements]
+- link:#required-software[Required Third Party Software]
+- link:#download-hibari[Downloading Hibari]
+- link:#installing-single-node[Installing a Single-Node Hibari System]
+- link:#starting-single-node[Starting and Stopping a Single-Node Hibari System]
+- link:#installing-multi-node[Installing a Multi-Node Hibari Cluster]
+- link:#starting-multi-node[Starting and Stopping a Multi-Node Hibari Cluster]
+- link:#creating-tables[Creating New Tables]
 
-==== System Requirements
-_to be added_
+[[system-requirements]]
+=== System Requirements
 
-==== Required Software
+Hibari will run on any OS that the Erlang VM supports, which includes most Unix and Unix-like systems, Windows, and Mac OS X. See http://www.erlang.org/faq/implementations.html[Implementation and Ports of Erlang] from the official Erlang documentation for further information.
+
+For guidance on hardware requirements in a production environment, see link:hibari-sysadmin-guide.en.html#brick-hardware[Notes on Brick Hardware] in the Hibari System Administrator's Guide.
+
+[[required-software]]
+=== Required Third-Party Software
+
+Hibari's requirements for third party software depend on whether you're doing a single-node installation or a multi-node installation.
+
+==== Required Software for a Single-Node Installation
+
+The node on which you plan to install Hibari must have the following software:
 
 - OpenSSL - http://www.openssl.org/
-  * _required for Erlang's crypto module_
+  * Required for Erlang's "crypto" module
 
-=== Downloading Hibari
+==== Required Software for a Multi-Node Installation
 
-A Hibari pre-built release has 2 files:
+When you install Hibari on multiple nodes you will use an installer tool that simplifies the cluster set-up process. When you use this tool you will identify the hosts on which you want Hibari to be installed, and the tool will manage the installation of Hibari onto those target hosts. You can run the tool itself from one of your target Hibari nodes or from a different machine. There are distinct requirements for third party software on the "installer node" (the machine from which you run the installer tool) and on the Hibari nodes (the machines on which Hibari will be installed and run.)
 
-- a tarball package "hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz"
-- a md5sum file "hibari-X.Y.Z-DIST-ARCH-WORDSIZE-md5sum.txt"
+===== Installer Node Required Software
 
-_X.Y.Z_ is the release version, _DIST_ is the release distribution,
-_ARCH_ is the release architecture, and _WORDSIZE_ is the release
-wordsize.
-
-Hibari pre-built releases are not available for download yet.  See
-<<HibariBuildingSource>> for instructions to build Hibari from source
-for your target platform.
-
-=== Installing Hibari
-
-==== Single Node
-
-. Create directory for running Hibari
-+
-------
-$ mkdir running-directory-name
-------
-+
-. Untar release files
-+
-------
-$ tar -C running-directory-name -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
-------
-
-==== Multi Node
-
-Cluster is a simple tool for installing, configuring, and
-bootstrapping a cluster of Hibari nodes. The cluster tool requires one
-installer node and one or more target nodes for the Hibari cluster.
-The installer node can be a different node or can be one of the target
-nodes.  The cluster tool requires an installing user (that is you) and
-it must be different than the user for Hibari on the target nodes.
-
-NOTE: This tool should meet the needs of most users.  However, this
-tool's "target node" recipe is currently Linux-centric (e.g. useradd,
-userdel, ...).  Patches and contributions for other OS and platforms
-are welcome.  For non-Linux deployments, the cluster tool is rather
-simple so installation can be done manually by following the tool's
-recipe.
-
-Your Hibari installer node must have following tools/environments
-ready.  For further information and help for related tools, please
-refer to the following links:
+The installer node must have the software listed below. If you are missing any of these items, you can use the provided links for downloads and installation instructions.
 
 - Bash - http://www.gnu.org/software/bash/
 - Expect - http://www.nist.gov/el/msid/expect.cfm
-- Git - http://git-scm.com/
-  * *Git 1.5.4 or newer*
-  * _required for GitHub_
 - Perl - http://www.perl.org/
 - SSH (client) - http://www.openssh.com/
+- Git - http://git-scm.com/
+  * Must be version 1.5.4 or newer
+  * If you haven't yet done so, please configure your email address and name for Git:
++
+------
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
+------
++
+    
+ * If you haven't yet done so, you must sign up for a  GitHub account - https://github.com/
 
-Your Hibari target nodes must have following tools/environments ready.
-For further information and help for related tools, please refer to
-the following links:
+There are currently no known version requirements for Bash, Expect, Perl, or SSH.
+
+===== Hibari Nodes Required Software
+
+The nodes on which you plan to install Hibari must have the software listed below.
 
 - SSH (server) - http://www.openssh.com/
+- OpenSSL - http://www.openssl.org/
+  * Required for Erlang's "crypto" module
 
-So far, there are no "known" version requirements for Bash, Expect,
-Perl, and SSH.
+[[download-hibari]]
+=== Downloading Hibari
 
-===== Prerequisites and Assumptions
+Hibari is not yet available as a pre-built release. In the meanwhile, you can build Hibari from source. Follow the instructions in <<HibariBuildingSource>>, and then return to this section to continue the set-up process. 
 
-A. 1 installer node
-   * Bash, Expect, Git, Perl, and SSH (client) is installed on
-     installer node
+When you build Hibari your output is two files that you will later use in the set-up process:
 
-   * Your login account ($USER) exists on installer node with ssh
-     private/public keys and ssh agent setup to enable password-less
-     ssh login
-   * /etc/hosts file on installer node contains entries for all
-     target nodes
-B. 1 or more cluster target nodes (e.g. dev1, dev2, dev3)
-   * Your login account ($USER) exists on target nodes
-   * Your login account ($USER) is enabled with password-less sudo
-     access on target nodes
-   * Your login account ($USER) is accessible with password-less ssh
-     login on target nodes
-   * SSH (server) is installed on target nodes
-   * /etc/hosts file on target nodes contains entries for all target
-     nodes
-   * Network A and Network B is setup and active (see note below)
-C. Cluster configuration file. This will show up as hibari.config in
-   latter explanation.  You have to manually create it on installer
-   node and later provide it's location as an input to the cluster
-   tool.
-   * Hibari Admin nodes
-   * Hibari Brick nodes
-   * Hibari Bricks per Chain value (i.e. replication factor)
-   * All Hibari nodes (union of Admin and Brick nodes)
-   * All Hibari nodes Network A and Network B ip addresses plus
-     Network broadcast addresses and Network A tiebreaker address
-   * All Heartbeat UDP ports
+- A tarball package "hibari-_X.Y.Z-DIST-ARCH-WORDSIZE_.tgz"
+- An md5sum file "hibari-_X.Y.Z-DIST-ARCH-WORDSIZE_-md5sum.txt"
+
+_X.Y.Z_ is the release version, _DIST_ is the release distribution, _ARCH_ is the release architecture, and _WORDSIZE_ is the release wordsize.
+
+[[installing-single-node]]
+=== Installing a Single-Node Hibari System
+
+A single-node Hibari system will not provide data replication and redundancy in the way that a multi-node Hibari cluster will. However, you may wish to deploy a simple single-node Hibari system for testing and development purposes.
+
+. Create a directory for running Hibari:
 +
-Example configuration file (hibari.config) for a three node cluster
-that uses the same physical network for Network A and Network B (see
-note below):
+------
+$ mkdir running-directory
+------
 +
+. Untar the Hibari tarball package that you created when you built Hibari from source:
++
+------
+$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+------
+
+[[starting-single-node]]
+=== Starting and Stopping Hibari on a Single Node
+
+==== Starting and Bootstrapping Hibari
+
+. Start Hibari:
++
+------
+$ running-directory/hibari/bin/hibari start
+------
++
+. If this is the first time you've started Hibari, bootstrap the system:
++
+------
+$ running-directory/hibari/bin/hibari-admin bootstrap
+------
++
+The Hibari bootstrap process starts Hibari's Admin Server on the
+single node and creates a single table "tab1" serving as Hibari's
+default table. For information on creating additional tables, see the Hibari System Administrator's Guide.
+
+==== Verifying Hibari
+
+Do these quick checks to verify that your single-node Hibari system is up and running.
+
+. Confirm that you can open the "Hibari Web Administration" page:
++
+------
+$ your-favorite-browser http://127.0.0.1:23080
+------
++
+. Confirm that you can successfully ping the Hibari node:
++
+------
+$ running-directory-name/hibari/bin/hibari ping
+------
+
+IMPORTANT: A single-node Hibari system is hard-coded to listen on the localhost address 127.0.0.1. Consequently the Hibari node is reachable only from the node itself.
+
+==== Stopping Hibari
+
+To stop Hibari:
+------
+$ running-directory/hibari/bin/hibari stop
+------
+
+[[installing-multi-node]]
+=== Installing a Multi-Node Hibari Cluster
+
+Before you install Hibari on to the target nodes you must complete these preparation steps:
+
+- Set up required user privileges on the installer node and on the target Hibari nodes.
+- Download the Cluster installer tool.
+- Configure the Cluster installer tool.
+
+==== Setting Up Your User Privileges
+
+The system user ID that you use to perform the installation must be different than the Hibari runtime user. Your installing user account ($USER) must be set up as follows:
+
+- $USER must exist on the installer node and also on the target Hibari nodes.
+- $USER on the installer node must have SSH private/public keys, with the SSH agent set up to enable password-less SSH login.
+- $USER account must be accessible with password-less SSH login on the target Hibari nodes.
+- $USER must have password-less sudo access on the target Hibari nodes.
+
+If your installing user account does not currently have the above privileges, follow these steps:
+
+. As the root user, add your installing user ($USER) to the installer node. Then on each of the Hibari nodes, add your installing user and grant your user password-less sudo access:
++
+------
+$ useradd $USER
+$ passwd $USER
+$ visudo
+# append the following line and save it
+$USER  ALL=(ALL)       NOPASSWD: ALL
+------
++
+NOTE: If you get a "sudo: sorry, you must have a tty to run sudo" error
+while testing sudo, try commenting out following line inside of
+the +/etc/sudoers+ file:
++
+------
+$ visudo
+Defaults    requiretty
+------
++
+. On the installer node, create a new SSH private/public key for your installing user:
++
+------
+$ ssh-keygen
+# enter your password for the private key
+$ eval `ssh-agent`
+$ ssh-add ~/.ssh/id_rsa
+# re-enter your password for the private key
+------
++
+. On each of the Hibari nodes:
+
+- Append an entry for the installer node to the +\~/.ssh/known_hosts+ file.
+- Append an entry for your public SSH key to the +~/.ssh/authorized_keys+ file.
+In the example below, the target Hibari nodes are dev1, dev2, and dev3:
++
+------
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3
+------
++
+NOTE: If your installer node will be one of the Hibari cluster nodes,
+make sure that you ssh-copy-id to the installer node also.
++
+. Confirm that password-less SSH access to the each of the Hibari nodes works
+as expected.
++
+------
+$ ssh $USER@dev1
+$ ssh $USER@dev2
+$ ssh $USER@dev3
+------
+
+TIP: If you need more help with SSH set-up, check
+http://inside.mines.edu/~gmurray/HowTo/sshNotes.html.
+
+[[download-cluster]]
+==== Downloading the Cluster Installer Tool
+
+"Cluster" is a simple tool for installing, configuring, and bootstrapping a cluster of Hibari nodes. The tool is not part of the Hibari package itself, but is available from GitHub.
+
+NOTE: The Cluster tool should meet the needs of most users.  However, this
+tool's "target node" recipe is currently Linux-centric (e.g. useradd,
+userdel, ...).  Patches and contributions for other OS and platforms
+are welcome.  For non-Linux deployments, the Cluster tool is rather
+simple so installation can be done manually by following the tool's
+recipe.
+
+. Create a working directory into which you will download the Cluster installer tool:
++
+------
+$ mkdir working-directory
+------
++
+. Download the Cluster tool's Git repository from GitHub:
++
+------
+$ cd working-directory
+$ git clone git://github.com/hibari/clus.git
+------
++
+
+The download creates a sub-directory +clus+ under which the installer tool and various supporting files are stored.
+
+[[config-cluster]]
+==== Configuring the Cluster Installer Tool
+
+The Cluster tool requires some basic configuration information that indicates how you want your Hibari cluster to be set up. You will create a simple text file that specifies your desired configuration, and then later use the file as input when you run the Cluster tool.
+
+It's simplest to create the file in the same working directory in which you downloaded the cluster tool. You can give the file any name that you want; for purposes of these instructions we will use the file name +hibari.config+.
+
+Below is a sample +hibari.config+ file. The file that you create must include all of these parameters, and the values must be formatted in the same way as in this example (with parentheses and quotation marks as shown). Parameter descriptions follow the example file.
+
 ------
 ADMIN_NODES=(dev1 dev2 dev3)
 BRICK_NODES=(dev1 dev2 dev3)
@@ -366,119 +500,53 @@ ALL_NETA_TIEBREAKER="10.181.165.1"
 ALL_HEART_UDP_PORT="63099"
 ALL_HEART_XMIT_UDP_PORT="63100"
 ------
-+
-Example /etc/hosts file entries for above configuration:
-+
+
+[[eligible-admin-nodes]]
+- +ADMIN_NODES+
+  * Host names of the nodes that will be eligible to run the Hibari Admin Server. For complete information on the Admin Server, see link:hibari-sysadmin-guide.en.html#admin-server-app[The Admin Server Application] in the Hibari System Administrator's Guide.
+- +BRICK_NODES+
+  * Host names of the nodes that will serve as Hibari storage bricks. Note that in the sample configuration file above there are three storage brick nodes (dev1, dev2, and dev3), and these three nodes are each eligible to run the Admin Server.
+- +BRICKS_PER_CHAIN+
+  * Number of bricks per replication chain. For example, with two bricks per chain there will be two copies of the data stored in the chain (one copy on each brick); with three bricks per chain there will be three copies, and so on. For an overview of chain replication, see link:#chain-replication[Chain Replication for High Availability and Strong Consistency] in this document. For chain replication detail, see the Hibari System Administrator's Guide.
+- +ALL_NODES+
+  * This list of all Hibari nodes is the union of +ADMIN_NODES+ and +BRICK_NODES+.
+- +ALL_NETA_ADDRS+
+  * As described in link:hibari-sysadmin-guide.en.html#partition-detector[The Partition Detector Application] in the Hibari System Administrator's guide, the nodes in a multi-node Hibari cluster should be connected by two networks, Network A and Network B, in order to detect and manage network partitions. The +ALL_NETA_ADDRS+ parameter specifies the IP addresses of each Hibari node within Network A, which is the network through which data replication and other Erlang communications will take place. The list of the IP addresses should correspond in order to host names you listed in the +ALL_NODES+ setting. 
+- +ALL_NETB_ADDRS+
+  * IP addresses of each Hibari node within Network B. Network B is used only for heartbeat broadcasts that help to detect network partitions. The list of the IP addresses should correspond in order to host names you listed in the +ALL_NODES+ setting.
+- +ALL_NETA_BCAST+
+  * IP broadcast address for Network A.
+- +ALL_NETB_BCAST+
+  * IP broadcast address for Network B.
+- +ALL_NETA_TIEBREAKER+
+  * Within Network A, the IP address for the network monitoring application to use as a "tiebreaker" in the event of a partition. If the network monitoring application on a Hibari node determines that Network A is partitioned and Network B is not partitioned, then if the Network A tiebreaker IP address responds to a ping, then the local node is on the "correct" side of the partition. Ideally the tiebreaker should be the address of the Layer 2 switch or Layer 3 router that all Erlang network distribution communications flow through.
+- +ALL_HEART_UDP_PORT+
+  * UDP port for heartbeat listener.
+- +ALL_HEART_XMIT_UDP_PORT+
+  * UDP port for heartbeat transmitter.
+
+For more detail on network monitoring configuration settings, see the partition-detector's
+OTP application source file (https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src).
+
+CAUTION: In a production setting, Network A and Network B should be
+physically different networks and network interfaces.  However, for testing and development purposes the same physical network can be used for Network A and
+Network B (as in the sample configuration file above).
+
+As a final configuration step, make sure that on each Hibari node, the +/etc/hosts+ file has entries for all Hibari nodes in the cluster. For example:
 ------
 10.181.165.230  dev1.your-domain.com    dev1
 10.181.165.231  dev2.your-domain.com    dev2
 10.181.165.232  dev3.your-domain.com    dev3
 ------
-+
-NOTE: See
-http://hibari.github.com/hibari-doc/hibari-sysadmin-guide.en.html#partition-detector
-for further information regarding the network partition detector
-application, Network A, and Network B.  Additional information for the
-application's configuration is embedded in the partition-detector's
-OTP application source file
-(https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src).
-+
-CAUTION: In a production setting, Network A and Network B should be
-physically different networks and network interfaces.  However, the
-same network can be used (as in this example) for Network A and
-Network B for testing and development purposes.
 
-===== Example how to prepare installing user
+==== Installing Hibari
 
-Setup your user (i.e. your login - $USER) on all Hibari nodes if not
-already existing.  This user will only be used for Hibari installation
-purposes.
+From your installer node, logged in as the installer user, take these steps to create your Hibari cluster:
 
-1. As root user, add your user to all of the Hibari nodes and grant
-   sudo access for your user.
+. In the working directory in which you link:#download-cluster[downloaded the Cluster tool] and link:#config-cluster[created your cluster configuration file], place a copy of the Hibari tarball package and md5sum file: 
 +
 ------
-$ useradd $USER
-$ passwd $USER
-$ visudo
-# append the following line and save it
-$USER  ALL=(ALL)       NOPASSWD: ALL
-------
-+
-NOTE: If you get "sudo: sorry, you must have a tty to run sudo" error
-while testing 'sudo', consider to comment out following line inside of
-the /etc/sudoers file:
-+
-------
-$ visudo
-Defaults    requiretty
-------
-+
-2. Create a new ssh private/public key for your user on the installer
-   node.
-+
-------
-$ ssh-keygen
-# enter your password for the private key
-$ eval `ssh-agent`
-$ ssh-add ~/.ssh/id_rsa
-# re-enter your password for the private key
-------
-+
-3. Append an entry for the installer node to your \~/.ssh/known_hosts
-   file on each of the Hibari nodes and append an entry to your
-   ~/.ssh/authorized_keys file on all of the Hibari nodes for your
-   public ssh key.
-+
-------
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3
-------
-+
-NOTE: If your installer node will be one of the Hibari cluster nodes,
-make sure that you ssh-copy-id to the installer node also.
-+
-4. Confirm password-less access to the each of the Hibari nodes works
-as expected.
-+
-------
-$ ssh $USER@dev1
-$ ssh $USER@dev2
-$ ssh $USER@dev3
-------
-
-TIP: If needed, check
-http://inside.mines.edu/~gmurray/HowTo/sshNotes.html for further SSH
-setup help.
-
-===== Example how to prepare installer node
-
-1. Configure your e-mail and name for Git
-+
-------
-$ git config --global user.email "you@example.com"
-$ git config --global user.name "Your Name"
-------
-+
-2. Create working directory
-+
-------
-$ mkdir working-directory-name
-------
-+
-3. Download cluster tool's Git repository
-+
-------
-$ cd working-directory-name
-$ git clone git://github.com/hibari/clus.git
-------
-+
-4. Place a copy of the Hibari pre-built release and your hibari.config
-   file into the working directory.
-+
-------
-$ cd working-directory-name
+$ cd working-directory
 $ ls -1
 clus
 hibari-X.Y.Z-DIST-ARCH-WORDSIZE-md5sum.txt
@@ -487,163 +555,83 @@ hibari.config
 $
 ------
 
-===== Example how to create all Hibari nodes
-
-All of the operations below are run on the installer node via two Bash
-scripts (i.e. clus.sh and clus-hibari.sh).
-
-1. Create (or re-create) "hibari" user on all Hibari nodes
-+
-NOTE: If your ssh private key is protected by a password, please make
-sure your private key is registered with the ssh agent before
-proceeding.
+. Create the "hibari" user on all Hibari nodes:
 +
 ------
-$ cd working-directory-name
 $ for i in dev1 dev2 dev3 ; do ./clus/priv/clus.sh -f init hibari $i ; done
 hibari@dev1
 hibari@dev2
 hibari@dev3
 ------
 +
-CAUTION: The -f option will forcefully delete and then re-create
-the "hibari" user on the target node.
+NOTE: If the "hibari" user already exists on the target nodes, the -f option will forcefully delete and then re-create the "hibari" user.
 +
-2. Copy pre-built release to all Hibari nodes and then setup Hibari
-   package on all Hibari nodes via the "hibari" user.
+. Install the Hibari package on all Hibari nodes, via the newly created "hibari" user:
 +
 ------
-$ cd working-directory-name
 $ ./clus/priv/clus-hibari.sh -f init hibari hibari.config hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
 hibari@dev1
 hibari@dev2
 hibari@dev3
 ------
++
+NOTE: By default the Cluster tool installs Hibari into +/usr/local/var/lib+ on the target nodes. If you prefer a different location, before doing the install open the +clus.sh+ script (in your working directory, under +/clus/priv/+) and edit the +CT_HOMEBASEDIR+ variable.
 
-TIP: As described in the next section, the clus-hibari.sh script can
-be used for starting and stopping of a Hibari multi node cluster even
-after it's creation.
 
-=== Deploying a Simple Hibari System
+[[starting-multi-node]]
+=== Starting and Stopping a Multi-Node Hibari Cluster
 
-==== Single Node
+You can use the Cluster installer tool to start and stop your multi-node Hibari cluster, working from the same node from which you managed the installation process. Note that in each of the Hibari commands in this section you'll be referencing the name of the link:#config-cluster[Cluster tool configuration file] that you created during the installation procedure.
 
-===== Basic Configuration
-_to be added_
+==== Starting and Bootstrapping the Hibari Cluster
 
-===== Starting a Single Node Cluster
-
-. Start Hibari
+. Change to the working directory in which you downloaded the Cluster tool, then start Hibari on all Hibari nodes via the "hibari" user:
 +
 ------
-$ running-directory-name/hibari/bin/hibari start
-------
-+
-. Bootstrap Hibari
-+
-------
-$ running-directory-name/hibari/bin/hibari-admin bootstrap
-------
-+
-The Hibari bootstrap process starts Hibari's Admin server on the
-single node and creates a single table "tab1" serving as Hibari's
-default table.
-
-===== Verifying Your System
-
-A few simple operations to verify system is set up properly.
-
-. Open "Hibari Web Administration" page
-+
-------
-$ your-favorite-browser http://127.0.0.1:23080
-------
-+
-. Ping node to check the health.
-+
-------
-$ running-directory-name/hibari/bin/hibari ping
-------
-
-_to be added_
-
-===== Creating Other Tables
-_to be added_
-
-===== Stopping a Single Node Cluster
-
-. Stop Hibari
-+
-------
-$ running-directory-name/hibari/bin/hibari stop
-------
-
-==== Multi Node
-
-===== Basic Configuration
-_to be added_
-
-===== Starting a Multi Node Cluster
-
-. Start Hibari on all Hibari nodes via the "hibari" user
-+
-------
-$ cd working-directory-name
+$ cd working-directory
 $ ./clus/priv/clus-hibari.sh -f start hibari hibari.config
 hibari@dev1
 hibari@dev2
 hibari@dev3
 ------
 +
-. Bootstrap Hibari on first Hibari admin node via the "hibari" user
+. If this is the first time you've started Hibari, bootstrap the system via the "hibari" user:
 +
 ------
-$ cd working-directory-name
 $ ./clus/priv/clus-hibari.sh -f bootstrap hibari hibari.config
 hibari@dev1 => hibari@dev1 hibari@dev2 hibari@dev3
 ------
 +
-The Hibari bootstrap process starts Hibari's admin server on the first
-admin node and creates a single table "tab1" serving as Hibari's
-default table.
+The Hibari bootstrap process starts Hibari's Admin Server on the first link:#eligible-admin-nodes[eligible
+admin node] and creates a single table "tab1" serving as Hibari's
+default table. For information about creating additional tables, see the Hibari System Administrator's Guide.
 +
-NOTE: If bootstrapping fails due to "another_admin_server_running"
-error, please stop the other Hibari cluster(s) running on the network
-or repeat the installation from the beginning with udp ports
-(i.e. ALL_HEART_UDP_PORT and ALL_HEART_XMIT_UDP_PORT) that are not in
-use by other applications or another Hibari cluster.
+NOTE: If bootstrapping fails due to "another_admin_server_running" error, please stop the other Hibari cluster(s) running on the network; or reconfigure the Cluster tool to assign link:#eligible-admin-nodes[Hibari heartbeat listener ports] that are not in use by another Hibari cluster or other applications and then repeat the cluster installation procedure. 
 
-===== Verifying Your System
+==== Verifying the Hibari Cluster
 
-A few simple operations to verify system is set up properly.
+Do these simple checks to verify that Hibari is up and running.
 
-. Open "Hibari Web Administration" page
+. Confirm that you can open the "Hibari Web Administration" page:
 +
 ------
 $ your-favorite-browser http://dev1:23080
 ------
 +
-. Ping each of the nodes to check the health.
+. Confirm that you can successfully ping each of your Hibari nodes:
 +
 ------
-$ cd working-directory-name
 $ ./clus/priv/clus-hibari.sh -f ping hibari hibari.config
 hibari@dev1 ... pong
 hibari@dev2 ... pong
 hibari@dev3 ... pong
 ------
 
-_to be added_
+==== Stopping the Hibari Cluster
 
-===== Creating Other Tables
-_to be added_
-
-===== Stopping a Multi Node Cluster
-
-. Stop Hibari on all Hibari nodes via the "hibari" user
-+
+Stop Hibari on all Hibari nodes via the "hibari" user:
 ------
-$ cd working-directory-name
+$ cd working-directory
 $ ./clus/priv/clus-hibari.sh -f stop hibari hibari.config
 ok
 ok
@@ -652,6 +640,119 @@ hibari@dev1
 hibari@dev2
 hibari@dev3
 ------
+
+[[creating-tables]]
+=== Creating New Tables
+
+The simplest way to create a new table is via the Admin Server's GUI. Open `http://localhost:23080/` and click the "Add a table" link. 
+
+NOTE: For information about creating tables using the administrative API, see the Hibari System Administrator's Guide.
+
+When adding a table through the GUI, you have these table configuration options:
+
+- +Local+
+  * Boolean. If true, all bricks for storing the new table's data will be created on the local node, i.e. the node that's running the Admin Server.  If false, then the "NodeList" field
+is used to specify which cluster nodes the new bricks should use.
+- +BigData+
+  * Boolean. If true, value blobs will be stored on disk.
+- +DiskLogging+
+  * Boolean. If true, all updates will be written to the write-ahead log for
+persistence.  If false, bricks will run faster but at the expense of
+data loss in a cluster-wide power failure.
+- +SyncWrites+
+  * Boolean. If true, all writes to the write-ahead log will be flushed to stable
+storage via the `fsync(2)` system call.  If false, bricks will run
+faster but at the expense of data loss in a cluster-wide power
+failure.
++
+- +VarPrefix+
+  * Boolean. If true, then a variable-length prefix of the key will be used as
+input for the consistent hashing function.  If false, the entire key
+will be used.
++
+Many applications can benefit from using a variable-length or
+fixed-length prefix hashing scheme.  As an example, consider an
+application that maintains state for various users.  The app wishes to
+use micro-transactions to update various keys (in the same table)
+related to that user.  The table can be created to use
+`VarPrefix=true`, together with `VarPrefixSeparator=47` (ASCII 47 is
+the forward slash character) and
+`VarPrefixNumSeparator=2`, to create a hashing scheme that will
+guarantee that keys `/FooUser/summary` and `/FooUser/thing1` and
+`/FooUser/thing9` are all stored by the same chain.
++
+NOTE: The HTTP interface for creating tables does not expose the
+fixed-length key prefix scheme.  The Erlang API must be used in this
+case.
++
+- +VarPrefixSeparator+
+  * Integer. Define the character used for variable-length key prefix calculation.
+Note that the default value of ASCII 47 (the "/" character), or any
+other character, does not imply any UNIX/POSIX style file or directory
+semantics.
+- +VarPrefixNumSeparators+
+  * Integer. Define the number of `VarPrefixSeparator` bytes, and all bytes in
+between, used for consistent hashing.  If `VarPrefixSeparator=47` and
+`VarPrefixNumSeparators=3`, then for a key such as `/foo/bar/baz`, the
+prefix used for consistent hashing will be `/foo/bar/`.
+- +Bricks+
+  * Integer. If `Local=true` (see above), then this integer defines the total
+number of logical bricks that will be created on the local node.  This
+value is ignored if `Local=false`.
+- +BPC+
+  * Integer. Define the number of bricks per chain.
++
+The algorithm used for creating chain -> brick mapping is based on a
+"striping" principle: enough chains are laid across bricks in a
+stripe-wise manner so that all nodes (aka physical bricks) will have
+the same number of logical bricks in head, middle, and tail roles.
+See the example in the Hibari System Administrator's Guide of
+link:hibari-sysadmin-guide.en.html#3-chains-striped-across-3-bricks[3
+chains striped across three nodes].
++
+The Erlang API must be used to create tables with other chain layout
+patterns.
++
+- +NodeList+
+  * Comma-separated string. If `Local=false`, specify the list of nodes that will run logical
+bricks for the new table.  Each node in the comma-separated list
+should take the form `NodeName@HostName`.  For example,
+use `hibari1@machine-a, hibari1@machine-b, hibari1@machine-c` to specify
+three nodes.
++
+- +NumNodesPerBlock+
+  * Integer. If `Local=false`, then this integer will affect the striping behavior
+of the default chain striping algorithm.  This value must be
+zero (i.e. this parameter is ignored) or a multiple of the `BPC` parameter.
++
+For example, if `NodeList`
+contains nodes A, B, C, D, E, and F, then the
+following striping patterns would be used:
++
+    ** `NumNodesPerBlock=0` would stripe across all 6 nodes for 6 chains
+    total.
+    ** `NumNodesPerBlock=2` and `BPC=2` would stripe 2 chains across nodes
+    A & B, 2 chains across C & D, and 2 chains across E & F.
+    ** `NumNodesPerBlock=3` and `BPC=3` would stripe 3 chains across nodes
+    A & B & C and 3 chains across D & E & F.
++
+- +BlockMultFactor+
+  * Integer. If `Local=false`, then this integer will affect the striping behavior
+of the default chain striping algorithm.  This value must be
+zero (i.e. this parameter is ignored) or greater than zero.
++
+For example, if `NodeList`
+contains nodes A, B, C, D, E, and F, then the
+following striping patterns would be used:
++
+    ** `NumNodesPerBlock=0` and `BlockMultFactor=0` would stripe across
+    all 6 nodes for 6 chains total.
+    ** `NumNodesPerBlock=2` and `BlockMultFactor=5` and `BPC=2` would
+    stripe 2*5=10 chains across nodes A & B, 2*5=10 chains across C &
+    D, and 2*5=10 chains across E & F, for a total of 30 chains.
+    ** `NumNodesPerBlock=3` and `BlockMultFactor=4` and `BPC=3` would
+    stripe 3*4=12 chains across nodes A & B & C and 3*4=12 chains across
+    D & E & F, for a total of 24 chains.
 
 [[client-api-erlang]]
 == Client API: Native Erlang
@@ -2849,10 +2950,6 @@ _to be added_
 
 [[HibariBuildingSource]]
 == Building Hibari from Source
-_Under Construction_
-
-// - _KK Dev to provide initial content._
-// - _Dave to review, edit, and solicit additional info as needed._
 
 This section describes the basic recipes to build the following items:
 
@@ -2860,66 +2957,34 @@ This section describes the basic recipes to build the following items:
 - Hibari Documentation
 - Erlang/OTP System
 
-Before getting started, review this checklist of tools and software.
-Please install and setup as needed.
+=== Required Third Party Software
 
-Git (Mandatory)::
+Before getting started, review this checklist of tools and software. Please install and set up as needed.
+
+==== Mandatory Items (Required for Building Hibari)
+
+The following software is required in order to download Hibari and build a release package:
+
 - Git - http://git-scm.com/
-  * *Git 1.5.4 or newer, Git 1.7.3.4 has been tested recently*
-  * _required for Repo and GitHub_
-- GitHub - https://github.com
-  * Anonymous read-only access using the GIT protocol is default.
-  * Team members having read-write access should add his/her ssh
-    public key under your GitHub account.
-Erlang/OTP (Mandatory)::
-- OpenSSL - http://www.openssl.org/
-  * _required for Erlang's crypto module_
-- Erlang - http://www.erlang.org/
-  * *R13B04 or newer*
-  * *R14B01 has been tested most recently*
-  * If needed, see <<ErlangOTP>> for instructions to build Erlang/OTP
-    from source.
-Python (Mandatory)::
-- Python - http://www.python.org
-  * *Python 2.4 or newer, Python 2.7 has been tested most recently
-     (CAUTION: Python 3.x might be too new)*
-  * _required for Repo and AsciiDoc_
-AsciiDoc (Optional)::
-- AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
-  * *asciidoc 8.6.1 and asciidoc 9.6.3 have been tested most recently*
-  * plus the following tools:
-    ** ImageMagick - http://www.imagemagick.org/
-    ** graphviz - http://www.graphviz.org/
-    ** mscgen - http://www.mcternan.me.uk/mscgen/
-  * Mandatory for building Hibari's documentation. See
-    <<HibariAsciiDoc>> for further details.
-- docbook - http://www.docbook.org/
-  * Optional for building _pdf_ version of Hibari's documentation
-- xmlto - https://fedorahosted.org/xmlto/
-  * Optional for building _text_ version of Hibari's documentation
-
-In addition to the above list, Hibari also depends on two tools to
-automate the downloading and the packaging steps.
-
-- Repo - http://source.android.com/source/git-repo.html
-- Rebar - https://github.com/basho/rebar/wiki
-
-Instructions for downloading the Repo tool are described next.  The
-Rebar tool is included in Hibari's git repositories so there is no
-need to download it separately.  Please refer to the above sites for
-further information regarding the usage of these tools.
-
-The first step is to download the Git repositories from GitHub.
-
-. Downloading _basic recipe_
-  .. Configure your e-mail and name for Git
+  * Must be version 1.5.4 or newer. 
+    ** 1.7.3.4 is the version most recently tested for Hibari.
+  * If you haven't yet done so, please configure your email address and name for Git:
 +
 ------
 $ git config --global user.email "you@example.com"
 $ git config --global user.name "Your Name"
 ------
 +
-  .. Install Repo
+    
+  * If you haven't yet done so, you must sign up for a  GitHub account - https://github.com/
+    ** Anonymous read-only access using the GIT protocol is default.
+    ** Team members with read-write access: be sure to add your SSH public key under your GitHub account.
+- Python - http://www.python.org
+  * Must be version 2.4 or newer
+    ** 2.7 is the version most recently tested for Hibari.
+    ** CAUTION: Python 3.x might be too new.
+- Repo - http://source.android.com/source/git-repo.html
+  * Install as follows:
 +
 ------
 $ mkdir -p ~/bin
@@ -2927,34 +2992,61 @@ $ wget -O - http://android.git.kernel.org/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
 ------
 +
-  .. Create working directory
+  * The downloading and packaging process also uses Rebar (https://github.com/basho/rebar/wiki) but this tool is included in the Hibari Git repositories so you do not need to install it separately.
+- OpenSSL - http://www.openssl.org/
+  * Required for Erlang's crypto module.
+- Erlang/OTP - http://www.erlang.org/
+  * Must be version R13B04 or newer.
+    ** R14B01 is the version most recently tested for Hibari.
+  * For information on building Erlang/OTP from source, see <<ErlangOTP>> in this document.
+
+==== Optional Items (Required for Building Hibari's Documentation)
+
+The following software is required only if you want to build Hibari's documentation from source. Note that an online version of the documentation is available at http://hibari.github.com/hibari-doc/.
+
+- AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
+  * Must be version 8.6.1 or newer
+    ** 9.6.3 is the version most recently tested for Hibari
+  * Plus the following support tools:
+    ** ImageMagick - http://www.imagemagick.org/
+    ** Graphviz - http://www.graphviz.org/
+    ** Mscgen - http://www.mcternan.me.uk/mscgen/
+- Docbook - http://www.docbook.org/
+  * Optional for building a PDF version of Hibari's documentation.
+- xmlto - https://fedorahosted.org/xmlto/
+  * Optional for building a text version of Hibari's documentation.
+  
+=== Downloading Hibari
+
+Follow these steps to download the Hibari repositories from GitHub.
+
+. Create a working directory and retrieve the Hibari manifest files.
 +
 ------
-$ mkdir working-directory-name
-$ cd working-directory-name
+$ mkdir working-directory
+$ cd working-directory
 $ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
 ------
 +
-NOTE: Your "Git" identity is needed during the init step.  Please
+NOTE: Your "Git" identity is needed during the repo init step.  Please
 enter the name and email of your GitHub account if you have one.  Team
-members having read-write access are recommended to use "repo init -u
+members having read-write access should use "repo init -u
 git@github.com:hibari/manifests.git -m hibari-default-rw.xml".
 +
 TIP: If you want to checkout the latest development version of Hibari,
 please append " -b dev" to the repo init command.
 +
-  .. Download Git repositories
+. Download Hibari's Git repositories.
 +
 ------
-$ cd working-directory-name
 $ repo sync
 ------
 +
 
-The working directory has the following layout structure:
+After the repo sync, your working directory has the following structure:
 
 -----
-<working-directory-name>
+<working-directory>
   |- hibari/
     |- .git/
     |- .gitignore
@@ -3017,15 +3109,14 @@ The working directory has the following layout structure:
 <5> Patches
 <6> Rebar
 
-=== Hibari Release Package
+=== Building the Hibari Release Package
 
-This section is the first step to build, to _eunit_ test, and to
-package your own Hibari.
+Follow these steps to build a Hibari release package.
 
-. Building _basic recipe_
+. Building _basic recipe_:
 +
 ------
-$ cd working-directory-name/hibari
+$ cd working-directory/hibari
 $ make
 ------
 +
@@ -3033,35 +3124,34 @@ TIP: If the response is "make: erl: Command not found", please make
 sure Erlang/OTP is installed and "otp-installing-directory-name/bin"
 is added to your $PATH environment.
 +
-. Release Packaging _basic recipe_
+. Release packaging _basic recipe_:
 +
 ------
-$ cd working-directory-name/hibari
+$ cd working-directory/hibari
 $ make package
 ------
 +
 NOTE: A release package tarball "hibari-X.Y.Z-dev-ARCH-WORDSIZE.tgz"
-and md5sum file "hibari-X.Y.Z-dev-ARCH-WORDSIZE-md5sum.txt" is written
-to working-directory-name.
+and md5sum file "hibari-X.Y.Z-dev-ARCH-WORDSIZE-md5sum.txt" is written into your
+working-directory. You can then use these files to perform a single-node or multi-node Hibari installation as described in <<getting-started>>.
 
 [[HibariAsciiDoc]]
-=== Hibari Documentation
+=== Building Hibari's Documentation
 
-This section is the first step to download and to build your own
-Hibari documentation.
+Follow these steps to build Hibari's documentation.
 
-. Building Hibari's "Guides" _basic recipe_
+. Building Hibari's "Guides" _basic recipe_:
 +
 ------
-$ cd working-directory-name/hibari-doc/src/hibari
+$ cd working-directory/hibari-doc/src/hibari
 $ make clean -OR- make realclean
 $ make
 ------
 +
-. Building Hibari's "Website" _basic recipe_
+. Building Hibari's "Website" _basic recipe_:
 +
 ------
-$ cd working-directory-name/hibari-doc/src/hibari/website
+$ cd working-directory/hibari-doc/src/hibari/website
 $ make clean -OR- make realclean
 $ make
 ------
@@ -3072,13 +3162,12 @@ Hibari's documentation is authored using AsciiDoc and a few auxillary
 tools:
 
 - ImageMagick
-- docbook
-- graphviz
-- mscgen
+- Docbook
+- Graphviz
+- Mscgen
 - xmlto
 
-Hibari's documentation is generated with asciidoc 8.6.3 and a manually
-modified version of the a2x tool.
+Hibari's documentation is generated with AsciiDoc and a manually modified version of the a2x tool.
 
 ------
 $ diff -u /usr/local/Cellar/asciidoc/8.6.3/bin/a2x{.orig,}
@@ -3099,50 +3188,41 @@ $ diff -u /usr/local/Cellar/asciidoc/8.6.3/bin/a2x{.orig,}
 ------
 
 [[ErlangOTP]]
-=== Erlang/OTP System
+=== Building and Installing Erlang/OTP
 
-This section is the first step to download, to build, and to install
-your own Erlang/OTP system.
+Follow these steps to download and build Erlang/OTP from source, and to install the system. These steps provide a basic recipe; not all options are addressed.
 
-. Downloading _basic recipe_
-  .. Please make sure to have the 'openssl-devel' package installed on
-     your system.  OpenSSL is required by Hibari (and before
-     configuring and building of your Erlang/OTP system).
-  .. Get and install Git
-+
-  .. Download the source code for your Erlang/OTP system
+NOTE: Please make sure to have the 'openssl-devel' package installed on your system before configuring and building Erlang/OTP.
+
+. Download the source code for your Erlang/OTP system:
 +
 ------
-$ cd working-directory-name
+$ cd working-directory
 $ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
 ------
 +
-  .. Untar the source code for your Erlang/OTP system.
+. Untar the source code for your Erlang/OTP system:
 +
 ------
-$ cd working-directory-name
 $ tar -xzf otp_src_R14B01.tar.gz
 ------
 +
-. Building _basic recipe_
-  .. Change to your working directory and configure Erlang/OTP
+. Configure Erlang/OTP:
 +
 ------
-$ cd working-directory-name/otp_src_R14B01
+$ cd working-directory/otp_src_R14B01
 $ ./configure --prefix=otp-installing-directory-name
 ------
 +
-  .. Build Erlang/OTP
+. Build Erlang/OTP:
 +
 ------
-$ cd working-directory-name/otp_src_R14B01
 $ make
 ------
 +
-. Installing _basic recipe_
+. Install Erlang/OTP:
 +
 ------
-$ cd working-directory-name/otp_src_R14B01
 $ sudo make install
 ------
 
