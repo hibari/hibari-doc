@@ -2931,7 +2931,6 @@ Ruby and JSON-RPC as it is to use Python and Protocol Buffers.
   Similar to EBF, except that Thrift's binary encoding is used for
   the wire protocol instead of UBF(A) or Erlang's native wire
   formats.
-  *Hibari support is experimental (i.e. not yet implemented).*
 * link:http://en.wikipedia.org/wiki/Protocol_buffers[Protocol Buffers].
   Similar to EBF, except that Google's Protocol Buffers binary
   encoding is used for the wire protocol instead of UBF(A) or
