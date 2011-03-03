@@ -1050,6 +1050,8 @@ hibari@dev3
 
 The simplest way to create a new table is via the Admin Server's
 GUI. Open `http://localhost:23080/` and click the "Add a table" link.
+In addition to the GUI, the hibari-admin tool can also be used to
+create a new table.  See the hibari-admin tool for usage details.
 
 NOTE: For information about creating tables using the administrative
 API, see the Hibari System Administrator's Guide.
