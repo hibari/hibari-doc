@@ -18,8 +18,8 @@
 //
 
 = Hibari Application Developer's Guide *DRAFT - IN PROGRESS*
-:Date: 2011/02/27
-:Revision: 0.1.9
+:Date: 2011/03/6
+:Revision: 0.2.0
 :Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 
 <<<
@@ -37,8 +37,8 @@ reasons:
   delivers high throughput and availability without sacrificing data
   consistency.
 - Hibari is the *only open source KVDB built to the exacting standards
-  of the carrier-class telecom sector, and proven in multi-million
-  user telecom production environments*.
+  of the carrier-class telecom sector*, and proven in multi-million
+  user telecom production environments.
 - Hibari delivers a *distinctive feature matrix* that includes:
   * Per-table options for disk-based or RAM-only value storage
   * Support for per-key expiration times and per-key custom meta-data
@@ -107,7 +107,7 @@ markets that demand flexibility and responsiveness.
 In short, recent years have seen a proliferation of services that
 require more data, with less structure.
 
-Not surprisingly, some of the leading web enterprise have been at the
+Not surprisingly, some of the leading web enterprises have been at the
 forefront of the NOSQL movement. In particular, Google with its
 http://labs.google.com/papers/bigtable.html[BigTable paper] in 2006
 and Amazon with its
@@ -632,6 +632,9 @@ $ mkdir running-directory
 $ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
 ------
 
+IMPORTANT: On your Hibari node, in the system's +/etc/sysctl.conf+ file,
+set +vm.swappiness=0+. Swappiness is not desirable for an Erlang VM.
+
 [[starting-single-node]]
 === Starting and Stopping Hibari on a Single Node
 
@@ -652,8 +655,8 @@ $ running-directory/hibari/bin/hibari-admin bootstrap
 
 The Hibari bootstrap process starts Hibari's Admin Server on the
 single node and creates a single table "tab1" serving as Hibari's
-default table. For information on creating additional tables, see the
-Hibari System Administrator's Guide.
+default table. For information on creating additional tables, see 
+link:#creating-tables[Creating New Tables].
 
 ==== Verifying Hibari
 
@@ -909,15 +912,19 @@ testing and development purposes the same physical network can be used
 for Network A and Network B (as in the sample configuration file
 above).
 
-As a final configuration step, make sure that on each Hibari node, the
-+/etc/hosts+ file has entries for all Hibari nodes in the cluster. For
-example:
+As final configuration steps, on *each Hibari node*:
 
+- Make sure that the +/etc/hosts+ file has entries for all Hibari nodes 
+in the cluster. For example:
++
 ------
 10.181.165.230  dev1.your-domain.com    dev1
 10.181.165.231  dev2.your-domain.com    dev2
 10.181.165.232  dev3.your-domain.com    dev3
 ------
++
+- In the system's +/etc/sysctl.conf+ file, set +vm.swappiness=0+. Swappiness 
+is not desirable for an Erlang VM.
 
 ==== Installing Hibari
 
@@ -1002,8 +1009,7 @@ hibari@dev1 => hibari@dev1 hibari@dev2 hibari@dev3
 The Hibari bootstrap process starts Hibari's Admin Server on the first
 link:#eligible-admin-nodes[eligible admin node] and creates a single
 table "tab1" serving as Hibari's default table. For information about
-creating additional tables, see the Hibari System Administrator's
-Guide.
+creating additional tables, see link:#creating-tables[Creating New Tables].
 +
 NOTE: If bootstrapping fails due to "another_admin_server_running"
 error, please stop the other Hibari cluster(s) running on the network;
@@ -1903,16 +1909,14 @@ execution.
  ::
 *Flags*
 
-- List of operational flags to apply to the `get' operation, and/or
-  custom property flags.
+- List of operational flags to apply to the `get' operation.
 - Optional; defaults to empty list.
 - Type:
   * `Flags = flags_list()`
-  * `flags_list() = [do_op_flag() | property()]`
+  * `flags_list() = [do_op_flag()]`
   * `do_op_flag() = 'get_all_attribs' | 'witness' | {'testset',
     timestamp()} | 'must_exist' | 'must_not_exist'`
   * `timestamp() = integer()`
-  * `property() = atom() | {term(), term()}`
 - Operational flag usage
   * `'get_all_attribs'`
     ** Return all attributes of the key. May be used in combination
@@ -1926,12 +1930,16 @@ execution.
        to `timestamp()`. If used inside a
        link:#brick-simple-do[micro-transaction], abort the transaction
        if the key's timestamp is not exactly equal to `timestamp()`.
+       This flag has priority over the `'must_exist'` and 
+       `'must_not_exist'` flags.
   * `'must_exist'`
     ** For use inside a link:#brick-simple-do[micro-transaction]:
        abort the transaction if the key does not exist.
   * `'must_not_exist'`
     ** For use inside a link:#brick-simple-do[micro-transaction]:
-       abort the transaction if the key exists.
+       abort the transaction if the key exists. This flag may be useful
+       when the relationship between two or more keys is important to
+       the client application.
 
  ::
 *Timeout*
@@ -2040,15 +2048,14 @@ SYNOPSIS
 DESCRIPTION
 
  ::
-Get many `Key` and `Value` pairs from a single chain in the table
-`Tab`, up to a maximum of `MaxNum`. Keys are returned in lexicographic
-sorting order. The key `Key` is the starting point: if there is a key
-`KeyNext` that follows `Key` (in lexicographic order), and if the
-`boolean()` value in the return is `true`, then `KeyNext` will be the
-first key's info in the `get_many_res_list()`.
+Get many keys from a single chain in the table `Tab`, up to a maximum 
+of `MaxNum` keys. Keys are returned in lexicographic sorting order 
+starting with the first key _after_ the key specified by the `Key` 
+argument. The return list includes a boolean value indicating whether
+or not there are more keys after the last key of the return results.
 +
-IMPORTANT: The `get_many()` function call cannot be used to find all
-keys in all chains in a Hibari table. The consistent hash of `Key`
+IMPORTANT: A single `get_many()` function call cannot be used to retrieve
+keys from across multiple storage chains. The consistent hash of `Key`
 will send the `get_many` operation to the tail brick in a single
 chain; all keys returned will come from that single brick only.
 +
@@ -2066,8 +2073,8 @@ PARAMETERS
 
  ::
 *Key*
-- Key at which to start the `get_many` retrieval, proceeding in
-  lexicographic order.
+- Key after which to start the `get_many` retrieval, proceeding in
+  lexicographic order with the first key after the specified `Key`.
 - Mandatory.
 - Type:
   * `Key = key()`
@@ -2091,15 +2098,13 @@ execution.
  ::
 *Flags*
 
-- List of operational flags to apply to the `get_many' operation,
-  and/or custom property flags.
+- List of operational flags to apply to the `get_many' operation.
 - Optional; defaults to empty list.
 - Type:
   * `Flags = flags_list()`
-  * `flags_list() = [do_op_flag() | property()]`
+  * `flags_list() = [do_op_flag()]`
   * `do_op_flag() = 'get_all_attribs' | 'witness' | {'binary_prefix',
-    binary()} | {'max_bytes', integer()}`
-  * `property() = atom() | {term(), term()}`
+    binary()} | {'max_bytes', integer()}` | `{'max_num', integer()}`
 - Operational flag usage
   * `'get_all_attribs'`
     ** Return all attributes of each key. May be used in combination
@@ -2114,6 +2119,11 @@ execution.
   * `{'max_bytes', integer()}`
     ** Return only as many keys as the sum of the sizes of their
        corresponding value blobs does not exceed `integer()` bytes.
+       If this flag is not explicity specified in a client request,
+       the value defaults to 2GB. 
+  * `{'max_num', integer()}`
+    ** Maxinum number of keys to return. Defaults to 10. Note: This
+       flag is duplicative of the MaxNum argument in purpose.
 
  ::
 *Timeout*
@@ -2150,9 +2160,12 @@ Success returns
     not `'witness'`.
   * `exp_time() = time_t()`
 +
-NOTE: When a `proplist()` is returned, one of the properties in the
-list will always be `{val_len,Size::integer()}`, where `Size` is the
-size of the value blob in bytes.
+NOTE: The boolean at the end of the success return indicates whether 
+or not the chain has more keys lexicographically after the 
+last key in the return (`true` for yes, `false` for no). When a `proplist()` 
+is returned, one of the properties in the list will always be 
+`{val_len,Size::integer()}`, where `Size` is the size of the value blob 
+in bytes.
 +
 
  ::
@@ -2262,30 +2275,29 @@ execution.
  ::
 *Flags*
 
-- List of operational flags to apply to the `delete' operation, and/or
-  custom property flags.
+- List of operational flags to apply to the `delete' operation.
 - Optional; defaults to empty list.
 - Type:
   * `Flags = flags_list()`
-  * `flags_list() = [do_op_flag() | property()]`
+  * `flags_list() = [do_op_flag()]`
   * `do_op_flag() = {'testset', timestamp()} |'must_exist' | 'must_not_exist'`
   * `timestamp() = integer()`
-  * `property() = atom() | {term(), term()}`
 - Operational flag usage
   * `{'testset', timestamp()}`
     ** Fail the operation if the existing key's timestamp is not
        exactly equal to `timestamp()`.  If used inside a
        link:#brick-simple-do[micro-transaction], abort the transaction
        if the key's timestamp is not exactly equal to
-       `timestamp()`. Using this flag with `set` will result in an
-       error if the key does not already exist or if the key exists
-       but has a non-matching timestamp.
+       `timestamp()`. This flag has priority over the `'must_exist'` and 
+       `'must_not_exist'` flags
   * `'must_exist'`
     ** For use inside a link:#brick-simple-do[micro-transaction]:
        abort the transaction if the key does not exist.
   * `'must_not_exist'`
     ** For use inside a link:#brick-simple-do[micro-transaction]:
-       abort the transaction if the key exists.
+       abort the transaction if the key exists. This flag may be useful
+       when the relationship between two or more keys is important to
+       the client application.
 
  ::
 *Timeout*
@@ -2472,9 +2484,16 @@ PARAMETERS
   * `do_flag() = 'fail_if_wrong_role' | 'ignore_role'`
 - Operational flag usage
   * `'fail_if_wrong_role'`
-    ** _description to be added_
+    ** If the 'do' operation is sent to the wrong brick in the target
+       chain (e.g. a 'read' request mistakenly sent to the 'head' brick or
+       a 'write' request mistakenly sent to the 'tail' brick), fail the
+       transaction immediately. If this flag is not used, the default 
+       behavior is for the incorrect brick to forward the request to the
+       correct brick.
   * `'ignore_role'`
-    ** _description to be added_
+    ** If this flag is used, then whichever brick receives the request 
+       will reply to the request directly, regardless of the brick's assigned
+       role.
 
  ::
 *Timeout*
@@ -2599,8 +2618,6 @@ entire operation to fail.
 [[brick-simple-fold-table]]
 === brick_simple:fold_table/7
 
-_Under Construction_
-
 SYNOPSIS
 
  ::
@@ -2609,7 +2626,8 @@ SYNOPSIS
 DESCRIPTION
 
  ::
-Attempt a fold operation across all keys in a table.
+Attempt a fold operation across all keys in a table. For general information
+about the Erlang fold function that underlies this operations, see http://www.erlang.org/doc/man/lists.html#foldl-3.
 
 IMPORTANT: Do not execute this operation while a data migration is
 being performed.
@@ -2628,7 +2646,7 @@ PARAMETERS
  ::
 *Fun*
 
-- _description to be added_.
+- Function to apply to successive elements of the list.
 - Mandatory.
 - Type:
   * `Fun  = fun_arity_2()`
@@ -2642,6 +2660,7 @@ PARAMETERS
          match `{Key, TS, Value}`. If `Flags` = `[witness]`, then
          `Tuple_From_get_many` will match `{Key, TS}`.
    ** `UserAccumulatorTerm`
+     *** _description to be added_. 
 
  ::
 *Acc*
@@ -2709,9 +2728,20 @@ PARAMETERS
 
 RETURNS
 
-_more info to be added_
+ ::
+Success return
 
-- `term() | {term(), integer(), integer(), integer()}`
+- `{ok, Acc, Iterations}`
+  * `Acc = term()`
+  * `Iterations = integer()`
+
+ ::
+Error return
+
+- `{error, GdssError, Acc, Iterations}`
+  * `GdssError = term()`
+  * `Acc = term()`
+  * `Iterations = integer()`
 
 ALIASES
 
@@ -2729,8 +2759,6 @@ _to be added_
 [[brick-simple-fold-key]]
 === brick_simple:fold_key_prefix/9
 
-_Under Construction_
-
 SYNOPSIS
 
  ::
@@ -2743,7 +2771,9 @@ DESCRIPTION
 For a binary key prefix `Prefix`, fold over all keys in table `Tab`
 starting with `StartKey`, sleeping for `SleepTime` milliseconds
 between iterations and using `Flags` and `NumItems` as arguments to
-link:#brick-simple-get-many[brick_simple:get_many()].
+link:#brick-simple-get-many[brick_simple:get_many()]. For general 
+information about the Erlang fold function that underlies this operations, 
+see http://www.erlang.org/doc/man/lists.html#foldl-3.
 
 IMPORTANT: Do not execute this operation while a data migration is
 being performed.
@@ -2778,7 +2808,7 @@ PARAMETERS
  ::
 *Fun*
 
-- _description to be added_.
+- Function to apply to successive elements of the list.
 - Mandatory.
 - Type:
   * `Fun  = fun_arity_2()`
@@ -2792,6 +2822,7 @@ PARAMETERS
          match `{Key, TS, Value}`. If `Flags0` = `[witness]`, then
          `Tuple_From_get_many` will match `{Key, TS}`.
    ** `UserAccumulatorTerm`
+     *** _description to be added_
 
  ::
 *Acc*
@@ -2852,8 +2883,6 @@ PARAMETERS
 
 RETURNS
 
-_more info to be added_
-
  ::
 Success return
 
@@ -2878,7 +2907,6 @@ ALIASES
 EXAMPLES
 
 _to be added_
-
 
 
 [[client-api-ubf]]
