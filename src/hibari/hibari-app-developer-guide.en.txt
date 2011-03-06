@@ -3971,3 +3971,3012 @@ _Under Construction_
 
 // - _KK Dev to provide initial content._
 // - _Likely deferred to future date._
+
+== Contributing to Hibari
+
+=== GitHub, Git, and Repo
+
+_to be added_
+
+List the working directories for all of Hibari's "projects":
+------
+$ repo forall -c "pwd"
+------
+
+NOTE: Each project has a corresponding Git repository and (default)
+revision.  Check the "manifests/hibari-default.xml" file for details.
+
+Start a new topic (e.g. new-topic-name) branch:
+------
+$ repo start new-topic-name `repo forall -c "pwd" | xargs echo`
+------
+
+Abandon an existing topic (e.g. topic-name) branch:
+------
+$ repo abandon topic-name `repo forall -c "pwd" | xargs echo`
+------
+
+Track and checkout the master branch:
+------
+$ repo forall -c "git branch --track master github/master"
+$ repo forall -c "git checkout master"
+------
+
+Track and checkout the dev (i.e. Development) branch:
+------
+$ repo forall -c "git branch --track dev github/dev"
+$ repo forall -c "git checkout dev"
+------
+
+=== Code, Branch, and Version Management
+
+_to be added_
+
+=== Documentation
+
+_to be added_
+
+=== Submitting Patches
+
+_to be added_
+
+== Hibari Internals for Contributors: The Source, Module by Module
+
+It would be wonderful to say that Hibari sprang from someone's
+forehead, fully formed and adult, like the goddess Athena's birth from
+the forehead of Zeus.  Software development is usually a bit more
+organic and unplanned than that.  Hibari is no exception.
+
+Once upon a time, in a galaxy far, far away ... Hibari started as a
+small, focused replacement for Mnesia, the database bundled with
+Erlang/OTP.  Gemini Mobile was bidding on a project that required an
+extremely high throughput database, with high availability and data
+durability guarantees for a workload with a very low read/write ratio
+(i.e. very write-intensive).  The amount of money dedicated to
+hardware was fixed.  Mnesia could do the job very well, except for the
+throughput.  Gemini needed something both faster and simpler.  The
+skeleton of Hibari was written in haste, in case Gemini got the
+contract.
+
+Fortunately, Gemini lost the bid for the contract.  Hibari sat on the
+shelf for a while, then picked up and developed as a main memory
+database, like Mnesia.  Then requirements changed.  Then a project was
+canceled, and Hibari set aside.  Then picked up and set aside again.
+Each time, requirements changed.
+
+Hindsight is perfect.  This section will attempt to give the reader,
+developers who are maintaining Hibari or adding new features, some
+background for why the code is structured the way it is.  The APIs for
+some modules are straightforward to use, and others are not so clear.
+Some modules were written together in a brief period of time, and
+other evolved slowly over several years.
+
+[[major-subsystems]]
+=== Major subsystems
+
+* Server (aka the brick)
+* Chain replication
+* Consistent hashing
+* Client
+* Admin Server
+* Miscellaneous
+
+[[server-modules]]
+==== Server (aka the "logical brick") modules
+
+As described in the
+link:hibari-sysadmin-guide.en.html#bricks-outside-chain-replication[Hibari
+Sysadmin Guide, "Bricks outside of chain replication" section], a
+Hibari logical brick can be used with or without chain replication.
+When used without chain replication, each brick is a standalone data
+storage entity.  Any replication of data across logical bricks must be
+done by the client, typically by a ``quorum replication'' technique.
+
+The source modules that implement the logical brick are divided into
+two groups:
+
+Write-ahead logging, aka disk persistence:: The following modules
+maintain the write-ahead logs on disk.  See the
+link:hibari-sysadmin-guide.en.html#write-ahead-logs[Hibari
+Sysadmin Guide, "Write-Ahead Logs" section] for a description of the
+two types of write-ahead log and how they interact with each other.
+  * `gmt_hlog.erl`
+  * `gmt_hlog_common.erl`
+  * `gmt_hlog_local.erl`
+Protocol service and in-memory data management:: The following modules
+handle Hibari client requests and manage the in-core binary trees used
+for key management:
+  * `brick_ets.erl`
+  * `brick_server.erl`
+
+[[chain-replication-modules]]
+==== Chain replication modules
+
+The chain replication algorithm is implemented in `brick_server.erl`.
+That module also contains server and client code, which helps explain
+why it's the largest source module in the Hibari application.
+
+[[consistent-hashing-modules]]
+==== Consistent hashing modules
+
+The consistent hashing algorithm is implemented in the
+`brick_simple.erl` module.  The code in this module has two roles:
+
+* The "gen_server" callbacks for the `brick_simple` registered process
+  that runs on each brick node.  This server receives updates from the
+  Admin Server when there are changes to chain membership.
+* Client-side stub functions, executed by a Hibari client application,
+  to implement the client API that uses consistent hashing.
+
+[[client-modules]]
+==== Client modules
+
+Hibari clients fall into two categories: those that use consistent
+hashing and those that do not.
+
+* As described in xref:consistent-hashing-modules[], the
+  `brick_simple.erl` module implements the client API that uses
+  consistent hashing.
+* The `brick_server.erl` module implements the low-level client API
+  that is not aware of consistent hashing.
+* The `brick_squorum.erl` module is a partial implementation of a
+  ``quorum replication'' method for managing data consistency across
+  multiple logical bricks.  This module is used only by the Admin
+  Server and is tailored to the Admin Server's use.  It should not be
+  used by other quorum replication-based applications.
+
+[[admin-server-modules]]
+==== Admin Server modules
+
+See link:hibari-sysadmin-guide.en.html#admin-server-app[Hibari
+Sysadmin Guide, "The Admin Server Application" section] for a
+description of the various services provided by the Admin Server
+application.
+
+* `brick_admin.erl` provides the major external API to most of the
+  Admin Server's function as well as basic table management
+  functions.
+* `brick_bp.erl` implements the ``brick pinger'' processes.  Each
+  pinger process is responsible for monitoring the health of a single
+  Hibari logical brick.
+* `brick_chainmon.erl` implements the ``chain monitor'' processes.
+  Each chain monitor is responsible for monitoring the status of a
+  single Hibari chain and to reconfigure the chain safely as its member
+  bricks crash and restart.
+* `brick_migmon.erl` implements the server process that is responsible
+  for monitoring data migrations that take place whenever chains are
+  added, deleted, or reweighted.
+* `brick_sb.erl` implements the ``scoreboard'' process, which provides
+  historical data about each brick and chain state transition.
+
+[[misc-modules]]
+==== Miscellaneous modules
+
+These modules do a variety of things, including the Erlang/OTP
+application and supervisor behaviors that create a single, cohesive
+application.  They will be described in more detail below.
+
+[[admin-server-crash-recovery]]
+=== Admin Server notes: crash-recovery design
+
+The xref:admin-server-modules[] indirectly outlines many of the
+processes that, when grouped together, form the Hibari Admin Server
+application:
+
+* The main Admin Server process.
+* Many ``brick pinger'' processes
+* Many ``chain monitor'' processes
+* The ``migration monitor'' process
+* The ``scoreboard'' process
+* ... and several other long- and short-lived processes,
+  discussed in xref:module-by-module-commentary.
+
+Acting together, these processes maintain data consistency for all
+bricks in a Hibari cluster.  However, individual processes can crash
+and restart at unpredictable times.  The Admin Server must be able to
+recover correctly from a failure of any number of its helper
+processes, regardless of timing.
+
+[NOTE]
+=====================
+The Admin Server implementation was written for correctness
+first and for speed/efficiency only when necessary.  It has been used
+in production environments with rough total of 2,000 logical brick
+pinger and chain monitor processes.  At this scale, the implementation
+shows signs of stress under the worst-case scenario of "Restart the
+Admin Server *and* all logical bricks on *all* physical bricks
+simultaneously", but it works none-the-less.
+
+[[refactor-admin-monitor]]
+NOTE: An increase in size by a factor of 4 or 5 will probably hit the limits
+of the current implementation.  It's likely that splitting the Admin
+Server monolith into separate sub-servers, perhaps each servicing a
+single table, would be a good refactoring task?
+=====================
+
+The architecture decision to have one Admin Server process, one
+scoreboard process, one pinger process per brick and one health
+monitor per chain is quite intentional.  If there is only one at a
+given time performing a given task, then there cannot be race
+conditions.
+
+[[module-by-module-commentary]]
+=== Module-By-Module Commentary
+
+The modules in this section appear in alphabetical order.  For an
+overview of their use by functional category, see
+xref:major-subsystems[].
+
+[[brick-erl]]
+==== brick.erl
+
+This module provides the Erlang/OTP "application" behavior for the
+Hibari application.  Such modules are usually quite small.  The reason
+why `brick.erl` doesn't fit the small pattern is that it has some
+extra logic to shutdown logical bricks in a particular order when
+application shutdown has been requested.
+
+[[brick-admin-erl]]
+==== brick_admin.erl
+
+Please see link:hibari-sysadmin-guide.en.html#admin-server-app[Hibari
+Sysadmin Guide, "The Admin Server Application" section] for a
+description of the Admin Server's various functions.
+
+The Admin Server has a "schema", though perhaps that's a poor choice
+of name.  The schema defines:
+
+* Each Hibari table
+* The consistent hashing `{TableName, Key}` -> chain mapping
+* Status of any data migrations
+
+The schema, together with the ``scoreboard'' operational history, is
+stored in the ``bootstrap bricks''.
+See link:hibari-sysadmin-guide.en.html#bootstrap-bricks[Hibari
+Sysadmin Guide, "Admin Server's Private State: the Bootstrap Bricks" section]
+and link:hibari-sysadmin-guide.en.html#bricks-outside-chain-replication[Hibari
+Sysadmin Guide, "Bricks outside of chain replication" section] for
+more details.
+
+Functions for creating a new schema and defining the names of the
+bootstrap bricks that will store the schema are in this module.  So
+are assorted functions for querying the schema, such as
+`brick_admin:get_tables/0` and `brick_admin:get_table_chain_list/2`.
+Changes to chain length and chain addition/deletion/reweighting are
+also available here.
+
+===== Global Hash spamming
+[[spamming-the-global-hash]]
+When a chain health monitor process makes a major state transition, it
+will notify the Admin Server of the change.  The Admin Server will
+then broadcast, or "spam" status notifications to all server and
+client nodes.  The data structure spammed is a `#g_hash_r` record, or
+simply a "global hash record". This record is maintained by the admin
+server per table. Each table has its own unique global hash record.
+
+****
+For Erlang nodes running the full Hibari application, these global
+hash pushes are automatic and require no extra configuration.
+
+For Erlang nodes that run only the Hibari client application
+(called `gdss_client`), *additional configuration is required* to add that
+node's name to the client spam list. This is because the admin server
+uses the output of the nodes() function to know what clients it needs to
+spam the global hash to. Client monitoring causes nodes which are alive to
+be connected to the admin server automatically. See:
+
+* The "Client monitoring API" comment in the exports section at the
+top of brick_admin.erl
+* and/or the "Add/Delete a client node monitor" link at the bottom of
+the Admin Server HTTP top-level status page at port 23080.
+****
+
+NOTE: Among other things, the global hash contains the bricks
+and their roles in each chain. In this manner, a gdss client can
+know which chain a key belongs to and what brick in that chain
+is acting as head or tail. In this manner they can talk directly
+to the correct brick for a given operation.
+
+NOTE: The admin server increments a minor revision number in the global hash
+for each update. Bricks and clients can then compare this revision number
+to what they already have to ensure that they don't revert to using
+an older global hash.
+
+===== "Fast Sync" utility
+
+The `brick_admin:fast_sync()` family of functions are an attempt to
+help Hibari cluster administrators to perform bulk-copies of data from
+in-service bricks to bricks that have zero data.  For example,
+consider a physical brick has crashed due to data loss caused by a
+hard disk failure.  The crashed brick can be put back into service
+after fixing the disk problem, but the brick's data has been lost.
+Chain replication can create new replicas of the lost data, but the
+chain replication implementation can create a lot of disk I/O on the
+upstream brick for long periods of time, e.g. several days for
+terabytes of data.  The `fast_sync()` function attempts to minimize
+the amount of random disk I/O by copying keys & values in file+offset
+sorted order.
+
+See xref:scavenger-and-code-reuse[].
+
+[[brick-admin-erl-processes]]
+===== Processes created by brick_admin.erl
+
+* A "gen_server" for the Admin Server main process.
+* The ``bootstrap scan'' process, which scans all keys in the
+  bootstrap bricks every 5 seconds and repairs any inconsistencies
+  created by crashing & restarting bootstrap bricks and/or a crash of
+  the Admin Server itself.
+* Each request to "spam" a new global hash record to all servers and
+  clients will spawn a process to send the new global hash to all
+  server nodes and then all `brick_simple` servers on all nodes.
+* The "fast sync" bulk data copy API will spawn a process to
+  coordinate the bulk data copy activities.
+
+[[brick-admin-event-h-erl]]
+==== brick_admin_event_h.erl
+
+The Admin Server registers the brick_admin_event_h.erl as an event
+handler with the partition detector application.  It's
+`handle_event()` function takes action for two kinds of events:
+
+* If a network heartbeat alarm is set, an app log message is
+  generated.  If the alarm is on the 'A' network, that node is
+  forcibly disconnected from the VM's `net_kernel` services.
+* If another Admin Server instance is detected, the Hibari application
+  will be stopped and the VM halted.
+
+[[brick-admin-sup-erl]]
+==== brick_admin_sup.erl
+
+This is the supervisor for Admin Server-related processes.  If the
+Admin Server application is not running, this supervisor will have no
+children to monitor.
+
+[NOTE]
+==================================
+A careful reader will notice that the preceding paragraph
+contains a contradiction.  The Hibari `gdss` application is an OTP
+application.  This document speaks of the Admin Server as being a
+separate OTP application, because the Admin Server is managed by the
+OTP kernel's application controller.
+
+The contradiction is: the Admin Server's processes are supervised by
+another application's supervisor.
+==================================
+
+The simple answer is: the Admin Server is not a 100% OTP-compliant
+application.
+
+The complicated answer is: it is complicated.  There's so much
+day-to-day developer activity that relies on the Admin Server that
+it's really inconvenient to package the Admin Server as a 100%
+OTP-compliant application.  It's much, much more convenient to have
+its source code and its processes mixed in with the rest of the Hibari
+server code and processes.
+
+So, the Admin Server application is OTP-compliant enough to be managed
+by the OTP application controller.  But it is conveniently managed,
+source-wise and process-wise, within the Hibari/`gdss` application as
+a whole.
+
+[[brick-bp-erl]]
+==== brick_bp.erl
+
+This module implements the ``brick pinger'' server: a "gen_fsm"
+process that is responsible for polling the health of a single logical
+brick.  The Admin Server starts a "brick pinger" process for each
+logical brick in each chain in every table.
+See the
+link:hibari-sysadmin-guide.en.html#brick-lifecycle-fsm[Hibari
+Sysadmin Guide, "Brick Lifecycle Finite State Machine" section] for a
+description of the state machine implemented by this module.
+
+A 1-second periodic timer is used to check the status of the brick
+that this FSM monitors.  Any major changes in status will be sent as a
+proplist to the "scoreboard" proc (see xref:brick-chainmon-erl[]) .
+
+[[refactor-brick-bp]]
+[NOTE]
+=====================================
+There are two areas where this module could use some refactoring:
+
+* This "gen_fsm" module isn't very FSM-ish in style; it more resembles
+"gen_server" style programming instead of "gen_fsm".
+
+* The current communication pattern for health monitoring is too
+brittle.  When a "pinger" detects a change of state, it informs the
+"scoreboard" process.  But the "scoreboard" server does not actively
+notify the chain monitor process; instead, the "chain monitor" process
+polls the scoreboard and then calculates changes in brick state based
+on the results of the previous polling.  This can cause information
+about state changes to get lost.
++
+The "pinger" and "chain monitor" processes are now quite robust in
+dealing with corner cases where state changes happen really rapidly,
+but the result is code that's more complex and difficult to maintain
+than it should be.
+=====================================
+
+Health polling is based on two attributes: brick repair state and
+brick repair time.  Due to the polling nature of this interface (a
+weakness, see the "NOTE" section above), it's possible that a logical
+brick in certain repair states X could crash, restart, and reenter the
+state X before the "pinger" polled again.  The logical brick's start
+time is checked to make certain that the "pinger" is talking to the
+same PID over time.
+
+===== Processes created by brick_bp.erl
+
+* A long-lived process starts running the `brick_monitor_simple()`
+  function, which creates a monitor to the remote logical brick and
+  then waits for a `{'DOWN', ...}` message from that monitor.
+* When an illegal state transition has been detected, a short-lived
+  function is spawned to kill the remote node before it does something
+  even more illegal than it already has.
+
+[[brick-brick-sup-erl]]
+==== brick_brick_sup.erl
+
+This is the direct supervisor for all logical bricks that run on this
+node.  The `brick_shepherd.erl` module provides the interface used to
+request that this supervisor start & stop a logical brick.
+
+[[brick-chainmon-erl]]
+==== brick_chainmon.erl
+
+This module implements the ``chain monitor'' server: a "gen_fsm"
+process that is responsible for monitoring the health of all logical
+bricks within a single chain.  The Admin Server starts a "chain
+monitor" for each chain in every table.
+See the
+link:hibari-sysadmin-guide.en.html#chain-lifecycle-fsm[Hibari
+Sysadmin Guide, "Chain Lifecycle Finite State Machine" section] for a
+description of the state machine implemented by this module.
+
+See the xref:brick-bp-erl[] for an overview of the polling method used
+by both the brick health "pinger" processes, the "chain monitor"
+processes, and the "scoreboard" and that method's known limitations.
+
+In addition to monitoring health, the chain monitor proc is
+responsible for taking actions required to repair the chain.
+
+Chain member status is tricky to calculate correctly.  Any chain
+monitor process may crash at any time (e.g. due to bugs), or the
+entire machine hosting the monitor may crash.  When the monitor has
+restarted, it doesn't know how many times chain members may have
+changed state.
+
+Each monitor queries the "scoreboard" to get the current status of
+each chain member.  (Remember: The scoreboard's info may be slightly
+out-of-date!)  Each current status is compared with the monitor's
+in-memory history of the status during the last check.  (All bricks
+start in the `unknown` state.)  If there's a difference, then suitable
+action is taken.
+
+Also, any change in brick or chain status is also reported to the
+scoreboard.
+
+Each brick's scoreboard status is converted to an internal status:
+
+`unknown`::  The brick's status is not known.
+`disk_error`:: The brick has hit a disk checksum error and has
+  not been able to initialize itself 100%.
+`pre_init`:: The brick is running and ping'able, but the
+  brick is not in service, and the state of the brick's local
+  storage is unknown.
+`repairing`:: The monitor has chosen this brick to be the next
+  brick to resume service in the chain.  Its local storage is actively
+  being repaired by chain's current tail.
+`repair_overload`::  If a brick was in `repairing' state and was
+  determined to be overloaded (usually by too much disk I/O),
+  the node can be switched to this state to halt repair.
+`ok`:: The brick is fully in-sync with the rest of the chain
+  and is in service in its correct chain role.
+
+There are times when the chain monitor detects a chain that has zero
+running bricks.  It must then examine the operational history of all
+bricks in the chain and determine which is the best brick to start
+first.  This must be the last brick to crash.  The chain monitor will
+wait forever for that "best brick" to start.  If it is impossible to
+start (for example, the machine was destroyed by fire, or data was
+lost due to a disk failure), then a human may use the
+`force_best_first_brick()` function to give permission to the chain
+monitor to start another brick as the chain's first brick.
+
+There are times when a chain monitor restarts and discovers that some
+or all bricks in the chain are running.  However, the new chain
+monitor cannot know exactly what roles each brick was in without
+polling each one ... and because a chain transition may have been
+interrupted by a chain monitor crash, it is quite tricky to make
+correct decisions about what running bricks are OK and which ones are
+not.
+
+The uncertainty of each brick's exact status could be addressed by
+more logging of intermediate states to the Admin Server's private
+state (i.e. stored in the `bootstrap_copy`* bricks).  But each write
+to that private state has an overhead that, when multiplied by
+thousands of bricks and hundreds of chains, is quite significant.
+
+When a chain monitor starts, it attempts to calculate the chain's
+status.  If the chain was `healthy` before the monitor crash, the chain
+will be deemed `healthy`.  If the chain was `degraded`, then it's
+likely that the chain will be "whittled down" to a single brick and
+then reconstructed using the chain repair protocol.
+
+[[refactor-brick-chainmon]]
+[NOTE]
+=========================================
+The reconstruction of the exact repair state & role of each brick in a
+chain should be refactored to be smarter and therefore reduce the
+total time required to return a chain to `healthy` state in more/all
+failure scenarios.  The current implementation is pretty conservative
+and has room for improvement.
+=========================================
+
+The `process_brickstatus_diffs()` function is a long, long bear of a
+function.  Refactoring it would be useful, even necessary if the
+polling-based mechanism were changed (as suggested elsewhere).  But it
+encodes a lot of hard-won knowledge of how to maintain data
+consistency under really weird, hard-to-find and hard-to-fix bugs over
+more than two years of testing and production use.
+
+IMPORTANT: Read the code and the comments before embarking on any
+refactoring journey.
+
+===== Processes created by brick_chainmon.erl
+
+* The `digraph` stdlib module is used for chain status reconstruction.
+  A separate process is used to idiot-proof and exception-proof the
+  cleanup of ETS tables and other resources used by that library
+  code.
+
+[[brick-cinfo-erl]]
+==== brick_cinfo.erl
+
+This module implements the callbacks for the OTP application
+`cluster_info`, bundled with Hibari.  Functions such as
+`cluster_info:dump_all_connected/1` can be used to write a huge amount
+of diagnostic information about the cluster.
+
+At startup time, both the `gdss` and `gdss_client` applications
+register a callback with the `cluster_info` application.
+
+[[brick-client-data-sup-erl]]
+==== brick_client_data_sup.erl
+
+This is a supervisor used by the `gdss_client` application.
+
+[[brick-client-erl]]
+==== brick_client.erl
+
+This is the start/stop module for the `gdss_client` application.  If
+the `gdss` application is not running on each node that a Hibari
+client application runs, then the lighter-weight `gdss_client`
+application must be running.
+
+[[brick-clientmon-erl]]
+==== brick_clientmon.erl
+
+This process implements a "gen_server" that monitor the condition of
+each client node that is monitored by the Admin Server.  See the
+`brick_admin:run_client_monitor_procs()` function for the definition
+of the funs used when the client monitor sense that a client node has
+stopped or started.
+
+[[brick-client-sup-erl]]
+==== brick_client_sup.erl
+
+This is a supervisor used by the `gdss_client` application.
+
+[[brick-data-sup-erl]]
+==== brick_data_sup.erl
+
+This is the `gdss` application supervisor that is responsible for
+supervising all processes related to logical bricks:
+
+* The "common log" write-ahead log
+* The actual logical brick supervisor
+* The brick "shepherd" to start & stop logical bricks
+* The "simple" table state server (to support for the Hibari client
+  `brick_simple.erl` API.
+* The brick mailbox monitor
+* The checkpoint I/O throttle server
+* The brick "primer" throttle server
+
+[[brick-ets-erl]]
+==== brick_ets.erl
+
+In an ideal world, `brick_ets.erl` would be a flexible plug-in module
+to implement the data store for a Hibari logical brick.  With regard
+to management of in-memory data structures (i.e. ETS `ordered_set`
+tables, which are implemented as balanced binary trees), this module
+is mostly self-contained.  For disk-based persistence, it uses the
+write-ahead log modules `gmt_hlog.erl`, `gmt_hlog_common.erl`, and
+`gmt_hlog_local.erl`) to handle disk I/O-related activity.
+
+In the real world, `brick_ets.erl` is a mongrel, a mix of various
+tasks: some memory related, some disk related, and some other stuff.
+A "pluggable storage system" was not part of Hibari's original design.
+The original design called for two kinds of bricks, with two separate
+implementations: one RAM-based and one disk-based.  The RAM-based one
+was written first: it was the original `brick_ets.erl` module, to be
+used as part of a quorum-style replication system.  The disk-based
+module was delayed.
+
+Then Hibari development stopped.  Then it restarted, but this time
+needing to meet larger-than-RAM storage requirements and to use chain
+replication (instead of quorum replication).  The decision was made to
+split the `brick_ets.erl` module was several pieces:
+
+* `brick_ets.erl` would maintain the RAM-based data structures
+* `gmt_hlog.erl` would maintain the disk-based write-ahead log
+* `brick_server.erl` would maintain chain replication & repair logic
+
+[[refactor-brick-ets]]
+NOTE: Ideally, each of those three modules would have a strict
+separation of concerns.  In reality, the split isn't very clean.
+There are some remnants of chain replication code and write-ahead log
+code in `brick_ets.erl`.  There are small bits of ETS table management
+code in `brick_server.erl`.  There are refactoring opportunities there
+to finish the module-splitting work that was never fully finished.
+
+A big legacy of the original, everything-in-`brick_ets.erl`
+implementation are the functions with names prefixed by "bcb_".  "BCB"
+= "Brick CallBack".  These functions are required by
+`brick_server.erl` for various purposes that also need access to the
+ETS tables managed by `brick_ets.erl`.
+
+[[brick-ets-matroshka]]
+===== "gen_server" nested inside a "gen_server", Matroshka-style
+
+Originally, the principal process for a logical brick was a
+"gen_server" behavior process that was implemented by
+`brick_ets.erl`.  When the `brick_ets.erl` module was split apart, the
+choice was made to do the following:
+
+* The "gen_server" process would use `brick_server.erl` as its
+  implementation module and use its own `#state` record which is
+  _completely independent of the `brick_ets.erl` `#state` record.
+* Keep the "gen_server" behavior callbacks in `brick_ets.erl`
+* Use a layer of indirection to allow `brick_server.erl` code manage
+  the behavior callbacks and `#state` of `brick_ets.erl`
+
+NOTE: This choice complicates `brick_server.erl` a little bit but
+avoided a lot of refactoring work in `brick_ets.erl`.  It isn't clear
+if now is a good time to review that decision.
+
+===== State record
+
+The `#state` record used by `brick_ets.erl` has members in several
+major categories:
+
+* Major configuration items, e.g. `do_logging` and `bigdata_dir`
+* Operation counts, e.g. `n_add` and `syncsum_count`
+* Log management, e.g. `logging_op_serial` and `log`
+* Checkpoint management, e.g. `check_pid`
+* ETS tables, e.g. `ctab` and `shadowtab`
+* Dirty key management, e.g. `dirty_tab` and `wait_on_dirty_q`
+
+[[refactor-brick-ets-state]]
+NOTE: The `#state` record is probably too big.  Profiling suggests
+that a substantial amount of CPU time is being spent in
+`erlang:setelement()`; I'm guessing that's related to `#state` record
+updates, but I'm not 100% certain.  There are about 43 members in that
+record, so refactoring by moving some items (e.g. operation counts
+like `n_add`) to the process dictionary or ETS is likely a good idea.
+
+[[brick-ets-erl-ets-tables]]
+===== ETS tables
+
+* `#state.ctab`, the contents table.  Except for changes made during a
+  checkpoint, all data about a key lives in this table as a "store
+  tuple" (see below).
+* `#state.dirty_tab`, the dirty table.  If a key has been updated but
+  not yet flushed to disk, the key appears here.  Necessary for any
+  update, inside or outside of a micro-transaction, where race
+  conditions are possible.  See xref:dirty-keys-table[].
+* `#state.etab`, the expiry table.  If a key has a non-zero expiry time
+  associated with it (an integer in UNIX `time_t` form), then the
+  expiry time appears in this table.
+* `#state.mdtab`, the brick private metadata table.  Used for private
+  state management during data migration and other tasks.
+* `#state.shadowtab`, the shadow table.  During checkpoints, the
+  `#state.ctab` table is frozen while the checkpoint process dumps its
+  contents.  All updates made while the checkpoint is running (insert
+  or delete) are stored in this table.  When the checkpoint is
+  finished, the contents of this table are applied to the contents
+  table, and then the shadow table is deleted.
+
+[[store-tuple]]
+===== The "store tuple"
+
+A "store tuple" is the internal representation of a key's metadata.
+It uses a variable-sized tuple to try to save some memory, avoiding
+storing common values.  This is the tuple that is stored in the
+`#state.ctab` table.
+
+[options="header",cols="^m,^m,^m,^m,^m,^m"]
+|=========
+| Element 1 | Element 2 | Element 3 | Element 4 | Element 5 | Element 6
+| {Key, | TStamp, | Value, | ValueLen} | |
+| {Key, | TStamp, | Value, | ValueLen, | ExpTime} |
+| {Key, | TStamp, | Value, | ValueLen, | Flags} |
+| {Key, | TStamp, | Value, | ValueLen, | ExpTime, | Flags}
+|=========
+
+Types used:
+
+* `Key = binary()`
+* `TStamp = integer()`
+* `Value = binary() | {integer(), integer()}`
+** For value blob storage in RAM, `Value = binary()`
+** For value blob storage on disk, `Value = {FileNumber::integer(),
+   Offset::integer()}` where `FileNumber` and `Offset` give the
+   starting location for the write-ahead log "hunk" that stores the
+   actual value blob.
+* `ValueLen = integer()`
+* `ExpTime = integer()`
+* `Flags = list()`
+
+===== Logical brick initialization and WAL scan
+
+The time required for full initialization of a logical brick is not
+predictable.  We cannot know in advance how much metadata must be read
+from the brick's private write-ahead log, nor do we know how much time
+it will take to read that data.
+
+The OTP "supervisor" behavior places a limit on how long a worker
+process's init() function can take, and while a supervisor is starting
+a worker process, it is blocked from starting/restarting/stopping
+other workers.  Therefore, it's very important that the logical brick
+initialization function execute in a short amount of time.
+
+The second-to-last statement in `brick_ets:init/1` is this:
+
+    self() ! do_init_second_half,
+
+Then the `handle_info/3` callback can take as much time as is
+necessary to read & process the updates in the private write-ahead
+log.
+
+[[dirty-keys-table]]
+===== The dirty keys table
+
+Here are some examples of why the dirty keys table,
+`#state.dirty_tab`, is used (not an exhaustive list):
+
+* To prevent more than one `add` operations succeeding.  If key `K`
+  does not exist, and if multiple clients race to `add(Table, K, Value)`,
+  then only one client should succeed.
+* To prevent more than one update operation from succeeding with the same
+  `{testset,CurrentTimeStamp}` flag.
+* To prevent more than one micro-transaction from committing when
+  using exclusive operations (e.g. `replace`) and/or exclusive flags
+  (e.g. `{testset,CurrentTimeStamp}` and `key_must_exist`).
+
+A Hibari micro-transaction is designed to avoid holding locks by
+forcing the client to send the entire micro-transaction in a single
+message.  The server brick's gen_server should immediately be able to
+enforce the above properties, correct?  Yes and no, unfortunately.
+
+Because each logical brick is implemented as a single "gen_server"
+process (we ignore the helper processes enumerated in
+xref:brick-ets-erl-processes[]), all messages processed by the brick
+are automatically serialized.  That serialization property makes it
+much easier to implement immediate commit/abort decisions.  However,
+there's a small problem: _disk I/O is slow_.  Here is one example of a
+race condition that is caused by slow disk I/O:
+
+1. Assume key `K` does not exist.
+2. Client X sends `add(Table, K, Value1)` to brick B.
+3. Brick B receives the `add` op.  The key `K` does not exist, so the
+operation is permitted.
+4. Brick B writes an insert record into its
+private write-ahead log and requests a file sync.
+5. Brick B is told that the file sync has not yet finished and
+therefore cannot send a reply to Client X yet.
+6. Client Y sends `add(Table, K, Value2)` to brick B.
+7. Brick B receives the `add` op.  The key `K` does not exist, so the
+operation is permitted.  _Although key `K` was added in step #4, that
+operation's write-ahead log has not yet been flushed safely to disk, so
+therefore Brick B cannot yet guarantee that the key does exist._
+8. Brick B writes an insert record into its
+private write-ahead log and requests a file sync.
+9. Brick B is told that the file sync has not yet finished and
+therefore cannot send a reply to Client Y yet.
+10. Brick B is informed asynchronously that the flush of step #3's
+operation is finished.  B sends a reply to Client X of `ok`.
+11. Brick B is informed asynchronously that the flush of step #7's
+operation is finished.  B sends a reply to Client Y of `ok`.  _This
+reply violates the principle of strong consistency and is therefore
+incorrect._
+
+Any key that is updated by an operation that is waiting for its
+write-ahead log entry to be flushed to disk will have an entry in the
+`#state.dirty_tab` ETS table.  When the `fsync(2)` system call is
+finished, the key will be removed from `#state.dirty_tab` and the
+`#state.ctab` (or the "shadow table", if a checkpoint is in progress)
+will be updated to make the key's update visible.
+
+[[micro-transaction-implementation]]
+===== Micro-transaction implementation
+
+If a Hibari client calls `do` when the first op in the `DoList` is the
+atom `txn`, then the `DoList` will be evaluated as a micro-transaction.
+The check is done by `do_do2/3`, with micro-transaction preconditions
+checked by `do_txnlist/3`.
+
+If `do_txnlist/3` detects that a micro-transaction precondition has
+been violated, e.g. `add` a key that already exists, then an error
+accumulator is built to inform the client of which items in `DoList`
+failed.  Note that the `txn` op is removed from the `DoList` before
+`do_txnlist/3` starts.
+
+If `do_txnlist/3` finds no errors in the micro-transaction, then the
+`DoList` is then executed by the same function that processes
+non-micro-transaction lists, `do_dolist/4`.
+
+[[log-flushing-and-sync-pid]]
+===== Log flushing and the sync pid and the logging_op_q
+
+The management of the write-ahead log and maintaining strong
+consistency was a more difficult problem than I had first realized.
+To preserve strong consistency, the order of all updates must be
+preserved when writing log entries to the write-ahead log.  Updates
+come from two sources:
+
+* Client requests
+* Chain replication messages, e.g. a log replay message from a brick's
+  immediate upstream neighbor.  (NOTE: These messages are handled by
+  the `brick_server.erl` module, see xref:brick-server-erl[].)
+
+The brick maintains a monotonically-increasing counter,
+`#state.logging_op_serial`, to assign a serial number to each update.
+Each update is written in increasing serial number order.  After an
+update is written, the brick will request an `fsync(2)` system call on
+the log.  The write-ahead log manager will initiate the call (if no
+`fsync(2)` call is currently in progress) or queue the request for a
+later time (because an `fsync(2)` system call is in progress already).
+
+Because the brick does not know when the `fsync(2)` system call will
+finish, the brick stores the operation and its serial number in a
+queue called `#state.logging_op_q`.
+
+The write-ahead log manager will notify the brick when an `fsync(2)`
+system call is finished, telling the brick the largest serial number
+`N`.  The brick will remove all pending requests from the
+`#state.logging_op_q` that have serial numbers less than or equal to
+serial `N`.  Processing of those pending requests is then resumed.
+
+[[the-syncpid]]
+===== The syncpid: How it works, room for improvement
+
+As described above, the "syncpid"'s job is pretty simple:
+
+1. Collect requests for an `fsync(2)` call.  (Each request is tagged
+   with a log sequence number.)
+2. Now and then, start a `fsync(2)` call via the `gmt_hlog_local.erl`
+   API.
+3. When the call is finished, notify the brick of the largest log
+   sequence number serviced by the completed `fsync(2)` call.
+
+The tricky part is step #2, specifically, when should "now and then"
+be?  There are a couple of easy answers to the question:
+
+* Initiate an `fsync(2)` call whenever a single request in step #1
+  arrives.  Block all other `fsync(2)` requests until this one
+  finishes.
+** Both throughput and latency under high load are quite poor.
+* Collect requests in step #1 for a fixed amount of time, e.g. 100
+  milliseconds, then start `fsync(2)`.
+** Throughput under high load is very good, but latency under light
+   loads is very high.
+
+The current implementation, in `collect_sync_requests/3`, uses a
+variable amount of time in step #1 by waiting a maximum of 5
+milliseconds since the last fsync request before going to step #2.
+The method is virtuous by being simple and for being "good enough" for
+both very low and very high load conditions.
+
+[[value-blobs-on-disk]]
+===== Value blob storage on disk: bigdata_dir
+
+As explained in xref:store-tuple[], when a value blob is stored on
+disk, its store tuple representation is `{FileNumber::integer(),
+Offset::integer()}`.  These two integers are used to find the value
+blob's storage location on disk.  See xref:gmt-hlog-erl[] for API
+details.
+
+A brick's behavior for value storage is defined by the value of
+`#state.bigdata_dir`:
+
+* If `undefined`, then values are stored in RAM, i.e. as an Erlang
+  binary within the store tuple.
+* If not `undefined`, then values are stored on disk.
+
+When a key is set by a `set`/`add`/`replace` operation in a table that
+stores value blobs on disk, there are actually two hunks written to
+the brick's write-ahead log:
+
+1. The value blob itself is written in a hunk first.
+2. Then the brick's metadata hunk is written second.  This hunk
+   contains the store tuple for this key and therefore contains the
+   `{FileNumber,Offset}` tuple for the location of the value blob hunk
+   stored in step #1.
+
+To retrieve a hunk, the `gmt_hlog` API is used, passing the
+`FileNumber` and `Offset` as arguments.  The library function then:
+
+* Converts `FileNumber` to a full file path for the log sequence file.
+* Opens the file and seeks to offset `Offset`
+* Reads the write-ahead log hunk header, which contains hunk metadata
+  such as blob size and MD5 checksum.
+* Reads the hunk blob, which immediately follows the hunk header.
+** If the client passes the blob size as an extra argument, the two
+   reads are combined into a single read request.
+
+[[squid-flash-priming]]
+===== Squid/flash and priming
+
+The serial nature of message handling by the "gen_server" behavior is
+almost always a good thing.  However, dealing with disk I/O is one of
+the few times when it would be really nice to have "gen_server" handle
+multiple messages in parallel.
+
+It's certainly possible to have "gen_server" handle multiple messages
+in parallel, but it's the developer's responsibility to juggle the
+asynchronous replies to clients.  This can get very tricky very
+quickly.  However, a logical brick must do this kind of juggling to
+minimize latency across all Hibari client requests.
+
+The Erlang virtual machine does not expose an API to the OS's
+`mmap(2)` and `mincore(2)` system calls, so it is impossible for a
+logical brick to know which parts of a file are in the page cache and
+which are not.  Without that knowledge, the brick cannot predict how
+long it will take to open or read a log sequence file to retrieve a
+value blob.
+
+To make the unpredictable disk I/O pattern into something almost 100%
+predictable, Hibari bricks borrow a trick from the
+link:http://www.squid-cache.org[Squid HTTP Caching Proxy server] and
+the link:http://www.cs.princeton.edu/~vivek/flash/[Flash HTTP
+server].  To avoid having computation threads blocked by disk I/O,
+both servers use a pool of OS processes or Pthreads whose sole job is
+to perform disk I/O.  The model goes something like this:
+
+1. The main server process/thread wishes to read file X.
+2. The main server process/thread sends a request to the I/O worker
+pool to read X.
+3. A process (or thread) in the worker pool opens X, reads X's data,
+and closes X.
+4. The worker process/thread notifies the main server thread that the
+read of X has finished, via a pipe file descriptor.
+5. The main server process/thread receives the completion message from
+step #4 via the other end of the pipe.
+6. Now the main server process/thread can open and read file X with
+almost 0% probability that it will be blocked by the OS: it's almost
+100% certain that all file system metadata and file data are now in
+the OS page cache and therefore the probability of blocking due to
+disk I/O is nearly zero.
+
+The logical brick uses the same basic strategy, which I've called
+"squid/flash priming" or simply "priming", as in "priming a pump".  A
+brick will spawn a short-lived Erlang process to read the log hunk,
+notify the main gen_server that the I/O is finished, and then the main
+gen_server process can open & read the file with virtual certainty
+that it will not be blocked by disk I/O.
+
+Primer processes are used when reading data from a Hibari client `get`
+or `get_many` request as well as when reading value blobs during brick
+repair operations.  Each has a separate throttle configuration
+attribute.
+
+[NOTE]
+==================
+There is a throttle mechanism to keep too many squid/flash
+primer processes from executing simultaneously: the
+`brick_primer_limit` attribute in `central.conf`.  Too many primer
+processes can cause several problems, separately or in combination
+or together:
+
+* Consume too many Erlang processes
+* Consume too many OS file descriptors
+* Consume too much virtual machine memory
+==================
+
+[[refactor-blob-reading]]
+[NOTE]
+==================
+There is plenty of opportunity for refactoring here.  The
+current implementation has been "good and fast enough", but there's
+almost certainly room for optimization, especially if very large blobs
+(greater than 4MB, approximately) are routinely used.  Some possible
+optimizations would included:
+
+* Use Erlang NIF functions to use `mmap(2)` and `mincore(2)` system calls.
+* Use the `readahead(2)` system call on Linux platforms.  Try to find
+  substitutes on other platforms aren't `mmap(2)` and `mincore(2)`.
+* Experiment with link:http://libprefetch.cs.ucla.edu/[libprefetch].
+* Adding a bytes-per-second throttle for priming operations.
+* Perhaps using `mmap(2)` instead of `file:read()` for the final blob
+  reading step?
+==================
+
+===== Magic values: ?VALUE_REMAINS_CONSTANT, ?VALUE_SWITCHAROO
+
+There are two magic values that an Erlang client can use in a
+`set`/`add`/`replace` operation in place of the usual binary or iolist
+value blob.
+
+`?VALUE_REMAINS_CONSTANT`::
+The client can use this magic constant in an `set`/`add`/`replace`
+operation to keep the value blob the same while changing other
+attributes of the key, such as expiration time or flags.
+`?VALUE_SWITCHAROO`::
+Use of this flag is limited to the scavenger only and should not be
+used by any other client.  See xref:the-scavenger[] for more.
+
+===== Areas where `brick_server.erl` stuff bleeds over into `brick_ets.erl`
+
+NOTE: These are some areas where logic that most likely should be
+moved to `brick_server.erl`.
+
+* Migration sweep logic bleeding into get_many1()
+* Chain replication into filter_mods_from_upstream()
+* Repair-related stuff in repair_diff_round1()
+
+===== `get_many` and the shadow table
+
+The implementation of the contents table and the shadow table,
+`#state.ctab` and `#state.shadowtab` respectively, causes some
+problems.  The biggest problem is that when a checkpoint is in
+progress and the `#state.shadowtab` exists, then the "does the key
+exist?" decision must consult both tables in a sane manner.
+
+The `get_many` operation is most affected by the necessity to look in
+both tables.  The `get_many_shadow()` function implements the tricky
+logic that's required to combine the contents of both contents and
+shadow tables into a consistent set of results.
+
+NOTE: Because `get_many` is really complicated by the shadow table,
+and because there has been no hard requirement for a client `get_many`
+op that returns keys in reverse order (i.e. search backwards), a
+reverse- ordered `get_many` operation does not exist.  There is no
+foreseeable technical reason why one couldn't be added.
+
+[[controlling-md5-checksums]]
+===== Controlling MD5 checksums
+
+By default, MD5 checksums are generated for all data written to all
+write-ahead logs, and those MD5 checksums are checked for all data
+read from write-ahead logs.
+
+If the file "disable-md5" exists in the Hibari server data directory,
+then data will be written to write-ahead logs without MD5 checksums,
+and data read from write-ahead logs will not have MD5 checksums
+verified.
+
+If the file "use-md5-bif" exists in the Hibari server data directory,
+then the `erlang:md5/1` function will be used to create MD5
+checksums.  By default, the `crypto:md5/1` is used to create MD5
+checksums.
+
+===== MD5 checksum errors
+
+If an MD5 checksum error is detected, the easy thing to do is crash
+the brick.  In practice, this approach causes some additional problems
+that we would rather avoid.  The logic is in `bigdata_dir_get_val()`:
+
+* Mark the sequence file as bad.  The assumption is that the entire
+  log sequence file is bad.  This assumption may or may not be true,
+  but the default is to be conservative.  We don't know if there are
+  other checksum errors within the file, so we will:
+** Rename the log sequence file to that it cannot be accessed again.
+** By not deleting the file, the bad data block(s) in it cannot be
+   recycled and therefore contaminate data sometime in the future.
+** We can examine the bad file at leisure to confirm that it is bad
+   and find any other places where checksums have been corrupted.
+** We delete all references to keys that depend on the corrupted log
+   sequence file.  Then we crash.  Chain repair will repopulate the
+  missing keys.
+* Silently drop the entire query.  The client will see a timeout
+  eventually and have to retry (if it wishes).
+
+[[the-scavenger]]
+===== The scavenger
+
+The "scavenger" procedure is used to reclaim disk space in the "common
+log" that is no longer used by a local logical brick.  It is
+essentially a copying garbage collector:
+
+1. It determines which hunks in all common log files are currently in
+   use or not in use.
+2. It perhaps copies some hunks to new log sequence files.
+3. It perhaps deletes some log sequence files to reclaim disk space.
+
+IMPORTANT: By default, the scavenger is run once every 24 hours at
+03:00.
+
+Each write-ahead log is divided into log sequence files.  Each log
+sequence files contains a sequence of "hunks".  The hunks are put into
+one of two categories:
+
+* A "live" hunk is still in use, i.e. there is a key which has a value
+  blob pointer that points to this hunk.
+* A "dead" hunk is not "alive": i.e. the key that originally had a
+  value blob pointer to this hunk has since been changed or deleted.
+
+The goal of the scavenger is to reclaim disk space.  The only way to
+reclaim disk space is to delete files.  If the scavenger finds a log
+sequence file with 0% live hunks, that file can be deleted
+immediately.  However, it is quite rare to find a log sequence file
+that has 0% live hunks.  For all other log sequence files, a different
+strategy is used:
+
+1. Fetch the `brick_skip_live_percentage_greater_than` attribute from
+`central.conf`.  Call it `SkipPercent`.
+2. For each log sequence file, calculate the ratio of disk space used
+by live hunks; call it `LivePercent`.
+3. For each log sequence file where `LivePercent` is less than
+`SkipPercent`:
+** Copy all live hunks to a new log sequence file(s).
+** Update the location pointers of those keys to point to the new
+   storage locations.
+** Delete the old log sequence file.
+
+[[refactor-scavenger]]
+NOTE: The current scavenger implementation trades (relatively) low
+memory usage for increased execution time and increased disk I/O.
+There are probably opportunities to refactor the scavenger to operate
+faster or to generate less disk I/O to its temp files.
+
+[[brick-ets-erl-processes]]
+===== Processes created by brick_ets.erl
+
+* The long-lived "sync pid" process.  This process is responsible for
+  combining, or "batching", multiple brick write operations into a
+  single `fsync(2)` OS system call.  Once an `fsync(2)` call has
+  finished, the "sync pid" will send a message to the logical brick's
+  "gen_server" process to tell it what log items (identified by log
+  serial number) have been flushed to disk and can be sent downstream
+  and/or to the client.
+* The long-lived "local" write-ahead log process.  Each logical brick
+  has its own local write-ahead log, managed by its own local log
+  process.  This process works together with the "common log"
+  write-ahead log and the "sync pid" to store brick updates safely to
+  disk.
+* Short-lived "checkpoint" processes.  When a brick's local log has
+  grown larger than the `brick_check_checkpoint_max_mb` configuration
+  variable, a checkpoint process is spawned to perform the checkpoint
+  task.  See link:hibari-sysadmin-guide.en.html#checkpoints[Hibari
+  Sysadmin Guide, "Checkpoints" section] for an overview of the
+  checkpoint procedure.
+* Very short-lived processes to implement the data "priming" process,
+  see above for description.
+* A short-lived process to delete keys that have expired.
+* Short-lived "scavenger processes, see xref:the-scavenger[].
+
+[[brick-hash-erl]]
+==== brick_hash.erl
+
+The consistent hashing layer is the top-level of the layered
+abstraction of a Hibari storage cluster, as discussed in
+link:hibari-sysadmin-guide.en.html#hibari-architecture[Hibari Sysadmin
+Guide, "Hibari Architecture" section].
+
+The `#hash_r` record encapsulates two things:
+
+* The algorithm used to choose what part of the key will be used for
+  hashing: the entire key, fixed length prefix, variable length
+  prefix, etc.
+* The consistent hashing algorithm itself.
+
+The `#g_hash_r` record is the "global hash record" for a table.  It is
+the record that is "spammed" to all brick servers and clients (see the
+xref:spamming-the-global-hash[description of global hash spamming]).
+The `#g_hash_r` record contains the `#hash_r` records for:
+
+* The current hash configuration
+* The new hash configuration.
+
+Usually, the current hash config is the same as the new hash config.
+However, when chains are added/removed/reweighted and a data migration
+takes place, the new hash configuration is used to determine which
+keys stay in their current chain and which need to be moved to a new
+chain.
+
+In theory, all Hibari clients have access to an up-to-date copy of
+each tables' `#g_hash_r` record, via their node-local `brick_simple`
+server.  In practice, due to message passing latencies, all clients do
+not have correct global hashes 100% of the time.  The Admin Server
+also sends `#g_hash_r` updates to all server bricks also.  If a client
+is using an old global hash, the servers (using the same consistent
+hash calculations) can forward the request to the correct brick.
+
+===== Key hashing methods
+
+The only method that should be used for new Hibari tables is the
+`chash` method.  The other three, `naive`, ``var_prefix`, and
+`fixed_prefix`, are deprecated and will be removed at some point.  The
+`chash` method supports all three schemes and also provides
+migration-related features that the three deprecated schemes alone
+cannot.
+
+===== Initializing a `chash`
+
+See the EDoc entry for `chash_init/3` for full details on all the
+valid properties that can be passed in the 3rd argument proplist.
+
+The two properties that are mandatory are `prefix_method` and
+`new_chainweights`.  We strongly advise that you also include the
+`old_float_map` property; the float map can be extracted from a
+`#g_hash_r` or a `#hash_r` record using the
+`chash_extract_new_float_map/1` function.
+
+IMPORTANT: Do not use the `chash_extract_old_float_map/1` function to
+extract the consistent hash "float map" from the current global hash
+record.  In the context of the current global hash, the "old float
+map" is the float map used from the global hash _prior to the current
+one_, which is almost certainly not the float map you want when making
+a new global hash record.
+
+===== Checking data migration pattern before initiating migration
+
+The link:hibari-sysadmin-guide.en.html#changing-chains-example[chain changing example]
+in the Hibari System Administrator's Guide shows how
+to verify that the `#hash_r` that you've created will result in the
+key distribution across chains that you desire.  See also the
+link:hibari-sysadmin-guide.en.html#chash-migration-pre-check[example of using ``brick_simple:chash_migration_pre_check/2`].
+
+[[brick-itimer-erl]]
+===== brick_itimer.erl
+
+Older versions of Hibari made substantial use of
+`timer:send_interval/2` for sending periodic timer messages.  The
+`timer` module's implementation can be too inefficient when over 1,000
+separate timer interval requests are made.  The `brick_itimer` module
+creates a more CPU-efficient implementation for heavily used timer
+intervals, for example 1 second.
+
+The latency jitter in delivering these shared timer messages is
+intentional.  Strict real-time accuracy for sending these periodic
+messages is not required.  If stricter delivery timings are required,
+do not use this module.
+
+[[brick-mboxmon-erl]]
+==== brick_mboxmon.erl
+
+Hibari servers use asynchronous message passing in two major areas:
+
+* Chain replication: sending events "downstream" to the next brick in
+  a chain.
+* Chain repair: sending key updates to bricks that have crashed and
+  later restarted.
+
+The number of these asynchronous messages can arrive more quickly than
+a brick can handle.  Perhaps its CPU is overloaded, or perhaps disk
+I/O rates are so high that the hardware cannot provide adequate
+service times.  In either case, the number of messages in a logical
+brick "gen_server" process mailbox can grow too large.
+
+It is vital for good performance that a brick's mailbox.  Large
+mailboxes can interfere with other messaging, for example, synchronous
+calls to the brick's write-ahead log process.  If the mailbox grows
+too large, the VM will spend 100% of a CPU core performing selective
+`receive` operations on the mailbox.  If the mailbox continues to grow
+without limit, the entire VM can crash by consuming all virtual memory
+available to the OS.
+
+If a brick's mailbox gets too big, then some kind of "pressure"
+mechanism is required to slow down message producers.  In cases of
+mailbox overload during brick repair, repair operations by the
+upstream brick (with the "official tail" role) must slow down.  In
+normal chain operations, the head brick must slow down its rate of
+updates.
+
+The throttling mechanism implemented by `brick_mboxmon.erl` is
+straightforward.  Every 500 milliseconds, the mailbox size of each
+brick on the local node is polled via `erlang:process_info/2`.
+
+* If the mailbox size exceeds the `brick_mbox_repair_high_water`
+  attribute in `central.conf`, and if the brick is under repair, then
+  the throttle mechanism is activated.
+** The repair process is stopped and will be restarted in
+  `brick_mbox_repair_overload_resume_interval` seconds.
+* If the mailbox size exceeds the `brick_mbox_high_water` attribute in
+  `central.conf`, then the throttle mechanism is activated.
+** The head brick in the chain is flipped to "read-only mode".  When
+   in read-only mode, the head brick cannot process any updates, so
+   the head brick cannot create new key updates that will eventually
+   be sent to the overloaded brick.
+* When the overloaded brick's mailbox size falls under
+  `brick_mbox_low_water`, then the brick is no longer considered
+  overloaded.
+** In cases of repair overload, repair is restarted.
+** In cases of normal chain replication overload, the head brick's
+   "read-only status" is turned off (i.e. updates are permitted
+   again).  For transient overload conditions lasting 0-3 seconds,
+   client request buffering by the head brick is usually sufficient to
+   avoid timeouts visible by Hibari clients.  However, if the chain is
+   so overloaded that client timeouts occur, then the client timeout
+   mechanism itself will reduce the chain's total workload.
+
+The application log files on the overloaded brick, the head brick, and
+(in repair cases) the Admin Server will contain messages stating when
+and why the brick was considered overloaded and when the overload
+condition ended.
+
+[[brick-migmon-erl]]
+==== brick_migmon.erl
+
+During times when a table's chain configuration is changed
+(e.g. chains added, removed, or reweighted), a "data migration" takes
+place.  Some keys are copied, or "migrated", from one chain to
+another.  The `brick_migmon.erl` module is responsible for monitoring
+the overall status of this data migration period.
+
+Data migrations are tied closely to a table's global hash record.
+Each Hibari table has its own global hash record (`#g_hash_r`
+record).  It is therefore possible to have multiple migrations running
+simultaneously for multiple tables.
+
+However, each data migration for a global hash is assigned a "cookie",
+which is an opaque Erlang term.  In the event that some or all
+processes in the Admin Server crash, this cookie is used to
+distinguish between resuming an in-progress migration and starting a
+new migration.  If migrations are numbered _X_, _X+1+_, _X+2_, etc.,
+then a migration _X+1_ for table _Y_ will not be permitted to start
+until migration _X_ for table _Y_ has finished.
+
+[[brick-migmon-sup-erl]]
+==== brick_migmon_sup.erl
+
+This is a supervisor dedicated to `brick_migmon` processes.
+
+[[brick-pingee-erl]]
+==== brick_pingee.erl
+
+Earlier versions of Hibari had difficulty with brick "pinger"
+processes getting timeouts when trying to check a logical brick's
+health.  Under extremely high workloads, the first-come, first-served
+nature of a "gen_server"'s message handling was not sufficient.
+
+The solution is to create a separate "pingee" process for each logical
+brick.  As the main brick "gen_server" process makes major state
+transitions, those transitions are transmitted to the "pingee"
+process.  The "pinger" processes actually communicate with the
+"pingee" process for health inquiries and not with the main brick
+process.  Because the "pingee" is only used for state transition and
+health check messages, its mailbox is almost always empty, and its
+process almost always idle.  This combination helps make responses to
+health checks much quicker.
+
+[[refactor-pingee]]
+NOTE: The split between the main brick process and the "pingee"
+process does not eliminate timeouts under extremely heavy workloads.
+There may be useful refactoring work possible here.  The main source
+of latency appears to be during inter-node messaging congestion,
+e.g. when 'dist_port_busy' system events are generated.
+
+[[brick-sb-erl]]
+==== brick_sb.erl
+
+This module implements the Admin Server's "scoreboard" process.  The
+scoreboard reflects the health status of each logical brick and chain.
+
+Accelerate read-only query performance, all scoreboard status is
+maintained in RAM.  To make the scoreboard resilient in case of
+crashing, each status change is synchronously written to the Admin
+Server's private `bootstrap_copy`* bricks.  See
+xref:admin-server-crash-recovery[] for more info on crash-recovery
+design.  For more information about the Admin Server's bootstrap
+bricks, see link:hibari-sysadmin-guide.en.html#bootstrap-bricks[Hibari
+Sysadmin Guide, "Admin Server's Private State: the Bootstrap Bricks"
+section] and
+link:hibari-sysadmin-guide.en.html#bricks-outside-chain-replication[Hibari
+Sysadmin Guide, "Bricks outside of chain replication" section].
+
+Each status change event that is sent to the scoreboard includes a
+proplist that can contain additional information about the event.  At
+this time, there is no requirement of mandatory properties in that
+proplist.  Though mandatory properties may be introduced later, the
+main purpose is merely to provide a human developer/systems
+administrator with some extra information about the event.
+
+.Scoreboard and it's surrounding (partial) supervision tree
+svgimage::images/brick-sb-stree[align="center"]
+
+The scoreboard and it's surrounding (partial) supervision tree is
+depicted above by "dotted" lines.  The chainmon_XXX and pinger_YYY
+processes manually establish a link with the brick_sb process.  If a
+"down event" for the brick_sb processed is received, the chainmon_XXX
+and pinger_YYY processes sleep for 1 second before exiting abnormally.
+The brick_mon_sup supervisor will then automatically restart the
+chainmon_XXX and pinger_YYY processes.
+
+.Scoreboard and it's surrounding (partial) call tree
+svgimage::images/brick-sb-ctree[align="center"]
+
+During initialization of the scoreboard, the brick_sb loads the
+``scoreboard'' operational history into RAM from the bootstrap bricks
+via the brick_admin server.  After initialization, the brick_sb
+manages the state in RAM and synchronously writes the full state
+directly to the bootstrap bricks after receiving new chain and/or
+brick status reports.  To help improve performance, the implementation
+of the brick_sb is optimized to process all pending status reports as
+a batch and to then save the full state to the bootstrap bricks as a
+single write operation.
+
+IMPORTANT: The scoreboard's maximum length of the list of historical
+events is hard-coded at 100.  This should be changed to use a
+`central.conf` configuration attribute instead.
+
+[[refactor-scoreboard]]
+[NOTE]
+=================================
+If the Admin Server is refactored to enhance performance, then
+the scoreboard will likely be one of the first items fixed.  Because
+all state changes must be reported to the scoreboard, and the
+scoreboard synchronous writes each change to the bootstrap bricks, the
+scoreboard is can be a substantial performance bottleneck in a cluster
+that contains thousands of logical bricks.
+=================================
+
+[[brick-server-erl]]
+==== brick_server.erl
+
+The `brick_server.erl` module implements the storage-agnostic aspects
+of a logical brick.  It isn't fully insulated from matters related to
+ETS and disk write-ahead log, but it's close.  See the beginning of
+xref:brick-ets-erl[] for more details of how `brick_ets.erl` started
+and how `brick_server.erl` came along later.
+
+[[brick-server-matroshka]]
+===== "gen_server" nested inside a "gen_server", Matroshka-style
+
+See also xref:brick-ets-matroshka[].
+
+After the split of `brick_ets.erl` and `brick_server.erl`, the
+"gen_server" callback functions of both were preserved, even though
+both are used by a single process.  As far as OTP is concerned,
+`brick_server.erl` is the callback module used for the main logical
+brick gen_server process.  If a call, cast, or message isn't handled
+by `brick_server`'s callback function, then the message is handled by
+`brick_ets`'s callback function.
+
+The wrinkle in this otherwise flawless scheme is that
+`brick_server.erl` has to maintain the `#state` record that
+`brick_ets.erl` uses, keeping it completely separate from
+`brick_server.erl`'s record of the same name.
+
+[[refactor-logging-op-q]]
+NOTE: The `brick_server` `#state` record is pretty simple, compared to
+`brick_ets`'s, and much smaller.  Note that `brick_server`'s `#state`
+record also contains a `logging_op_q` member, which is used for a
+similar purpose as `brick_ets`'s.  Maintaining two separate queues of
+log entries is quite messy.  It would be really tricky to refactor
+without breaking anything, but the effort would be worthwhile.
+
+[[do-ops-op-flags-do-flags]]
+===== Making `do` operations, operation flags, and `do` flags
+
+See xref:do-api-via-brick-simple[] for examples that use the `do()`
+client interface.
+
+All of the basic `do` operations are encoded into a small number of
+tuples.  See `make_op2()`, `make_op5()`, and `make_op6()`.  Note that
+if you want to manage your own timestamps, rather than use ones based
+on the OS system clock, you must use the `make_op6()` function
+yourself.  A more convenient API doesn't yet exist because there's
+been no need for it ... but it would be easy & quick to write.
+
+By default, the various operations within a `do` call's `DoList` do
+not have any transaction semantics.  If a `DoList` contains 5
+operations, then there is almost no difference between sending that
+`DoList` to a server than there is sending 5 different `do`
+operations, each containing a single op.  However...
+
+... there are two good reasons why an application developer might want
+to combine those 5 ops into a single `do` call:
+
+* To reduce the total amount of time required to process the 5 ops.
+* To take advantage of the brick's guarantee that no other ops (sent
+  by another client) can be interleaved with the execution of those 5 ops.
+** Note that this guarantee is not the same as the guarantees provided
+   by micro-transactions.
+
+There are two types of flags that can be sent with a `do` op:
+
+* Flags bundled in the `make_op`* function, which affect only that
+  particular operation.
+** See the EDoc description of `encode_op_flags/1` for valid op flag
+   names.
+* Flags that affect all ops in the `do` list.
+** See the EDoc description of `do/5` for valid `DoFlags` names.
+
+===== Disk logging and log flush options
+
+The Admin Server maintains the table-specific settings for disk
+logging and log flush parameters for all bricks in the table.  By
+default, both disk logging and log flushing are enabled.  Both
+features are actually implemented by `brick_ets.erl`, but the API to
+change those parameters at runtime are handled through
+`brick_server.erl`.
+
+See `set_do_logging/2` and `set_do_sync`.
+
+===== Brick role management
+
+The role management functions were designed for use by the Admin
+Server to manage the brick lifecycle state machine.  See comment
+"Chain admin & related API" in `-export` statements at top of the
+file.
+
+See link:hibari-sysadmin-guide.en.html#brick-lifecycle-fsm[Hibari
+Sysadmin Guide, "Brick Lifecycle Finite State Machine" section] for
+a description of a brick's lifecycle within chain replication.
+
+[[refactor-role-management]]
+NOTE: When a brick's role is set, the brick knows at most its
+immediate upstream brick and its immediate downstream brick.  Most of
+the time, this decision works well.  However, occasionally it's useful
+for a brick to know all members of its chain, e.g. when the
+`brick_mboxmon` needs to signal the head brick to slow down.  These
+cases haven't happened often enough to trigger a refactoring, but it
+might be useful later.
+
+Management of the `#chain_r` record is tricky whenever a role is
+changed.  There are some attributes of the record that should be reset
+to a default value and other attributes that must be preserved.
+Examples of the latter are log serial numbers used by the brick as
+well as serial numbers ack'ed downstream & upstream.  Some role
+transitions must also be reflected in the `brick_pingee` helper
+process (see xref:brick-pingee-erl[]).  The result looks more complex
+than you'd first believe is necessary, but there isn't much excess
+code to remove: much of that complexity is necessary.
+
+===== Consistent hashing is enforced by brick servers, `do` forwarding
+
+As described in xref:brick-hash-erl[], the `brick_hash.erl` module is
+used for consistent hashing calculations by Hibari clients.  However,
+because a client may be acting on old/stale data, each Hibari brick
+also uses `brick_hash` to verify that each operation it receives
+should be executed locally.
+
+If a client sends a `do` call to the wrong brick, as calculated by the
+brick's global hash, then that brick will forward the `do` call to
+what it believes is the correct brick.  However, due to asynchronous
+message passing, scheduling latencies, network latencies, etc., the
+_brick itself_ may have an old/stale version of the global hash.  In
+such a case, the `do` will be forwarded to the wrong brick.  However,
+because each brick will forward the `do` to where it believes the `do`
+should go, eventually the `do` call will arrive at its proper
+location.  In the event that the forwarding takes too long, the client
+will see a timeout.
+
+The forwarding mechanism is limited by a couple of factors:
+
+* Each forwarding increments a forwarding hop counter.
+* After the first few forwarding hops, a geometrically-increasing
+  sleep period is used before actual forwarding.
+* After a limit of 18 forwarding hops, the query is dropped.
+
+Each time the `do` call is forwarded, the `SentAt` time (which is
+originally set by the client node) is reset to the current wall-clock
+time.  This reset is done to prevent `brick_do_op_too_old_timeout`
+configuration attribute enforcement; see
+link:hibari-sysadmin-guide.en.html#ntp-config-strongly-recommended[Hibari
+Sysadmin Guide, "NTP configuration of all Hibari server and client
+nodes" section].
+
+===== Chain replication protocol messages and sending client replies
+
+See link:hibari-sysadmin-guide.en.html#chain-lifecycle-fsm[Hibari
+Sysadmin Guide, "Chain Lifecycle Finite State Machine" section] for
+background information.
+
+Both chain replication protocol messages and client replies are sent
+"downstream", i.e. they are sent to the next brick in the chain.
+
+The reply term for a `do` call is piggy-backed onto the chain
+replication message that is sent down the chain.  When a chain
+replication protocol message reaches a brick has the "official tail"
+role, then:
+
+* The reply is sent to the client.
+* If the brick has a downstream brick (i.e. there is a brick currently
+  under repair that is downstream of the "official tail" brick), then
+  the chain replication protocol message is sent downstream.
+
+If the `do` operation has the `ignore_role` property in its `DoFlags`
+property list, then the reply is sent directly to the client (instead
+of the default behavior of being sent downstream with the chain
+replication message).
+
+The chain replication protocol messages are:
+
+`{ch_log_replay, UpstreamBrick, Serial, Thisdo_Mods, From, Reply}`::
+The `UpstreamBrick` and `Serial` terms are used to verify that the
+message comes from the correct brick and that messages have not been
+sent out-of-order.  The `Thisdo_Mods` term contains the write-ahead
+log terms associated with this update (i.e. insert and delete
+commands), and `From` and `Reply` are used to send the `Reply` term to
+the client.
++
+`{ch_serial_ack, Serial, BrickName, Node, Props}`::
+Once per second, the tail brick sends this message upstream.  All
+other bricks in the chain forward it upstream until it reaches the
+head brick.  All bricks in the chain keep track of the `Serial` number
+in these messages and purge from their in-memory buffers all log
+replay requests with serial numbers less than or equal to `Serial`:
+these replay requests are no longer required to recover from failure
+of a middle brick.
+
+===== Write-ahead log sequence number complications
+
+See xref:log-flushing-and-sync-pid[] for background on the write-ahead
+log serial number's use and management.
+
+[[refactor-wal]]
+[NOTE]
+======================
+Of all the complications that were introduced by the separation
+of the `brick_ets.erl` and `brick_server.erl` modules, the largest
+source of nasty, hard-to-find bugs has been management of the
+write-ahead log queues, the `#state.logging_op_q` term in both
+modules' state record.  Refactoring this log management would probably
+help performance by reducing CPU consumption as well as making the
+core server code less fragile.
+
+One area that might be easier to refactor is the management of the
+serial number associated with each queue.  Incrementing the serial
+number is done by the caller after writing something to the queue.  It
+would likely be much less error-prone if the writing and the
+incrementing were done by the same call.
+======================
+
+There is a lot of code in `chain_send_downstream_iff_empty_log_q/6`
+and elsewhere to make certain that log events are sent downstream
+without violating ordering constraints.  I confess it isn't pretty,
+but all of the bugs that I know of have been wrung out.  If there are
+still bugs (and I suspect but cannot prove that there is one more),
+the paranoid sanity checking done by the downstream/receiving brick
+will crash if `Serial` numbers are received out-of-order.  It isn't a
+pretty way to recover from such an error, but it's the safest reaction
+that I know of.
+
+===== Chain repair protocol messages
+
+The chain repair protocol has been implemented twice.  The first
+protocol was a brute-force, "as simple as possible" affair.  The
+upstream brick would send a series of `{ch_repair, Serial,
+RepairList}` messages to the repairing brick.  `RepairList` contained
+a list of store tuples (see xref:store-tuple[]) for all keys in the
+table.  Note that these store tuples will always contain the full
+value blob.
+
+The first protocol was deprecated after it became clear that "as
+simple as possible" had too much overhead.  When in-RAM storage of
+value blobs was the only option, then it was cheap to fetch the value
+blobs and send them across the network to the repairing brick.  But
+when "bigdata" storage was introduced (see
+xref:value-blobs-on-disk[]), then the disk I/O, network bandwidth, and
+total latency became far too high to be practical.
+
+The second chain repair protocol uses two rounds of messages to avoid
+the I/O problems caused by the first protocol:
+
+1. First round: The upstream sends a list of keys, a
+subset of all keys stored by the brick.  The downstream replies with
+the list of keys that it does not have copies of.
+2. Second round: If the downstream does not need any keys, this round
+is skipped.  Otherwise, the upstream sends the downstream the store
+tuples (including value blob) for only the keys that the client
+requested in round 1.
+
+The following messages are exchanged:
+
+`{ch_repair_diff_round1, Serial, RepairList}`::
+The 1st round message sent by the upstream brick.  Only key and
+timestamps are included in `RepairList`.
++
+`{ch_repair_diff_round1_ack, Serial, BrickName, Node, Unknown, Ds}`::
+This is the downstream brick's response to the
+`{ch_repair_diff_round1, ...}` message.  The `Unknown` term is a list
+of keys that are missing from the downstream brick (completely missing
+or timestamp mismatch).  The `Ds` informs the upstream brick of how
+many keys were deleted by the downstream brick.
++
+If the brick's value blobs are stored on disk, then an asynchronous
+"priming" mechanism is used by the upstream brick to force those blobs
+into RAM before processing sending the 2nd round.
++
+`{ch_repair_diff_round2, Serial, RepairList, Ds}`::
+The upstream brick sends this message with `RepairList` containing all
+store tuples (with value blobs) for all keys requested in round 1.
+The `Ds` term is not used.
++
+`{ch_repair_ack, Serial, BrickName, Node, Inserted, Deleted}`::
+The downstream brick sends this message in both the old and new repair
+protocol versions.  `Inserted` and `Deleted` count the number of keys
+that were inserted and deleted into the repairing brick, respectively.
++
+`{ch_repair_finished, Brick, Node, Checkpoint_p, NumKeys}`::
+The upstream brick sends this message when the round 1 messages have
+iterated over all keys.  When received, the downstream brick will move
+itself from the `repairing` state to the `ok` state.  The brick
+"pinger" process will notice this state transition and trigger further
+chain role changes.
+
+While these repair protocol messages are exchanged, the upstream brick
+will send all `{ch_log_replay,...}` chain replication messages as
+updates occur.  On the upstream brick, the `{ch_repair_diff_round1,
+Serial, RepairList}` is created without interference from client
+updates; any keys not in `RepairList` are immediately deleted by the
+downstream brick before replying with the
+`{ch_repair_diff_round1_ack,...}` message.  Therefore, any possible
+race conditions involving client updates of keys within the
+`RepairList` range of keys are resolved correctly by the log serial
+mechanism, because only one of two races can happen inside the
+upstream brick:
+
+* The client update `{ch_log_replay,...}` message is sent before the
+  upstream creates and sends the round 1 repair message.  Any keys
+  updated in the log replay message are guaranteed to be included in
+  the round 1 repair message.
+* The client update `{ch_log_replay,...}` message is sent after the
+  upstream creates and sends the round 1 repair message.  Any keys
+  updated in the log replay message are guaranteed to not be included
+  in the round 1 repair message.  Replay of the replay message can
+  happen safely at any time (as long as serial number ordering is
+  preserved).
+
+===== Data migration protocol messages
+
+The data migration mechanism is used to move keys from one chain to
+another when chains are added, removed, or reweighted.  The task of
+moving keys while maintaining strong consistency is a delicate
+business.  The protocol, which uses two rounds (or phases), described
+below is used to move keys safely between chains.
+
+During migration, the head of each chain maintains a "sweep key
+pointer".  This pointer moves through the keys, first to last (in
+lexicographic sorting order).
+
+* Keys that are "in front" of the sweep
+key, i.e. keys that are larger than the sweep key, have not yet been
+scanned by the migration algorithm.
+* Keys that are "behind" the sweep key, i.e. keys that are smaller
+than the sweep key, have been scanned by the migration algorithm.
+
+The sweep key advances through the head brick's keys, advancing by a
+maximum of `max_keys_per_iter` configuration attributed in
+`central.conf` or a maximum of 64MB of blob values (hardcoded for now
+in `get_sweep_tuples/4`.  These keys are what the code calls the
+"sweep zone": those keys between the sweep key's current value and the
+sweep key's value from the last successful iteration of the migration
+protocol.
+
+`{ch_log_replay,...}` message with `{plog_sweep,phase1_sweep_info,#sweepcheckp_r}` modification inside::
+If the chain length is > 1, the head brick must inform all bricks in
+the chain where the new sweep key is located.  For chains of length 1,
+this first phase is not required.  All bricks record the sweep info in the
+`sweepcheckp_r` record into its private brick metadata: the head brick
+before sending the message, all other bricks when receiving the
+message.  The private metadata is used to recover vital state in case
+the head brick crashes.  NOTE: This migration sweep metadata is called
+a sweep checkpoint and is not related to a brick key checkpoint.
+`{sweep_phase1_done,LastKey}`::
+Sent by the tail of the chain back to the head, acknowledging that all
+bricks in the chain have seen the `{plog_sweep,phase1_sweep_info,...}`
+message.
+`{ch_sweep_from_other, ChainHeadPid, ChainName, Thisdo_Mods, LastKey}`::
+This message starts the second phase of migration.  The head brick has
+calculated which keys must be moved to a new chain.  This message is
+sent to the head of the new chain.  The `Thisdo_Mods`
+contains the list of store tuples that are moving to the receiving
+brick; this list is sent down the chain using the usual chain
+replication protocol.  `LastKey` specifies where the sweep key
+location for the `ChainName` chain.  One of these messages will be
+sent to each chain that stores keys within the sweep zone; call the
+number of chains _X_.
+`{sweep_phase2_done, Key, PropList}`::
+When the modifications from the second phase's
+`{ch_sweep_from_other,...}` message have reached the tail of the new
+chain, this message is sent to the head of the old chain to
+acknowledge that the migrated keys are now fully replicated on the new
+chain.  When the head brick receives `{ch_sweep_from_other,...}`
+messages from all _X_ chains, then the second phase of migration is
+finished.
+
+===== Data migration mechanism and value blob "priming"
+
+In between round 1 and round 2 of a migration sweep iteration, the
+same value blob "priming" technique is used to prevent disk I/O from
+blocking the brick's gen_server process.  See `sweep_move_or_keep/3`
+and `spawn_val_prime_worker_for_sweep/3`.
+
+===== SSF: The server-side fun, client side
+
+"SSF" stands for "Server-Side Fun".  An SSF is an Erlang fun that is
+created by a Hibari client and executed on a Hibari server brick.  The
+SSF has the ability to rewrite the `DoList` of operations in the `do`
+call based on the ability to examine the brick's internal state.
+
+In the end, the SSF cannot do anything that cannot be done with
+multiple queries to a brick.  For example, here is a simple two-query
+scheme to update simple counter value in a race-safe manner:
+
+.Incrementing a counter
+--------------------------
+{ok, TS, OldValBin} = brick_simple:get(TableName, Key),
+OldVal = binary_to_term(OldValBin),
+ok = brick_simple:replace(TableName, Key, term_to_binary(OldVal + 1),
+                          [{testset, TS}]),
+%% Use OldVal in code below this point.
+--------------------------
+
+An SSF would use a very similar bit of logic and would create the same
+`replace` operation.
+
+.Incrementing a counter with an SSF
+--------------------------
+F = fun(Key, _DoOp, _DoFlags, S) ->
+      [{_Key, TS, Val, _Exp, _KeyFlags}] = brick_server:ssf_peek(Key, true, S),
+      OldVal = binary_to_term(Val),
+      {ok, [brick_server:make_replace(Key, term_to_binary(OldVal + 1), 0,
+                                      [{testset, TS}]),
+            {current_val, OldVal}]}
+    end,
+Op = brick_server:make_ssf(Key, F),
+[ok, {current_val, OldVal}] = brick_server:do(TableName, [op]),
+%% Use OldVal in code below this point.
+--------------------------
+
+The SSF fun creates a list of `do` primitive operations, in this case
+two operations:
+
+* A `replace` operation to update the key
+* A "pass-through" 2-tuple to tell the client the current value of the
+  counter.  Because this 2-tuple isn't a valid brick operation, the
+  term is returned to the client as-is.
+
+Here is an example that uses the SSF above.  It assumes that the shell
+variable `F` has been bound to the fun above.  A cut-and-paste of the
+code above will work well, assuming that `F` is not already bound to a
+shell variable and that the final "end," is replaced with "end.".
+
+  (hibari_dev@bb3)13> brick_simple:set(tab1, "c1", term_to_binary(0)).
+  ok
+
+  (hibari_dev@bb3)14> Op = brick_server:make_ssf("c1", F).
+  {ssf,<<"c1">>,[#Fun<erl_eval.4.105156089>]}
+
+  (hibari_dev@bb3)15> brick_simple:do(tab1, [Op]).
+  [ok,{current_val,0}]
+
+  (hibari_dev@bb3)16> brick_simple:do(tab1, [Op]).
+  [ok,{current_val,1}]
+
+[IMPORTANT]
+======================
+The SSF is executed to create a list of `do` primitive
+operations.  All attempts to examine brick keys must be done using the
+`brick_server:ssf_peek/3` function.  The `brick_server:ssf_peek/3`
+cannot guarantee that the key will not be modified immediately after
+the `ssf_peek/3` call and the actual execution of the `DoList` created
+by the SSF.
+
+For example, here is a case where the timestamp of the key has been
+modified in a race with another client.  Note that the 2nd element in
+the return term, `{current_val, N}`, is included in the results
+despite the error.  The client must perform sufficient pattern
+matching and/or other sanity checks to verify that the SSF and its
+`DoList` output were successful.
+
+  (hibari_dev@bb3)21> brick_simple:do(tab1, [Op2]).
+  [{ts_error,1272654442441669},{current_val,2}]
+======================
+
+NOTE: The API of the SSF is a work-in-progress.  It is used by one
+internal Gemini project but otherwise does not have strong
+backward-compatibility requirements.
+
+===== SSF: The server-side fun, server side
+
+NOTE: The API of the SSF is a work-in-progress.  It is used by one
+internal Gemini project but otherwise does not have strong
+backward-compatibility requirements.
+
+The implementation of SSFs (server-side funs) on the server side of
+the world is an experiment using a general framework for modifying
+`do` operations on the client side before they are executed.  This
+experiment is implemented by the combination of:
+
+* The `brick_preprocess_method` configuration attributed in
+  `central.conf`.
+* The `handle_call_do/3` and `preprocess_fold/4` functions.
+* Individual functions in the `#state.do_list_preprocess` list.
+
+The current implementation allows the output of the SSF to replace the
+{ssf, Key, Fun} tuple inside the `do` call's `DoList` list of
+operations.  It does not permit the arbitrary modification of the
+entire `DoList` list, nor does it permit examination of other
+operations in the `DoList`.  The reasoning for the limitation is that
+all `DoList` items ultimately come from a single client in a single
+`do` operation; if the client wanted to reorder things arbitrarily,
+the client has the power to do that before sending the `do` call.
+
+===== MD5 checksum errors in the write-ahead log
+
+When an MD5 checksum error is detected by `brick_ets.erl` or one of
+the write-ahead log modules, dealing with the error is a bit complex:
+
+* Data structures maintained by `brick_ets.erl` require changes.
+* The error may be inside a file in the "common log", the part
+  of the write-ahead log shared by all bricks on the node.  In this
+  case, all bricks must be notified that a file in the common log is
+  bad.
+
+The `common_log_sequence_file_is_bad/3` function is used by
+`gmt_hlog_common.erl` to notify each brick when an MD5 checksum error
+is found.
+
+===== Checkpoint options
+
+The checkpoint operation is implemented by `brick_ets.erl`, but the
+API options are documented in the EDoc for
+`brick_server:checkpoint/3`.
+
+See xref:brick-ets-erl-ets-tables[] and xref:brick-ets-erl-processes[]
+for more information information about checkpointing.
+
+===== Scavenger options
+
+The implementation of the scavenger is spread across both
+two modules.  As a general rule, the low-level key scanning and hunk
+copying is done by functions in `brick_ets.erl`, while the
+higher-level coordination is implemented in `gmt_hlog_common.erl`.
+
+One property worth noting here is the `destructive` option.  If this
+property is false, then the scavenger will read keys but not do
+anything to relocate the keys.  When used in combination with
+`{skip_live_percentage_greater_than,100}`, the scavenger can verify
+the MD5 checksums of all value blobs by reading all value blob hunks
+in sorted, log file sequence order.
+
+The scavenger can be halted manually using
+`gmt_hlog_common:stop_scavenger_commonlog/0` and resumed using
+`gmt_hlog_common:resume_scavenger_commonlog/2`.
+
+[[scavenger-and-code-reuse]]
+===== Scavenger and code reuse
+
+One of the design ideas behind the scavenger is that it should try to
+avoid random I/O as much as possible.  The scavenger uses the same
+write-ahead log as everyone else, and since the write-ahead log always
+uses sequential file writes and does a decent job of batching multiple
+writes with a fewer number of `fsync(2)` calls, write I/O is mostly
+sequential.  However, the scavenger's read I/O should also be as
+sequential as possible ... so the scavenger goes through a lot of
+effort to read all hunks from a single log file at the same time and
+in sequential offset order.
+
+[[fast-sync]]
+===== Fast sync
+
+The sequential read property introduced at
+xref:scavenger-and-code-reuse[] can be useful in other areas also.
+For example, the "fast sync" utility in `brick_admin.erl`.
+
+The utility is intended for use in cases where a very large brick has
+had a catastrophic failure, and all data on that brick is lost.  The
+chain replication algorithm will perform repair based on key
+lexicographic sort order.  The key sorting order is not correlated with
+storage location within the common log.  The result is disk read I/O
+patterns that are mostly random, meaning it could take days to fully
+repair a brick that had lost many terabytes of data.
+
+The "fast sync" utility uses the scavenger's infrastructure to sort
+live keys into log sequence and offset order (instead of lexicographic
+order).  Ideally, this changes the read I/O pattern on the repairing
+brick to be more sequential than random.  Once the "fast sync" utility
+is finished, then usual chain replication is used to fix discrepancies
+caused by updates made while the "fast sync" was running.
+
+[[brick-shepherd-erl]]
+==== brick_shepherd.erl
+
+The brick shepherd "gen_server" is the public interface for
+adding/removing logical bricks to/from the `brick_brick_sup`
+supervisor.
+
+For testing purposes, the functions `add_do_not_restart_brick/2` and
+`delete_do_not_restart_brick/2` allow developers and test scripts to
+crash a brick and prevent their prompt restart.
+
+[[brick-simple-erl]]
+==== brick_simple.erl
+
+The `brick_simple.erl` module provides three sets of services for
+Hibari clients and administrators.
+
+* An easy-to-use client API to fetch and update key/value data in a
+  Hibari cluster.
+* A "gen_server" that runs on each Hibari client node that receives
+  cluster status updates from the Hibari Admin Server.  This server,
+  with the registered name `brick_simple`, runs as part of both the
+  `gdss` and `gdss_client` OTP applications.
+* A handful of hash-related utility functions useful for Hibari
+  administrators.
+
+Each client API call, e.g. `add()`, `get_many()`, needs to query the
+`brick_simple` server as prerequisite of the consistent hashing
+calculation and `{TableName, Key}` -> chain mapping.  The Erlang
+process dictionary is (ab)used to improve performance by reducing the
+size of replies sent by `brick_simple`.
+
+[[refactor-brick-simple]]
+NOTE: Parts of the exported API for this module may seem cumbersome to
+use.  Those parts are from a bottom-up code writing experiment that
+created only exported APIs needed for very specific tasks, not to
+create a more useful (generally-speaking) interface.  A refactoring
+exercise could be useful here.
+
+NOTE: The `fold_table()` API functions are not fully robust in cases
+where bricks fail or when a data migration is in progress.  If a
+robust full-table fold is required, then another implementation is
+required.
+
+[[brick-squorum-erl]]
+==== brick_squorum.erl
+
+This is a simplified quorum-based replication client for Hibari server
+bricks.  See xref:brick-admin-erl[] for background and
+link:hibari-sysadmin-guide.en.html#admin-server-app[Hibari Sysadmin
+Guide, "The Admin Server Application" section] for background info.
+
+[[refactor-brick-squorum]]
+NOTE: "Simplified" means that it's meant for use only within the Admin
+Server and should not be used (in its current form) by other
+applications.  It should be straightforward enough to maintain
+compatibility with the Admin Server while refactoring to add some
+missing robustness features, e.g. client-side repair when
+inconsistencies are detected in 100% of use cases.
+
+The intent of this module is provide naive and simple yet robust
+storage for use by an cluster admin/manager server.  Such a server
+has limited requirements for persistent data, but it doesn't make
+sense to store that data on a local disk.  For availability, that
+data should be spread across multiple bricks.  However, there's a
+chicken-and-the-egg problem for a cluster manager: if the cluster
+must be running in order to serve data, how do you start the
+cluster?
+
+The answer (for now) is to have any machine capable of running an
+administrator to have a statically configured list of bricks that
+store cluster manager data.  A very simple quorum technique is used
+for robust storage.
+
+No transaction support is provided, since we assume that the
+manager will use some other mechanism for preventing multiple
+managers from running simultaneously.
+
+The Admin Server uses the `Schema.local` file as a hint for breaking
+the chicken-and-egg problem of finding the bootstrap bricks.  The
+bricks listed in `Schema.local` are consulted to try to find a valid
+`#schema_r` record.  Once a copy of that record is found, then the
+real list of bootstrap bricks in `#schema_r.schema_bricklist` is used
+for all subsequent quorum calculations.
+
+[[brick-sup-erl]]
+==== brick_sup.erl
+
+This is the top-level supervisor for the `gdss` Hibari application.
+
+[[brick-ticket-erl]]
+==== brick_ticket.erl
+
+The `brick_ticket.erl` module implements a subset of functionality of
+another Gemini application.  It provides ticket-based workload
+limiting services, sometimes called "admission-based rate limiting".
+
+The goal is to limit the amount of _X_ things that can happen per unit
+of time, e.g. executing a function per minute or reading a maximum
+number of bytes/second.
+
+Hibari bricks use this ticket-based system to provide shared
+throttling mechanisms for checkpoint and scavenger operations.  Via
+`central.conf`, both activities are limited to a certain amount of
+write bandwidth per second.
+
+[[gmt-hlog-erl]]
+==== gmt_hlog.erl
+
+See link:hibari-sysadmin-guide.en.html#write-ahead-logs[Hibari Sysadmin
+Guide, "Write-Ahead Logs" section] for background info.
+
+The Erlang/OTP `disk_log` library does not support random access into
+one of its log files.  Hibari's on-disk value blob storage requires
+very efficient random access to the write-ahead log.  Therefore,
+`disk_log` wasn't sufficient.
+
+I came close to using a bridge to Berkeley DB to use only the Berkeley
+DB logging subsystem.  But I discovered some tough problems around the
+edges of the that subsystem, and I abandoned the idea.  I don't
+recall what issue(s) it was, but I recall it was related to a
+not-so-clean separation between the logging subsystem and another DB
+system when the log was opened?
+
+The basic concept for this module is stolen from the Berkeley DB
+logging subsystem.  DB's logging subsystem allows you to append a hunk
+to a log.  In return, you get an "LSN", which is a file number and
+byte offset for where that hunk of data is stored.  Given the LSN,
+it's trivial matter (with very low overhead) to retrieve any hunk in
+any desired access pattern.
+
+I added a couple of features that Berkeley DB's logging subsystem does
+not have:
+
+1. Each hunk written to the log can contain multiple blobs (or perhaps
+sub-hunks?).  So instead of identifying a hunk by `{FileNum,Offset}`
+it would be identified by `{FileNum,Offset,HunkNumber}`.  I don't
+believe this feature is actually used by Hibari, but the CPU and
+storage overheads to support it are low enough to be ignored.
+2. For any given hunk, each blob can have an MD5 checksum to detect
+corruption of the blob.
+
+The `gmt_hlog.erl` module started as the sole implementation module of
+a write-ahead log.  Later, it was split into three separate modules:
+
+`gmt_hlog.erl`::
+This module manages all of the directories and files used to store
+write-ahead log data.  The separation of "common log" and "brick
+private logs" is merely a matter of which directory each type of log
+uses; both types of logs use exactly the same file data structures.
++
+`gmt_hlog_common.erl`::
+This module maintains the "common log" storage area.
++
+`gmt_hlog_local.erl`::
+This module is a code proxy/intermediate layer between a brick and the
+actual write-ahead logs that it relies upon.  This module maintains
+the barrier between the "common log" and the brick's private metadata
+write-ahead log.  Much of the `gmt_hlog_local` exported API are just
+2-line wrappers around calls to `gmt_hlog` functions, because there is
+nothing for the proxy to do in those cases.
+
+[[glossary-write-ahead-log-terms]]
+===== Glossary for write-ahead log terms
+
+Log:: A collection of log files.
+Log file:: A single file that stores hunks as part of a larger
+collection known as a "log".
+Log sequence number:: The integer used to name a specific log file.
+The sign of the log sequence number, i.e. positive or negative, may
+change (see below) but the absolute value of the integer may not.
+Hunk:: A collection of blobs that is appended as an atomic
+unit to the end of the log's latest log file.
+`{SeqNum, Offset}`::  This tuple uniquely identifies a hunk.
+It is directly analogous to the Berkeley DB "LSN" (Log Sequence
+Number).  Together with the directory path for the log, any
+part of the hunk can be retrieved via random access.
+Hunk type:: A 32-bit integer that describes the type of hunk.
+Mostly useful for application use.
+Blob:: An Erlang binary term.
+CBlob/c_blob:: A blob that also has an MD5 checksum stored inside
+the hunk.
+UBlob/u_blob:: A blob without an MD5 checksum.
+
+[[shortterm-and-longterm-storage]]
+===== Short term vs. long term log storage
+
+First, let's have a short review of Hibari brick disk storage
+properties and goals.  See the
+link:hibari-sysadmin-guide.en.html#write-ahead-logs[Hibari Sysadmin
+Guide, "Write-Ahead Logs" section]
+and also the
+link:hibari-sysadmin-guide.en.html#brick-init["Brick Initialization" section]
+for background info.
+
+1. A logical brick stores all key metadata in RAM.
+2. All key updates (including ) are written to the write-ahead log.
+   ** This metadata includes the `{FileNum,Offset}` storage location
+   of disk-based value blob hunks, which are stored separately from
+   key metadata hunks.
+3. The write-ahead log is not, by itself, a random-access data
+   structure in the way that a disk-based B-tree or hash table.
+4. It is desirable to eliminate as much random disk I/O as much as
+   possible.
+5. After a crash, it is desirable to have the logical brick restart as
+   quickly as possible.
+
+As a consequence of these properties:
+
+* After a crash, the only method to reconstruct the brick's ``key
+  catalog'' is a sequential scan of the write-ahead log (because
+  random access is not fully supported).
+* To meet the goal of restarting quickly, it would be helpful to
+  reduce the the amount of data that must be scanned sequentially.
+* It is quite difficult to fully support Items #4 and #5
+  simultaneously.
+** Item #4 suggests that both types of data hunks, key metadata and
+   value blobs, be written into the same log to reduce disk I/O.
+** Item #5 suggests that both types of data hunks be written in
+   separate locations to make brick startup, specifically the scan &
+   reconstruction of the key catalog, as fast as possible.
+
+The implementation of `gmt_hlog.erl` tries to resolve the conflict
+between I/O efficiency and short startup times by storing data in
+files stored in two different areas:
+
+The short term area (`shortterm` in the code)::
+All key metadata hunks are always stored in shortterm storage.  To
+support item #4, value blob hunks are also be written in short term
+storage in order to amortize the expense of `fsync(2)` system calls.
+** Log files in short term storage have positive log sequence numbers.
+** Log files in short term storage can be found in the `"s"`
+   subdirectory, where "s" is an abbreviation for "short".
++
+The long term area (`longterm` in the code)::
+All long-lived value blob hunks, i.e. those hunks which have existed
+long enough to exist after a checkpoint operation, are stored in long
+term storage.
+** Log files in long term storage have negative log sequence numbers.
+** Log files in long term storage are hashed and stored in one of many
+   subdirectories, to avoid having millions of files all inside a
+   single directory.
+
+.Top-level listing of the common log's `gmt_hlog` file store.
+-----------------------------------
+% ls -l hlog.commonLogServer
+total 24
+drwxrwxr-x 9 hibari root 4096 2010-06-09 13:56 1/
+drwxrwxr-x 9 hibari root 4096 2010-06-09 13:56 2/
+drwxrwxr-x 9 hibari root 4096 2010-06-09 13:56 3/
+-rw-rw-r-- 1 hibari root   14 2010-06-09 13:59 flush
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:56 register/
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:59 s/
+
+% ls -l hlog.commonLogServer/s
+total 16760
+-rw-rw-r-- 1 hibari root 2701321 2010-06-09 13:58 000000000014.HLOG
+-rw-rw-r-- 1 hibari root 2719724 2010-06-09 13:58 000000000015.HLOG
+-rw-rw-r-- 1 hibari root 2765506 2010-06-09 13:59 000000000016.HLOG
+-rw-rw-r-- 1 hibari root 2679379 2010-06-09 13:59 000000000017.HLOG
+-rw-rw-r-- 1 hibari root 3008375 2010-06-09 13:59 000000000018.HLOG
+-rw-rw-r-- 1 hibari root 2785571 2010-06-09 13:59 000000000019.HLOG
+-rw-rw-r-- 1 hibari root  451182 2010-06-09 13:59 000000000020.HLOG
+-rw-rw-r-- 1 hibari root      45 2010-06-09 13:56 Config
+
+% ls -l hlog.commonLogServer/1
+total 28
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:56 1/
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:56 2/
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:59 3/
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:57 4/
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:56 5/
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:59 6/
+drwxrwxr-x 2 hibari root 4096 2010-06-09 13:57 7/
+
+% ls -l hlog.commonLogServer/1/7:
+total 2688
+-rw-rw-r-- 1 hibari root 2745369 2010-06-09 13:56 -000000000006.HLOG
+-----------------------------------
+
+The application can request that a hunk be written into either area by
+the write-ahead log.  As examples:
+
+* All key updates (key metadata hunks and value blob hunks) are always
+  written to the short term area.
+* Checkpoint data is always written to the short term area.
+* The scavenger reads value blob hunks that are still ``alive'' from
+  their current location and always writes them to the long term area.
+
+An entire log file can moved from short term storage to long term
+storage by renaming it to its long term name, i.e from a positive log
+sequence number to a negative log sequence number.  This renaming
+operation is done at the end of a checkpoint operation by bricks that
+store value blobs on disk: see the "Brick checkpoint processing steps"
+list in
+link:hibari-sysadmin-guide.en.html#checkpoints[Hibari Sysadmin
+Guide, "Brick Checkpoint Operations" section].
+
+Log files cannot move from long term to short term storage.
+
+Given the separation of various log hunk types into short term and
+long term storage, we have a couple of new properties:
+
+1. The number of log sequence files in short term storage will be
+   quite small, usually well under 1,000 files total and typically
+   under 100 files.
+** This gets us most of the way to our goal of, "brick
+   startup must be fast."  All key metadata is stored in the short term
+   area.  Therefore we only need to read sequentially a fairly small
+   number of files to reconstruct the brick's key catalog.
+2. The number of log sequence files in long term storage can be huge,
+   perhaps millions of files.
+** Millions of files in the long term area can create
+   a storage problem.  Many OS file systems cannot efficiently handle too
+   many files within a single directory.  The long term storage area uses
+   two levels of intermediate directories to avoid directories that are
+   "too big".
+
+NOTE: In theory, the constants to define the number of subdirectories
+at each level are completely flexible.  In reality, use of the
+`?ARCH_H1_SIZE` and `?ARCH_H2_SIZE` macros is hard-coded in some
+critical areas.
+
+===== Writing hunks and flushing them to stable storage
+
+There's a fundamental tension between writing hunks to disk as
+efficiently as possible and flushing them to stable storage via the
+`fsync(2)` system call.  The latency overhead of `fsync(2)` on
+Winchester disks is extremely high.  Also, Linux-based systems can
+block writes to a file descriptor when an `fsync(2)` operation is in
+progress.
+
+To mitigate the effects of `fsync(2)` calls, a couple of strategies
+are used.  First, `file:sync/1` calls are performed asynchronously
+when feasible.  Second, writes are buffered by the log's "gen_server"
+process while an `file:sync/1` call is in progress.  The "gen_server"
+will promise to write the hunk at a given `{FileNum,Offset}` location
+but won't actually write the data there until the `fsync(2)` is
+finished.
+
+The "gen_server"'s write buffering opens up a can of worms: nasty race
+conditions.  Races with write requests, fsync requests, in-progress
+fsync calls, and "advance sequence number" requests are possible.
+This module has been extensively reviewed and tested with both unit
+tests and QuickCheck to eliminate those race conditions.  We believe
+that all bugs have been eliminated, but as with many things in the
+software world, we don't really know with 100% certainty.
+
+===== Application-level and OS-level readahead
+
+See link:hibari-sysadmin-guide.en.html#os-readahead-configuration[Hibari
+Sysadmin Guide, "OS Readahead Configuration" section] for background.
+
+The key metadata for disk-based value blob storage contains both the
+storage location of the value blob hunk *and* the size of the blob.
+The blob's size is usually passed through the `gmt_hlog` API when
+reading the blob.  First the hunk header must be read and then the
+value blob can be read.  A function like `read_hunk_summary/5` uses
+the blob size argument to help combine (further down in the call
+chain) the two reads into a single `file:pread()` call via the
+`my_pread/4` function.
+
+The `my_pread/4` function is a simple application-level readahead
+mechanism.  The two major types of read operations both have elements
+of readahead to them:
+
+1. For reads during brick initialization, the write-ahead log scan is
+   reading many small-sized hunks in sequential order.  The average
+   size of a key metadata hunk is less than 200 bytes, so a read-ahead
+   of 4KB or 8KB is very helpful (though a bigger size would reduce
+   CPU consumption even more).
+2. For the random reads of value blobs hunks, adding the estimated
+   size of the hunk header and the known size of the value blob makes
+   it possible to read both with a single `file:pread()` call.
+
+[[refactor-my-pread]]
+[NOTE]
+=======================
+The code path of hunk reads, by both sequential reads during brick
+init and random reads of value blob hunks, is probably sub-optimal.
+The addition of `?MY_PREAD_MODEST_READAHEAD_BYTES` to the readahead
+size by `read_hunk_summ_ll_middle/3` is a good thing (and should
+probably be even bigger) in the former case and a bad thing for the
+latter case.  Refactoring might be a good idea here.
+
+Function tracing verifies that `read_hunk_summ_ll_middle/3` is
+definitely used by the latter case.  But for random read I/O, reading
+the extra `?MY_PREAD_MODEST_READAHEAD_BYTES` bytes is very unlikely to
+have any benefit and quite possibly has negative impact.
+=======================
+
+NOTE: See also, the discussion at xref:squid-flash-priming.
+
+===== MD5 checksums
+
+See xref:controlling-md5-checksums[].
+
+===== API comments
+
+[[refactor-gmt-hlog]]
+NOTE: Parts of the exported API for this module may seem cumbersome to
+use.  Those parts are from a bottom-up code writing experiment that
+created only exported APIs needed for very specific tasks, not to
+create a more useful (generally-speaking) interface.  A refactoring
+exercise could be useful here.
+
+[[gmt-hlog-erl-processes]]
+===== Processes created by gmt_hlog.erl
+
+* Very short-lived processes to finish `{read_hunk,...}`
+  `{get_all_seqnums}`, and `{sync}`  calls.
+
+[[gmt-hlog-common-erl]]
+==== gmt_hlog_common.erl
+
+This module is responsible for combining write & fsync requests from
+multiple bricks, via their `gmt_hlog_common` private write-ahead log
+servers, into a single write-ahead log.  The writes and fsyncs must
+provide a durable storage service (to prevent data loss), and
+performance must be good enough (despite the slow speed of `fsync(2)`
+operations on Winchester disk drives).
+
+The "short term/long term" storage areas are described in
+xref:gmt-hlog-erl[].  Together with `gmt_hlog_local.erl`, this module
+creates a different separation of hunk types:
+
+* Key metadata hunks, type = `?LOGTYPE_METADATA`.
+** To maintain the illusion of each logical brick maintaining its own
+   private write-ahead log, hunks of type `?LOGTYPE_METADATA` are copied
+   asynchronously out of the common log and into their pre-chosen
+   `{FileNum,Offset}` location in the brick's private write-ahead log by
+   the `do_sync_writeback/1` function.  When a logical brick restarts,
+   all common -> private log writebacks are performed synchronously
+   via `full_writeback/1` before the brick is allowed to restart.
+* Value blob hunks, type = `?LOGTYPE_BLOB`
+* Bad sequence hunks, type = `?LOGTYPE_BAD_SEQUENCE`
+
+[[refactor-os-sync]]
+[IMPORTANT]
+===================
+The common -> private log writebacks are performed
+lazily/asynchronously and do not use `fsync(2)` to flush to disk.
+Instead, a
+time-based mechanism is used, assuming that the OS has flushed all
+writeback data to stable storage within a generous time limit
+(configured by the `brick_dirty_buffer_wait` configuration attribute
+in `central.conf`).  The advantage is to allow the OS to combine
+various dirty page writes into as few disk I/O operations as possible
+without interference from `fsync(2)` calls.
+
+This assumption works for Linux platforms but probably isn't valid for
+FreeBSD and Mac OS.  It would be straightforward to use `file:sync(2)`
+in a background task to flush these writebacks very infrequently (to
+allow write coalescing), but that refactoring has not been performed
+yet.
+===================
+
+[[refactor-hunk-writeback]]
+NOTE: The `write_back_to_local_log/8` function's goal is to perform
+individual hunk writebacks as efficiently as possible, i.e. with as
+few file open/write/close operations as possible.  The logic is
+tortuous and difficult to debug.  It's probably correct now, but a
+refactoring might be a good idea.
+
+===== Separate file systems for common log short term and long term
+
+Another part of the lazy writeback process is to manage the transition
+of files from the common log's ``short term'' storage area to ``long
+term'' storage.  See xref:shortterm-and-longterm-storage[] for
+background; see
+link:hibari-sysadmin-guide.en.html#high-io-rate-devices[Hibari Sysadmin
+Guide, "High I/O rate devices (e.g. SSD) may be used" section] for a
+discussion of using high-speed non-volatile storage such as
+solid-state memory disks.
+
+If SSD or similar disk is used, then a file system for that disk
+should be mounted under the common log's short term directory:
+`.../var/data/hlog.commonLogServer/s`.  The
+`do_bigblob_hunk_writeback/3` function, together with
+`clean_old_seqnums/2`, will take care of copying the `?LOGTYPE_BLOB`
+hunks from the short term file system to the long term file system,
+which (we assume) will use traditional, cheap Winchester-type disk drives.
+
+===== Scavenger
+
+See also: xref:scavenger-and-code-reuse[].
+
+[[refactor-scav-mapreduce]]
+[NOTE]
+=======================
+
+The scavenger presents another refactoring opportunity.  An earlier
+version was much simpler, but it relied too heavily on in-memory
+sorting and consumed too much memory when scavenging systems
+containing tens of millions of keys.
+
+The current implementation is quite brute-force now.  Perhaps a more
+explicitly map-reduce style, while still preserving disk-based
+sorting, would be useful?
+=======================
+
+===== Brick registration
+
+When the scavenger copies a `?LOGTYPE_BLOB` hunk to its new storage
+location, the brick that owns that value blob must be notified of its
+new location.  A brick that isn't running & in `ok` state cannot (by
+definition) handle such notifications.  If all logical bricks are not
+running, the scavenger should be aborted.
+
+The `register_local_brick/2` function is used by a brick's startup to
+assist the common log keep track of all logical bricks that may have
+records stored in the common log.  If a registered brick is not
+running when the scavenger starts, the scavenger will be aborted.
+Brick failures during the scavenger's run are handled separately.
+
+[[gmt-hlog-common-erl-processes]]
+===== Processes created by gmt_hlog_common.erl
+
+* A `gmt_hlog` "gen-server" process to handle I/O to and from the
+  "common log".
+* The scavenger is run in a separate process that may run for 0
+  seconds to a few hours.
+* Short-lived processes to handle fsync requests.
+* Short-lived processes to perform tasks that were deferred until
+  after the `brick_dirty_buffer_wait` time interval has passed.
+* A short-lived process to avoid blocking the OTP supervisor framework
+  when shutting down the `gdss` application in certain MD5 checksum
+  failure scenarios.
+
+[[gmt-hlog-local-erl]]
+==== gmt_hlog_local.erl
+
+The `gmt_hlog_local.erl` module's purpose is to present the same
+client API as `gmt_hlog.erl` while providing the "common log"/"private
+log" split that is described in the
+link:hibari-sysadmin-guide.en.html#write-ahead-logs-in-hibari[Hibari Sysadmin
+Guide, "Write-ahead logs in the Hibari application" section].
+
+This module uses atoms for mapping to hunk metadata types:
+
+* `metadata` -> `?LOGTYPE_METADATA`
+* `bigblob` -> `?LOGTYPE_BLOB`
+
+The most important thing this module does is maintain the
+`{FileNum,Offset}` storage locations for the private log.  This task
+is done with some knowledge of the internal workings of
+`gmt_hlog.erl`:
+
+1. Use `gmt_hlog:create_hunk/3` to create a fully-serialized hunk.
+2. Wrap the serialized hunk in a `{eee,...}` tuple and write it to the
+   common log.
+3. If the common log write was successful, return a reply to the client
+   using the `{FileNum,Offset}` maintained for the private log, *not*
+   the storage location given by the common log.
+4. Sometime in the near future, the common log will
+   lazily/asynchronously locate all of the recently-written `{eee,...}`
+   tuples for this brick and copy the serialized hunks to the exact
+   storage locations specified by step #3.
+
+IMPORTANT: Step #4 in the outline above has a huge race vulnerability
+window.  Any test that tries to write a hunk using
+`gmt_hlog_local.erl` and then immediately read that hunk will almost
+certainly fail.  If you must read something that was very recently
+written, you must call `gmt_hlog_common:full_writeback/1` before
+attempting the read.
+
+[[gmt-hlog-local-erl-processes]]
+===== Processes created by gmt_hlog_local.erl
+
+* A `gmt_hlog` "gen-server" process to handle I/O to and from the
+  brick's "private log".
+* Very short-lived processes to finish `{get_all_seqnums}` and
+  `{sync}` calls.
+
+[[mod-admin-erl]]
+==== mod_admin.erl
+
+This is the callback module for the `inets` application's HTTP server
+for the Admin Server's HTTP status server at `http://localhost:23080/`
+(default URL).
+
+[[refactor-mod-admin]]
+NOTE: There's room for refactoring here.  This module was written by a
+developer who was relatively new to Erlang and learning as he went
+along.  Also, there is a large number of administrative tasks that the
+Admin Server's HTTP service does not yet support,
+e.g. changing chain length, adding/removing/reweighting chains.
+
+[[debugging-hibari-using-tracing]]
+=== Debugging Hibari (clients and servers) using tracing
+
+Sooner or later, a Hibari developer will need to do some debugging.
+It may be a learning exercise, trying to figure out what existing code
+is doing.  Or perhaps it's new code that needs debugging.  In either
+case, there are several sets of tools available to Erlang developers.
+
+The OTP "debugger" application is useful because it provides a GUI
+that many developers find comfortable, particularly the "breakpoint"
+feature.  However, "debugger" app doesn't always work very well with
+Hibari, especially on the server side.
+
+* With the large amount of inter-process messaging, it can be
+  difficult to identify which modules should be loaded into the
+  debugger and where breakpoints should be added.
+* Once a breakpoint is set, multiple processes (e.g. multiple bricks)
+  may trigger it, but you are only interested in one specific process.
+* Most of the inter-process messaging uses timeouts on the client
+  side.  It's unlikely that a developer can point-and-click the "Step"
+  and "Continue" buttons on the GUI quickly enough to allow a server
+  to respond before the client side stub code times out.
+* When a logical brick or write-ahead log server process is stopped by
+  a breakpoint, the Admin Server may interpret the break as a
+  failure ... and then take actions to kill and restart that brick.
+
+Therefore, we recommend that you use tracing-based tools for debugging
+Hibari.  These tools do not require a GUI, so it's possible to use
+them for diagnosing remote systems where a GUI may be impossible to
+support.  Also, the tracing tools give much finer control over what
+process (or processes) will be traced.
+
+==== External applications/tools
+
+The Erlang/OTP runtime system provides an extremely powerful set of
+tracing tools.  See the
+link:http://www.erlang.org/doc/[Erlang/OTP documentation] in the
+"Tools" section for several applications that are built on top of
+Erlang's tracing primitives: "dbg" (in the "runtime_tools"
+subsection), "observer", "inviso", and others.
+
+Gemini has had very positive experience with the "redbug"
+application.  "Redbug" is bundled with the commercial packaging of
+Hibari and is used frequently by both customer operations staff and
+Gemini field engineers to diagnose problems with both Hibari client
+applications and the Hibari server.
+
+* The "redbug" tool is part of the
+link:http://code.google.com/p/eper/["eper" tool suite at Google Code:
+http://code.google.com/p/eper/].
+
+==== Hibari internal tracepoints
+
+The Hibari source code has been annotated with over 400 tracepoints
+using macros based on the `gmt_elog.erl` and `gmt_elog_policy.erl`
+modules.  These tracepoints give the developer (and even field support
+staff) more options for tracing events through Hibari's code.
+
+The `gmt_elog` tracepoints are designed to be extremely lightweight.
+While they can be disabled completely at compile-time, their overhead
+is so low that they can remain in production code and be enabled only
+when needed for debugging.
+
+For example, on an x86 laptop with the CPU frequency fixed at 1.33GHz,
+a microbenchmark that called a `gmt_elog_policy` tracepoint when
+system tracing was disabled (i.e. normal system state) executed
+88999000 trace calls in 12.925467 seconds, averaging 6.886 million
+calls/second.
+
+===== Major tracepoint types
+
+There are two major types of tracepoints that annotate the Hibari
+code.  The macros for both types are defined in the `brick.hrl` header
+file.  The underlying mechanism is provided by macros in the
+`gmt_elog.hrl` header file.
+
+* The `?E_`* macros, e.g. `?E_INFO/2`, `?E_ERROR/2`.  These macros are
+  similar in spirit to the C library's `syslog(3)` function: free-form
+  message text (with formatting by `io_lib:format/2`) with a severity
+  level.
++
+These macros actually perform two functions: generate an
+application log event via `error_logger` and optionally generate a
+`gmt_elog` trace message.  When examining large traces, it proved
+_extremely inconvenient_ to try to merge application log messages into
+the flow of trace output ... so now the macros perform that merging
+task automatically.
++
+* For trace events that do not merit an application log entry using
+  `error_logger`, the `?DBG_`* macros provide a convenient way to
+  specify:
+** A general category (for trace filtering)
+** One of:
+*** A generic Erlang term (usually a tuple)
+*** `io_lib:format/2` style formatted text
+
+.`?E_INFO/2` macro's definition:
+----------
+-define(E_INFO(Fmt, Args),
+        begin ?ELOG_INFO_C(?CAT_GENERAL, Fmt, Args),
+              error_logger:info_msg(Fmt, Args)
+        end).
+----------
+
+The `?DBG_`* macros use the following filtering categories.  The
+categories use integers with C-style bit masks to allow a single trace
+message to use multiple categories by bit-wise AND'ing the categories
+together.
+
+.`?DBG_`* categories from `brick.hrl`
+----------
+%% Any component
+-define(CAT_GENERAL,              (1 bsl  0)). % General: init, terminate, ...
+
+%% brick_ets, mostly, except where there's cross-over purpose.
+-define(CAT_OP,                   (1 bsl  1)). % Op processing
+-define(CAT_ETS,                  (1 bsl  2)). % ETS table
+-define(CAT_TLOG,                 (1 bsl  3)). % Txn log
+-define(CAT_REPAIR,               (1 bsl  4)). % Repair
+
+%% brick_server, mostly, except where there's cross-over purpose.
+-define(CAT_CHAIN,                (1 bsl  5)). % Chain-related
+-define(CAT_MIGRATE,              (1 bsl  6)). % Migration-related
+-define(CAT_HASH,                 (1 bsl  7)). % Hash-related
+----------
+
+Here are a couple of examples of using these macros.
+
+.Sample usage of `?E_INFO` and `?DBG_ETSx/2`
+----------
+?E_INFO("~s: got unknown message ~P\n", [?MODULE, Msg, 20]).
+
+%% Example of ?DBG_ETSx()
+?DBG_ETSx({inserted, S#state.tab, Key, size(Val)}).
+----------
+
+In the end, the result of both these macros is a call to
+`gmt_elog_policy:enabled/6`.  By default, this function does not do
+anything.  For lowest overhead, it should do nothing.  It doesn't
+*need* to do anything, because the Erlang tracing mechanism will do
+what we need if and when we need to activate the tracing.
+
+.The `gmt_elog_policy:enabled/6` function
+----------
+enabled(_Priority, _Category, _Module, _Line, _Fmt, _ArgList) ->
+    false.
+----------
+
+When enabled, the Erlang VM's tracing mechanism will tell us the
+module name, function name, and arguments of any function call that
+meets its match specification.  When tracing is not enabled, almost no
+computation is performed.
+
+The arguments for the `enabled/6` function are usually generated by
+macros for convenience.  The arguments are:
+
+Priority, `term()`::
+The Hibari app macros use an integer for this
+argument, using `syslog(3)`-like priority numbers (which are defined
+in `gmt_applog.hrl`, e.g. `?LOG_EMERG_PRI` is level 0, `?LOG_INFO_PRI`
+is level 6.
++
+Category, `term()`::
+The Hibari app macros use an integer for this argument, using the
+bitmask-style encoding shown above, e.g. `?CAT_ETS` -> `(1 bsl 2)`.
++
+Module, `atom()`::
+This is the name of the module that is making the tracing call.
++
+Line, `integer()`::
+This is the line number of the source module that is making the
+tracing call.
++
+Fmt, `string()`::
+An `io_lib:format/2` formatting string.
++
+ArgList, `string()`::
+An `io_lib:format/2` formatting argument list.
++
+NOTE: The `Fmt` and `ArgList` arguments are used for the `?DBG_`*
+style macros, because arguments are used by the log trace formatting
+functions to do the actual log trace formatting.
+
+===== Trace collection and formatting
+
+The `gmt_elog:help/0` function provides a quick reference for how to
+use the `gmt_elog` tracing functions.
+
+.Example of `gmt_elog:help/0` usage.
+------------------
+(hibari_dev@bb3)56> gmt_elog:help().
+  gmt_elog:start_tracing().
+  gmt_elog:start_tracing("/path/to/trace-file").
+  gmt_elog:add_match_spec().         ... to trace everything
+  gmt_elog:add_match_spec(dbg:fun2ms(fun([_, target_category, _, _, _, _]) -> return_trace() end)).
+  gmt_elog:add_match_spec(dbg:fun2ms(fun([Pri, _, _, _, _, _]) when Prio > 0 -> return_trace() end)).
+  gmt_elog:add_match_spec(dbg:fun2ms(fun([_, target_category, target_module, _, _, _]) -> return_trace();
+                                        ([_, _, other_module, 88, _, _]) -> return_trace() end)).
+  gmt_elog:del_match_spec().
+  gmt_elog:stop_tracing().
+  gmt_elog:format_file("/path/to/trace-file").
+  gmt_elog:format_file("/path/to/trace-file", "/path/to/output").
+  gmt_elog:format_file("/path/to/trace-file", "/path/to/output", MatchStr|"").
+ok
+------------------
+
+When we enable tracing, we're actually tracing calls to the
+`gmt_elog_policy:enabled/6` function.  As with any tracing match
+specification, we can be as general (using `'_'` wildcards) or as
+specific as we wish in filtering trace events.
+
+For the examples of `add_match_spec` shown above, here is an explanation
+
+1. Trace everything, i.e. all calls to `gmt_elog_policy:enabled/6`.
+2. Trace anything where the `Category` arg == `target_category`.
+   Remember that the Hibari app uses integers, not atoms, for the
+   `Category` arg, so use an integer here line `8` for (1 bsl 3) for
+   the `?CAT_TLOG` category.
+3. Trace anything where the `Prio` argument > 0, i.e. everything that
+   isn't emergency priority, `?LOG_EMERG_PRI`.
+4. Trace anything where either of the following conditions is true:
+   ** `Category == target_category` and `Module == target_module`
+   ** `Module == other_module` and `Line == 88`
+
+.Outline of a typical tracing session
+-------------------
+> gmt_elog:start_tracing("/tmp/trace-file1").
+> gmt_elog:add_match_spec(dbg:fun2ms(fun([_, Cat, _, _, _, _]) when Cat == 1 -> return_trace() end)).
+> %% ... trigger some activity that you wish to trace
+> %% ... when you are finished, resume with:
+> gmt_elog:del_match_spec().
+> gmt_elog:stop_tracing().
+> gmt_elog:format_file("/tmp/trace-file1", "/tmp/trace-file1.out").
+-------------------
+
+If you have a low volume of trace messages, it may be convenient to
+use `gmt_elog:start_tracing/0` to send those messages to the shell
+window instead of to a file.
+
+===== For more information about tracing
+
+* See the EDoc documentation for the `gmt_elog` module for detailed
+  information on how to use all the tracing functions in that module.
+* See the
+  link:http://www.erlang.org/doc/man/dbg.html#fun2ms-1[Erlang/OTP
+  documentation for the `dbg:fun2ms/1` function] for an overview of
+  the (usually) simpler method of creating a match specification.
+* See the
+  link:http://www.erlang.org/doc/apps/erts/match_spec.html[Erlang/OTP
+  documentation "Match specifications in Erlang"] for a detailed
+  reference of match specifications.
+
+== Appendix: Troubleshooting
+
+The subsections here are an assortment of items that were inconvenient
+to add in-line elsewhere in this guide.  Like Erlang's "let it crash"
+philosophy, it's a bit tidier to let something else handle
+exceptions.  This section is the "something else".
+
+[[problem-multiple-hibari-apps]]
+=== Problem: Cannot run multiple Hibari apps on the same physical machine
+
+Although it is possible to run the Hibari app multiple times
+simultaneously on the same physical machine (or guest OS instance, if
+you're using virtualization software such as VMware or Xen), it isn't
+always easy.  There are two reasons why Hibari might not be able to
+run on a machine:
+
+==== Multiple Erlang VMs with the same node name
+
+Erlang node names take the form `VM_Name@Host_Name`, using the "short"
+host naming convention, via "erl -sname VM_Name@Host_Name".  It is not
+possible to run two Erlang virtual machines with the same "VM_Name".
+
+.Example of Erlang node name conflict: `duplicate_name`
+-------------------
+{error_logger,{{2010,4,14},{19,41,28}},"Protocol: ~p: register error: ~p~n",["inet_tcp",{{badmatch,{error,duplicate_name}},
+[{inet_tcp_dist,listen,1},{net_kernel,start_protos,4},{net_kernel,start_protos,3},{net_kernel,init_node,2},
+{net_kernel,init,1},{gen_server,init_it,6},{proc_lib,init_p_do_apply,3}]}]}
+-------------------
+
+*If run in developer's interactive mode*,
+(e.g. xref:starting-hibari-1st-time[]), the node name is defined in
+`gdss/src/Makefile`.  Edit the `NODENAME1` variable in `Makefile`, then
+re-run your `make` command.
+
+*If run as a daemon*,
+the Erlang node name is taken from the `central.conf`
+file, the `application_nodename` attribute.  Running multiple
+instances of Hibari using the same installation directory will use the
+same `central.conf` file.  The work-around is to install Hibari
+multiple times, one for each Erlang VM instance.  Each installation
+will require a different installation prefix,
+e.g. `/usr/local/hibari1` and `/usr/local/hibari2`.  Then the
+`application_nodename` attribute in each `central.conf` file can
+contain a unique value.
+
+NOTE: The multiple-installation path technique above is not sufficient
+for running multiple Hibari daemons/virtual machines on the same box.
+See also xref:multiple-hibari-instances-TCP-conflicts[].
+
+[[multiple-hibari-instances-TCP-conflicts]]
+==== Multiple Hibari instances have TCP port conflicts
+
+.TCP port conflict: `eaddrinuse` (with Admin Server HTTP Web server on TCP port 23080)
+----------
+=GMT ERR REPORT==== 14-Apr-2010::19:43:19 ===
+std_error: "Failed initiating web server: \nundefined\n{{listen,eaddrinuse},\n {child,undefined,\n        {httpd_acceptor,any,23080},\n....
+----------
+
+The error message below may be hidden among other app log messages,
+both related to startup as well as the premature shutdown.
+
+Using a utility like `grep` in the `brick.log` file (interactive mode)
+or `.../var/log/gdss-app.log` file (daemon mode) might be more
+helpful.  Look for the pattern `eaddrinuse`.
+
+Port conflicts can exist for a number of TCP ports used by Hibari:
+
+The Admin HTTP server:: Configured by an Erlang/OTP configuration file
+(and not `central.conf`)
+* In developer interactive mode, see the file
+`./root/conf/admin.conf`, relative to your current working dir
+(i.e. the `gdss/src` subdirectory).
+* In daemon mode, see `/path/to/hibari-top/gdss/1.0.0/etc/root/conf/admin.conf`
+* In either situation above, edit the "Port" line at the top of the file.
+Other TCP ports:: Configured by the `central.conf` file.
+* In developer interactive mode, see `../priv/central.conf`.
+* In daemon mode, see `/path/to/hibari-top/gdss/1.0.0/etc/central.conf`
+* In either situation above, edit the appropriate attribute, e.g.
+  `cli_port`, `brick_s3_tcp_port`, `gdss_ebf_tcp_port`, and so on.
+
+== Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc.
+
+* Hibari does not yet have a comprehensive backup & restore mechanism,
+  in the sense of "dump all contents of the entire cluster to this
+  file/files" and "load this file/files back into the cluster".
++
+* There's probably room for substantial improvement by refactoring
+  the "syncpid" with a new algorithm (see xref:the-syncpid[]).
+  I suspect that when under high load,
+  switching to a fixed time interval would provide better throughput
+  with similar latencies.  The problem is determining when to switch
+  from one algorithm or another, or when change the size of this fixed
+  time interval.
++
+* The Admin Server needs refactoring for scalability, see
+  xref:refactor-admin-monitor["An increase in the size..."].
+* Refactoring xref:refactor-brick-bp[suggestions for `brick_bp.erl`].
++
+* Refactoring xref:refactor-brick-chainmon[suggestions for `brick_chainmon.erl`].
++
+* Refactoring xref:refactor-brick-ets[suggestions for `brick_ets.erl`].
++
+* Refactoring xref:refactor-brick-ets-state[suggestions for the
+  `#state` record in `brick_ets.erl`].
++
+* Refactoring xref:refactor-blob-reading[suggestions for blob reading].
++
+* Refactoring xref:refactor-scavenger[suggestions for the scavenger].
++
+* Refactoring xref:refactor-scavenger[suggestions for the `brick_pingee.erl`].
++
+* Refactoring xref:refactor-scoreboard[suggestions for the `brick_sb.erl`].
++
+* Refactoring xref:refactor-logging-op-q[suggestion the `logging_op_q`
+  mess shared by `brick_ets.erl` and `brick_server.erl`].
++
+* Refactoring xref:refactor-role-management[suggestions for chain role
+  manipulations].
++
+* Refactoring xref:refactor-wal[suggestions for the write-ahead log].
++
+* Refactoring xref:refactor-brick-simple[suggestions for `brick_simple.erl`].
++
+* Refactoring xref:refactor-brick-squorum[suggestions for `brick_squorum.erl`].
++
+* Refactoring xref:refactor-my-pread[suggestions for the read-ahead
+  scheme in `gmt_hlog.erl`].
++
+* Refactoring xref:refactor-gmt-hlog[suggestions for the public API of
+  `gmt_hlog.erl`].
++
+* Refactoring xref:refactor-os-sync[suggestions for OS-specific file
+  flushing operations].
++
+* Refactoring xref:refactor-hunk-writeback[suggestions for the
+  `write_back_to_local_log/8` function].
++
+* Refactoring xref:refactor-scav-mapreduce[suggestions for the
+  scavenger to be more explicitly map-reduce style].
++
+* Admin Server API isn't fully exposed via HTTP status server, mostly
+  due to lack of vision/definition of what it ought to do and look
+  like.
++
+* Refactoring xref:refactor-mod-admin[suggestions for the public API of
+  `mod_admin.erl`].
++
+* Enhance `brick_admin:get_table_chain_list/{1,2}` get the current
+  operational chain list, not the healthy chain list.
++
+* The EDoc for `brick_server:start_scavenger/3` for API options
+  proplist for the scavenger.  However, that function should be
+  removed, because almost all scavenger code from `brick_server.erl`
+  has been moved over to `gmt_hlog_common.erl`.  This inconsistency
+  should be fixed.
