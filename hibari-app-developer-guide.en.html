@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Application Developer’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" href="docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="article" title="Hibari Application Developer&#x2019;s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36104938"></a>Hibari Application Developer’s Guide <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 0.1.9</td><td align="left">2011/02/27</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_why_nosql">1.1. Why NOSQL?</a></span></dt><dt><span class="section"><a href="#_why_hibari">1.2. Why Hibari?</a></span></dt></dl></dd><dt><span class="section"><a href="#getting-started">2. Getting Started</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. System Requirements</a></span></dt><dt><span class="section"><a href="#required-software">2.2. Required Third-Party Software</a></span></dt><dt><span class="section"><a href="#download-hibari">2.3. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. Installing a Single-Node Hibari System</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. Starting and Stopping Hibari on a Single Node</a></span></dt><dt><span class="section"><a href="#installing-multi-node">2.6. Installing a Multi-Node Hibari Cluster</a></span></dt><dt><span class="section"><a href="#starting-multi-node">2.7. Starting and Stopping a Multi-Node Hibari Cluster</a></span></dt><dt><span class="section"><a href="#creating-tables">2.8. Creating New Tables</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. Client API: Native Erlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_client_api_overview">3.1. Hibari Client API Overview</a></span></dt><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. Client API: UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. The Hibari Server’s Implementation of the UBF Protocol Stack</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBF representation of strings vs. binaries</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. Steps for Using a UBF-based Protocol in Any Language</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. The Hibari UBF Protocol Contract</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Using the UBF Client Library for Erlang</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Using the UBF Client Library for Java</a></span></dt><dt><span class="section"><a href="#using-ubf-python-client">4.7. Using the EBF Client Library for Python</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. Client API: Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_the_hibari_thrift_api">5.1. The Hibari Thrift API</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_types_to_thrift_types">5.2. Mapping UBF Contract Types to Thrift Types</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_to_thrift_service">5.3. Mapping UBF Contract to Thrift Service</a></span></dt><dt><span class="section"><a href="#_examples_of_using_a_thrift_client">5.4. Examples of using a Thrift client</a></span></dt><dt><span class="section"><a href="#_mapping_tbf_contract_responses_from_thrift_client">5.5. Mapping TBF Contract Responses From Thrift Client</a></span></dt></dl></dd><dt><span class="section"><a href="#_developer_utilities">6. Developer Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#_basho_bench">6.1. Basho Bench</a></span></dt><dt><span class="section"><a href="#_yahoo_cloud_serving_benchmark">6.2. Yahoo! Cloud Serving Benchmark</a></span></dt></dl></dd><dt><span class="section"><a href="#HibariBuildingSource">7. Building Hibari from Source</a></span></dt><dd><dl><dt><span class="section"><a href="#_required_third_party_software">7.1. Required Third Party Software</a></span></dt><dt><span class="section"><a href="#_downloading_hibari">7.2. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#_building_the_hibari_release_package">7.3. Building the Hibari Release Package</a></span></dt><dt><span class="section"><a href="#HibariAsciiDoc">7.4. Building Hibari’s Documentation</a></span></dt><dt><span class="section"><a href="#ErlangOTP">7.5. Building and Installing Erlang/OTP</a></span></dt></dl></dd><dt><span class="section"><a href="#_sample_application">8. Sample Application</a></span></dt></dl></div><p></p><div class="section" title="1.&#xA0;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><p>Hibari is a production-ready, distributed, key-value, big data
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Application Developer’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" href="docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="article" title="Hibari Application Developer&#x2019;s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36104938"></a>Hibari Application Developer’s Guide <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 0.2.0</td><td align="left">2011/03/6</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_why_nosql">1.1. Why NOSQL?</a></span></dt><dt><span class="section"><a href="#_why_hibari">1.2. Why Hibari?</a></span></dt></dl></dd><dt><span class="section"><a href="#getting-started">2. Getting Started</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. System Requirements</a></span></dt><dt><span class="section"><a href="#required-software">2.2. Required Third-Party Software</a></span></dt><dt><span class="section"><a href="#download-hibari">2.3. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. Installing a Single-Node Hibari System</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. Starting and Stopping Hibari on a Single Node</a></span></dt><dt><span class="section"><a href="#installing-multi-node">2.6. Installing a Multi-Node Hibari Cluster</a></span></dt><dt><span class="section"><a href="#starting-multi-node">2.7. Starting and Stopping a Multi-Node Hibari Cluster</a></span></dt><dt><span class="section"><a href="#creating-tables">2.8. Creating New Tables</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. Client API: Native Erlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_client_api_overview">3.1. Hibari Client API Overview</a></span></dt><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. Client API: UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. The Hibari Server’s Implementation of the UBF Protocol Stack</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBF representation of strings vs. binaries</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. Steps for Using a UBF-based Protocol in Any Language</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. The Hibari UBF Protocol Contract</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Using the UBF Client Library for Erlang</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Using the UBF Client Library for Java</a></span></dt><dt><span class="section"><a href="#using-ubf-python-client">4.7. Using the EBF Client Library for Python</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. Client API: Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_the_hibari_thrift_api">5.1. The Hibari Thrift API</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_types_to_thrift_types">5.2. Mapping UBF Contract Types to Thrift Types</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_to_thrift_service">5.3. Mapping UBF Contract to Thrift Service</a></span></dt><dt><span class="section"><a href="#_examples_of_using_a_thrift_client">5.4. Examples of using a Thrift client</a></span></dt><dt><span class="section"><a href="#_mapping_tbf_contract_responses_from_thrift_client">5.5. Mapping TBF Contract Responses From Thrift Client</a></span></dt></dl></dd><dt><span class="section"><a href="#_developer_utilities">6. Developer Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#_basho_bench">6.1. Basho Bench</a></span></dt><dt><span class="section"><a href="#_yahoo_cloud_serving_benchmark">6.2. Yahoo! Cloud Serving Benchmark</a></span></dt></dl></dd><dt><span class="section"><a href="#HibariBuildingSource">7. Building Hibari from Source</a></span></dt><dd><dl><dt><span class="section"><a href="#_required_third_party_software">7.1. Required Third Party Software</a></span></dt><dt><span class="section"><a href="#_downloading_hibari">7.2. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#_building_the_hibari_release_package">7.3. Building the Hibari Release Package</a></span></dt><dt><span class="section"><a href="#HibariAsciiDoc">7.4. Building Hibari’s Documentation</a></span></dt><dt><span class="section"><a href="#ErlangOTP">7.5. Building and Installing Erlang/OTP</a></span></dt></dl></dd><dt><span class="section"><a href="#_sample_application">8. Sample Application</a></span></dt></dl></div><p></p><div class="section" title="1.&#xA0;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><p>Hibari is a production-ready, distributed, key-value, big data
 store. In the emerging field of "NOSQL" solutions to today’s
 mass-scale data storage challenges, Hibari stands out for several
 reasons:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
@@ -12,8 +12,8 @@ Hibari is the <span class="strong"><strong>only open source key-value database t
   consistency.
 </li><li class="listitem">
 Hibari is the <span class="strong"><strong>only open source KVDB built to the exacting standards
-  of the carrier-class telecom sector, and proven in multi-million
-  user telecom production environments</strong></span>.
+  of the carrier-class telecom sector</strong></span>, and proven in multi-million
+  user telecom production environments.
 </li><li class="listitem"><p class="simpara">
 Hibari delivers a <span class="strong"><strong>distinctive feature matrix</strong></span> that includes:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
@@ -81,7 +81,7 @@ applications and services, SQL-structuring and strict ACID properties
 are overkill. Worse, in some environments they’re expensive overkill
 that can potentially hamstring service offerings in highly competitive
 markets that demand flexibility and responsiveness.</p><p>In short, recent years have seen a proliferation of services that
-require more data, with less structure.</p><p>Not surprisingly, some of the leading web enterprise have been at the
+require more data, with less structure.</p><p>Not surprisingly, some of the leading web enterprises have been at the
 forefront of the NOSQL movement. In particular, Google with its
 <a class="ulink" href="http://labs.google.com/papers/bigtable.html" target="_top">BigTable paper</a> in 2006
 and Amazon with its
@@ -507,14 +507,15 @@ Create a directory for running Hibari:
 </p><pre class="screen">$ mkdir running-directory</pre></li><li class="listitem"><p class="simpara">
 Untar the Hibari tarball package that you created when you built
   Hibari from source:
-</p><pre class="screen">$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz</pre></li></ol></div></div><div class="section" title="2.5.&#xA0;Starting and Stopping Hibari on a Single Node"><div class="titlepage"><div><div><h3 class="title"><a id="starting-single-node"></a>2.5. Starting and Stopping Hibari on a Single Node</h3></div></div></div><div class="section" title="Starting and Bootstrapping Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_starting_and_bootstrapping_hibari"></a>Starting and Bootstrapping Hibari</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+</p><pre class="screen">$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz</pre></li></ol></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>On your Hibari node, in the system’s <code class="literal">/etc/sysctl.conf</code> file,
+set <code class="literal">vm.swappiness=0</code>. Swappiness is not desirable for an Erlang VM.</p></td></tr></table></div></div><div class="section" title="2.5.&#xA0;Starting and Stopping Hibari on a Single Node"><div class="titlepage"><div><div><h3 class="title"><a id="starting-single-node"></a>2.5. Starting and Stopping Hibari on a Single Node</h3></div></div></div><div class="section" title="Starting and Bootstrapping Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_starting_and_bootstrapping_hibari"></a>Starting and Bootstrapping Hibari</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 Start Hibari:
 </p><pre class="screen">$ running-directory/hibari/bin/hibari start</pre></li><li class="listitem"><p class="simpara">
 If this is the first time you’ve started Hibari, bootstrap the system:
 </p><pre class="screen">$ running-directory/hibari/bin/hibari-admin bootstrap</pre><p class="simpara">The Hibari bootstrap process starts Hibari’s Admin Server on the
 single node and creates a single table "tab1" serving as Hibari’s
-default table. For information on creating additional tables, see the
-Hibari System Administrator’s Guide.</p></li></ol></div></div><div class="section" title="Verifying Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_verifying_hibari"></a>Verifying Hibari</h4></div></div></div><p>Do these quick checks to verify that your single-node Hibari system is
+default table. For information on creating additional tables, see
+<a class="ulink" href="#creating-tables" target="_top">Creating New Tables</a>.</p></li></ol></div></div><div class="section" title="Verifying Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_verifying_hibari"></a>Verifying Hibari</h4></div></div></div><p>Do these quick checks to verify that your single-node Hibari system is
 up and running.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 Confirm that you can open the "Hibari Web Administration" page:
 </p><pre class="screen">$ your-favorite-browser http://127.0.0.1:23080</pre></li><li class="listitem"><p class="simpara">
@@ -700,11 +701,15 @@ partition-detector’s OTP application source file
 physically different networks and network interfaces.  However, for
 testing and development purposes the same physical network can be used
 for Network A and Network B (as in the sample configuration file
-above).</p></td></tr></table></div><p>As a final configuration step, make sure that on each Hibari node, the
-<code class="literal">/etc/hosts</code> file has entries for all Hibari nodes in the cluster. For
-example:</p><pre class="screen">10.181.165.230  dev1.your-domain.com    dev1
+above).</p></td></tr></table></div><p>As final configuration steps, on <span class="strong"><strong>each Hibari node</strong></span>:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Make sure that the <code class="literal">/etc/hosts</code> file has entries for all Hibari nodes
+in the cluster. For example:
+</p><pre class="screen">10.181.165.230  dev1.your-domain.com    dev1
 10.181.165.231  dev2.your-domain.com    dev2
-10.181.165.232  dev3.your-domain.com    dev3</pre></div><div class="section" title="Installing Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_installing_hibari"></a>Installing Hibari</h4></div></div></div><p>From your installer node, logged in as the installer user, take these
+10.181.165.232  dev3.your-domain.com    dev3</pre></li><li class="listitem">
+In the system’s <code class="literal">/etc/sysctl.conf</code> file, set <code class="literal">vm.swappiness=0</code>. Swappiness
+is not desirable for an Erlang VM.
+</li></ul></div></div><div class="section" title="Installing Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_installing_hibari"></a>Installing Hibari</h4></div></div></div><p>From your installer node, logged in as the installer user, take these
 steps to create your Hibari cluster:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 In the working directory in which you
   <a class="ulink" href="#download-cluster" target="_top">downloaded the Cluster tool</a> and
@@ -751,8 +756,7 @@ If this is the first time you’ve started Hibari, bootstrap the
 hibari@dev1 =&gt; hibari@dev1 hibari@dev2 hibari@dev3</pre><p class="simpara">The Hibari bootstrap process starts Hibari’s Admin Server on the first
 <a class="ulink" href="#eligible-admin-nodes" target="_top">eligible admin node</a> and creates a single
 table "tab1" serving as Hibari’s default table. For information about
-creating additional tables, see the Hibari System Administrator’s
-Guide.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>If bootstrapping fails due to "another_admin_server_running"
+creating additional tables, see <a class="ulink" href="#creating-tables" target="_top">Creating New Tables</a>.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>If bootstrapping fails due to "another_admin_server_running"
 error, please stop the other Hibari cluster(s) running on the network;
 or reconfigure the Cluster tool to assign
 <a class="ulink" href="#eligible-admin-nodes" target="_top">Hibari heartbeat listener ports</a> that are
@@ -1703,8 +1707,7 @@ execution.</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Flags</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-List of operational flags to apply to the ‘get’ operation, and/or
-  custom property flags.
+List of operational flags to apply to the ‘get’ operation.
 </li><li class="listitem">
 Optional; defaults to empty list.
 </li><li class="listitem"><p class="simpara">
@@ -1712,14 +1715,12 @@ Type:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">Flags = flags_list()</code>
 </li><li class="listitem">
-<code class="literal">flags_list() = [do_op_flag() | property()]</code>
+<code class="literal">flags_list() = [do_op_flag()]</code>
 </li><li class="listitem">
 <code class="literal">do_op_flag() = 'get_all_attribs' | 'witness' | {'testset',
     timestamp()} | 'must_exist' | 'must_not_exist'</code>
 </li><li class="listitem">
 <code class="literal">timestamp() = integer()</code>
-</li><li class="listitem">
-<code class="literal">property() = atom() | {term(), term()}</code>
 </li></ul></div></li><li class="listitem"><p class="simpara">
 Operational flag usage
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
@@ -1740,6 +1741,8 @@ Fail the operation if the key’s timestamp is not exactly equal
        to <code class="literal">timestamp()</code>. If used inside a
        <a class="ulink" href="#brick-simple-do" target="_top">micro-transaction</a>, abort the transaction
        if the key’s timestamp is not exactly equal to <code class="literal">timestamp()</code>.
+       This flag has priority over the <code class="literal">'must_exist'</code> and
+       <code class="literal">'must_not_exist'</code> flags.
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">'must_exist'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
@@ -1749,7 +1752,9 @@ For use inside a <a class="ulink" href="#brick-simple-do" target="_top">micro-tr
 <code class="literal">'must_not_exist'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
 For use inside a <a class="ulink" href="#brick-simple-do" target="_top">micro-transaction</a>:
-       abort the transaction if the key exists.
+       abort the transaction if the key exists. This flag may be useful
+       when the relationship between two or more keys is important to
+       the client application.
 </li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
@@ -1869,14 +1874,13 @@ key_not_exist</pre></dd></dl></div></div><div class="section" title="3.6.&#xA0;b
 </dd></dl></div><p>DESCRIPTION</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
-Get many <code class="literal">Key</code> and <code class="literal">Value</code> pairs from a single chain in the table
-<code class="literal">Tab</code>, up to a maximum of <code class="literal">MaxNum</code>. Keys are returned in lexicographic
-sorting order. The key <code class="literal">Key</code> is the starting point: if there is a key
-<code class="literal">KeyNext</code> that follows <code class="literal">Key</code> (in lexicographic order), and if the
-<code class="literal">boolean()</code> value in the return is <code class="literal">true</code>, then <code class="literal">KeyNext</code> will be the
-first key’s info in the <code class="literal">get_many_res_list()</code>.
-</p><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The <code class="literal">get_many()</code> function call cannot be used to find all
-keys in all chains in a Hibari table. The consistent hash of <code class="literal">Key</code>
+Get many keys from a single chain in the table <code class="literal">Tab</code>, up to a maximum
+of <code class="literal">MaxNum</code> keys. Keys are returned in lexicographic sorting order
+starting with the first key <span class="emphasis"><em>after</em></span> the key specified by the <code class="literal">Key</code>
+argument. The return list includes a boolean value indicating whether
+or not there are more keys after the last key of the return results.
+</p><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>A single <code class="literal">get_many()</code> function call cannot be used to retrieve
+keys from across multiple storage chains. The consistent hash of <code class="literal">Key</code>
 will send the <code class="literal">get_many</code> operation to the tail brick in a single
 chain; all keys returned will come from that single brick only.</p></td></tr></table></div><p class="simpara">PARAMETERS</p></dd><dt><span class="term">
  
@@ -1897,8 +1901,8 @@ Type:
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Key</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-Key at which to start the <code class="literal">get_many</code> retrieval, proceeding in
-  lexicographic order.
+Key after which to start the <code class="literal">get_many</code> retrieval, proceeding in
+  lexicographic order with the first key after the specified <code class="literal">Key</code>.
 </li><li class="listitem">
 Mandatory.
 </li><li class="listitem"><p class="simpara">
@@ -1930,8 +1934,7 @@ Type:
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Flags</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-List of operational flags to apply to the ‘get_many’ operation,
-  and/or custom property flags.
+List of operational flags to apply to the ‘get_many’ operation.
 </li><li class="listitem">
 Optional; defaults to empty list.
 </li><li class="listitem"><p class="simpara">
@@ -1939,12 +1942,10 @@ Type:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">Flags = flags_list()</code>
 </li><li class="listitem">
-<code class="literal">flags_list() = [do_op_flag() | property()]</code>
+<code class="literal">flags_list() = [do_op_flag()]</code>
 </li><li class="listitem">
 <code class="literal">do_op_flag() = 'get_all_attribs' | 'witness' | {'binary_prefix',
-    binary()} | {'max_bytes', integer()}</code>
-</li><li class="listitem">
-<code class="literal">property() = atom() | {term(), term()}</code>
+    binary()} | {'max_bytes', integer()}</code> | <code class="literal">{'max_num', integer()}</code>
 </li></ul></div></li><li class="listitem"><p class="simpara">
 Operational flag usage
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
@@ -1968,6 +1969,13 @@ Return only keys that have a binary prefix that is exactly
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
 Return only as many keys as the sum of the sizes of their
        corresponding value blobs does not exceed <code class="literal">integer()</code> bytes.
+       If this flag is not explicity specified in a client request,
+       the value defaults to 2GB.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+<code class="literal">{'max_num', integer()}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+Maxinum number of keys to return. Defaults to 10. Note: This
+       flag is duplicative of the MaxNum argument in purpose.
 </li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
@@ -2021,9 +2029,12 @@ Success return when the <code class="literal">get_many</code> uses <code class="
     not <code class="literal">'witness'</code>.
 </li><li class="listitem"><p class="simpara">
 <code class="literal">exp_time() = time_t()</code>
-</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>When a <code class="literal">proplist()</code> is returned, one of the properties in the
-list will always be <code class="literal">{val_len,Size::integer()}</code>, where <code class="literal">Size</code> is the
-size of the value blob in bytes.</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The boolean at the end of the success return indicates whether
+or not the chain has more keys lexicographically after the
+last key in the return (<code class="literal">true</code> for yes, <code class="literal">false</code> for no). When a <code class="literal">proplist()</code>
+is returned, one of the properties in the list will always be
+<code class="literal">{val_len,Size::integer()}</code>, where <code class="literal">Size</code> is the size of the value blob
+in bytes.</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 Error returns
@@ -2133,8 +2144,7 @@ execution.</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Flags</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-List of operational flags to apply to the ‘delete’ operation, and/or
-  custom property flags.
+List of operational flags to apply to the ‘delete’ operation.
 </li><li class="listitem">
 Optional; defaults to empty list.
 </li><li class="listitem"><p class="simpara">
@@ -2142,13 +2152,11 @@ Type:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">Flags = flags_list()</code>
 </li><li class="listitem">
-<code class="literal">flags_list() = [do_op_flag() | property()]</code>
+<code class="literal">flags_list() = [do_op_flag()]</code>
 </li><li class="listitem">
 <code class="literal">do_op_flag() = {'testset', timestamp()} |'must_exist' | 'must_not_exist'</code>
 </li><li class="listitem">
 <code class="literal">timestamp() = integer()</code>
-</li><li class="listitem">
-<code class="literal">property() = atom() | {term(), term()}</code>
 </li></ul></div></li><li class="listitem"><p class="simpara">
 Operational flag usage
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
@@ -2158,9 +2166,8 @@ Fail the operation if the existing key’s timestamp is not
        exactly equal to <code class="literal">timestamp()</code>.  If used inside a
        <a class="ulink" href="#brick-simple-do" target="_top">micro-transaction</a>, abort the transaction
        if the key’s timestamp is not exactly equal to
-       <code class="literal">timestamp()</code>. Using this flag with <code class="literal">set</code> will result in an
-       error if the key does not already exist or if the key exists
-       but has a non-matching timestamp.
+       <code class="literal">timestamp()</code>. This flag has priority over the <code class="literal">'must_exist'</code> and
+       <code class="literal">'must_not_exist'</code> flags
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">'must_exist'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
@@ -2170,7 +2177,9 @@ For use inside a <a class="ulink" href="#brick-simple-do" target="_top">micro-tr
 <code class="literal">'must_not_exist'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
 For use inside a <a class="ulink" href="#brick-simple-do" target="_top">micro-transaction</a>:
-       abort the transaction if the key exists.
+       abort the transaction if the key exists. This flag may be useful
+       when the relationship between two or more keys is important to
+       the client application.
 </li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
@@ -2383,11 +2392,18 @@ Operational flag usage
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
 <code class="literal">'fail_if_wrong_role'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-<span class="emphasis"><em>description to be added</em></span>
+If the <span class="emphasis"><em>do</em></span> operation is sent to the wrong brick in the target
+       chain (e.g. a <span class="emphasis"><em>read</em></span> request mistakenly sent to the <span class="emphasis"><em>head</em></span> brick or
+       a <span class="emphasis"><em>write</em></span> request mistakenly sent to the <span class="emphasis"><em>tail</em></span> brick), fail the
+       transaction immediately. If this flag is not used, the default
+       behavior is for the incorrect brick to forward the request to the
+       correct brick.
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">'ignore_role'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-<span class="emphasis"><em>description to be added</em></span>
+If this flag is used, then whichever brick receives the request
+       will reply to the request directly, regardless of the brick’s assigned
+       role.
 </li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
@@ -2518,14 +2534,15 @@ entire operation to fail.
 &gt; Do2b = brick_server:make_get("foo2", [must_exist]).
 {get,&lt;&lt;"foo2"&gt;&gt;,[must_exist]}
 &gt; brick_simple:do(tab1, [brick_server:make_txn(), Do1b, Do2b]).
-{txn_fail,[{2,key_not_exist}]}</pre></dd></dl></div></div><div class="section" title="3.9.&#xA0;brick_simple:fold_table/7"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-table"></a>3.9. brick_simple:fold_table/7</h3></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+{txn_fail,[{2,key_not_exist}]}</pre></dd></dl></div></div><div class="section" title="3.9.&#xA0;brick_simple:fold_table/7"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-table"></a>3.9. brick_simple:fold_table/7</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags, MaxParallel, Timeout).</strong></span>
 </dd></dl></div><p>DESCRIPTION</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
-Attempt a fold operation across all keys in a table.
+Attempt a fold operation across all keys in a table. For general information
+about the Erlang fold function that underlies this operations, see <a class="ulink" href="http://www.erlang.org/doc/man/lists.html#foldl-3" target="_top">http://www.erlang.org/doc/man/lists.html#foldl-3</a>.
 </dd></dl></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Do not execute this operation while a data migration is
 being performed.</p></td></tr></table></div><p>PARAMETERS</p><div class="variablelist"><dl><dt><span class="term">
  
@@ -2546,7 +2563,7 @@ Type:
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Fun</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<span class="emphasis"><em>description to be added</em></span>.
+Function to apply to successive elements of the list.
 </li><li class="listitem">
 Mandatory.
 </li><li class="listitem"><p class="simpara">
@@ -2565,9 +2582,11 @@ Type:
          example, if <code class="literal">Flags</code> = <code class="literal">[]</code>, then <code class="literal">Tuple_From_get_many</code> will
          match <code class="literal">{Key, TS, Value}</code>. If <code class="literal">Flags</code> = <code class="literal">[witness]</code>, then
          <code class="literal">Tuple_From_get_many</code> will match <code class="literal">{Key, TS}</code>.
-</li></ul></div></li><li class="listitem">
+</li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">UserAccumulatorTerm</code>
-</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>description to be added</em></span>.
+</li></ul></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Acc</strong></span>
@@ -2666,9 +2685,29 @@ Type:
 <code class="literal">Timeout = timeout()</code>
 </li><li class="listitem">
 `timeout() = integer()
-</li></ul></div></li></ul></div></dd></dl></div><p>RETURNS</p><p><span class="emphasis"><em>more info to be added</em></span></p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<code class="literal">term() | {term(), integer(), integer(), integer()}</code>
-</li></ul></div><p>ALIASES</p><div class="variablelist"><dl><dt><span class="term">
+</li></ul></div></li></ul></div></dd></dl></div><p>RETURNS</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+Success return
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+<code class="literal">{ok, Acc, Iterations}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">Acc = term()</code>
+</li><li class="listitem">
+<code class="literal">Iterations = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p class="simpara">
+Error return
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+<code class="literal">{error, GdssError, Acc, Iterations}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<code class="literal">GdssError = term()</code>
+</li><li class="listitem">
+<code class="literal">Acc = term()</code>
+</li><li class="listitem">
+<code class="literal">Iterations = integer()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>ALIASES</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 brick_simple:fold_table/5
@@ -2679,7 +2718,7 @@ brick_simple:fold_table/6
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags,
     MaxParallel).</code>
-</li></ul></div></li></ul></div></dd></dl></div><p>EXAMPLES</p><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.10.&#xA0;brick_simple:fold_key_prefix/9"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-key"></a>3.10. brick_simple:fold_key_prefix/9</h3></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+</li></ul></div></li></ul></div></dd></dl></div><p>EXAMPLES</p><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.10.&#xA0;brick_simple:fold_key_prefix/9"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-key"></a>3.10. brick_simple:fold_key_prefix/9</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:fold_key_prefix(Tab, Prefix, StartKey, Fun, Acc, Flags0,
@@ -2690,7 +2729,9 @@ brick_simple:fold_table/6
 For a binary key prefix <code class="literal">Prefix</code>, fold over all keys in table <code class="literal">Tab</code>
 starting with <code class="literal">StartKey</code>, sleeping for <code class="literal">SleepTime</code> milliseconds
 between iterations and using <code class="literal">Flags</code> and <code class="literal">NumItems</code> as arguments to
-<a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a>.
+<a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a>. For general
+information about the Erlang fold function that underlies this operations,
+see <a class="ulink" href="http://www.erlang.org/doc/man/lists.html#foldl-3" target="_top">http://www.erlang.org/doc/man/lists.html#foldl-3</a>.
 </dd></dl></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Do not execute this operation while a data migration is
 being performed.</p></td></tr></table></div><p>PARAMETERS</p><div class="variablelist"><dl><dt><span class="term">
  
@@ -2735,7 +2776,7 @@ Type:
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Fun</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<span class="emphasis"><em>description to be added</em></span>.
+Function to apply to successive elements of the list.
 </li><li class="listitem">
 Mandatory.
 </li><li class="listitem"><p class="simpara">
@@ -2754,9 +2795,11 @@ Type:
          example, if <code class="literal">Flags0</code> = <code class="literal">[]</code>, then <code class="literal">Tuple_From_get_many</code> will
          match <code class="literal">{Key, TS, Value}</code>. If <code class="literal">Flags0</code> = <code class="literal">[witness]</code>, then
          <code class="literal">Tuple_From_get_many</code> will match <code class="literal">{Key, TS}</code>.
-</li></ul></div></li><li class="listitem">
+</li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">UserAccumulatorTerm</code>
-</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="emphasis"><em>description to be added</em></span>
+</li></ul></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Acc</strong></span>
@@ -2841,7 +2884,7 @@ Type:
 <code class="literal">Timeout = timeout()</code>
 </li><li class="listitem">
 `timeout() = integer()
-</li></ul></div></li></ul></div></dd></dl></div><p>RETURNS</p><p><span class="emphasis"><em>more info to be added</em></span></p><div class="variablelist"><dl><dt><span class="term">
+</li></ul></div></li></ul></div></dd></dl></div><p>RETURNS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 Success return
