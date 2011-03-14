@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-= Hibari Application Developer's Guide *DRAFT - IN PROGRESS*
+= Hibari Application Developer's Guide
 :Date: 2011/03/14
 :Revision: 0.2.1
 :Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
@@ -655,7 +655,7 @@ $ running-directory/hibari/bin/hibari-admin bootstrap
 
 The Hibari bootstrap process starts Hibari's Admin Server on the
 single node and creates a single table "tab1" serving as Hibari's
-default table. For information on creating additional tables, see 
+default table. For information on creating additional tables, see
 link:#creating-tables[Creating New Tables].
 
 ==== Verifying Hibari
@@ -914,7 +914,7 @@ above).
 
 As final configuration steps, on *each Hibari node*:
 
-- Make sure that the +/etc/hosts+ file has entries for all Hibari nodes 
+- Make sure that the +/etc/hosts+ file has entries for all Hibari nodes
 in the cluster. For example:
 +
 ------
@@ -923,7 +923,7 @@ in the cluster. For example:
 10.181.165.232  dev3.your-domain.com    dev3
 ------
 +
-- In the system's +/etc/sysctl.conf+ file, set +vm.swappiness=0+. Swappiness 
+- In the system's +/etc/sysctl.conf+ file, set +vm.swappiness=0+. Swappiness
 is not desirable for an Erlang VM.
 
 ==== Installing Hibari
@@ -1930,7 +1930,7 @@ execution.
        to `timestamp()`. If used inside a
        link:#brick-simple-do[micro-transaction], abort the transaction
        if the key's timestamp is not exactly equal to `timestamp()`.
-       This flag has priority over the `'must_exist'` and 
+       This flag has priority over the `'must_exist'` and
        `'must_not_exist'` flags.
   * `'must_exist'`
     ** For use inside a link:#brick-simple-do[micro-transaction]:
@@ -2048,9 +2048,9 @@ SYNOPSIS
 DESCRIPTION
 
  ::
-Get many keys from a single chain in the table `Tab`, up to a maximum 
-of `MaxNum` keys. Keys are returned in lexicographic sorting order 
-starting with the first key _after_ the key specified by the `Key` 
+Get many keys from a single chain in the table `Tab`, up to a maximum
+of `MaxNum` keys. Keys are returned in lexicographic sorting order
+starting with the first key _after_ the key specified by the `Key`
 argument. The return list includes a boolean value indicating whether
 or not there are more keys after the last key of the return results.
 +
@@ -2120,7 +2120,7 @@ execution.
     ** Return only as many keys as the sum of the sizes of their
        corresponding value blobs does not exceed `integer()` bytes.
        If this flag is not explicity specified in a client request,
-       the value defaults to 2GB. 
+       the value defaults to 2GB.
   * `{'max_num', integer()}`
     ** Maxinum number of keys to return. Defaults to 10. Note: This
        flag is duplicative of the MaxNum argument in purpose.
@@ -2160,11 +2160,11 @@ Success returns
     not `'witness'`.
   * `exp_time() = time_t()`
 +
-NOTE: The boolean at the end of the success return indicates whether 
-or not the chain has more keys lexicographically after the 
-last key in the return (`true` for yes, `false` for no). When a `proplist()` 
-is returned, one of the properties in the list will always be 
-`{val_len,Size::integer()}`, where `Size` is the size of the value blob 
+NOTE: The boolean at the end of the success return indicates whether
+or not the chain has more keys lexicographically after the
+last key in the return (`true` for yes, `false` for no). When a `proplist()`
+is returned, one of the properties in the list will always be
+`{val_len,Size::integer()}`, where `Size` is the size of the value blob
 in bytes.
 +
 
@@ -2288,7 +2288,7 @@ execution.
        exactly equal to `timestamp()`.  If used inside a
        link:#brick-simple-do[micro-transaction], abort the transaction
        if the key's timestamp is not exactly equal to
-       `timestamp()`. This flag has priority over the `'must_exist'` and 
+       `timestamp()`. This flag has priority over the `'must_exist'` and
        `'must_not_exist'` flags
   * `'must_exist'`
     ** For use inside a link:#brick-simple-do[micro-transaction]:
@@ -2487,11 +2487,11 @@ PARAMETERS
     ** If the 'do' operation is sent to the wrong brick in the target
        chain (e.g. a 'read' request mistakenly sent to the 'head' brick or
        a 'write' request mistakenly sent to the 'tail' brick), fail the
-       transaction immediately. If this flag is not used, the default 
+       transaction immediately. If this flag is not used, the default
        behavior is for the incorrect brick to forward the request to the
        correct brick.
   * `'ignore_role'`
-    ** If this flag is used, then whichever brick receives the request 
+    ** If this flag is used, then whichever brick receives the request
        will reply to the request directly, regardless of the brick's assigned
        role.
 
@@ -2771,8 +2771,8 @@ DESCRIPTION
 For a binary key prefix `Prefix`, fold over all keys in table `Tab`
 starting with `StartKey`, sleeping for `SleepTime` milliseconds
 between iterations and using `Flags` and `NumItems` as arguments to
-link:#brick-simple-get-many[brick_simple:get_many()]. For general 
-information about the Erlang fold function that underlies this operations, 
+link:#brick-simple-get-many[brick_simple:get_many()]. For general
+information about the Erlang fold function that underlies this operations,
 see http://www.erlang.org/doc/man/lists.html#foldl-3.
 
 IMPORTANT: Do not execute this operation while a data migration is
@@ -3975,7 +3975,6 @@ _Under Construction_
 == Contributing to Hibari
 
 === GitHub, Git, and Repo
-
 _to be added_
 
 List the working directories for all of Hibari's "projects":
@@ -4009,14 +4008,11 @@ $ repo forall -c "git checkout dev"
 ------
 
 === Code, Branch, and Version Management
-
 _to be added_
 
 === Documentation
-
 _to be added_
 
 === Submitting Patches
-
 _to be added_
 
