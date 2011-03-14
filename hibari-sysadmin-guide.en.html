@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari System Administrator’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" href="docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="article" title="Hibari System Administrator&#x2019;s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36104938"></a>Hibari System Administrator’s Guide  <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 0.5.1</td><td align="left">2011/01/07</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_the_problem">1.1. The Problem</a></span></dt><dt><span class="section"><a href="#_key_value_store">1.2. Key-Value Store</a></span></dt><dt><span class="section"><a href="#hibari-origins">1.3. Hibari’s Origins</a></span></dt><dt><span class="section"><a href="#_summary_of_hibari_8217_s_main_features">1.4. Summary of Hibari’s Main Features</a></span></dt><dt><span class="section"><a href="#acid-base-hibari">1.5. The "ACID vs. BASE" Spectrum and Hibari</a></span></dt><dt><span class="section"><a href="#cap-theorem-and-hibari">1.6. The CAP Theorem and Hibari</a></span></dt><dt><span class="section"><a href="#_copyright_notices">1.7. Copyright Notices</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_8217_s_main_features_in_broad_detail">2. Hibari’s Main Features in Broad Detail</a></span></dt><dd><dl><dt><span class="section"><a href="#_distributed_system">2.1. Distributed system</a></span></dt><dt><span class="section"><a href="#_scalable_system">2.2. Scalable system</a></span></dt><dt><span class="section"><a href="#_durable_updates">2.3. Durable updates</a></span></dt><dt><span class="section"><a href="#_consistent_updates">2.4. Consistent updates</a></span></dt><dt><span class="section"><a href="#lockless-client-api">2.5. Lockless client API</a></span></dt><dt><span class="section"><a href="#_high_availability">2.6. High availability</a></span></dt><dt><span class="section"><a href="#_multiple_client_protocols">2.7. Multiple Client Protocols</a></span></dt><dt><span class="section"><a href="#overview-high-performance">2.8. High performance</a></span></dt><dt><span class="section"><a href="#_automatic_repair">2.9. Automatic repair</a></span></dt><dt><span class="section"><a href="#_dynamic_configuration">2.10. Dynamic configuration</a></span></dt><dt><span class="section"><a href="#_data_rebalancing">2.11. Data rebalancing</a></span></dt><dt><span class="section"><a href="#_heterogeneous_hardware_support">2.12. Heterogeneous hardware support</a></span></dt><dt><span class="section"><a href="#_micro_transactions">2.13. Micro-Transactions</a></span></dt><dt><span class="section"><a href="#per-table-config-perf-options">2.14. Per-table configurable performance options</a></span></dt></dl></dd><dt><span class="section"><a href="#_getting_started_with_hibari_incomplete">3. Getting Started with Hibari (INCOMPLETE)</a></span></dt><dd><dl><dt><span class="section"><a href="#_starting_hibari_for_the_first_time_incomplete">3.1. Starting Hibari for the first time (INCOMPLETE)</a></span></dt><dt><span class="section"><a href="#_an_introductory_example_incomplete">3.2. An Introductory Example (INCOMPLETE)</a></span></dt></dl></dd><dt><span class="section"><a href="#_building_a_hibari_database">4. Building A Hibari Database</a></span></dt><dd><dl><dt><span class="section"><a href="#_defining_a_schema">4.1. Defining a Schema</a></span></dt><dt><span class="section"><a href="#hibari-data-model">4.2. The Hibari Data Model</a></span></dt><dt><span class="section"><a href="#_hibari_8217_s_client_operations">4.3. Hibari’s Client Operations</a></span></dt><dt><span class="section"><a href="#_indexes">4.4. Indexes</a></span></dt><dt><span class="section"><a href="#creating-new-tables">4.5. Creating New Tables</a></span></dt></dl></dd><dt><span class="section"><a href="#hibari-architecture">5. Hibari Architecture</a></span></dt><dd><dl><dt><span class="section"><a href="#_bricks_physical_and_logical">5.1. Bricks, Physical and Logical</a></span></dt><dt><span class="section"><a href="#write-ahead-logs">5.2. Write-Ahead Logs</a></span></dt><dt><span class="section"><a href="#chains">5.3. Chains</a></span></dt><dt><span class="section"><a href="#_tables">5.4. Tables</a></span></dt><dt><span class="section"><a href="#micro-transactions">5.5. Micro-Transactions</a></span></dt><dt><span class="section"><a href="#_distribution_workload_partitioning_and_fault_tolerance">5.6. Distribution: Workload Partitioning and Fault Tolerance</a></span></dt></dl></dd><dt><span class="section"><a href="#admin-server-app">6. The Admin Server Application</a></span></dt><dd><dl><dt><span class="section"><a href="#_admin_server_active_standby_implementation">6.1. Admin Server Active/Standby Implementation</a></span></dt><dt><span class="section"><a href="#bootstrap-bricks">6.2. Admin Server’s Private State: the Bootstrap Bricks</a></span></dt><dt><span class="section"><a href="#_admin_server_crash_and_restart">6.3. Admin Server Crash and Restart</a></span></dt><dt><span class="section"><a href="#admin-server-and-network-partition">6.4. Admin Server and Network Partition</a></span></dt><dt><span class="section"><a href="#_admin_server_network_partition_and_client_access">6.5. Admin Server, Network Partition, and Client Access</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_system_information_configuration_files_etc">7. Hibari System Information: Configuration Files, Etc.</a></span></dt><dd><dl><dt><span class="section"><a href="#_literal_central_conf_literal_file_syntax_and_usage">7.1. <code class="literal">central.conf</code> File Syntax and Usage</a></span></dt><dt><span class="section"><a href="#central-conf-parameters">7.2. Parameters in the <code class="literal">central.conf</code> File</a></span></dt><dt><span class="section"><a href="#_admin_server_configuration">7.3. Admin Server Configuration</a></span></dt><dt><span class="section"><a href="#_configuration_not_stored_in_editable_config_files">7.4. Configuration Not Stored in Editable Config Files</a></span></dt></dl></dd><dt><span class="section"><a href="#life-of-brick">8. The Life of a (Logical) Brick</a></span></dt><dd><dl><dt><span class="section"><a href="#brick-lifecycle-fsm">8.1. Brick Lifecycle Finite State Machine</a></span></dt><dt><span class="section"><a href="#chain-lifecycle-fsm">8.2. Chain Lifecycle Finite State Machine</a></span></dt><dt><span class="section"><a href="#brick-roles">8.3. Brick “Roles” Within A Chain</a></span></dt><dt><span class="section"><a href="#brick-init">8.4. Brick Initialization</a></span></dt><dt><span class="section"><a href="#chain-repair">8.5. Chain Repair</a></span></dt><dt><span class="section"><a href="#checkpoints">8.6. Brick Checkpoint Operations</a></span></dt><dt><span class="section"><a href="#scavenger">8.7. The Scavenger</a></span></dt></dl></dd><dt><span class="section"><a href="#dynamic-cluster-reconfiguration">9. Dynamic Cluster Reconfiguration</a></span></dt><dd><dl><dt><span class="section"><a href="#add-table">9.1. Adding a Table</a></span></dt><dt><span class="section"><a href="#remove-table">9.2. Removing a Table</a></span></dt><dt><span class="section"><a href="#chain-length-change">9.3. Changing Chain Length (Changing Replication Factor)</a></span></dt><dt><span class="section"><a href="#chain-migration">9.4. Chain Migration: Rebalancing Data Across Chains</a></span></dt><dt><span class="section"><a href="#adding-removing-client-nodes">9.5. Adding/Removing Client Nodes</a></span></dt></dl></dd><dt><span class="section"><a href="#partition-detector">10. The Partition Detector Application</a></span></dt><dd><dl><dt><span class="section"><a href="#_partition_detector_heartbeats">10.1. Partition Detector Heartbeats</a></span></dt><dt><span class="section"><a href="#_partition_detector_8217_s_tiebreaker">10.2. Partition Detector’s Tiebreaker</a></span></dt></dl></dd><dt><span class="section"><a href="#_backup_and_disaster_recovery">11. Backup and Disaster Recovery</a></span></dt><dd><dl><dt><span class="section"><a href="#_backup_and_recovery_software">11.1. Backup and Recovery Software</a></span></dt><dt><span class="section"><a href="#_disaster_recovery_via_remote_data_centers">11.2. Disaster Recovery via Remote Data Centers</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_application_logging">12. Hibari Application Logging</a></span></dt><dd><dl><dt><span class="section"><a href="#_format_of_the_hibari_application_log">12.1. Format of the Hibari Application Log</a></span></dt><dt><span class="section"><a href="#_application_log_example">12.2. Application Log Example</a></span></dt></dl></dd><dt><span class="section"><a href="#_hardware_and_software_considerations">13. Hardware and Software Considerations</a></span></dt><dd><dl><dt><span class="section"><a href="#brick-hardware">13.1. Notes on Brick Hardware</a></span></dt><dt><span class="section"><a href="#_notes_on_networking">13.2. Notes on Networking</a></span></dt><dt><span class="section"><a href="#_notes_on_operating_system">13.3. Notes on Operating System</a></span></dt><dt><span class="section"><a href="#_notes_on_supporting_software">13.4. Notes on Supporting Software</a></span></dt><dt><span class="section"><a href="#_notes_on_hibari_configuration">13.5. Notes on Hibari Configuration</a></span></dt><dt><span class="section"><a href="#_notes_on_monitoring_a_hibari_cluster">13.6. Notes on Monitoring a Hibari Cluster</a></span></dt></dl></dd></dl></div><p></p><div class="section" title="1.&#xA0;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This document is under re-construction - beware!</p></td></tr></table></div><div class="section" title="1.1.&#xA0;The Problem"><div class="titlepage"><div><div><h3 class="title"><a id="_the_problem"></a>1.1. The Problem</h3></div></div></div><p>There exists a dichotomy in modern storage products. Commodity storage
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari System Administrator’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" href="docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.75.2" /></head><body><div xml:lang="en" class="article" title="Hibari System Administrator&#x2019;s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36104938"></a>Hibari System Administrator’s Guide  <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>Revision History</b></th></tr><tr><td align="left">Revision 0.5.1</td><td align="left">2011/01/07</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>Table of Contents</b></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_the_problem">1.1. The Problem</a></span></dt><dt><span class="section"><a href="#_key_value_store">1.2. Key-Value Store</a></span></dt><dt><span class="section"><a href="#hibari-origins">1.3. Hibari’s Origins</a></span></dt><dt><span class="section"><a href="#_summary_of_hibari_8217_s_main_features">1.4. Summary of Hibari’s Main Features</a></span></dt><dt><span class="section"><a href="#acid-base-hibari">1.5. The "ACID vs. BASE" Spectrum and Hibari</a></span></dt><dt><span class="section"><a href="#cap-theorem-and-hibari">1.6. The CAP Theorem and Hibari</a></span></dt><dt><span class="section"><a href="#_copyright_notices">1.7. Copyright Notices</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_8217_s_main_features_in_broad_detail">2. Hibari’s Main Features in Broad Detail</a></span></dt><dd><dl><dt><span class="section"><a href="#_distributed_system">2.1. Distributed system</a></span></dt><dt><span class="section"><a href="#_scalable_system">2.2. Scalable system</a></span></dt><dt><span class="section"><a href="#_durable_updates">2.3. Durable updates</a></span></dt><dt><span class="section"><a href="#_consistent_updates">2.4. Consistent updates</a></span></dt><dt><span class="section"><a href="#lockless-client-api">2.5. Lockless client API</a></span></dt><dt><span class="section"><a href="#_high_availability">2.6. High availability</a></span></dt><dt><span class="section"><a href="#_multiple_client_protocols">2.7. Multiple Client Protocols</a></span></dt><dt><span class="section"><a href="#overview-high-performance">2.8. High performance</a></span></dt><dt><span class="section"><a href="#_automatic_repair">2.9. Automatic repair</a></span></dt><dt><span class="section"><a href="#_dynamic_configuration">2.10. Dynamic configuration</a></span></dt><dt><span class="section"><a href="#_data_rebalancing">2.11. Data rebalancing</a></span></dt><dt><span class="section"><a href="#_heterogeneous_hardware_support">2.12. Heterogeneous hardware support</a></span></dt><dt><span class="section"><a href="#_micro_transactions">2.13. Micro-Transactions</a></span></dt><dt><span class="section"><a href="#per-table-config-perf-options">2.14. Per-table configurable performance options</a></span></dt></dl></dd><dt><span class="section"><a href="#_getting_started_with_hibari_incomplete">3. Getting Started with Hibari (INCOMPLETE)</a></span></dt><dd><dl><dt><span class="section"><a href="#_starting_hibari_for_the_first_time_incomplete">3.1. Starting Hibari for the first time (INCOMPLETE)</a></span></dt><dt><span class="section"><a href="#_an_introductory_example_incomplete">3.2. An Introductory Example (INCOMPLETE)</a></span></dt></dl></dd><dt><span class="section"><a href="#_building_a_hibari_database">4. Building A Hibari Database</a></span></dt><dd><dl><dt><span class="section"><a href="#_defining_a_schema">4.1. Defining a Schema</a></span></dt><dt><span class="section"><a href="#hibari-data-model">4.2. The Hibari Data Model</a></span></dt><dt><span class="section"><a href="#_hibari_8217_s_client_operations">4.3. Hibari’s Client Operations</a></span></dt><dt><span class="section"><a href="#_indexes">4.4. Indexes</a></span></dt><dt><span class="section"><a href="#creating-new-tables">4.5. Creating New Tables</a></span></dt></dl></dd><dt><span class="section"><a href="#hibari-architecture">5. Hibari Architecture</a></span></dt><dd><dl><dt><span class="section"><a href="#_bricks_physical_and_logical">5.1. Bricks, Physical and Logical</a></span></dt><dt><span class="section"><a href="#write-ahead-logs">5.2. Write-Ahead Logs</a></span></dt><dt><span class="section"><a href="#chains">5.3. Chains</a></span></dt><dt><span class="section"><a href="#_tables">5.4. Tables</a></span></dt><dt><span class="section"><a href="#micro-transactions">5.5. Micro-Transactions</a></span></dt><dt><span class="section"><a href="#_distribution_workload_partitioning_and_fault_tolerance">5.6. Distribution: Workload Partitioning and Fault Tolerance</a></span></dt></dl></dd><dt><span class="section"><a href="#admin-server-app">6. The Admin Server Application</a></span></dt><dd><dl><dt><span class="section"><a href="#_admin_server_active_standby_implementation">6.1. Admin Server Active/Standby Implementation</a></span></dt><dt><span class="section"><a href="#bootstrap-bricks">6.2. Admin Server’s Private State: the Bootstrap Bricks</a></span></dt><dt><span class="section"><a href="#_admin_server_crash_and_restart">6.3. Admin Server Crash and Restart</a></span></dt><dt><span class="section"><a href="#admin-server-and-network-partition">6.4. Admin Server and Network Partition</a></span></dt><dt><span class="section"><a href="#_admin_server_network_partition_and_client_access">6.5. Admin Server, Network Partition, and Client Access</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_system_information_configuration_files_etc">7. Hibari System Information: Configuration Files, Etc.</a></span></dt><dd><dl><dt><span class="section"><a href="#_literal_central_conf_literal_file_syntax_and_usage">7.1. <code class="literal">central.conf</code> File Syntax and Usage</a></span></dt><dt><span class="section"><a href="#central-conf-parameters">7.2. Parameters in the <code class="literal">central.conf</code> File</a></span></dt><dt><span class="section"><a href="#_admin_server_configuration">7.3. Admin Server Configuration</a></span></dt><dt><span class="section"><a href="#_configuration_not_stored_in_editable_config_files">7.4. Configuration Not Stored in Editable Config Files</a></span></dt></dl></dd><dt><span class="section"><a href="#life-of-brick">8. The Life of a (Logical) Brick</a></span></dt><dd><dl><dt><span class="section"><a href="#brick-lifecycle-fsm">8.1. Brick Lifecycle Finite State Machine</a></span></dt><dt><span class="section"><a href="#chain-lifecycle-fsm">8.2. Chain Lifecycle Finite State Machine</a></span></dt><dt><span class="section"><a href="#brick-roles">8.3. Brick “Roles” Within A Chain</a></span></dt><dt><span class="section"><a href="#brick-init">8.4. Brick Initialization</a></span></dt><dt><span class="section"><a href="#chain-repair">8.5. Chain Repair</a></span></dt><dt><span class="section"><a href="#checkpoints">8.6. Brick Checkpoint Operations</a></span></dt><dt><span class="section"><a href="#scavenger">8.7. The Scavenger</a></span></dt></dl></dd><dt><span class="section"><a href="#dynamic-cluster-reconfiguration">9. Dynamic Cluster Reconfiguration</a></span></dt><dd><dl><dt><span class="section"><a href="#add-table">9.1. Adding a Table</a></span></dt><dt><span class="section"><a href="#remove-table">9.2. Removing a Table</a></span></dt><dt><span class="section"><a href="#chain-length-change">9.3. Changing Chain Length (Changing Replication Factor)</a></span></dt><dt><span class="section"><a href="#chain-migration">9.4. Chain Migration: Rebalancing Data Across Chains</a></span></dt><dt><span class="section"><a href="#adding-removing-client-nodes">9.5. Adding/Removing Client Nodes</a></span></dt></dl></dd><dt><span class="section"><a href="#partition-detector">10. The Partition Detector Application</a></span></dt><dd><dl><dt><span class="section"><a href="#_partition_detector_heartbeats">10.1. Partition Detector Heartbeats</a></span></dt><dt><span class="section"><a href="#_partition_detector_8217_s_tiebreaker">10.2. Partition Detector’s Tiebreaker</a></span></dt></dl></dd><dt><span class="section"><a href="#_backup_and_disaster_recovery">11. Backup and Disaster Recovery</a></span></dt><dd><dl><dt><span class="section"><a href="#_backup_and_recovery_software">11.1. Backup and Recovery Software</a></span></dt><dt><span class="section"><a href="#_disaster_recovery_via_remote_data_centers">11.2. Disaster Recovery via Remote Data Centers</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_application_logging">12. Hibari Application Logging</a></span></dt><dd><dl><dt><span class="section"><a href="#_format_of_the_hibari_application_log">12.1. Format of the Hibari Application Log</a></span></dt><dt><span class="section"><a href="#_application_log_example">12.2. Application Log Example</a></span></dt></dl></dd><dt><span class="section"><a href="#_hardware_and_software_considerations">13. Hardware and Software Considerations</a></span></dt><dd><dl><dt><span class="section"><a href="#brick-hardware">13.1. Notes on Brick Hardware</a></span></dt><dt><span class="section"><a href="#_notes_on_networking">13.2. Notes on Networking</a></span></dt><dt><span class="section"><a href="#_notes_on_operating_system">13.3. Notes on Operating System</a></span></dt><dt><span class="section"><a href="#_notes_on_supporting_software">13.4. Notes on Supporting Software</a></span></dt><dt><span class="section"><a href="#_notes_on_hibari_configuration">13.5. Notes on Hibari Configuration</a></span></dt><dt><span class="section"><a href="#_notes_on_monitoring_a_hibari_cluster">13.6. Notes on Monitoring a Hibari Cluster</a></span></dt></dl></dd><dt><span class="section"><a href="#_administering_hibari_through_the_api">14. Administering Hibari Through the API</a></span></dt><dd><dl><dt><span class="section"><a href="#add-a-new-table">14.1. Add a New Table: brick_admin:add_table()</a></span></dt><dt><span class="section"><a href="#delete-a-table">14.2. Delete a Table</a></span></dt><dt><span class="section"><a href="#change-a-chain-add-remove-bricks">14.3. Change a Chain: Add or Remove Bricks</a></span></dt><dt><span class="section"><a href="#change-a-table-add-remove-chains">14.4. Change a Table: Add/Remove Chains</a></span></dt><dt><span class="section"><a href="#change-a-table-chain-chain-weighting">14.5. Change a Table: Change Chain Weighting</a></span></dt><dt><span class="section"><a href="#admin-server-api">14.6. Admin Server API</a></span></dt><dt><span class="section"><a href="#scoreboard-api">14.7. Scoreboard API</a></span></dt><dt><span class="section"><a href="#chain-monitor-api">14.8. Chain Monitor API</a></span></dt><dt><span class="section"><a href="#changing-chain-length">14.9. Changing Chain Length: Examples</a></span></dt><dt><span class="section"><a href="#changing-chains-example">14.10. Creating and Rebalancing Chains: Examples</a></span></dt></dl></dd></dl></div><p></p><div class="section" title="1.&#xA0;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This document is under re-construction - beware!</p></td></tr></table></div><div class="section" title="1.1.&#xA0;The Problem"><div class="titlepage"><div><div><h3 class="title"><a id="_the_problem"></a>1.1. The Problem</h3></div></div></div><p>There exists a dichotomy in modern storage products. Commodity storage
 is inexpensive, but unreliable. Enterprise storage is expensive, but
 reliable. Large capacities are present in both enterprise and
 commodity class. The problem, then, becomes how to leverage
@@ -1680,6 +1680,554 @@ progress), see <a class="ulink" href="./misc-screenshots/admin-server-status/ind
 <a class="xref" href="#chain-lifecycle-fsm" title="8.2.&#xA0;Chain Lifecycle Finite State Machine">Section 8.2, “Chain Lifecycle Finite State Machine”</a>
 </li><li class="listitem">
 <a class="xref" href="#brick-lifecycle-fsm" title="8.1.&#xA0;Brick Lifecycle Finite State Machine">Section 8.1, “Brick Lifecycle Finite State Machine”</a>
-</li></ul></div></div></div></div><div class="footnotes"><br /><hr width="100" align="left" /><div class="footnote"><p><sup>[<a id="ftn.id36105282" href="#id36105282" class="simpara">1</a>] </sup>The crucial detail is that such systems may not be "CA"
+</li></ul></div></div></div></div><div class="section" title="14.&#xA0;Administering Hibari Through the API"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_administering_hibari_through_the_api"></a>14. Administering Hibari Through the API</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Add a new table
+</li><li class="listitem">
+Delete a table
+</li><li class="listitem"><p class="simpara">
+Change to a single chain:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Add one or more bricks (increase replication factor)
+</li><li class="listitem">
+Remove one or more bricks (decrease replication factor)
+</li></ul></div></li><li class="listitem"><p class="simpara">
+Change to a single table.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Add a new chain
+</li><li class="listitem">
+Remove a chain
+</li><li class="listitem">
+Change the chain weighting factor
+</li><li class="listitem">
+Change consistent hashing parameters
+</li></ul></div></li></ul></div><div class="section" title="14.1.&#xA0;Add a New Table: brick_admin:add_table()"><div class="titlepage"><div><div><h3 class="title"><a id="add-a-new-table"></a>14.1. Add a New Table: brick_admin:add_table()</h3></div></div></div><div class="section" title="Why use hash prefixes?"><div class="titlepage"><div><div><h4 class="title"><a id="why-use-hash-prefixes"></a>Why use hash prefixes?</h4></div></div></div><p>Hash prefixes allow Hibari servers to guarantee the application
+developer that certain keys will always be stored on the same chain
+and therefore always on the same set of bricks.  With this guarantee,
+an application aware of hash prefixes can use micro-transactions
+successfully.</p><p>For example, assume the application requires a collection of
+persistent stacks that are stored in Hibari.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Each stack is identified by a string/binary.  (The two types are
+  identical for the sake of discussion.)
+</li><li class="listitem">
+Each item stored on the stack is a string.
+</li><li class="listitem">
+Support stack options push &amp; pop.
+</li><li class="listitem">
+Support quick stack stats, e.g. # of elements on the stack and # of
+  bytes stored on the stack.
+</li><li class="listitem">
+Stacks may contain hundreds of thousands of items.
+</li><li class="listitem">
+The total size of a stack will not exceed the total storage capacity
+  of any single brick in the cluster.
+</li></ul></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Understanding the last assumption is vital.  Because all
+keys with the same hash prefix <code class="literal">H</code> will be managed by the same chain
+<code class="literal">C</code>, then all bricks in <code class="literal">C</code> must have enough capacity to store all <code class="literal">H</code>
+prefix keys.</p></td></tr></table></div><p>The application developer then makes the following decisions:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+The application will use a table devoted to storing stacks, called
+   <code class="literal">'stack'</code>.
+</li><li class="listitem">
+We know that the application requires strong durability (which is
+   the Hibari default) and that the sum total of all stack <span class="strong"><strong>items</strong></span> will
+   exceed a single brick’s RAM capacity.  Therefore, the <code class="literal">'stack'</code>
+   table must store its value blobs on disk.  Read access to the table
+   will be slower than if value blobs were stored in RAM, but the
+   limited RAM capacity of bricks does not give us a choice.
+</li><li class="listitem"><p class="simpara">
+We have two machines, <code class="literal">boxA</code> and <code class="literal">boxB</code>, available for hosting the
+   table’s logical bricks.
+   We want to be able to survive at least one physical brick failure,
+   therefore all chains have a minimum length of 2.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+We will use two chains, so that each physical machine (when up and
+   running smoothly) will have 2 logical bricks for the table, one in
+   the chain head role and one in the chain tail role.
+</li><li class="listitem">
+The naming scheme used for each chain name and brick name can be
+   arbitrary, as long as all names are unique.  However, for
+   ease-of-management purposes, the use of a systematic naming scheme
+   is strongly encouraged.  The scheme used here numbers each chain
+   (starting at 1) and numbers each brick (also starting at 1) with
+   both the chain and brick number.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+We use the following key naming convention:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+A stack’s metadata (item count, byte count) uses <code class="literal">&lt;&lt;"/StackName/md"&gt;&gt;</code>.
+</li><li class="listitem">
+A item uses <code class="literal">&lt;&lt;"/StackName/N"&gt;&gt;</code> where N is the item number.
+</li></ul></div></li><li class="listitem"><p class="simpara">
+We create the table using the following:
+</p><pre class="screen">Opts = [{hash_init, fun brick_admin:chash_init/3}, {prefix_method, var_prefix},
+        {num_separators, 2}, {prefix_separator, $/},
+        {new_chainweights, [{stack_ch1, 100}, {stack_ch2, 100}]},
+        {bigdata_dir, "."}, {do_logging, true}, {do_sync, true}].
+
+ChainList = [{stack_ch1, [{stack_ch1_b1, hibari1@boxA},
+                          {stack_ch1_b2, hibari1@boxB}]},
+             {stack_ch1, [{stack_ch2_b1, hibari1@boxB},
+                          {stack_ch2_b2, hibari1@boxA}]}].
+
+brick_admin:add_table(stack, ChainList, Opts).</pre></li></ol></div><p>See <a class="xref" href="#examples-using-the-stack" title="Examples code for using the stack">the section called “Examples code for using the stack”</a> for sample usage code.</p></div><div class="section" title="Types for brick_admin:add_table()"><div class="titlepage"><div><div><h4 class="title"><a id="types-of-brick-admin-add-table"></a>Types for brick_admin:add_table()</h4></div></div></div><pre class="screen">add_table(Name, ChainList)
+  equivalent to add_table(brick_admin, Name, ChainList)
+
+add_table(Name, ChainList, BrickOptions)
+  when is_atom(Name), is_list(ChainList)
+  equivalent to add_table(brick_admin, Name, ChainList, BrickOptions)
+
+add_table(ServerRef, Name, BrickOptions)
+  when is_atom(Name), is_list(BrickOptions)
+  equivalent to add_table(ServerRef, Name, ChainList, [])
+
+add_table(ServerRef::gen_server_serverref(), Name::table(),
+          ChainList::chain_list(), BrickOptions::brick_options())
+-&gt; ok |
+   {error, term()} |
+   {error, term(), term()}
+
+gen_server_serverref() = "ServerRef" type from STDLIB gen_server, gen_fsm, etc.
+proplists_property()   = "Property" type from STDLIB proplists
+
+bigdata_option()    = {'bigdata_dir', string()}
+brick()             = {logical_brick(), node()}
+brick_option()      = chash_prop() |
+                      custom_prop() |
+                      fixed_prefix_prop() |
+                      {'hash_init', fun/3} |
+                      var_prefix_prop()
+brick_options()     = [brick_option]
+chain_list()        = {chain_name(), [brick()]}
+chain_name()        = atom()
+chash_prop()        = {'new_chainweights', chain_weights()} |
+                      {'num_separators', integer()} |
+                      {'old_float_map', float_map()} |
+                      {'prefix_is_integer_hack', boolean()} |
+                      {'prefix_length', integer()} |
+                      {'prefix_method', 'all' | 'var_prefix' | 'fixed_prefix'} |
+                      {'prefix_separator', integer()}
+chain_weights()     = [{chain_name, integer()}]
+custom_prop()       = proplists_property()
+fixed_prefix_prop() = {'prefix_is_integer_hack', boolean()} |
+                      {'prefix_length', integer()}
+logging_option()    = {'do_logging', boolean()}
+logical_brick()     = atom()
+node()              = atom()
+sync_option()       = {'do_sync', boolean()}
+table()             = atom()
+var_prefix_prop()   = {'num_separators', integer()} |
+                      {'prefix_separator', integer()}</pre><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">{'bigdata_dir', string()}</code>
+</span></dt><dd><p class="simpara">
+To store value blobs on disk (i.e. "big data" is true), specify this
+value with any string (the string’s actual value is not used).
+</p><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>To store value blobs in RAM, this option must be omitted.</p></td></tr></table></div></dd><dt><span class="term">
+<code class="literal">{'do_logging', boolean()}</code>
+</span></dt><dd>
+Specify whether all bricks in the table will log updates to disk.
+If not specified, the default is true.
+</dd><dt><span class="term">
+<code class="literal">{'do_sync', boolean()}</code>
+</span></dt><dd>
+Specify whether all bricks in the table will synchronously flush all
+updates to disk before responding to the client.
+If not specified, the default is true.
+</dd><dt><span class="term">
+<code class="literal">{'hash_init', fun/3}</code>
+</span></dt><dd>
+Specify the hash initialization function.  Of the four hash methods
+bundled with Hibari, we recommend using <code class="literal">brick_hash:chash_init/3</code>
+only.
+</dd><dt><span class="term">
+<code class="literal">{'new_chainweights, chain_weights()}</code>
+</span></dt><dd>
+(For <code class="literal">brick_admin:chash_init/3</code>)
+Specify the chainweights for this new
+table.  For creating a new table, this option is not used.
+However, this option is used when changing a table to
+add/remove chains or to change other table-related parameters.
+</dd><dt><span class="term">
+<code class="literal">{'num_separators', integer()}</code>
+</span></dt><dd><p class="simpara">
+(For <code class="literal">brick_admin:chash_init/3</code> and <code class="literal">brick_admin:var_prefix_init/3</code>)
+For variable prefix hashes, this option specifies how many instances
+of the variable prefix separator character (see <code class="literal">'prefix_separator'</code>
+below) are included in the hashing prefix.
+The default is 2.
+</p><p class="simpara">For example, if <code class="literal">{'prefix_separator', $/}</code>, then</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+With <code class="literal">{'num_separators', 2}</code> and key <code class="literal">&lt;&lt;"/foo/bar/baz/hello"&gt;&gt;</code>,
+   the hashing prefix is <code class="literal">&lt;&lt;"/foo/"&gt;&gt;</code>.
+</li><li class="listitem">
+With <code class="literal">{'num_separators', 3}</code> and key <code class="literal">&lt;&lt;"/foo/bar/baz/hello"&gt;&gt;</code>,
+   the hashing prefix is <code class="literal">&lt;&lt;"/foo/bar/"&gt;&gt;</code>.
+</li></ul></div></dd><dt><span class="term">
+<code class="literal">{'old_float_map', float_map()}</code>
+</span></dt><dd>
+Specify the old version of the "float map".
+For creating a new table, this option is not used.
+However, this option is used when changing a table to
+add/remove chains or to change other table-related parameters: it
+is used to create a new mapping of {table, key} → chain that
+relocates only a minimum number of keys a new chain.
+</dd><dt><span class="term">
+<code class="literal">{'prefix_method', 'all' | 'var_prefix' | 'fixed_prefix'}</code>
+</span></dt><dd><p class="simpara">
+(For <code class="literal">brick_admin:chash_init/3</code>) Specify which prefix method will be
+used for consistent hashing:
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<code class="literal">'all'</code>: Use the entire key
+</li><li class="listitem">
+<code class="literal">'var_prefix'</code>: Use a variable-length prefix of the key
+</li><li class="listitem">
+<code class="literal">fixed_prefix'</code>: Use a fixed-length prefix of the key
+</li></ul></div></dd><dt><span class="term">
+<code class="literal">{'prefix_is_integer_hack', boolean()}</code>
+</span></dt><dd>
+(For <code class="literal">brick_admin:fixed_prefix_init/3</code>)
+If true, the prefix should be interpreted
+as an ASCII representation of a base 10 integer for use as the
+hash calculation.
+</dd><dt><span class="term">
+<code class="literal">{'prefix_length', integer()}</code>
+</span></dt><dd>
+(For <code class="literal">brick_admin:fixed_prefix_init/3</code>)
+For a fixed-prefix hashes, this option specifies the prefix length.
+</dd><dt><span class="term">
+<code class="literal">{'prefix_separator', integer()}</code>
+</span></dt><dd>
+(For <code class="literal">brick_admin:chash_init/3</code> and <code class="literal">brick_admin:var_prefix_init/3</code>)
+For variable prefix hashes, this option specifies the
+single byte ASCII value of the byte
+that separates the key’s prefix from the rest of the key.
+The default is $/, ASCII 47.
+</dd></dl></div></div><div class="section" title="Examples code for using the stack"><div class="titlepage"><div><div><h4 class="title"><a id="examples-using-the-stack"></a>Examples code for using the stack</h4></div></div></div><p title="Create a new stack"><b>Create a new stack. </b>
+</p><pre class="screen">Val = #stack_md{count = 0, bytes = 0}.
+brick_simple:add(stack, "/new-stack/md", term_to_binary(Val)).</pre><p title="Create a new stack">
+</p><p title="Push an item onto a stack"><b>Push an item onto a stack. </b>
+</p><pre class="screen">{ok, OldTS, OldVal} = brick_simple:get(stack, "/new-stack/md").
+#stack_md{count = Count, bytes = Bytes} = binary_to_term(OldVal).
+NewMD = #stack_md{count = Count + 1, bytes = Bytes + size(NewItem)}.
+ItemKey = "/new-stack/" ++ integer_to_list(Count).
+[ok, ok] = brick_simple:do(stack,
+                           [brick_server:make_txn(),
+                            brick_server:make_replace("/new-stack/md",
+                                                      term_to_binary(NewMD),
+                                                      0, [{testset, OldTS}]),
+                            brick_server:make_add(ItemKey, NewItem)]).</pre><p title="Push an item onto a stack">
+</p><p title="Pop an item off a stack"><b>Pop an item off a stack. </b>
+</p><pre class="screen">{ok, OldTS, OldVal} = brick_simple:get(stack, "/new-stack/md").
+#stack_md{count = Count, bytes = Bytes} = binary_to_term(OldVal).
+ItemKey = "/new-stack/" ++ integer_to_list(Count - 1).
+{ok, _, Item} = brick_simple:get(stack, ItemKey).
+NumBytes = proplists:get_value(val_len, Ps).
+NewMD = #stack_md{count = Count - 1, bytes = Bytes - size(Item)}.
+[ok, ok] = brick_simple:do(stack,
+                           [brick_server:make_txn(),
+                            brick_server:make_replace("/new-stack/md",
+                                                      term_to_binary(NewMD),
+                                                      0, [{testset, OldTS}]),
+                            brick_server:make_delete(ItemKey)]).
+Item.</pre><p title="Pop an item off a stack">
+</p></div></div><div class="section" title="14.2.&#xA0;Delete a Table"><div class="titlepage"><div><div><h3 class="title"><a id="delete-a-table"></a>14.2. Delete a Table</h3></div></div></div><p>As yet, Hibari does not have a method to delete a table.  The only
+methods available now are:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Delete all files and subdirectories from the <code class="literal">bootstrap_*</code> brick
+  data directories, restart the Admin Server, and recreate all tables.
+  (Also known as, "Start over".)
+</li><li class="listitem">
+Make a backup copy of all <code class="literal">bootstrap_*</code> brick data directories
+  before creating a new table.  If you wish to undo, then stop Hibari
+  on all Admin Server-eligible nodes, remove the <code class="literal">bootstrap_*</code> brick
+  data directories, restore the <code class="literal">bootstrap_*</code> brick data directories
+  from the previous backup, then start all of the Admin
+  Server-eligible nodes.
+</li></ul></div></div><div class="section" title="14.3.&#xA0;Change a Chain: Add or Remove Bricks"><div class="titlepage"><div><div><h3 class="title"><a id="change-a-chain-add-remove-bricks"></a>14.3. Change a Chain: Add or Remove Bricks</h3></div></div></div><p>Adding or removing bricks from a single chain changes the replication
+factor for the keys stored in that chain: more bricks increases the
+replication factor, and fewer bricks decreases it.</p><p title="Data types for brick_admin:change_chain_length()"><b>Data types for brick_admin:change_chain_length(). </b>
+</p><pre class="screen">brick_admin:change_chain_length(ChainName, BrickList)
+
+ChainName       = atom()
+BrickList       = [brick()]
+
+brick()         = {logical_brick(), node()}
+logical_brick() = atom()
+node()          = atom()</pre><p title="Data types for brick_admin:change_chain_length()">
+</p><p>See also,
+<a class="link" href="#example-change-chain-length"><code class="literal">brick_admin:change_chain_length()</code> usage examples</a>
+<a class="xref" href="#example-change-chain-length">Section 14.9, “Changing Chain Length: Examples”</a>.</p></div><div class="section" title="14.4.&#xA0;Change a Table: Add/Remove Chains"><div class="titlepage"><div><div><h3 class="title"><a id="change-a-table-add-remove-chains"></a>14.4. Change a Table: Add/Remove Chains</h3></div></div></div><p title="Data types for brick_admin:start_migration()"><b>Data types for brick_admin:start_migration(). </b>
+</p><pre class="screen">brick_admin:start_migration(TableName, LH)
+  equivalent to brick_admin:start_migration(TableName, LH, [])
+
+brick_admin:start_migration(TableName, LH, Options)
+-&gt; {ok, cookie()} |
+   {'EXIT', term()}
+
+TableName           = atom()
+LH                  = hash_r()
+Options             = migration_options()
+
+cookie()            = term()
+migration_option()  = {'do_not_initiate_serial_ack', boolean()} |
+                      {'interval', integer()} |
+                      {'max_keys_per_chain', integer()} |
+                      {'max_keys_per_iter', integer()} |
+                      {'propagation_delay', integer()}
+migration_options() = [migration_option()]
+
+brick_admin:chash_init('via_proplist', ChainList, Options)
+-&gt; hash_r()
+
+ChainList = chain_list()
+Options   = brick_options()</pre><p title="Data types for brick_admin:start_migration()">
+</p><p>See <a class="xref" href="#types-of-brick-admin-add-table" title="Types for brick_admin:add_table()">the section called “Types for brick_admin:add_table()”</a> for definitions of
+<code class="literal">chain_list()</code> and <code class="literal">brick_options()</code> types.</p><p>The <code class="literal">hash_r()</code> type is an Erlang record, <code class="literal">#hash_r</code> as defined in the
+<code class="literal">brick_hash.hrl</code> header file.  It is normally considered an opaque
+type that is created by a function such as <code class="literal">brick_hash:chash_init/3</code>.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The options list passed in argument #3 to
+<code class="literal">brick_admin:chash_init/3</code> is the same properties list that is used
+for <code class="literal">brick_admin:add_table/3</code>.  The difference is that the options
+that are related strictly to brick behavior, such as the <code class="literal">do_logging</code>
+and <code class="literal">do_sync</code> properties, are ignored by <code class="literal">chash_init/3</code>.</p></td></tr></table></div><p>Once a <code class="literal">hash_r()</code> term is created and <code class="literal">brick_admin:start_migration/2</code>
+is called successfully, the data migration will start immediately.</p><p>The <code class="literal">cookie()</code> type is an opaque term that uniquely identifies the
+data migration that was triggered for the <code class="literal">TableName</code> table.  Another
+data migration may not be triggered until the current migration has
+finished successfully.</p><p>The <code class="literal">migration_option()</code> properties are described below:</p><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">{'do_not_initiate_serial_ack', boolean()}</code>
+</span></dt><dd>
+For internal use only, do not use.
+</dd><dt><span class="term">
+<code class="literal">{'interval', integer()}</code>
+</span></dt><dd>
+Interval (in milliseconds) to send kick_next_sweep messages.
+Default = 50.
+</dd><dt><span class="term">
+<code class="literal">{'max_keys_per_chain', integer()}</code>
+</span></dt><dd>
+Maximum number of keys
+to send to any particular chain.  Not yet implemented.
+</dd><dt><span class="term">
+<code class="literal">{'max_keys_per_iter', integer()}</code>
+</span></dt><dd>
+Maximum number of keys to examine per sweep iteration.
+Default = 500 for bricks with value blobs in RAM, 25 for bricks with
+value blobs on disk.
+</dd><dt><span class="term">
+<code class="literal">{'propagation_delay', integer()}</code>
+</span></dt><dd>
+Number of milliseconds to delay for each brick’s logging operation.
+Default = 0.
+</dd></dl></div><p>See also <a class="xref" href="#changing-chains-example" title="14.10.&#xA0;Creating and Rebalancing Chains: Examples">Section 14.10, “Creating and Rebalancing Chains: Examples”</a>.</p></div><div class="section" title="14.5.&#xA0;Change a Table: Change Chain Weighting"><div class="titlepage"><div><div><h3 class="title"><a id="change-a-table-chain-chain-weighting"></a>14.5. Change a Table: Change Chain Weighting</h3></div></div></div><p>The functions to change chain weighting are the same for
+adding/removing chains, see <a class="xref" href="#change-a-table-add-remove-chains" title="14.4.&#xA0;Change a Table: Add/Remove Chains">Section 14.4, “Change a Table: Add/Remove Chains”</a>
+for additional details.</p><p>When creating a <code class="literal">hash_r()</code> type record, follow these two bits of
+advice:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+The <code class="literal">chain_list()</code> term remains exactly the same as the chain list
+  currently used by the table.  See
+  <code class="literal">brick_admin:get_table_chain_list/1</code> for how to retrieve this list.
+</li><li class="listitem">
+The <code class="literal">new_chainweights</code> property in the <code class="literal">brick_options()</code> list
+  specifies a different set of chain weighting factors than is
+  currently used by the table.  The current chain weighting list is in
+  the <code class="literal">brick_options</code> property returned by the
+  <code class="literal">brick_admin:get_table_info/1</code> function.
+</li></ul></div><p>See also <a class="xref" href="#changing-chains-example" title="14.10.&#xA0;Creating and Rebalancing Chains: Examples">Section 14.10, “Creating and Rebalancing Chains: Examples”</a>.</p></div><div class="section" title="14.6.&#xA0;Admin Server API"><div class="titlepage"><div><div><h3 class="title"><a id="admin-server-api"></a>14.6. Admin Server API</h3></div></div></div><p>See EDoc documentation for <code class="literal">brick_admin.erl</code> API.</p></div><div class="section" title="14.7.&#xA0;Scoreboard API"><div class="titlepage"><div><div><h3 class="title"><a id="scoreboard-api"></a>14.7. Scoreboard API</h3></div></div></div><p>See EDoc documentation for <code class="literal">brick_sb.erl</code> API.</p></div><div class="section" title="14.8.&#xA0;Chain Monitor API"><div class="titlepage"><div><div><h3 class="title"><a id="chain-monitor-api"></a>14.8. Chain Monitor API</h3></div></div></div><p>See EDoc documentation for <code class="literal">brick_chainmon.erl</code> API.</p></div><div class="section" title="14.9.&#xA0;Changing Chain Length: Examples"><div class="titlepage"><div><div><h3 class="title"><a id="changing-chain-length"></a>14.9. Changing Chain Length: Examples</h3></div></div></div><p>The Admin Server’s basic definition of a chain: the chains name, and
+the list of bricks.  In turn, each brick is defined by a 2-tuple of
+brick name and node name.</p><pre class="screen">Chain definition = {ChainName, [BrickDef1, BrickDef2, ...]}
+Brick definition = {BrickName, NodeName}
+
+Example chain definition, chain length=1
+    {tab1_ch1, [{tab1_ch1_b1, hibari1@bb3}]}</pre><p>The function <code class="literal">brick_admin:get_table_chain_list/1</code> will retrieve the
+active chain definition list for a table.  For example, we retrieve the
+chain definition list for the table <code class="literal">tab1</code>.  The node <code class="literal">bb3</code> is the
+hostname of my laptop.</p><pre class="screen">(hibari1@bb3)23&gt; {ok, Tab1ChList} = brick_admin:get_table_chain_list(tab1).
+{ok,[{tab1_ch1,[{tab1_ch1_b1,hibari1@bb3}]}]}
+
+(hibari1@bb3)24&gt; Tab1ChList.
+[{tab1_ch1,[{tab1_ch1_b1,hibari1@bb3}]}]</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The <code class="literal">brick_admin:get_table_chain_list/1</code> function will retrieve
+the active chain definition list for a table: only bricks that are in
+<code class="literal">ok</code> state will be shown.  If a chain has a brick that has crashed,
+that brick will not appear in the list returned by this function.  The
+<code class="literal">brick_admin:get_table_info()</code> function can fetch the list of all
+bricks, in service and crashed, but the API is not as convenient.</p></td></tr></table></div><p><a id="example-change-chain-length"></a>To change the chain length, use the
+<code class="literal">brick_admin:change_chain_length/2</code> function.  The arguments are the
+chain name and brick list.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Any bricks in the brick list that aren’t in the chain are
+automatically started. Any bricks in the current chain that are not in
+the new list are halted, <span class="strong"><strong>and their persistent data will be deleted</strong></span>.</p></td></tr></table></div><pre class="screen">(hibari1@bb3)29&gt; brick_admin:change_chain_length(tab1_ch1,
+                 [{tab1_ch1_b1,hibari1@bb3}, {tab1_ch1_b2,hibari1@bb3}]).
+ok
+
+(hibari1@bb3)30&gt; {ok, Tab1ChList2} = brick_admin:get_table_chain_list(tab1). {ok,[{tab1_ch1,[{tab1_ch1_b1,hibari1@bb3},
+                {tab1_ch1_b2,hibari1@bb3}]}]}</pre><p>Now the <code class="literal">tab1_ch1</code> chain has length two.  We’ll shorten it back down
+to length 1.</p><pre class="screen">(hibari1@bb3)31&gt; brick_admin:change_chain_length(tab1_ch1, [{tab1_ch1_b2,hibari1@bb3}]).
+ok
+
+(hibari1@bb3)32&gt; {ok, Tab1ChList3} = brick_admin:get_table_chain_list(tab1).
+{ok,[{tab1_ch1,[{tab1_ch1_b2,hibari1@bb3}]}]}</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>A chain’s new brick list must contain at least one brick from
+the current chain’s definition.  If the intersection of old brick list
+and new brick list is empty, the command will fail.</p></td></tr></table></div><pre class="screen">(hibari1@bb3)34&gt; brick_admin:change_chain_length(tab1_ch1, [{tab1_ch1_b3,hibari1@bb3}]).
+{'EXIT',{error,no_intersection}}</pre></div><div class="section" title="14.10.&#xA0;Creating and Rebalancing Chains: Examples"><div class="titlepage"><div><div><h3 class="title"><a id="changing-chains-example"></a>14.10. Creating and Rebalancing Chains: Examples</h3></div></div></div><p>The procedure for creating new chains, deleting existing chains, and
+reweighing existing chains, and rehashing is done using the the
+<code class="literal">brick_admin:start_migration()</code> function.  The chain definitions are
+specified in the same way as changing chain lengths, see
+<a class="xref" href="#changing-chain-length" title="14.9.&#xA0;Changing Chain Length: Examples">Section 14.9, “Changing Chain Length: Examples”</a> for details.</p><p>The data structure required by <code class="literal">brick_admin:start_migration/2</code> is more
+complex than the relatively-simple brick list that
+<code class="literal">brick_admin:change_chain_length/2</code> requires.  This section will
+demonstrate the creation of this structure, the “local hash record”,
+step-by-step.</p><p>First, we create a new chain definition list.  (Refer to
+<a class="xref" href="#changing-chain-length" title="14.9.&#xA0;Changing Chain Length: Examples">Section 14.9, “Changing Chain Length: Examples”</a> if necessary.)  For this example, we’ll
+assume that we’ll be modifying the <code class="literal">tab1</code> table and that we’ll be
+adding two more chains.  Each chain will be of length one.  We’ll
+place each chain on the same node as everything else, <code class="literal">hibari1@bb3</code>
+(i.e. my laptop).</p><pre class="screen">(hibari1@bb3)48&gt; brick_admin:get_table_chain_list(tab1).
+{ok,[{tab1_ch1,[{tab1_ch1_b1,hibari1@bb3}]}]}
+
+(hibari1@bb3)49&gt; NewCL = [{tab1_ch1, [{tab1_ch1_b1, hibari1@bb3}]},
+                 {tab1_ch2, [{tab1_ch2_b1, hibari1@bb3}]},
+                 {tab1_ch3, [{tab1_ch3_b1, hibari1@bb3}]}].
+[{tab1_ch1,[{tab1_ch1_b1,hibari1@bb3}]},
+ {tab1_ch2,[{tab1_ch2_b1,hibari1@bb3}]},
+ {tab1_ch3,[{tab1_ch3_b1,hibari1@bb3}]}]</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Any bricks in the brick list that aren’t in a chain are
+automatically started.  Any bricks in a current chains that are not in
+the chain definition are halted, <span class="strong"><strong>and their persistent data will be
+deleted</strong></span>.</p></td></tr></table></div><p>Next, we retrieve the table’s current hashing configuration.  The data
+is returned to us in the form of an Erlang property list.  (See the
+Erlang/OTP documentation for the <code class="literal">proplists</code> module, located in the
+"Basic Applications" area under "stdlib".)  We then pick out several
+properties that we’ll need later; we use <code class="literal">lists:keyfind/3</code> instead of
+a function in the <code class="literal">proplists</code> module because it will preserve the
+properties in 2-tuple form, which will save us some typing effort
+later.</p><pre class="screen">(hibari1@bb3)51&gt; {ok, TabInfo} = brick_admin:get_table_info(tab1).
+{ok,[{name,tab1},
+    ...lots of stuff omitted...
+
+(hibari1@bb3)53&gt; Opts = proplists:get_value(brick_options, TabInfo).
+[{hash_init,#Fun&lt;brick_hash.chash_init.3&gt;},
+ {old_float_map,[]},
+ {new_chainweights,[{tab1_ch1,100}]},
+ {hash_init,#Fun&lt;brick_hash.chash_init.3&gt;},
+ {prefix_method,var_prefix},
+ {prefix_separator,47},
+ {num_separators,3},
+ {bigdata_dir,"cwd"},
+ {do_logging,true},
+ {do_sync,true},
+ {created_date,{2010,4,17}},
+ {created_time,{17,21,58}}]
+
+(hibari1@bb3)58&gt; PrefixMethod = lists:keyfind(prefix_method, 1, Opts).
+{prefix_method,var_prefix}
+
+(hibari1@bb3)59&gt; NumSep = lists:keyfind(num_separators, 1, Opts).
+{num_separators,3}
+
+(hibari1@bb3)60&gt; PrefixSep = lists:keyfind(prefix_separator, 1, Opts).
+{prefix_separator,47}
+
+(hibari1@bb3)61&gt; OldCWs = proplists:get_value(new_chainweights, Opts).
+[{tab1_ch1,100}]
+
+(hibari1@bb3)62&gt; OldGH = proplists:get_value(ghash, TabInfo).
+
+(hibari1@bb3)63&gt; OldFloatMap = brick_hash:chash_extract_new_float_map(OldGH).</pre><p>Next, we create a new property list.</p><pre class="screen">(hibari1@bb3)71&gt; NewCWs = OldCWs ++ [{tab1_ch2, 100}, {tab1_ch3, 100}].
+[{tab1_ch1,100},{tab1_ch2,100},{tab1_ch3,100}]
+
+(hibari1@bb3)72&gt; NewOpts = [PrefixMethod, NumSep, PrefixSep,
+                               {new_chainweights, NewCWs},
+                               {old_float_map, OldFloatMap}].
+[{prefix_method,var_prefix},
+ {num_separators,3},
+ {prefix_separator,47},
+ {new_chainweights,[{tab1_ch1,100},
+                    {tab1_ch2,100},
+                    {tab1_ch3,100}]}
+ {old_float_map, []}]</pre><p>Next, we use the chain definition list, <code class="literal">NewCL</code>, and the table options
+list, <code class="literal">NewOpts</code>, to create a “local hash” record.  This record will
+contain all of the configuration information required to change a
+table’s consistent hashing characteristics.</p><pre class="screen">(hibari1@bb3)73&gt; NewLH = brick_hash:chash_init(via_proplist, NewCL, NewOpts).
+{hash_r,chash,brick_hash,chash_key_to_chain,
+ ...lots of stuff omitted...</pre><p><a id="chash-migration-pre-check"></a>We’re just one step away from changing the <code class="literal">tab1</code> table.  Before we
+change the table, however, we’d like to see how the table change will
+affect the data in the table.  First, we add 1,000 keys to the <code class="literal">tab1</code>
+table.  Then we use the <code class="literal">brick_simple:chash_migration_pre_check/2</code>
+function to tell us how many keys will move and to where.</p><pre class="screen">(hibari1@bb3)74&gt; [brick_simple:set(tab1, "foo"++integer_to_list(X), "bar") || X &lt;- lists:seq(1,1000)].
+[ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,ok,
+ ok,ok,ok,ok,ok,ok,ok,ok,ok,ok|...]
+
+(hibari1@bb3)75&gt; brick_simple:chash_migration_pre_check(tab1, NewLH).
+[{keys_before,[{tab1_ch1,1001}]},
+ {keys_keep,[{tab1_ch1,348}]},
+ {keys_moving,[{tab1_ch2,315},{tab1_ch3,338}]},
+ {keys_moving_where,[{tab1_ch1,[{tab1_ch2,315},
+                                {tab1_ch3,338}]}]},
+ {errors,[]}]</pre><p>The output above shows us that of the 1,001 keys in the <code class="literal">tab1</code> table,
+348 will remain in the <code class="literal">tab1_ch1</code> chain, 315 keys will move to the
+<code class="literal">tab1_ch2</code> chain, and 338 keys will move to the <code class="literal">tab1_ch3</code> chain.
+That looks like what we want, so let’s reconfigure the table and start
+the data migration.</p><pre class="screen">brick_admin:start_migration(tab1, NewLH).</pre><p>Immediately, we’ll see a bunch of application messages sent to the
+console as new activities start:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+A migration monitoring process is started.
+</li><li class="listitem">
+New brick processes are started.
+</li><li class="listitem">
+New monitoring processes are started.
+</li><li class="listitem">
+Data migrations are started and finish
+</li><li class="listitem">
+The migration monitoring process exits.
+</li></ul></div><pre class="screen">=GMT INFO REPORT==== 20-Apr-2010::00:26:40 ===
+Migration number 1 is starting with cookie {1271,741200,988900}
+
+=GMT INFO REPORT==== 20-Apr-2010::00:26:41 ===
+progress: [{supervisor,{local,brick_mon_sup}},
+           {started,
+               [{pid,&lt;0.2937.0&gt;},
+                {name,chmon_tab1_ch2},
+                ...stuff omitted...
+
+[...lines skipped...]
+=GMT INFO REPORT==== 20-Apr-2010::00:26:41 ===
+Migration monitor: tab1: chains starting
+
+[...lines skipped...]
+=GMT INFO REPORT==== 20-Apr-2010::00:26:41 ===
+brick_admin: handle_cast: chain tab1_ch2 in unknown state
+
+[...lines skipped...]
+=GMT INFO REPORT==== 20-Apr-2010::00:26:52 ===
+Migration monitor: tab1: sweeps starting
+
+[...lines skipped...]
+=GMT INFO REPORT==== 20-Apr-2010::00:26:54 ===
+Migration number 1 finished
+
+[...lines skipped...]
+=GMT INFO REPORT==== 20-Apr-2010::00:26:57 ===
+Clearing final migration state for table tab1</pre><p>For the sake of demonstration, now let’s see what
+<code class="literal">brick_simple:chash_migration_pre_check()</code> would say if we were to
+migrate from three chains to four chains.</p><pre class="screen">(hibari_dev@bb3)24&gt; {ok, TabInfo3} = brick_admin:get_table_info(tab1).
+
+(hibari_dev@bb3)25&gt; Opts3 = proplists:get_value(brick_options, TabInfo3).
+
+(hibari_dev@bb3)26&gt; GH3 = proplists:get_value(ghash, TabInfo3).
+
+(hibari_dev@bb3)28&gt; OldFloatMap = brick_hash:chash_extract_new_float_map(GH3).
+
+(hibari_dev@bb3)31&gt; NewOpts4 = [PrefixMethod, NumSep, PrefixSep,
+                    {new_chainweights, NewCWs4}, {old_float_map, OldFloatMap}].
+
+(hibari_dev@bb3)35&gt; NewCL4 = [ {tab1_ch1, [{tab1_ch1_b1, hibari1@bb3}]},
+                               {tab1_ch2, [{tab1_ch2_b1, hibari1@bb3}]},
+                               {tab1_ch3, [{tab1_ch3_b1, hibari1@bb3}]},
+                               {tab1_ch4, [{tab1_ch4_b1, hibari1@bb3}]} ].
+(hibari_dev@bb3)36&gt; NewLH4 = brick_hash:chash_init(via_proplist, NewCL4, NewOpts4).
+
+(hibari_dev@bb3)37&gt; brick_simple:chash_migration_pre_check(tab1, NewLH4).
+[{keys_before,[{tab1_ch1,349},
+               {tab1_ch2,315},
+               {tab1_ch3,337}]},
+ {keys_keep,[{tab1_ch1,250},{tab1_ch2,232},{tab1_ch3,232}]},
+ {keys_moving,[{tab1_ch4,287}]},
+ {keys_moving_where,[{tab1_ch1,[{tab1_ch4,99}]},
+                     {tab1_ch2,[{tab1_ch4,83}]},
+                     {tab1_ch3,[{tab1_ch4,105}]}]},
+ {errors,[]}]</pre><p>The output tells us that chain <code class="literal">tab1_ch1</code> will lose 99 keys,
+<code class="literal">tab1_ch2</code> will lose 83 keys, and <code class="literal">tab1_ch3</code> will lose 105 keys.  The
+final key distribution across the four chains would be 250, 232, 232,
+and 287 keys, respectively.</p></div></div><div class="footnotes"><br /><hr width="100" align="left" /><div class="footnote"><p><sup>[<a id="ftn.id36105282" href="#id36105282" class="simpara">1</a>] </sup>The crucial detail is that such systems may not be "CA"
 and "CP" at the same time: they can shift around the spectrum in reaction
 to events such as network partition.</p></div></div></div></body></html>
