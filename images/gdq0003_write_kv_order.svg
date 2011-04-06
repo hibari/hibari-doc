@@ -1,52 +1,50 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="600pt" height="134pt" version="1.1" viewBox="0 0 600 134"
- viewBox="0 0 600 134"
+<svg width="600pt" height="130pt" version="1.1" viewBox="0 0 600 130"
+ viewBox="0 0 600 130"
  xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"
  stroke-width="1" text-rendering="geometricPrecision">
-<polygon fill="white" points="135,7 163,7 163,16 135,16"/>
-<text x="150" y="16" textLength="27" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+<polygon fill="white" points="135,6 163,6 163,16 135,16"/>
+<text x="150" y="15" textLength="26" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
 
 Brick
 </text>
-<polygon fill="white" points="437,7 461,7 461,16 437,16"/>
-<text x="450" y="16" textLength="23" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
+<polygon fill="white" points="437,6 461,6 461,16 437,16"/>
+<text x="450" y="15" textLength="23" font-family="Helvetica" font-size="12" fill="black" text-anchor="middle">
 
 Disk
 </text>
-<line x1="150" y1="22" x2="150" y2="50" stroke="black"/>
-<line x1="450" y1="22" x2="450" y2="50" stroke="black"/>
-<line x1="150" y1="33" x2="450" y2="33" stroke="black"/>
-<line x1="450" y1="33" x2="440" y2="39" stroke="black"/>
-<polygon fill="white" points="260,23 338,23 338,32 260,32"/>
-<text x="261" y="32" textLength="76" font-family="Helvetica" font-size="12" fill="black">
+<line x1="150" y1="22" x2="150" y2="49" stroke="black"/>
+<line x1="450" y1="22" x2="450" y2="49" stroke="black"/>
+<line x1="150" y1="35" x2="450" y2="35" stroke="black"/>
+<line x1="450" y1="35" x2="440" y2="41" stroke="black"/>
+<polygon fill="white" points="260,24 338,24 338,34 260,34"/>
+<text x="261" y="33" textLength="76" font-family="Helvetica" font-size="12" fill="black">
 [1] write Value
 </text>
-<line x1="150" y1="50" x2="150" y2="78" stroke="black"/>
-<line x1="450" y1="50" x2="450" y2="78" stroke="black"/>
-<line x1="450" y1="61" x2="150" y2="61" stroke="black"/>
-<line x1="150" y1="61" x2="160" y2="67" stroke="black"/>
-<polygon fill="white" points="284,51 315,51 315,60 284,60"/>
+<line x1="150" y1="49" x2="150" y2="76" stroke="black"/>
+<line x1="450" y1="49" x2="450" y2="76" stroke="black"/>
+<line x1="450" y1="62" x2="150" y2="62" stroke="black"/>
+<line x1="150" y1="62" x2="160" y2="68" stroke="black"/>
+<polygon fill="white" points="284,51 315,51 315,61 284,61"/>
 <text x="285" y="60" textLength="29" font-family="Helvetica" font-size="12" fill="black">
 [2] ok
 </text>
-<line x1="150" y1="78" x2="150" y2="106" stroke="black"/>
-<line x1="450" y1="78" x2="450" y2="106" stroke="black"/>
+<line x1="150" y1="76" x2="150" y2="103" stroke="black"/>
+<line x1="450" y1="76" x2="450" y2="103" stroke="black"/>
 <line x1="150" y1="89" x2="450" y2="89" stroke="black"/>
 <line x1="450" y1="89" x2="440" y2="95" stroke="black"/>
-<polygon fill="white" points="265,79 333,79 333,88 265,88"/>
-<text x="266" y="88" textLength="66" font-family="Helvetica" font-size="12" fill="black">
+<polygon fill="white" points="265,78 333,78 333,88 265,88"/>
+<text x="266" y="87" textLength="66" font-family="Helvetica" font-size="12" fill="black">
 [3] write Key
 </text>
-<line x1="150" y1="106" x2="150" y2="134" stroke="black"/>
-<line x1="450" y1="106" x2="450" y2="134" stroke="black"/>
-<line x1="450" y1="117" x2="150" y2="117" stroke="black"/>
-<line x1="150" y1="117" x2="160" y2="123" stroke="black"/>
-<polygon fill="white" points="284,107 315,107 315,116 284,116"/>
-<text x="285" y="116" textLength="29" font-family="Helvetica" font-size="12" fill="black">
+<line x1="150" y1="103" x2="150" y2="130" stroke="black"/>
+<line x1="450" y1="103" x2="450" y2="130" stroke="black"/>
+<line x1="450" y1="116" x2="150" y2="116" stroke="black"/>
+<line x1="150" y1="116" x2="160" y2="122" stroke="black"/>
+<polygon fill="white" points="284,105 315,105 315,115 284,115"/>
+<text x="285" y="114" textLength="29" font-family="Helvetica" font-size="12" fill="black">
 [4] ok
 </text>
-<line x1="150" y1="128" x2="150" y2="134" stroke="black"/>
-<line x1="450" y1="128" x2="450" y2="134" stroke="black"/>
 </svg>
