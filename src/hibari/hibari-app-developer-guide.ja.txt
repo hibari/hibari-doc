@@ -28,15 +28,15 @@
 　Hibari(R)は、キー・バリュー・ストア（KVS）方式を用いた分散型データベースです。大規模化し続けるデータ、いわゆる“Big Data”に対応し、商用にすぐに活用できます。大量のデータをどのように保管するかが大きな問題となる現在、それに対処する「NOSQL」というソリューションが出てきました。Hibariはこの分野で、次のような多くの理由から注目を集めています。
 
 - Hibariは、*プログラミング言語Erlangと革新的なチェイン・レプリケーション技術を使った唯一のオープンソースのキー・バリュー型データベース（KVDB）* です。Erlangは、堅牢で高性能な分散型ストレージ・ソリューションの構築には理想的なプログラミング基盤を提供します。一方、チェイン・レプリケーションは、データの一貫性を犠牲にすることなく、高いスループットと高可用性を提供します。
-- Hibariは、*キャリアクラスの通信事業分野で要求される厳格な基準を満たすように作られた唯一のオープンソースのキー・バリュー型データベース*です。通信事業分野の製品では、数百万ユーザーの利用実績を持ちます。
+- Hibariは、*キャリアクラスの通信事業分野で要求される厳格な基準を満たすように作られた唯一のオープンソースのキー・バリュー型データベース* です。通信事業分野の製品では、数百万ユーザーの利用実績を持ちます。
 - Hibariは、次のような優れた特長を備えています。
-　* ストレージ・オプションとして、ディスクベースあるいはRAMのみの使用を、テーブル単位で選択できます。
-　* キー単位で有効期限およびカスタムのメタデータをサポートします。
-　* 制限範囲内で複数キーのアトミック・トランザクションをサポートします。
-　* キーのタイムスタンプ機能によって「テスト・アンド・セット」型の操作が可能です。
-　* システムの規模に応じた自動データ配置バランシング機能を持ちます。
-　* コードのライブ・アップグレードをサポートします。
-　* 複数のクライアントAPIを実装しています。
+ * ストレージ・オプションとして、ディスクベースあるいはRAMのみの使用を、テーブル単位で選択できます。
+ * キー単位で有効期限およびカスタムのメタデータをサポートします。
+ * 制限範囲内で複数キーのアトミック・トランザクションをサポートします。
+ * キーのタイムスタンプ機能によって「テスト・アンド・セット」型の操作が可能です。
+ * システムの規模に応じた自動データ配置バランシング機能を持ちます。
+ * コードのライブ・アップグレードをサポートします。
+ * 複数のクライアントAPIを実装しています。
 
 　この最初の章では、「Big Data」の時代が投げかける問題に対処するために近年出現した「NOSQL」ソリューションについて簡単に説明します。その後、大規模データを扱うアプリケーションの開発者や管理者、あるいはユーザーにHibariが提供する大きな利点について、さらに詳しく紹介します。
 
@@ -45,7 +45,7 @@
 　まず、NOSQLという新しい動向は、伝統的なRDBMS（リレーショナル・データベース管理システム）を無条件に否定するものではありません。この動向は、今日のデータ環境がSQLだけに留まらず（Not Only SQL：NOSQL）、ストレージに多様なツールが必要であるという認識が急速に広がっていることの表われです。リレーショナル型のデータ・ストレージとNOSQL型のデータ・ストレージは、それぞれ異なるアプローチを持ち、異なる種類のアプリケーションやサービスに適しています。これらは互いに補完するものであると理解してください。
 　NOSQLが注目されるようになった背景には、TB（テラバイト）あるいはPB（ぺタバイト）級のデータを保管して使うアプリケーションやサービスの急増という現状があります。その分野では頻繁に「常時使用可能」な可用性を保証し、エンドユーザーの待ち時間を減らす努力が払われてきました。たとえば次のような多くの市場分野で、さまざまな組織がBig Data時代の到来に備えて取り組んでいます。
 
-- Web資産：検索、eコマース、ソーシャルメディア、ユーザー作成コンテンツ等による大量データの要求への対応
+- Webサービス：検索、eコマース、ソーシャルメディア、ユーザー作成コンテンツ等による大量データの要求への対応
 - 通信事業：何百万件もの加入者のネットワークログや通話データ記録の管理と分析
 - 公益事業：次世代送電網の巨大データ容量の管理と分析
 - 金融サービス：リスク分析とモデル化を目的とした顧客履歴データの保管およびマイニング
@@ -62,9 +62,9 @@
 　つまり、近年急増しているサービスで必要とするデータは、より大規模になる一方で、構造化の必要性はより少ないのです。
 
 　そう考えると、業界を牽引するWeb企業がNOSQLの動きの最前線にいるのは不思議なことではありません。特に、Google社の
-http://labs.google.com/papers/bigtable.html[BigTable paper]（2006年）
+http://labs.google.com/papers/bigtable.html[BigTable論文]（2006年）
 と、Amazon社の
-http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf[Dynamopaper]（2007年）は、NOSQL市場に大きな影響を及ぼしました。BigTable やDynamo、あるいはその両方から構想を得たNOSQLソリューションが多数存在しており、ここ2年でいくつかのソリューションがオープンソースのコミュニティで発表されています。
+http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf[Dynamo論文]（2007年）は、NOSQL市場に大きな影響を及ぼしました。BigTable やDynamo、あるいはその両方から構想を得たNOSQLソリューションが多数存在しており、ここ2年でいくつかのソリューションがオープンソースのコミュニティで発表されています。
 
 　NOSQLを使ったデータ・ストレージソリューションは、それぞれ細かい点では異なりますが、基本的に次のような共通点があります。
 
@@ -143,9 +143,9 @@ image:images/automatic_failover_2.png[]
 　Hibariのストレージ・システムにおけるチェイン・レプリケーション、フェイル・オーバー、および修復に関する詳しい情報について、さらにHibariのAdmin Serverと呼ぶ冗長構成クラスター・メンバー・アプリケーションに関する情報については、「Hibari(R)システム管理者ガイド」の以下の節を参照してください。
 
 - link:hibari-sysadmin-guide.en.html#hibari-architecture[Hibariのアーキテクチャー]
-- link:hibari-sysadmin-guide.en.html#life-of-brick[（論理）ブリックのライフサイクル]
-- link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration［動的クラスター再構成］
-- link:hibari-sysadmin-guide.en.html#admin-server-app［Admin Serverアプリケーション］
+- link:hibari-sysadmin-guide.en.html#life-of-brick[（論理）ブリックのライフサイクル］
+- link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration[動的クラスター再構成]
+- link:hibari-sysadmin-guide.en.html#admin-server-app[Admin Serverアプリケーション]
 
 [[scalability]]
 ==== 簡単でコストが低廉な拡張性
@@ -158,7 +158,9 @@ image:images/automatic_failover_2.png[]
 
 　Hibariは、異種のハードウェアの混在をサポートするだけでなく、Erlangをベースとしているため、ほとんどすべてのオペレーティング・システム上で稼働します。異種のハードウェアおよびオペレーティング・システムに容易に対応できるので、利用できるあらゆるリソースを用いてHibariをインクリメンタルに拡張できます。すべてのリソースを同時に、また同一の種類に揃えて購入する必要はありません。
 
-NOTE: Hibariの水平拡張の上限値は、明確には決まっていませんが、Erlangに組み込まれたネットワーク分散機能の実装の限界から見て、200〜250ノードが実質的な限界になります。また、Hibariのチェインは、理論的には複数のデータ・センターをまたがって延長しで地理的な冗長性を確保することも可能ですが、現在のところ、単一のデータ・センター内の配置しかテストしておらず、稼働実績はありません。
+NOTE:
+
+Hibariの水平拡張の上限値は、明確には決まっていませんが、Erlangに組み込まれたネットワーク分散機能の実装の限界から見て、200〜250ノードが実質的な限界になります。また、Hibariのチェインは、理論的には複数のデータ・センターをまたがって延長しで地理的な冗長性を確保することも可能ですが、現在のところ、単一のデータ・センター内の配置しかテストしておらず、稼働実績はありません。
 
 　Hibariのクラスター・サイズの変更に関する詳細情報は、「Hibari(R)システム管理者ガイド」の
 link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration［動的クラスター再構成]の節を参照してください。
@@ -195,10 +197,10 @@ link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration［動的ク�
 - Amazon S3
 - JSON-RPC
 
-Hibariのクライアント・アプリケーションは、Java、 C/C++、Python、Ruby、Erlangなど幅広い言語で開発できます。
+　Hibariのクライアント・アプリケーションは、Java、 C/C++、Python、Ruby、Erlangなど幅広い言語で開発できます。
 
    HibariのクライアントAPIに関する詳細情報は、
-link:#client-api-erlang[クライアントAPI：ネイティブErlang] および当ガイドでこのあと説明するクライアントAPIの章を参照してください。
+link:#client-api-erlang[クライアントAPI：ネイティブErlang]および当ガイドでこのあと説明するクライアントAPIの章を参照してください。
 
 [[production-proven]]
 ==== 稼働実績
@@ -240,3 +242,500 @@ link:#client-api-erlang[クライアントAPI：ネイティブErlang] および
 
 　そしてHibariはビジネス全体に対しても、サービスの高可用性と短い待ち時間に対するユーザーの要求を満たしながら、低廉なコストでBig Dataの拡張性を提供します。Hibariは、大量のデータを扱う幅広いサービスシナリオに対応できるストレージ・ソリューションです。そのシナリオは、大規模メッセージングやソーシャルメディア、アーカイブなどをはじめ、さまざまな可能性を持ちます。Hibariは、多種多様なオブジェクトすべてに対してデータの強い一貫性と高性能が求められる環境で、その真価を発揮します。
 
+[[getting-started]]
+== はじめに
+
+　この章では、Hibariを起動して稼働させる上で必要な以下のトピックを説明します。
+
+- link:#system-requirements[システム要件]
+- link:#required-software[必要なサードパーティのソフトウェア]
+- link:#download-hibari[Hibariをダウンロードする]
+- link:#installing-single-node[シングルノードのHibariシステムをインストールする]
+- link:#starting-single-node[シングルノードのHibariを起動する／停止する]
+- link:#installing-multi-node[マルチノードのHibariクラスターをインストールする]
+- link:#starting-multi-node[マルチノードのHibariクラスターを起動する／停止する]
+- link:#creating-tables[新しいテーブルを作成する]
+
+[[system-requirements]]
+=== システム要件
+
+HibariはErlangの VMをサポートするUNIXとUNIX系、およびWindows、Mac OS Xなどのオペレーティング・システム（以下、OS）上で稼働します。詳しくは、Erlangの公式サイト
+http://www.erlang.org/faq/implementations.html[Implementation and Ports of Erlang] を参照してください。
+　
+また、稼働環境に必要なハードウェア要件については、「Hibariシステム管理者ガイド」の
+link:hibari-sysadmin-guide.en.html#brick-hardware[ブリックのハードウェアに関する注意]を参照してください。
+
+[[required-software]]
+=== 必要なサードパーティのソフトウェア
+
+Hibariに必要なサードパーティのソフトウェアは、シングルノードのインストールか、マルチノードのインストールかによって、異なります。
+
+==== シングルノードのインストールに必要なソフトウェア
+
+Hibariをシングルノードにインストールする場合は、以下のソフトウェアが必要です。
+- OpenSSL - http://www.openssl.org/
+  * Erlangの“crypto”モジュールに必要
+
+==== マルチノードのインストールに必要なソフトウェア
+
+Hibariをマルチノードにインストールする際にインストーラーツールを使用すると、クラスターのセットアッププロセスを簡略化できます。最初にHibariをインストールするホストさえ決めれば、あとはこのツールが管理して、Hibariをホストにインストールします。このツールは、Hibariのノードのマシンからでも、その他のマシンからでも起動できます。「インストールノード」（インストールツールを稼働させるマシン）とHibariノード（Hibariをインストールして稼働させるマシン）では、必要となるサードパーティのソフトウェアが異なります。
+
+===== インストールノードに必要なソフトウェア
+
+インストールノードに必要なソフトウェアは以下のとおりです。必要に応じて、リンク先のインストールガイドに従ってダウンロードしてください。
+
+- Bash - http://www.gnu.org/software/bash/
+- Expect - http://www.nist.gov/el/msid/expect.cfm
+- Perl - http://www.perl.org/
+- SSH (client) - http://www.openssh.com/
+- Git - http://git-scm.com/
+  * バージョン1.5.4以降を使用してください。
+  * Git用の電子メールアドレスと名前を設定していない場合は、以下のように設定してください。
++
+------
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
+------
++
+ * GitHubアカウントを取得していない場合は、ここで取得してください。 - https://github.com/
+
+現在、Bash、Expect、Perl、SSHにはバージョン指定はありません。
+
+===== Hibariノードに必要なソフトウェア
+
+Hibariをインストールするノード群に必要なソフトウェアは以下のとおりです。
+- SSH (server) - http://www.openssh.com/
+- OpenSSL - http://www.openssl.org/
+  * Erlangの“crypto”モジュールに必要
+
+[[download-hibari]]
+=== Hibariをダウンロードする
+
+現在、Hibariはビルド済みで提供することができません。当面は、ソースコードからHibariをビルドしてください。第7章の<<「7. ソースコードからHibariをビルドする」>>の説明に従ってビルドして、その後、本節に戻ってセットアップを行ってください。
+
+Hibariをビルドすると、後でセットアップに使用する2つのファイルが出力されます。
+- tarballパッケージ“hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz”
+- md5sumファイル“hibari-X.Y.Z-DIST-ARCH-WORDSIZE-md5sum.txt”
+
+_X.Y.Z_はリリースバージョン、_DIST_はリリースのディストリビューション、_ARCH_はリリースのアーキテクチャ、_WORDSIZE_はリリースのワードサイズです。
+
+[[installing-single-node]]
+=== シングルノードにHibariをインストールする
+
+シングルノードにHibariをインストールしたシステムには、マルチノードのHibariクラスターが提供するようなデータのレプリケーションや冗長性はありません。しかし、テストや開発上の目的で簡単にHibariをシングルノードにインストールして配置したいときは、この方法を利用します。
+
+. Hibariを稼働させるディレクトリを作成します。
++
+------
+$ mkdir running-directory
+------
++
+. Hibariをソースコードからビルドする際に出力されたtarballパッケージを解凍します。
++
+------
+$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+
+
+------
+
+IMPORTANT: Hibariノードでは、システムの+/etc/sysctl.conf+ファイルに+vm.swappiness=0+を設定してください。ErlangのVMにおいてswappinesssの指定は望ましくありません。
+
+[[starting-single-node]]
+=== シングルノードのHibariを起動する／停止する
+
+==== Hibariの起動とブートストラップ
+
+. Hibariを起動します。
++
+------
+$ running-directory/hibari/bin/hibari start
+------
++
+. Hibariを初めて起動する場合は、システムのブートストラップを実行します。
++
+------
+$ running-directory/hibari/bin/hibari-admin bootstrap
+------
++
+
+Hibariのブートストラッププロセスでは、まずシングルノードのAdminサーバーを起動した後、Hibariのデフォルトテーブルとして機能する１つのテーブル「tab1」を作成します。追加テーブルの作成に関する詳細は、
+link:#creating-tables[新しいテーブルの作成]を参照してください。
+
+==== Hibariの検証
+
+シングルノードのHibariシステムの稼働状況を検証するには、以下のようにクイックチェックを実行してください。
+
+. “Hibari Web Administration”ページがオープンできることを確認します。
++
+------
+$ your-favorite-browser http://127.0.0.1:23080
+------
++
+. Hibariノードにpingが打てることを確認します。
++
+------
+$ running-directory-name/hibari/bin/hibari ping
+------
+
+IMPORTANT:
+
+
+シングルノードのHibariシステムは、ローカルホストアドレス127.0.0.1のみに応答するようにハードコーディングされています。したがって、Hibari ノードにはそのノード自身からしか到達できません。
+
+==== Hibariの停止
+
+Hibariを停止するには、以下を実行でください。
+------
+$ running-directory/hibari/bin/hibari stop
+------
+
+[[installing-multi-node]]
+=== マルチノードのクラスターにHibariをインストールする
+
+ターゲットノードにHibariをインストールする前に、以下の準備を実行してください。
+
+- インストールノードおよびターゲットのHibariノード群に、必要なユーザー権限を設定してください。
+- クラスター用のインストーラーツールをダウンロードしてください。
+- クラスター用のインストーラーツールを設定してください。
+
+==== ユーザー権限の設定
+
+インストール時に使用するシステムのユーザーIDは、Hibariの実行時のユーザーIDとは異なるものでなければなりません。インストールを実行するユーザーアカウント ($USER) は、以下のようにセットアップします。
+
+- $USERは、インストールノードにも、ターゲットHibariノード群にも必要です。
+- $USERは、インストールノードにおいてSSHの公開鍵と秘密鍵を持つ必要があります。パスワード認証なしにSSHでログインできるようにSSH agentを設定してください。
+- $USERアカウントは、ターゲットのHibariノードでも、パスワード認証なしにSSHでログインできなければなりません。
+- $USERアカウントは、ターゲットのHibariノード上で、パスワード認証なしにsudoコマンドでアクセスできなければなりません。
+
+インストールを実行するユーザーのアカウントに上記の権限がない場合は、以下のステップを実行してください。
+
+. rootユーザーとして、インストールノードにインストールユーザー ($USER) を追加します。その後、各Hibariノードにインストールユーザーを追加して、そのユーザーにパスワード認証なしのsudo権限を付与します。
++
+------
+$ useradd $USER
+$ passwd $USER
+$ visudo
+# append the following line and save it
+$USER  ALL=(ALL)       NOPASSWD: ALL
+------
++
+
+
+NOTE:
+
+sudoのテスト中に“sudo: sorry, you must have a tty to run sudo”というエラーメッセージが出た場合は、+/etc/sudoers+ファイル内の次の行をコメントアウトしてください。
++
+------
+
+$ visudo
+Defaults    requiretty
+------
++
+. インストールノードに、インストールユーザー用のSSHの公開鍵と秘密鍵を新たに作成します。
++
+------
+$ ssh-keygen
+# enter your password for the private key
+$ eval `ssh-agent`
+$ ssh-add ~/.ssh/id_rsa
+# re-enter your password for the private key
+------
++
+. 各Hibariノードにおいて
+- +\~/.ssh/known_hosts+ファイルに、インストールノードのエントリーを追加します。
+- +~/.ssh/authorized_keys+ファイルに、SSHの公開鍵のエントリーを追加します。
++
+以下の例では、dev1、dev2、dev3がターゲットのHibariノード群です。
++
+------
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3
+------
++
+NOTE:
+
+
+インストールノードがHibariのクラスターノードの１つである場合は、インストールノードにもssh-copy-idを実行する必要があります。
+
++
+. 各Hibariノードへのパスワード認証のないSSHのアクセスが、期待どおりに行われることを確認します。
++
+------
+$ ssh $USER@dev1
+$ ssh $USER@dev2
+$ ssh $USER@dev3
++
+------
+TIP:
+
+SSHのセットアップの詳細について知りたい場合は、http://inside.mines.edu/~gmurray/HowTo/sshNotes.html を参照してください。
+
+[[download-cluster]]
+==== Clusterインストーラーツールのダウンロード
+
+“Cluster”とは、Hibariのノード群のクラスターのインストールと設定、およびブートストラップに使用する簡単なツールです。このツールはHibariパッケージの一部ではありませんが、GitHubから入手できます。
+
+
+NOTE: Clusterは、多くのユーザーのニーズを満たすツールです。ただし現在、このツールの「ターゲットノード」のレシピはLinux主体に書かれています（たとえばuseraddや userdelなど）。その他のOSやプラットフォーム向けのパッチ類の提供が望まれます。Linux以外の配置の場合のClusterツールは比較的単純で、ツールのレシピどおりに操作すれば手動でインストールできます。
+
+. Clusterツールをダウンロードするための作業用ディレクトリを作成します。
++
+------
+$ mkdir working-directory
+------
++
+. GitHubからClusterツールのGitリポジトリをダウンロードします。
++
+------
+$ cd working-directory
+$ git clone git://github.com/hibari/clus.git
+------
++
+
+このダウンロードにより、+clus+というサブディレクトリが作成され、その下に、インストーラーツールと種々のサポートファイルが格納されます。
+
+
+[[config-cluster]]
+==== Clusterツールの設定
+
+Clusterツールには、Hibariのクラスターのセットアップ方法を示す基本的な設定情報が必要です。必要な設定を明記した簡単なテキストファイルを作り、Clusterツールを稼働させる際に、そのファイルをインプットとして使ってください。
+
+設定情報ファイルは、Clusterツールをダウンロードした作業用ディレクトリ内に作成するのが最も簡単です。ファイル名は何でもかまいません。ここでは説明のために+hibari.config+というファイル名を使用します。
+
+以下は+hibari.config+ファイルのサンプルです。作成するファイルには、ここに示したすべてのパラメータを記載する必要があります。またその値は、この例と同じ書式（括弧や引用符も）でなければなりません。パラメータの記述はサンプルに従ってください。
+
+------
+ADMIN_NODES=(dev1 dev2 dev3)
+BRICK_NODES=(dev1 dev2 dev3)
+BRICKS_PER_CHAIN=2
+
+ALL_NODES=(dev1 dev2 dev3)
+ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETA_BCAST="10.181.165.255"
+ALL_NETB_BCAST="10.181.165.255" ALL_NETA_TIEBREAKER="10.181.165.1"
+
+ALL_HEART_UDP_PORT="63099"
+ALL_HEART_XMIT_UDP_PORT="63100"
+------
+
+[[eligible-admin-nodes]]
+- +ADMIN_NODES
+  * Hibari Adminサーバーを起動できるノード群のホスト名。Adminサーバーに関する詳細は、「Hibariシステム管理者ガイド」の
+   link:hibari-sysadmin-guide.en.html#admin-server-app[Adminサーバーアプリケーション]を参照してください。
+- +BRICK_NODES+
+  * Hibariのストレージ・ブリックとして機能するノード群のホスト名。上記設定ファイルのサンプルには3つのストレージ・ブリックのノード（dev1、dev2、dev3）があり、この3つのノードのそれぞれでAdminサーバーを稼働できます。
+- +BRICKS_PER_CHAIN+
+  * チェイン・レプリケーションごとのブリック数。たとえば、1チェインあたり2ブリックであれば、チェインに格納されるデータには2つのコピーが存在します（ブリックごとに1コピー）。1チェインあたり3ブリックであれば、3つのコピーが存在します。チェイン・レプリケーションの概要は、本ドキュメントのlink:#chain-replication[「1.2.2 チェイン・レプリケーションによる高可用性と強い一貫性」]を参照してください。チェイン・レプリケーションの詳細は、Hibariシステム管理者ガイドを参照してください。
+- +ALL_NODES+
+  * +ADMIN_NODES+と+BRICK_NODES+の和集合によって得られるHibariの全ノードのリスト。
+- +ALL_NETA_ADDRS+
+  * 「Hibariシステム管理者ガイド」の
+link:hibari-sysadmin-guide.en.html#partition-detector[The Partition Detector Application]に記述されているように、マルチノードのHibariのクラスター内の各ノードは、2つのネットワーク（ネットワークAおよびネットワークB）に接続されていなければなりません。これは、ネットワークのパーティションを検出および管理するためです。+ALL_NETA_ADDRS+パラメータで、ネットワークA内の各HibariノードのIPアドレスを指定します。このネットワークAを介して、データ・レプリケーションおよびその他のErlangの通信が行われます。IPアドレスの一覧は、+ALL_NODES+で指定したホスト名に対応している必要があります。
+- +ALL_NETB_ADDRS+
+  * ネットワークB内におけるHibariの各ノードのIP アドレス。ネットワークBは、ネットワークパーティションの検出に役立つハートビートブロードキャストのためだけに使用されます。IPアドレスの一覧の順番は、ALL_NODESで設定したホスト名の順番に対応している必要があります。
+- +ALL_NETA_BCAST+
+  * ネットワークAのIP ブロードキャストアドレス。
+- +ALL_NETB_BCAST+
+  * ネットワークBのIP ブロードキャストアドレス。
+- +ALL_NETA_TIEBREAKER+
+  * ネットワークAでパーティション問題が発生した場合に、「タイブレーカ」として使用するネットワーク監視アプリケーション用のIPアドレス。Hibariノードにおいて、ネットワークAにパーティションが発生し、ネットワークBにはパーティションが発生していないとネットワーク監視アプリケーションが判断した場合、ネットワークAのタイブレーカのIPアドレスがpingに応答すれば、ローカルノードはパーティションの「正しい」側に存在することになります。タイブレーカは、Erlangのすべてのネットワーク通信が配信されるレイヤ2のスイッチまたはレイヤ3のルータのアドレスであることが望まれます。
+- +ALL_HEART_UDP_PORT+
+  * ハートビート・リスナー用のUDPポート。
+- +ALL_HEART_XMIT_UDP_PORT+
+  * ハートビート・トランスミッター用のUDPポート。
+
+ネットワーク監視の設定に関する詳細は、パーティション検出のOTPアプリケー
+ションのソースファイル
+(https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src)
+を参照してください。
+
+
+CAUTION:
+
+稼働時の設定では、ネットワークAとネットワークBを、物理的に異なるネットワークおよびネットワークインターフェイスにするべきです。しかし、テストおよび開発時には、ネットワークAとネットワークBを物理的に同じネットワークにすることができます（設定ファイルの上記サンプルと同様）。
+
+
+最終ステップとして、*各Hibariノード*で
+
+- +/etc/hosts+ファイルに、クラスター内のすべてのHibariノード群のエントリーがあることを確認します。
++
+------
+10.181.165.230  dev1.your-domain.com    dev1
+10.181.165.231  dev2.your-domain.com    dev2 10.181.165.232  dev3.your-domain.com    dev3
+------
++
+- システムの+/etc/sysctl.conf+ファイルに+vm.swappiness=0+を設定してください。Erlangの VMにおいてswappinessを指定することは望ましくありません。
+
+==== Hibariのインストール
+
+インストールノードからインストールユーザーとしてログインし、以下の手順でHibariクラスターを作成します。
+
+. link:#download-cluster[Clusterツールのダウンロード]および
+  link:#config-cluster[クラスター設定情報ファイルの作成]を行った作業ディレクトリに、Hibariのtarballパッケージとmd5sumファイルがあることを確認します。
++
+------
+$ cd working-directory
+$ ls -1
+clus
+hibari-X.Y.Z-DIST-ARCH-WORDSIZE-md5sum.txt
+hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+hibari.config
+$
+------
+
+. Hibariのすべてのノードに、”hibari”というユーザーを作成します。
++
+------
+$ for i in dev1 dev2 dev3 ; do ./clus/priv/clus.sh -f init hibari $i ; done
+hibari@dev1 hibari@dev2
+hibari@dev3
+------
++
+NOTE: “hibari”ユーザーがすでにそのノードに存在する場合は、-fオプションが“hibari”ユーザーを強制的に削除して、再度作成します。
++
+. 新たに作成した「hibari」ユーザーを通して、HibariのすべてのノードにHibariパッケージをインストールします。
++
++
+------
+$ ./clus/priv/clus-hibari.sh -f init hibari hibari.config hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+hibari@dev1
+hibari@dev2
+hibari@dev3
+------
+
+
+NOTE: デフォルト設定では、Clusterツールはターゲットノード群の+/usr/local/var/lib+にHibariをインストールします。別の場所へインストールしたい場合は、インストールの前に+clus.sh+スクリプト（作業用ディレクトリの+/clus/priv/+の下）を開き、+CT_HOMEBASEDIR+変数を編集してください。
+
+[[starting-multi-node]]
+=== マルチノードのHibariクラスターを起動する／停止する
+
+マルチノードのHibariクラスターの起動および停止は、インストールプロセスを管理したノードから、Clusterツールを使って行います。本節で説明するHibariの各コマンドは、インストール手続き中に作成した
+link:#config-cluster[Clusterツール設定情報ファイル]のファイル名を参照することに注意してください。
+
+==== Hibariクラスターの起動およびブートストラップ
+
+. Clusterツールをダウンロードした作業用ディレクトリに移り、“hibari”ユーザーによって、HibariのすべてのノードでHibariを起動します。
++
+------
+$ cd working-directory
+$ ./clus/priv/clus-hibari.sh -f start hibari hibari.config
+hibari@dev1
+hibari@dev2
+hibari@dev3
+------
++
+. Hibariを初めて起動する場合は、“hibari”ユーザーを通じて、システムのブートストラップを実行します。
++
+------
+$ ./clus/priv/clus-hibari.sh -f bootstrap hibari hibari.config
+hibari@dev1 => hibari@dev1 hibari@dev2 hibari@dev3
+------
++
+Hibariのブートストラッププロセスが、最初の
+link:#eligible-admin-nodes[適格なadminノード]で、HibariのAdminサーバーを起動し、Hibariのデフォルトテーブルとして機能する１つのテーブル「tab1」を作成します。追加テーブルの作成に関する詳細は、link:#creating-tables[新しいテーブルを作成する]を参照してください。
++
+
+NOTE:
+
+ブートストラップで“another_admin_server_running”というエラーが出た場合は、そのネットワークで稼働中の他のHibariのクラスターを停止してください。あるいは他のHibariクラスターや他のアプリケーションで使われていない
+link:#eligible-admin-nodes[Hibariハートビートリスナーポート]をClusterツールに割り当てるように設定変更し、その後で、クラスターのインストール手続きを繰り返してください。
+==== Hibariクラスターの検証
+
+Hibariが立ち上がって稼働していることを検証するため、以下の簡単なチェックを行ってください。
+. “Hibari Web Administration”ページをオープンできるかどうか確認します。
++
+------
+$ your-favorite-browser http://dev1:23080
+------
++
+. 各Hibariノードにpingが打てることを確認します。
++
+------
+$ ./clus/priv/clus-hibari.sh -f ping hibari hibari.config
+hibari@dev1 ... pong
+hibari@dev2 ... pong
+hibari@dev3 ... pong
+------
+
+==== Hibariクラスターの停止
+
+“hibari”ユーザーを通じて、すべてのHibariノードでHibariを停止します。
+------
+$ cd working-directory
+$ ./clus/priv/clus-hibari.sh -f stop hibari hibari.config
+ok
+ok
+ok
+hibari@dev1
+hibari@dev2
+hibari@dev3
+------
+
+[[creating-tables]]
+=== 新しいテーブルを作成する
+
+新しいテーブルは、AdminサーバーのGUIを通して作成するのが最も簡単です。“http://localhost:23080/”を開き、“Add a table”をクリックしてください。GUIに加えて、hibari-admin ツールで新しいテーブルを作成することも可能です。詳しい使用法は、hibari-admin ツールの説明を参照してください。
+
+
+NOTE:
+
+管理用のAPIを使ったテーブル作成の方法については、「Hibariシステム管理者ガイド」を参照してください。
+
+
+GUIを使ってテーブルを追加する場合、以下のようなテーブル設定のオプションがあります。
+
+- +Local+
+  * Boolean型。真の場合、新しいテーブルのデータを保存するブリックは、ローカルノード（Adminサーバーが稼働しているノード）に作成されます。偽の場合、「NodeList」フィールドを使って新たなブリックを作成するクラスターノードを指定します。
+- +BigData+
+  * Boolean型。真の場合、バリューBLOBはディスク上に保存されます。
+- +DiskLogging+
+  * Boolean型。真の場合、すべての更新は、永続性を実現するため、先行書き込みログに記述されます。偽の場合、ブリックは高速処理されますが、クラスターにまたがる電力障害が発生した場合、データ損失にかかる費用負担が大きくなります。
+- +SyncWrites+
+  * Boolean型。真の場合、先行書き込みログへの書き込みは、システムコールfsync(2)を通じて安定記憶装置へ送られます。偽の場合、ブリックは高速処理されますが、クラスターにまたがる電力障害が発生した場合、データ損失にかかる費用負担が大きくなります。
++
+- +VarPrefix+
+  * Boolean型。真の場合、キーの可変長prefixが、コンシステント・ハッシング関数へのインプットとして使われます。偽の場合は、キー全体が使われます。
+＋
+可変長または固定長のprefixのハッシング・スキームの使用は、多くのアプリケーションにとってメリットがあります。一例として、さまざまなユーザーの状態を保持するアプリケーションを考えてみましょう。アプリケーションは、マイクロ・トランザクションを使用して、そのユーザーに関連する（同一テーブルの）さまざまなキーを更新できると都合が良いでしょう。テーブルを作成することで、VarPrefix=trueをVarPrefixSeparator=47(ASCII 47は「/」) およびVarPrefixNumSeparator=2と共に使用し、キー/FooUser/summaryと/FooUser/thing1と/FooUser/thing9が同じチェインに保存されることを保証するハッシング・スキームを作成できます。
++
+NOTE:
+
+
+テーブルを作成するHTTPインターフェイスは、固定長のprefixスキームを公開していません。この場合、Erlangの APIを使用しなければなりません。
++
+- +VarPrefixSeparator+
+  * Integer型。可変長のprefix計算で使われる文字コードを定義します。デフォルト値のASCII 47 (文字「/」)やその他の文字は、UNIX/POSIX形式のファイルやディレクトリを意味するものではないことに注意してください。
+- +VarPrefixNumSeparators+
+  * Integer型。コンシステント・ハッシングで使われるVarPrefixSeparatorのバイト数、およびその間のすべてのバイトを定義します。たとえば/foo/bar/bazというキーについて、VarPrefixSeparator=47、VarPrefixNumSeparators=3であれば、コンシステント・ハッシングで使われるprefixは/foo/bar/となります。
+- +Bricks+
+  * Integer型。Local=true（上記を参照）の場合、この整数は、ローカルノードに作成される論理ブリックの総数を定義します。Local=falseの場合、この値は無視されます。
+- +BPC+
+  * Integer型。チェインごとのブリック数を定義します。
++
+チェインを作成するアルゴリズム → ブリック・マッピングは「ストライピング」の原則に基づいています。ブリックは十分な長さのチェインにストライプ状に置かれ、その結果、ヘッド、ミドル、テイルの役割をする同数の論理ブリックを持つことになります。「Hibariシステム管理者ガイド」の、
+link:hibari-sysadmin-guide.en.html#3-chains-striped-across-3-bricks[3ノードでストライプ構造を持つ3チェイン]の例を参照してください。
++
+Erlang のAPIは、他のチェイン・レイアウトパターンで、テーブルの作成に使用されます。
++
+- +NodeList+
+  * カンマ区切りの文字列。Local=falseの場合、新しいテーブルのために論
+  理ブリックを稼働させるノードの一覧を指定します。カンマ区切りの一覧は、
+  `NodeName@HostName` の形式で表記されます。たとえば、3ノードの指定に
+  は、`hibari1@machine-a、 hibari1@machine-b、 hibari1@machine-c` を使用します。
++
+- +NumNodesPerBlock+
+  * Integer型。Local=falseの場合、この整数がデフォルトのチェイン・ストライピング・アルゴリズムのストライピングの振る舞いに影響します。この値はゼロ（パラメータが無視されます）または複数のBPCパラメータです。
++
+たとえば、NodeListにA、B、C、D、E、Fというノードがあれば、以下のストライピングパターンが使用されます。
++
+    ** NumNodesPerBlock=0の場合、6チェインが6ノードにわたってストライプします。
+    ** NumNodesPerBlock=2かつBPC=2の場合、2チェインがノードA と B、2チェインがノードC と D、2チェインがノードEと Fにわたってストライプします。
+    ** NumNodesPerBlock=3かつBPC=3の場合、3チェインがノード A と Bと C、3チェインがノードD と Eと Fにわたってストライプします。
++
+- +BlockMultFactor+
+  * Integer型。Local=falseの場合、この整数がデフォルトのチェイン・ストライピング・アルゴリズムのストライピングの振る舞いに影響します。この値はゼロ（パラメータが無視されます）またはゼロ以上にしなければなりません。
++
+たとえば、NodeListにA、B、C、D、E、Fというノードがあれば、以下のストライピングパターンが使用されます。
++
+    ** NumNodesPerBlock=0かつBlockMultFactor=0の場合、6チェインが6ノードにわたってストライプします。
+    ** NumNodesPerBlock=2かつBlockMultFactor=5かつBPC=2の場合、トータル30チェインについて、2×5=10チェインがノードA と Bに、2×5=10チェインがノードC と Dに、2×5=10チェインがノードE とFにわたってストライプします。
+    ** NumNodesPerBlock=3かつBlockMultFactor=4かつBPC=3の場合、トータル24チェインについて、3×4=12チェインがノードA と Bと Cに、3×4=12チェインがノードD と Eと Fにわたってストライプします。
