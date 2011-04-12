@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari ® アプリケーション開発者ガイド</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.74.3" /></head><body><div class="article" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title"><a id="id426169"></a>Hibari ® アプリケーション開発者ガイド</h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>改訂履歴</b></th></tr><tr><td align="left">改訂 0.2.1(ja)</td><td align="left">2011/03/14</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>目次</b></p><dl><dt><span class="section"><a href="#_1_hibari">1. 1. Hibariとは</a></span></dt><dd><dl><dt><span class="section"><a href="#_1_1_nosql">1.1. 1.1. なぜNOSQLか？</a></span></dt><dt><span class="section"><a href="#_1_2_hibari">1.2. 1.2. なぜHibariか？</a></span></dt><dd><dl><dt><span class="section"><a href="#engineered-erlang">1.2.1. Erlangによる開発</a></span></dt><dt><span class="section"><a href="#chain-replication">1.2.2. チェイン・レプリケーションによる高可用性と強い一貫性</a></span></dt><dt><span class="section"><a href="#scalability">1.2.3. 簡単でコストが低廉な拡張性</a></span></dt><dt><span class="section"><a href="#high-performance">1.2.4. 高性能 — 特に読み出しと大サイズのバリューの処理の場合</a></span></dt><dt><span class="section"><a href="#simple-powerful-api">1.2.5. シンプルながら強力なクライアントAPI</a></span></dt><dt><span class="section"><a href="#production-proven">1.2.6. 稼働実績</a></span></dt><dt><span class="section"><a href="#hibari-benefits-by-user">1.2.7. 開発者とシステム管理者、そしてビジネスに対するHibariの利点</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#getting-started">2. はじめに</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. システム要件</a></span></dt><dt><span class="section"><a href="#required-software">2.2. 必要なサードパーティのソフトウェア</a></span></dt><dd><dl><dt><span class="section"><a href="#_">2.2.1. シングルノードのインストールに必要なソフトウェア</a></span></dt><dt><span class="section"><a href="#__2">2.2.2. マルチノードのインストールに必要なソフトウェア</a></span></dt></dl></dd><dt><span class="section"><a href="#download-hibari">2.3. Hibariをダウンロードする</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. シングルノードにHibariをインストールする</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. シングルノードのHibariを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_2">2.5.1. Hibariの起動とブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_3">2.5.2. Hibariの検証</a></span></dt><dt><span class="section"><a href="#_hibari_4">2.5.3. Hibariの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#installing-multi-node">2.6. マルチノードのクラスターにHibariをインストールする</a></span></dt><dd><dl><dt><span class="section"><a href="#__4">2.6.1. ユーザー権限の設定</a></span></dt><dt><span class="section"><a href="#download-cluster">2.6.2. Clusterインストーラーツールのダウンロード</a></span></dt><dt><span class="section"><a href="#config-cluster">2.6.3. Clusterツールの設定</a></span></dt><dt><span class="section"><a href="#_hibari_5">2.6.4. Hibariのインストール</a></span></dt></dl></dd><dt><span class="section"><a href="#starting-multi-node">2.7. マルチノードのHibariクラスターを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_6">2.7.1. Hibariクラスターの起動およびブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_7">2.7.2. Hibariクラスターの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#creating-tables">2.8. 新しいテーブルを作成する</a></span></dt></dl></dd></dl></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_1_hibari"></a>1. 1. Hibariとは</h2></div></div></div><p>　Hibari®は、キー・バリュー・ストア（KVS）方式を用いた分散型データベースです。大規模化し続けるデータ、いわゆる“Big Data”に対応し、商用にすぐに活用できます。大量のデータをどのように保管するかが大きな問題となる現在、それに対処する「NOSQL」というソリューションが出てきました。Hibariはこの分野で、次のような多くの理由から注目を集めています。</p><div class="itemizedlist"><ul type="disc"><li>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari ® アプリケーション開発者ガイド</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.74.3" /></head><body><div class="article" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title"><a id="id412959"></a>Hibari ® アプリケーション開発者ガイド</h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>改訂履歴</b></th></tr><tr><td align="left">改訂 0.2.1(ja)</td><td align="left">2011/03/14</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>目次</b></p><dl><dt><span class="section"><a href="#_1_hibari">1. 1. Hibariとは</a></span></dt><dd><dl><dt><span class="section"><a href="#_1_1_nosql">1.1. 1.1. なぜNOSQLか？</a></span></dt><dt><span class="section"><a href="#_1_2_hibari">1.2. 1.2. なぜHibariか？</a></span></dt><dd><dl><dt><span class="section"><a href="#engineered-erlang">1.2.1. Erlangによる開発</a></span></dt><dt><span class="section"><a href="#chain-replication">1.2.2. チェイン・レプリケーションによる高可用性と強い一貫性</a></span></dt><dt><span class="section"><a href="#scalability">1.2.3. 簡単でコストが低廉な拡張性</a></span></dt><dt><span class="section"><a href="#high-performance">1.2.4. 高性能 — 特に読み出しと大サイズのバリューの処理の場合</a></span></dt><dt><span class="section"><a href="#simple-powerful-api">1.2.5. シンプルながら強力なクライアントAPI</a></span></dt><dt><span class="section"><a href="#production-proven">1.2.6. 稼働実績</a></span></dt><dt><span class="section"><a href="#hibari-benefits-by-user">1.2.7. 開発者とシステム管理者、そしてビジネスに対するHibariの利点</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#getting-started">2. はじめに</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. システム要件</a></span></dt><dt><span class="section"><a href="#required-software">2.2. 必要なサードパーティのソフトウェア</a></span></dt><dd><dl><dt><span class="section"><a href="#_">2.2.1. シングルノードのインストールに必要なソフトウェア</a></span></dt><dt><span class="section"><a href="#__2">2.2.2. マルチノードのインストールに必要なソフトウェア</a></span></dt></dl></dd><dt><span class="section"><a href="#download-hibari">2.3. Hibariをダウンロードする</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. シングルノードにHibariをインストールする</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. シングルノードのHibariを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_2">2.5.1. Hibariの起動とブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_3">2.5.2. Hibariの検証</a></span></dt><dt><span class="section"><a href="#_hibari_4">2.5.3. Hibariの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#installing-multi-node">2.6. マルチノードのクラスターにHibariをインストールする</a></span></dt><dd><dl><dt><span class="section"><a href="#__4">2.6.1. ユーザー権限の設定</a></span></dt><dt><span class="section"><a href="#download-cluster">2.6.2. Clusterインストーラーツールのダウンロード</a></span></dt><dt><span class="section"><a href="#config-cluster">2.6.3. Clusterツールの設定</a></span></dt><dt><span class="section"><a href="#_hibari_5">2.6.4. Hibariのインストール</a></span></dt></dl></dd><dt><span class="section"><a href="#starting-multi-node">2.7. マルチノードのHibariクラスターを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_6">2.7.1. Hibariクラスターの起動およびブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_7">2.7.2. Hibariクラスターの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#creating-tables">2.8. 新しいテーブルを作成する</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. クライアント向けAPI ： ネイティブErlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_api">3.1. Hibariのクライアント向けAPIの概要</a></span></dt><dd><dl><dt><span class="section"><a href="#_erlang">3.1.1. Erlangの基本データ型</a></span></dt><dt><span class="section"><a href="#_hibari_8">3.1.2. Hibariのデータモデル</a></span></dt></dl></dd><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd></dl></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_1_hibari"></a>1. 1. Hibariとは</h2></div></div></div><p>　Hibari®は、キー・バリュー・ストア（KVS）方式を用いた分散型データベースです。大規模化し続けるデータ、いわゆる“Big Data”に対応し、商用にすぐに活用できます。大量のデータをどのように保管するかが大きな問題となる現在、それに対処する「NOSQL」というソリューションが出てきました。Hibariはこの分野で、次のような多くの理由から注目を集めています。</p><div class="itemizedlist"><ul type="disc"><li>
 Hibariは、<span class="strong"><strong>プログラミング言語Erlangと革新的なチェイン・レプリケーション技術を使った唯一のオープンソースのキー・バリュー型データベース（KVDB）</strong></span> です。Erlangは、堅牢で高性能な分散型ストレージ・ソリューションの構築には理想的なプログラミング基盤を提供します。一方、チェイン・レプリケーションは、データの一貫性を犠牲にすることなく、高いスループットと高可用性を提供します。
 </li><li>
 Hibariは、<span class="strong"><strong>キャリアクラスの通信事業分野で要求される厳格な基準を満たすように作られた唯一のオープンソースのキー・バリュー型データベース</strong></span> です。通信事業分野の製品では、数百万ユーザーの利用実績を持ちます。
@@ -208,7 +208,7 @@ GitHubアカウントを取得していない場合は、ここで取得して�
 </li></ul></div></li></ul></div><p>現在、Bash、Expect、Perl、SSHにはバージョン指定はありません。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h5 class="title"><a id="_hibari"></a>2.2.2.2. Hibariノードに必要なソフトウェア</h5></div></div></div><p>Hibariをインストールするノード群に必要なソフトウェアは以下のとおりです。
 - SSH (server) - <a class="ulink" href="http://www.openssh.com/" target="_top">http://www.openssh.com/</a>
 - OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
-  * Erlangの“crypto”モジュールに必要</p></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="download-hibari"></a>2.3. Hibariをダウンロードする</h3></div></div></div><p>現在、Hibariはビルド済みで提供することができません。当面は、ソースコードからHibariをビルドしてください。第7章の<a class="xref" href="#">???</a>の説明に従ってビルドして、その後、本節に戻ってセットアップを行ってください。</p><p>Hibariをビルドすると、後でセットアップに使用する2つのファイルが出力されます。
+  * Erlangの“crypto”モジュールに必要</p></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="download-hibari"></a>2.3. Hibariをダウンロードする</h3></div></div></div><p>現在、Hibariはビルド済みで提供することができません。当面は、ソースコードからHibariをビルドしてください。第7章の TODO(「7. ソースコードからHibariをビルドする」) の説明に従ってビルドして、その後、本節に戻ってセットアップを行ってください。</p><p>Hibariをビルドすると、後でセットアップに使用する2つのファイルが出力されます。
 - tarballパッケージ“hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz”
 - md5sumファイル“hibari-X.Y.Z-DIST-ARCH-WORDSIZE-md5sum.txt”</p><p>_X.Y.Z_はリリースバージョン、_DIST_はリリースのディストリビューション、_ARCH_はリリースのアーキテクチャ、_WORDSIZE_はリリースのワードサイズです。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="installing-single-node"></a>2.4. シングルノードにHibariをインストールする</h3></div></div></div><p>シングルノードにHibariをインストールしたシステムには、マルチノードのHibariクラスターが提供するようなデータのレプリケーションや冗長性はありません。しかし、テストや開発上の目的で簡単にHibariをシングルノードにインストールして配置したいときは、この方法を利用します。</p><div class="orderedlist"><ol type="1"><li><p>
 Hibariを稼働させるディレクトリを作成します。
@@ -319,10 +319,7 @@ Hibariのストレージ・ブリックとして機能するノード群のホ�
 <code class="literal">ALL_HEART_XMIT_UDP_PORT</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
 ハートビート・トランスミッター用のUDPポート。
-</li></ul></div></li></ul></div><p>ネットワーク監視の設定に関する詳細は、パーティション検出のOTPアプリケー
-ションのソースファイル
-(<a class="ulink" href="https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src" target="_top">https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src</a>)
-を参照してください。</p><p>CAUTION:</p><p>稼働時の設定では、ネットワークAとネットワークBを、物理的に異なるネットワークおよびネットワークインターフェイスにするべきです。しかし、テストおよび開発時には、ネットワークAとネットワークBを物理的に同じネットワークにすることができます（設定ファイルの上記サンプルと同様）。</p><p>最終ステップとして、*各Hibariノード*で</p><div class="itemizedlist"><ul type="disc"><li><p>
+</li></ul></div></li></ul></div><p>ネットワーク監視の設定に関する詳細は、パーティション検出のOTPアプリケーションのソースファイル (<a class="ulink" href="https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src" target="_top">https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src</a>) を参照してください。</p><p>CAUTION:</p><p>稼働時の設定では、ネットワークAとネットワークBを、物理的に異なるネットワークおよびネットワークインターフェイスにするべきです。しかし、テストおよび開発時には、ネットワークAとネットワークBを物理的に同じネットワークにすることができます（設定ファイルの上記サンプルと同様）。</p><p>最終ステップとして、*各Hibariノード*で</p><div class="itemizedlist"><ul type="disc"><li><p>
 +/etc/hosts+ファイルに、クラスター内のすべてのHibariノード群のエントリーがあることを確認します。
 </p><pre class="screen">10.181.165.230  dev1.your-domain.com    dev1
 10.181.165.231  dev2.your-domain.com    dev2 10.181.165.232  dev3.your-domain.com    dev3</pre></li><li>
@@ -405,10 +402,7 @@ Boolean型。真の場合、キーの可変長prefixが、コンシステント�
 <a class="ulink" href="hibari-sysadmin-guide.en.html#3-chains-striped-across-3-bricks" target="_top">3ノードでストライプ構造を持つ3チェイン</a>の例を参照してください。</p><p>+
 Erlang のAPIは、他のチェイン・レイアウトパターンで、テーブルの作成に使用されます。</p><p>+
 - <code class="literal">NodeList</code>
-  * カンマ区切りの文字列。Local=falseの場合、新しいテーブルのために論
-  理ブリックを稼働させるノードの一覧を指定します。カンマ区切りの一覧は、
-  <code class="literal">NodeName@HostName</code> の形式で表記されます。たとえば、3ノードの指定に
-  は、<code class="literal">hibari1@machine-a、 hibari1@machine-b、 hibari1@machine-c</code> を使用します。</p><p>+
+  * カンマ区切りの文字列。Local=falseの場合、新しいテーブルのために論理ブリックを稼働させるノードの一覧を指定します。カンマ区切りの一覧は、<code class="literal">NodeName@HostName</code> の形式で表記されます。たとえば、3ノードの指定には、<code class="literal">hibari1@machine-a、 hibari1@machine-b、 hibari1@machine-c</code> を使用します。</p><p>+
 - <code class="literal">NumNodesPerBlock</code>
   * Integer型。Local=falseの場合、この整数がデフォルトのチェイン・ストライピング・アルゴリズムのストライピングの振る舞いに影響します。この値はゼロ（パラメータが無視されます）または複数のBPCパラメータです。</p><p>+
 たとえば、NodeListにA、B、C、D、E、Fというノードがあれば、以下のストライピングパターンが使用されます。</p><p>+
@@ -420,4 +414,1706 @@ Erlang のAPIは、他のチェイン・レイアウトパターンで、テー�
 たとえば、NodeListにA、B、C、D、E、Fというノードがあれば、以下のストライピングパターンが使用されます。</p><p>+
     <span class="strong"><strong> NumNodesPerBlock=0かつBlockMultFactor=0の場合、6チェインが6ノードにわたってストライプします。
     </strong></span> NumNodesPerBlock=2かつBlockMultFactor=5かつBPC=2の場合、トータル30チェインについて、2×5=10チェインがノードA と Bに、2×5=10チェインがノードC と Dに、2×5=10チェインがノードE とFにわたってストライプします。
-    ** NumNodesPerBlock=3かつBlockMultFactor=4かつBPC=3の場合、トータル24チェインについて、3×4=12チェインがノードA と Bと Cに、3×4=12チェインがノードD と Eと Fにわたってストライプします。</p></div></div></div></body></html>
+    ** NumNodesPerBlock=3かつBlockMultFactor=4かつBPC=3の場合、トータル24チェインについて、3×4=12チェインがノードA と Bと Cに、3×4=12チェインがノードD と Eと Fにわたってストライプします。</p></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-erlang"></a>3. クライアント向けAPI ： ネイティブErlang</h2></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_api"></a>3.1. Hibariのクライアント向けAPIの概要</h3></div></div></div><p>キー・バリュー型データベースとしてHibariが提供するクライアント向けAPIは非常にシンプルです。APIによって、データの追加、検索、削除という基本的な操作ができます。制限はありますが、その範囲内で操作を組み合わせればアトミック・トランザクションも実行できます。</p><p>Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。</p><p>*データの追加*</p><div class="itemizedlist"><ul type="disc"><li><p>
+まだ存在していないキーとバリューのペアを新たに追加します。オプションでフラグを追加できます。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-add" target="_top">brick_simple:add/6</a>
+</li></ul></div></li><li><p>
+既に存在しているキーに対して、新しいバリューやフラグを割り当てます。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-replace" target="_top">brick_simple:replace/6</a>
+</li></ul></div></li><li><p>
+キーの存在の有無にかかわらず、キーとバリューのペアと、オプションでフラグを設定します。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-set" target="_top">brick_simple:set/6</a>
+</li></ul></div></li></ul></div><p><span class="strong"><strong>データの検索</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>
+キーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-get" target="_top">brick_simple:get/4</a>
+</li></ul></div></li><li><p>
+辞書の順に並んで連続している複数のキーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many/5</a>
+</li></ul></div></li></ul></div><p><span class="strong"><strong>データの削除</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>
+キーとバリューのペア、およびそれに関連付けられたフラグを削除します。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-delete" target="_top">brick_simple:delete/4</a>
+</li></ul></div></li></ul></div><p><span class="strong"><strong>複合操作</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>
+指定した操作のリストを実行します。オプションで、アトミック・トランザクションとして実行します。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-do" target="_top">brick_simple:do/4</a>
+</li></ul></div></li></ul></div><p><span class="strong"><strong>フォールド操作</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>
+テーブル内のすべてのキーに対して、フォールド操作を実行します。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-fold-table" target="_top">brick_simple:fold_table/7</a>
+</li></ul></div></li><li><p>
+指定したprefixで始まるすべてのキーに対して、フォールド操作を実行します。
+</p><div class="itemizedlist"><ul type="circle"><li>
+<a class="ulink" href="#brick-simple-fold-key" target="_top">brick_simple:fold_key_prefix/9</a>
+</li></ul></div></li></ul></div><p>クライアント側の必要に応じて、データの追加、検索、削除に「テスト・アンド・セット」ロジックを適用すると、指定したキーのタイムスタンプと一致する場合にのみ操作を実行させることができます。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_erlang"></a>3.1.1. Erlangの基本データ型</h4></div></div></div><p>この章で参照するErlangの基本データ型について、簡単に紹介します。これは、
+<a class="ulink" href="http://www.erlang.org/doc/reference_manual/data_types.html" target="_top">Erlangのデータ型に関する公式ドキュメント</a>からの抜粋を少し変更したものです。詳細な情報は、Erlangの公式ドキュメントを参照してください。</p><div class="important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[重要項目]" src="./images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>すべてのErlangのコマンドは、最後にピリオド（’.’）をつけてください。</p></td></tr></table></div><div class="variablelist"><dl><dt><span class="term">
+項（term）
+</span></dt><dd>
+すべてのデータ型のデータを*項（term）*と呼びます。
+</dd><dt><span class="term">
+数値（number）
+</span></dt><dd>
+数値定数には、*Integer（整数）型*と*Float（浮動小数点）型*の2種類があります。
+</dd><dt><span class="term">
+アトム（atom）
+</span></dt><dd><p>
+アトム（atom）はリテラル（名前を持つ定数）です。英小文字以外で始まるアトム、および英数字と下線（’_’）と’@’以外を含むアトム場合は、次の例のように一重引用符（’）で囲んでください。
+</p><pre class="screen">hello
+phone_number
+'Monday'
+'phone number'
+'hello'
+'phone_number'</pre></dd><dt><span class="term">
+Bit string（ビット列）とBinary（バイナリ）
+</span></dt><dd><p>
+*Bit string（ビット列）*は、型指定のないメモリー領域にデータを保管するときに使用します。表記は、
+<a class="ulink" href="http://www.erlang.org/doc/reference_manual/expressions.html#bit_syntax" target="_top">Erlangのビット構文</a>に従います。また、8の倍数のビット数からなるビット列を、*Binary（バイナリ）*と呼びます。たとえば次のように表します。
+</p><pre class="screen">&lt;&lt;10,20&gt;&gt;
+&lt;&lt;"ABC"&gt;&gt;</pre></dd><dt><span class="term">
+Tuple（タプル）
+</span></dt><dd><p>
+*Tuple（タプル）*は、固定数の項の組からなるデータ型です。次の例のように、中括弧（’{ }’）で囲んで表します。
+</p><pre class="screen">{Term1,...,TermN}</pre></dd><dt><span class="term">
+List（リスト）
+</span></dt><dd><p>
+*List（リスト）*は、可変数の項の組からなるデータ型です。次の例のように、大括弧（’[ ]’）で囲んで表します。
+</p><pre class="screen">[Term1,...,TermN]</pre></dd><dt><span class="term">
+String（文字列）
+</span></dt><dd>
+*String（文字列）*は、二重引用符（”）で囲んで表します。これは、Erlangの正式のデータ型ではありません。リスト[$h,$e,$l,$l,$o]、つまり[104,101,108,108,111]の代わりに、簡略化した表現として”hello”という文字列を使用します。
+</dd><dt><span class="term">
+Boolean（ブール）
+</span></dt><dd>
+ErlangにBoolean型（論理型）はありません。ブール値を表す場合は、代わりにアトムの`真（true）`と`偽（false）`を使用します。
+</dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_8"></a>3.1.2. Hibariのデータモデル</h4></div></div></div><p>HibariのテーブルをSQLデータベースの方法で表現すると、次のようになります。</p><p><a id="sql-definition-hibari"></a>+</p><pre class="screen">CREATE TABLE foo (
+    BLOB key;
+    BLOB value;
+    INTEGER timestamp;                  -- 単調に増加
+    INTEGER expiration_time;            -- 通常はゼロ
+    LIST OF ATOMS_AND_TWO_TUPLES flags; -- 高速化のためRAMに保管されるメタデータ
+) PRIMARY KEY key;</pre><p>Hibariのテーブル名は、Erlangのデータ型では「アトム」になります。キーに関連するすべての属性の型は、次の表のとおりです。</p><p>属性名
+        Erlangのデータ型
+ストレージ
+説明</p><p>キー
+Binary（バイナリ）
+        RAM
+        バイナリ型のBLOBで、サイズは任意。ストレージがRAMであるため、すべてのキーがRAMに収まるサイズであることが必要です。</p><p>バリュー
+        Binary（バイナリ）
+RAMまたはディスク
+バイナリ型のBLOBで、サイズは任意。バリューBLOBの現実的な上限は16MB程度です。タイムスタンプ
+        Integer（整数）
+RAM
+単調増加するカウンター。通常はクライアントの実時間（そうでない場合もあります）。キーの現在のタイムスタンプの値よりも小さい値のタイムスタンプでキーを更新することはできません。</p><p>有効期限
+Integer（整数）
+RAM
+キーの有効期限は、UNIXのtime_tで表現されます。値が0の場合は有効期限がないので、RAMのオーバーヘッドが不要になります。フラグ
+List（リスト）
+RAM
+この属性をSQLで明確に表現することはできません。アトムおよび（または）{atom(), term()}のぺアのリストです。この属性はRAMストレージにあるので、あまり多用はできません。</p><p>ストレージがRAMの場合、通常のクエリー処理では、RAM上のコピーでデータを検索します。キーの属性を更新する場合は、クラスター全体の電源障害が発生した場合のデータの損失を防ぐために、どんな場合でも更新前に先行ログに書き込まれます。詳細については、???を参照してください。</p><p>ストレージがディスクの場合、属性の値はRAMには保管されていません。RAM内のメタデータは属性の場所として、ファイル番号、バイトオフセット値、およびバイト長に対するポインターを保持します。属性を検索するには、共通ログ内のログ・シーケンス・ファイルをオープンし、 <code class="literal">lseek(2) ` をコールしてから、 `read(2)</code> をコールします。</p><div class="variablelist"><dl><dt><span class="term">
+最善のケース
+</span></dt><dd>
+対象データがすべてOSのページ・キャッシュ内にあるため、ディスクからキーのバリューBLOBを読み出す際に、ディスクのシークを必要としません。
+</dd><dt><span class="term">
+通常のケース
+</span></dt><dd>
+ファイルのinode情報はキャッシュにありますが、必要なファイル・ページがキャッシュにないため、シークと読み出しが1回だけ必要になります。
+</dd><dt><span class="term">
+最悪のケース
+</span></dt><dd>
+ファイルシステムは、中間ディレクトリ・データ、inode、inode内の間接ストレージ・ブロック・データを読み込むために、シークと読み出しをさらに実施する必要があります。
+</dd></dl></div><p>バリューBLOBのサイズの現実的な上限値は、BLOB全体のサイズと、大きいサイズのBLOBのアクセス頻度によって異なります。たとえば、64MBのバリューBLOBをたまに保管する場合と、常に64MBのバリューBLOBを100％の負荷で書き込む場合とでは、話が違います。HibariのAPIを用いて更新またはフェッチを実行する場合は、バリューBLOB全体を対象とする以外の方法はありません。したがって極端な場合、4GBの単一BLOBを対象に操作を実行しようとすると、ブリックが何秒間もブロックされることがあります。さらに、大きいサイズのBLOBの処理中は、`busy_dist_port`イベントが他のプロセスをブロックすることもあります。</p></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-add"></a>3.2. brick_simple:add/6</h3></div></div></div><p>書式</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout).</strong></span>
+</dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+テーブルTabにキーKeyがまだ存在していない場合、キーKeyとバリューValueのペアを追加します。さらにオプションでフラグFlagsも追加できます。キーKeyが既に存在している場合、操作は失敗します。
+</dd></dl></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーとバリューのペアを追加するテーブルの名前
+</li><li>
+必須
+</li><li>
+型
+</li><li><p>
+<code class="literal">Tab = table()</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Key</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+バリューとペアになり、テーブルに追加されるキー
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Key = key()</code>
+</li><li>
+<code class="literal">key() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li><p>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</p><p>NOTE:</p></li></ul></div></li></ul></div></dd></dl></div><p>Keyはiolist()またはbinary()で指定できますが、操作の実行前にBinary型に変換されます。これは、Valueに関しても同様です。+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Value</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーのペアとなるバリュー
+</li><li>
+必須
+</li><li><p>
+型:
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Value = val()</code>
+</li><li>
+<code class="literal">val() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>ExpTime</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーの有効期限。UNIXのtime_t()で表現されます。
+</li><li>
+任意：デフォルト値は0（有効期限なし）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">ExpTime = exp_time()</code>
+</li><li>
+<code class="literal">exp_time() = time_t()</code>
+</li><li>
+<code class="literal">time_t() = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Flags</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+‘add’ 操作に適用する操作フラグのリスト、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するため、カスタム特性フラグの多用はお勧めできません。
+</li><li>
+任意：デフォルト値は空リスト
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Flags = flags_list()</code>
+</li><li>
+<code class="literal">flags_list() = [do_op_flag() | property()]</code>
+</li><li>
+<code class="literal">do_op_flag() = 'value_in_ram'</code>
+</li><li>
+<code class="literal">property() = atom() | {term(), term()}</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">'value_in_ram'</code>
+</p><div class="itemizedlist"><ul type="square"><li><p>
+ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
+</p><p>NOTE:</p></li></ul></div></li></ul></div></li></ul></div></dd></dl></div><p>Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。</p><p>+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：デフォルト値は15,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+<code class="literal">timeout() = integer() | 'infinity'</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+正常終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">'ok'</code>
+</li></ul></div></dd></dl></div><p>エラー終了の場合</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">{'key_exists',timestamp()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+キーが既に存在しているため、操作が失敗しました。
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li></ul></div></li><li><p>
+<code class="literal">'invalid_flag_present'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+Flags引数に無効な `?do_op_flag() ` が検出されたため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">'brick_not_available'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+該当キーに相当するチェインの現在の長さがゼロのため利用できないので、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{{'nodedown',node()},{'gen_server','call',term()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークのパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をお  * <code class="literal">node() = atom()</code>
+</li></ul></div></li></ul></div><p>エイリアス
+ ::
+- brick_simple:add/3
+  * <code class="literal">brick_simple:add(Tab, Key, Value).</code>
+- brick_simple:add/4
+  * <code class="literal">brick_simple:add(Tab, Key, Value, Flags).</code>
+  * <code class="literal">brick_simple:add(Tab, Key, Value, Timeout).</code></p><p>例</p><pre class="literallayout">::新しいキーとバリューのペアの追加に成功した場合</pre><p>+</p><pre class="screen">&gt; brick_simple:add(tab1, &lt;&lt;"foo"&gt;&gt;, &lt;&lt;"Hello, world!"&gt;&gt;).
+ok</pre><p>+</p><pre class="literallayout">::追加しようとして、キーが既に存在しているため失敗した場合</pre><p>+</p><pre class="screen">&gt; brick_simple:add(tab1, &lt;&lt;"foo"&gt;&gt;, &lt;&lt;"Goodbye, world!"&gt;&gt;).
+{key_exists,1271542959131192}</pre><p>+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+ブリックのデフォルトのストレージ設定にかかわらず、バリューをRAMに保管するように指定して、新しいキーとバリューのペアの追加に成功した場合
+</p><pre class="screen">&gt; brick_simple:add(tab1, "foo2", "this is value2", 20000).
+ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-replace"></a>3.3. brick_simple:replace/6</h3></div></div></div><p>書式</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:replace(Tab, Key, Value, ExpTime, Flags, Timeout).</strong></span>
+</dd></dl></div><p>解説</p><pre class="literallayout">::テーブル`Tab`にキー`Key`が既に存在している場合に、キー`Key`とバリュー`Value`のペアを更新します。さらにオプションでフラグ`Flags`も更新します。キー`Key`が存在しない場合、操作は失敗します。</pre><p>引数
+ ::
+<span class="strong"><strong>Tab</strong></span></p><div class="itemizedlist"><ul type="disc"><li>
+キーとバリューのペアを更新するテーブルの名前
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Tab = table()</code>
+</li><li><p>
+<code class="literal">table() = atom()</code>
+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>Key</strong></span>
+</dd></dl></div></li></ul></div></li><li>
+新たにバリューとペアになって、テーブルを更新するキー
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Key = key()</code>
+</li><li>
+<code class="literal">key() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li><p>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</p><p>NOTE:</p></li></ul></div></li></ul></div><p>`Key`は`iolist()`または`binary()`で指定できますが、操作の実行前にBinary型に変換されます。これは、`Value`に関しても同様です。+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Value</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーのペアとなる新しいバリュー
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Value = val()</code>
+</li><li>
+<code class="literal">val() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>ExpTime</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーの有効期限。UNIXのtime_t()で表現されます。
+</li><li>
+任意：デフォルト値は0（有効期限なし）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">ExpTime = exp_time()</code>
+</li><li>
+<code class="literal">exp_time() = time_t()</code>
+</li><li>
+<code class="literal">time_t() = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Flags</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">replace</code> 操作に適用する操作フラグのリスト、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するので、カスタム特性フラグの多用はお勧めできません。
+</li><li>
+任意：デフォルト値は空リスト
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Flags = flags_list()</code>
+</li><li>
+<code class="literal">flags_list() = [do_op_flag() | property()]</code>
+</li><li>
+<code class="literal">do_op_flag() = {'testset', timestamp()} |'value_in_ram'</code>
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li><li>
+<code class="literal">property() = atom() | {term(), term()}</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">{'testset', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+既存のキーのタイムスタンプが`timestamp()`と正確に一致しない場合、操作は失敗します。
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用するときは、キーのタイムスタンプが`timestamp()`と正確に一致しない場合、トランザクションは終了します。
+</li></ul></div></li><li><p>
+<code class="literal">'value_in_ram'</code>
+</p><div class="itemizedlist"><ul type="square"><li><p>
+ブリックのデフォルトのストレージの場所指定を無効にして、バリューBLOBをRAMに保管します。
+</p><p>NOTE:</p></li></ul></div></li></ul></div></li></ul></div></dd></dl></div><p>Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：省略値は15,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+<code class="literal">timeout() = integer() | 'infinity'</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+正常終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">'ok'</code>
+</li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+エラー終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">'key_not_exist'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+キーが存在しないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{'ts_error', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`{<span class="emphasis"><em>testset</em></span>, timestamp()}`フラグが使用され、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、該当のキーの現在のタイムスタンプの値です。
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li></ul></div></li><li><p>
+<code class="literal">'invalid_flag_present'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`Flags`引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">'brick_not_available'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+該当キーに相当するチェインの最新の長さがゼロで利用できないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{{'nodedown',node()},{'gen_server','call',term()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+</li><li>
+<code class="literal">node() = atom()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>エイリアス</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+brick_simple:replace/3
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:replace(Tab, Key, Value).</code>
+</li></ul></div></li><li><p>
+brick_simple:replace/4
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:replace(Tab, Key, Value, Flags).</code>
+</li><li>
+<code class="literal">brick_simple:replace(Tab, Key, Value, Timeout).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>例</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーとバリューのペアの更新に成功た場合
+</p><pre class="screen">&gt; brick_simple:replace(tab1, &lt;&lt;"foo"&gt;&gt;, &lt;&lt;"Goodbye, world!"&gt;&gt;).
+ok</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+更新しようとして、キーが存在しないために失敗した場合
+</p><pre class="screen">&gt; brick_simple:replace(tab1, &lt;&lt;"key3"&gt;&gt;, &lt;&lt;"new and improved value"&gt;&gt;).
+key_not_exist</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+ブリックのデフォルトのストレージ設定に関わらず、バリューをRAMに保管することを指定して、キーとバリューのペアの更新に成功した場合
+</p><pre class="screen">&gt; brick_simple:replace(tab1, "foo", "You again, world!", ['value_in_ram']).
+ok</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーを更新しようとして、現在のタイムスタンプの指定が正しくなかったために失敗した場合
+</p><pre class="screen">&gt; brick_simple:replace(tab1, "foo", "Whole new value", [{'testset', 12345}]).
+{ts_error,1271543165272987}</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+現在のタイムスタンプを正しく指定して、キーとバリューのペアの更新に成功した場合
+</p><pre class="screen">&gt; brick_simple:replace(tab1, "foo", "Whole new value", [{'testset', 1271543165272987}]).
+ok</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+デフォルトではない操作のタイムアウト時間を指定して、キーとバリューのペアの更新に成功た場合
+</p><pre class="screen">&gt; brick_simple:replace(tab1, "foo", "Foo again?", 30000).
+ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-set"></a>3.4. brick_simple:set/6</h3></div></div></div><p>書式</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:set(Tab, Key, Value, ExpTime, Flags, Timeout).</strong></span>
+</dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+テーブル`Tab`にキー`Key`が既に存在しているかどうかに関わらず、キー`Key`とバリュー`Value`のペアをテーブル`Tab`に設定します。さらにオプションで、フラグ`Flags`もテーブル`Tab`に設定します。
+</dd></dl></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーとバリューのペアを設定するテーブルの名前
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Tab = table()</code>
+</li><li>
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Key</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+バリューとペアにしてテーブルに設定するキー
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Key = key()</code>
+</li><li>
+<code class="literal">key() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li><p>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>`</p></td></tr></table></div></li></ul></div></li></ul></div></dd></dl></div><p>Key``iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。これは、`Value`に関しても同様です。</p><p>+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Value</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーとペアになるバリュー
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Value = val()</code>
+</li><li>
+<code class="literal">val() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>ExpTime</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーの有効期限。UNIXのtime_t()で表現されます。
+</li><li>
+任意：省略値は0（有効期限なし）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">ExpTime = exp_time()</code>
+</li><li>
+<code class="literal">exp_time() = time_t()</code>
+</li><li>
+<code class="literal">time_t() = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Flags</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">set</code> 操作に適用される操作フラグ、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するので、カスタム特性フラグの多用はお勧めできません。
+</li><li>
+任意：省略値は空リスト
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Flags = flags_list()</code>
+</li><li>
+<code class="literal">flags_list() = [do_op_flag() | property()]</code>
+</li><li>
+<code class="literal">do_op_flag() = {'testset', timestamp()} |'value_in_ram'</code>
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li><li>
+<code class="literal">property() = atom() | {term(), term()}</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">{'testset', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+現在のキーのタイムスタンプが?timestamp()と正確に一致しない場合、操作は失敗します。
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーのタイムスタンプが `timestamp() `と正確に一致しない場合、トランザクションは終了します。このフラグを `set `で用いると、キーが存在しない場合やキーが存在してもタイムスタンプが一致しない場合、エラーとなります。
+</li></ul></div></li><li><p>
+<code class="literal">'value_in_ram'</code>
+</p><div class="itemizedlist"><ul type="square"><li><p>
+ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
+</p><p>NOTE:</p></li></ul></div></li></ul></div></li></ul></div></dd></dl></div><p>Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：省略値は15,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+<code class="literal">timeout() = integer() | 'infinity'</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+正常終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">'ok'</code>
+</li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+エラー終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">'key_not_exist'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`{<span class="emphasis"><em>testset</em></span>, timestamp()}`フラグが使用され、キーが存在しないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{'ts_error', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`{<span class="emphasis"><em>testset</em></span>, timestamp()}`フラグが使用され、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li></ul></div></li><li><p>
+<code class="literal">'invalid_flag_present'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+Flags引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">'brick_not_available'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{{'nodedown',node()},{'gen_server','call',term()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+</li><li>
+<code class="literal">node() = atom()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>エイリアス</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+brick_simple:set/3
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:set(Tab, Key, Value).</code>
+</li></ul></div></li><li><p>
+brick_simple:set/4
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:set(Tab, Key, Value, Flags).</code>
+</li><li>
+<code class="literal">brick_simple:set(Tab, Key, Value, Timeout).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>例</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーとバリューのペアの設定に成功した場合
+</p><pre class="screen">&gt; brick_simple:set(tab1, &lt;&lt;"key4"&gt;&gt;, &lt;&lt;"cool value"&gt;&gt;).
+ok</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+ブリックのデフォルトのストレージ設定に関わらず、バリューをRAMに保管することを指定して、キーとバリューのペアの設定に成功した場合
+</p><pre class="screen">&gt; brick_simple:set(tab1, "goo", "value6", ['value_in_ram']).
+ok</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーとバリューのペアを設定しようとして`testset`フラグを指定したにもかかわらず、キーが存在しないために失敗した場合
+</p><pre class="screen">&gt; brick_simple:set(tab1, "boo", "hoo", [{'testset', 1271543165272987}]).
+key_not_exist</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+`testset`フラグを指定し、かつ既存のキーのタイムスタンプが指定したタイムスタンプと一致したため、キーとバリューのペアの設定に成功した場合
+</p><pre class="screen">&gt; brick_simple:set(tab1, "goo", "value7", [{'testset', 1271543165272432}]).
+ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-get"></a>3.5. brick_simple:get/4</h3></div></div></div><p>書式
+ ::
+<span class="strong"><strong>brick_simple:get(Tab, Key, Flags, Timeout).</strong></span></p><p>解説</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+テーブル`Tab`から、キー`Key`とフラグ`Flags`で指定したキーの属性を検索します。
+</dd></dl></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーを検索するテーブルの名前
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Tab = table()</code>
+</li><li>
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Key</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+テーブルから検索したいキー
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Key = key()</code>
+</li><li>
+<code class="literal">key() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li><p>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>`</p></td></tr></table></div></li></ul></div></li></ul></div></dd></dl></div><p>Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Flags</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">get</code> 操作に適用される操作フラグのリスト
+</li><li>
+任意：デフォルト値は空リスト
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Flags = flags_list()</code>
+</li><li>
+<code class="literal">flags_list() = [do_op_flag()]</code>
+</li><li>
+<code class="literal">do_op_flag() = 'get_all_attribs' | 'witness' | {'testset',
+    timestamp()} | 'must_exist' | 'must_not_exist'</code>
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">'get_all_attribs'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+</li></ul></div></li><li><p>
+<code class="literal">'witness'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+検索結果のバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
+</li></ul></div></li><li><p>
+<code class="literal">{'testset', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+キーのタイムスタンプが`timestamp()`と正確に一致しない場合、操作は失敗します。
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーのタイムスタンプが`timestamp()`と正確に一致しない場合、トランザクションは終了します。このフラグは、`must_exist`と`must_not_exist`の両フラグに優先します。
+</li></ul></div></li><li><p>
+<code class="literal">'must_not_exist'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーが存在しない場合にトランザクションが終了します。
+</li></ul></div></li><li><p>
+<code class="literal">'must_not_exist'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーが存在する場合、トランザクションが終了します。このフラグは、クライアント・アプリケーションにとって2個以上のキーの間の関係が重要な場合に便利です。
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：省略値は15,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+<code class="literal">timeout() = integer() | 'infinity'</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><p>正常終了の場合</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">{'ok', timestamp(), val()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`witness `フラグも `get_all_attribs `フラグも、どちらも指定していない `get `要求が成功しました。
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li><li>
+<code class="literal">val() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</li></ul></div></li><li><p>
+<code class="literal">{'ok', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`witness`フラグを指定して、`get_all_attribs`フラグは指定していない`get`要求が成功しました。
+</li></ul></div></li><li><p>
+<code class="literal">{'ok', timestamp(), proplist()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`witness`フラグも`get_all_attribs`フラグもともに指定した`get`要求が成功しました。
+</li><li>
+<code class="literal">proplist() = [property()]</code>
+</li><li>
+<code class="literal">property() = atom() | {term(), term()}</code>
+</li></ul></div></li><li><p>
+<code class="literal">{'ok', timestamp(), val(), exp_time(), proplist()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`get_all_attribs`フラグを指定して、`witness`フラグは指定していない`get`要求が成功しました。
+</li><li><p>
+<code class="literal">exp_time() = time_t()</code>
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">proplist()`が返される場合、リスト中の特性のひとつは常に</code>{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+エラー終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">'key_not_exist'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+キーが存在しないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{'ts_error', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`{<span class="emphasis"><em>testset</em></span>, timestamp()}`フラグを使用して、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+</li></ul></div></li><li><p>
+<code class="literal">'invalid_flag_present'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+Flags引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">'brick_not_available'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{{'nodedown',node()},{'gen_server','call',term()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再信してください。
+</li><li>
+<code class="literal">node() = atom()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>エイリアス</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+brick_simple:get/2
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:get(Tab, Key).</code>
+</li></ul></div></li><li><p>
+brick_simple:get/3
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:get(Tab, Key, Flags).</code>
+</li><li>
+<code class="literal">brick_simple:get(Tab, Key, Timeout).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>例</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーとバリューのペアの検索に成功した場合
+</p><pre class="screen">&gt; brick_simple:get(tab1, "goo").
+{ok,1271543165272432,&lt;&lt;"value7"&gt;&gt;}</pre><pre class="literallayout"> :
+バリューBLOBなしでキーの検索に成功した場合</pre><pre class="screen">&gt; brick_simple:get(tab1, "goo", ['witness']).
+{ok,1271543165272432}</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーが存在しないため、検索に失敗した場合
+</p><pre class="screen">&gt; brick_simple:get(tab1, "moo").
+key_not_exist</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-get-many"></a>3.6. brick_simple:get_many/5</h3></div></div></div><p>書式</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:get_many(Tab, Key, MaxNum, Flags, Timeout).</strong></span>
+</dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+テーブル`Tab`の単一チェインから、複数キーを検索します。引数`Key`で指定したキーの検索後、その次のキーから開始して、最大数`MaxNum`に達するまで検索を続け、辞書のように昇順で並べてキーを返します。戻り値のリストには、戻り値の最後のキーの後に続きがあるかどうかを示すブール値が付いてきます。
+</dd></dl></div><p>+
+IMPORTANT: `get_many()`関数を1回コールしただけでは、複数のストレージ・チェインをまたがってキーを検索することはできません。`Key`のコンシステント・ハッシングは、`get_many`命令を単一チェインのテイル・ブリックに送り、その後は、その単一チェインからのみ、すべてのキーを検索します。</p><p>+</p><p>引数</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+複数キーを検索するテーブルの名前
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Tab = table()</code>
+</li><li>
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Key</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+`get_many`の検索を開始するキー。指定した`Key`の検索後、その次のキーから開始して、辞書のように昇順で検索を続けます。
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Key = key()</code>
+</li><li>
+<code class="literal">key() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li><p>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>`Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>MaxNum</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+返すキーの数の最大値
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">MaxNum = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Flags</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+`get_many`操作に適用される操作フラグのリスト
+</li><li>
+任意：デフォルト値は空リスト
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Flags = flags_list()</code>
+</li><li>
+<code class="literal">flags_list() = [do_op_flag()]</code>
+</li><li>
+<code class="literal">do_op_flag() = 'get_all_attribs' | 'witness' | {'binary_prefix',
+    binary()} | {'max_bytes', integer()}</code> | <code class="literal">{'max_num', integer()}</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">'get_all_attribs'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+各キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+</li></ul></div></li><li><p>
+<code class="literal">'witness'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+検索結果としてバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
+</li></ul></div></li><li><p>
+<code class="literal">{'binary_prefix', binary()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+`binary()`と正確に一致するバイナリ値のプレフィクスを持つキーのみを返します。
+</li></ul></div></li><li><p>
+<code class="literal">{'max_bytes', integer()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+対応するバリューBLOBのサイズの合計が`integer()`バイトを超えない範囲のキーだけを返します。クライアントからの要求にこのフラグが明示的に指定されていない場合のデフォルト値は、2GBです。
+</li></ul></div></li><li><p>
+<code class="literal">{'max_num', integer()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+返すキーの数の最大値（デフォルト値は10）です。このフラグの目的は、MaxNum引数と同じであることに注意してください。
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：省略値は15,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+<code class="literal">timeout() = integer() | 'infinity'</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><p>正常終了の場合</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">{ok, {[{key(), timestamp(), val()}], boolean()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`witness`フラグも`get_all_attribs`フラグもどちらも指定していない`get_many`要求が成功しました。
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li><li>
+<code class="literal">val() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</li></ul></div></li><li><p>
+<code class="literal">{ok, {[{key(), timestamp()}], boolean()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`witness`フラグを指定し、`get_all_attribs`フラグは指定していない`get_many`要求が成功しました。
+</li></ul></div></li><li><p>
+<code class="literal">{ok, {[{key(), timestamp(), proplist()}], boolean()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`witness`フラグも`get_all_attribs`フラグもともに指定した`get_many`要求が成功しました。
+</li><li>
+<code class="literal">proplist() = [property()]</code>
+</li><li>
+<code class="literal">property() = atom() | {term(), term()}</code>
+</li></ul></div></li><li><p>
+<code class="literal">{ok, {[{key(), timestamp(), val(), exp_time(), proplist()}], boolean()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`get_all_attribs`フラグを指定し、`witness`フラグは指定していない`get_many`要求が成功しました。
+</li><li><p>
+<code class="literal">exp_time() = time_t()</code>
+</p><p>NOTE:</p></li></ul></div></li></ul></div></dd></dl></div><p>正常終了の戻り値の最後のブール値は、戻り値の最後のキーの後にチェイン内にまだキーが存在するかどうかを示します。存在する場合は真（<code class="literal">true`）、存在しない場合は偽（`false`）となります。`proplist()`が返される場合、リスト中の特性のひとつは常に</code>{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。</p><p>+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+エラー終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">'invalid_flag_present'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`Flags`引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">'brick_not_available'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{{'nodedown',node()},{'gen_server','call',term()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+</li><li>
+<code class="literal">node() = atom()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>エイリアス</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+brick_simple:get_many/3
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:get_many(Tab, Key, MaxNum).</code>
+</li></ul></div></li><li><p>
+brick_simple:get_many/4
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:get_many(Tab, Key, MaxNum, Flags).</code>
+</li><li>
+<code class="literal">brick_simple:get_many(Tab, Key, MaxNum, Timeout).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>例</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+現在、キーが2個しかないテーブルから、すべてのキーの検索に成功した場合（ブール値の`false`は、キー`foo`に後続のキーが存在しないことを示します）
+</p><pre class="screen">&gt; brick_simple:get_many(tab1, "", 5).
+{ok,{[{&lt;&lt;"another"&gt;&gt;,1271543102911775,&lt;&lt;"yes!"&gt;&gt;},
+      {&lt;&lt;"foo"&gt;&gt;,1271543165272987,&lt;&lt;"Foo again?"&gt;&gt;}],
+     false}}</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+`witness`フラグを指定して、現在キーが2個しかないテーブルから、すべてのキーの検索に成功した場合
+</p><pre class="screen">&gt; brick_simple:get_many(tab1, "", 5, ['witness']).
+{ok,{[{&lt;&lt;"another"&gt;&gt;,1271543102911775},
+      {&lt;&lt;"foo"&gt;&gt;,1271543165272987}],
+     false}}</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+`get_all_attribs`フラグを指定して、現在キーが2個しかないテーブルから、すべてのキーの検索に成功した場合
+</p><pre class="screen">&gt; brick_simple:get_many(tab1, "", 5).
+{ok,{[{&lt;&lt;"another"&gt;&gt;,1271543102911775,&lt;&lt;"yes!"&gt;&gt;,0,
+       [{val_len,4}]},
+      {&lt;&lt;"foo"&gt;&gt;,1271543165272987,&lt;&lt;"Foo again?"&gt;&gt;,0,[{val_len,6}]}],
+     false}}</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-delete"></a>3.7. brick_simple:delete/4</h3></div></div></div><p>書式</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:delete(Tab, Key, Flags, Timeout).</strong></span>
+</dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+テーブル`Tab`から、キー`Key`を削除します。
+</dd></dl></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+キーと、そのペアとなるバリューを削除するテーブルの名前
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Tab = table()</code>
+</li><li>
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Key</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+テーブルから削除するキー
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Key = key()</code>
+</li><li>
+<code class="literal">key() = iodata()</code>
+</li><li>
+<code class="literal">iodata() = iolist() | binary()</code>
+</li><li><p>
+<code class="literal">iolist()  = [char() | binary() | iolist()]</code>
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>`</p></td></tr></table></div></li></ul></div></li></ul></div></dd></dl></div><p>Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。</p><p>+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Flags</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">delete</code> 操作に適用される操作フラグのリスト
+</li><li>
+任意：デフォルト値は空リスト
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Flags = flags_list()</code>
+</li><li>
+<code class="literal">flags_list() = [do_op_flag()]</code>
+</li><li>
+<code class="literal">do_op_flag() = {'testset', timestamp()} |'must_exist' | 'must_not_exist'</code>
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">{'testset', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+キーのタイムスタンプが`timestamp()`と正確に一致しない場合、操作は失敗します。
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーのタイムスタンプが`timestamp()`と正確に一致しない場合にトランザクションが終了します。このフラグは、`must_exist`と`must_not_exist`の両フラグに優先します。
+</li></ul></div></li><li><p>
+<code class="literal">'must_exist'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーが存在しない場合にトランザクションが終了します。
+</li></ul></div></li><li><p>
+<code class="literal">'must_not_exist'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーが存在する場合にトランザクションが終了します。このフラグは、クライアント・アプリケーションにとって2個以上のキーの間の関係が重要な場合に便利です。
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：デフォルト値は15,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+<code class="literal">timeout() = integer() | 'infinity'</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><p>::
+正常終了の場合</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">'ok'</code>
+</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+エラー終了の場合
+</dd></dl></div></li><li><p>
+<code class="literal">'key_not_exist'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+キーが存在しないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{'ts_error', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`{<span class="emphasis"><em>testset</em></span>, timestamp()}`フラグが使用され、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+</li><li>
+<code class="literal">timestamp() = integer()</code>
+</li></ul></div></li><li><p>
+<code class="literal">'invalid_flag_present'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`Flags`引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">'brick_not_available'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{{'nodedown',node()},{'gen_server','call',term()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+</li><li>
+<code class="literal">node() = atom()</code>
+</li></ul></div></li></ul></div><p>エイリアス</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+brick_simple:delete/2
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:delete(Tab, Key).</code>
+</li></ul></div></li><li><p>
+brick_simple:delete/3
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:delete(Tab, Key, Flags).</code>
+</li><li>
+<code class="literal">brick_simple:delete(Tab, Key, Timeout).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>例</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーと、そのペアのバリュー、および属性の削除に成功した場合
+</p><pre class="screen">&gt; brick_simple:delete(tab1, &lt;&lt;"foo"&gt;&gt;).
+ok</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーを削除しようとしてキーが存在しないため、失敗した場合
+</p><pre class="screen">&gt; brick_simple:delete(tab1, "key6").
+key_not_exist</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+キーを削除しようとして現在のタイムスタンプの指定が正しくなかったため、失敗した場合
+</p><pre class="screen">&gt; brick_simple:delete(tab1, "goo", [{'testset', 12345}]).
+{ts_error,1271543165272987}</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+現在のタイムスタンプを正しく指定して、キーの削除に成功した場合
+</p><pre class="screen">&gt; brick_simple:delete(tab1, "goo", [{'testset', 1271543165272987}]).
+ok</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+デフォルトではない操作のタイムアウト時間を指定して、キーの削除に成功した場合
+</p><pre class="screen">&gt; brick_simple:delete(tab1, "key3", 30000).
+ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-do"></a>3.8. brick_simple:do/4</h3></div></div></div><p>書式</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:do(Tab, OpList, OpFlags, Timeout).</strong></span>
+</dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+テーブル`Tab`に基本操作のリストを送ります。それと同時に、Hibariのブリックがその基本操作を実行します。操作リスト`OpList`の最初の項目が`brick_server:make_txn()`の場合は、操作リストをマイクロ・トランザクションとして実行します。この場合は、すべての操作が成功するか、あるいはすべての操作が実行されないかのどちらかになります。これを「マイクロ」トランザクションと呼ぶのは、`brick_simple:do()`API を使用するすべての操作に適用される明確な制約となるからです。
+</p><div class="itemizedlist"><ul type="disc"><li>
+対象となるキーはすべて、同一テーブル内に存在しなければなりません。
+</li><li>
+対象となるキーはすべて、同一チェイン内に存在しなければなりません。
+</li><li>
+トランザクション内のすべての操作は、1回の`brick_simple:do()`のコールで送らなければなりません。他のデータベースとは異なり、トランザクションのハンドルを要求し、そのトランザクションに対してアドホックに1個ずつ操作を追加することはできません。
+</li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd>
+マイクロ・トランザクションに関する詳細情報については、「Hibariシステム管理者ガイド」の
+<a class="ulink" href="hibari-sysadmin-guide.en.html#micro-transactions" target="_top">「マイクロ・トランザクション」の節</a>を参照してください。
+</dd></dl></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作を実行するテーブルの名前
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Tab = table()</code>
+</li><li>
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>OpList</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+実行したい基本操作のリスト。各基本操作は、`brick_server:make_*()`APIによって起動されます。
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">OpList = do_op_list()</code>
+</li><li>
+<code class="literal">do_op_list() = [do1_op()]</code>
+</li><li><p>
+<code class="literal">do1_op() =</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+<code class="literal">brick_server:make_add(Key, Value, ExpTime, Flags)</code>
+</li><li>
+<code class="literal">brick_server:make_replace(Key, Value, ExpTime, Flags)</code>
+</li><li>
+<code class="literal">brick_server:make_set(Key, Value, ExpTime, Flags)</code>
+</li><li>
+<code class="literal">brick_server:make_get(Key, Flags)</code>
+</li><li>
+<code class="literal">brick_server:make_get_many(Key, Flags)</code>
+</li><li>
+<code class="literal">brick_server:make_delete(Key, Flags)</code>
+</li><li><p>
+<code class="literal">brick_server:make_txn()</code>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">do`操作をアトミック・トランザクションとして実行したい場合は、`OpList`の最初の項目として`brick_server:make_txn()</code> を入れてください。
+</li></ul></div></li><li>
+各基本操作の引数は、その操作を単独で実行する場合と同じであることに注意してください。ただし、`Tab`および`Timeout`引数は除きます。この両引数は、個別の操作の引数ではなく、`do`操作全体の引数となります。たとえば、`add`操作を単独で実行する場合の指定は`brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout)`となります。それに対して、`do`操作の中で実行する場合は`brick_server:make_add(Key, Value, ExpTime, Flags)`となります。
+</li><li>
+各基本操作の詳細については、次を参照してください。
+       <a class="ulink" href="#brick-simple-add" target="_top">brick_simple:add/6</a>,
+       <a class="ulink" href="#brick-simple-replace" target="_top">brick_simple:replace/6</a>,
+       <a class="ulink" href="#brick-simple-set" target="_top">brick_simple:set/6</a>,
+       <a class="ulink" href="#brick-simple-get" target="_top">brick_simple:get/4</a>,
+       <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many/5</a>, and
+       <a class="ulink" href="#brick-simple-delete" target="_top">brick_simple:delete/4</a>.
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>OpFlags</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+`do`操作全体に適用される操作フラグのリスト
+</li><li>
+任意：デフォルト値は空リスト
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">OpFlags = do_flags_list()</code>
+</li><li>
+<code class="literal">do_flags_list() = [do_flag()]</code>
+</li><li>
+<code class="literal">do_flag() = 'fail_if_wrong_role' | 'ignore_role'</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">'fail_if_wrong_role'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+do操作が対象のチェイン内の誤ったブリックに送られた場合（read要求が誤ってヘッド・ブリックに送られた、あるいはwrite要求が誤ってテイル・ブリックに送信された場合）、ただちにトランザクションは終了します。このフラグを指定していない場合のデフォルト処理では、誤りのブリックが要求を正しいブリックに転送します。
+</li></ul></div></li><li><p>
+<code class="literal">'ignore_role'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+このフラグを指定すると、要求を受けとったたブリックがどんな役割を割り振られていても、そのブリックが直接に要求にこたえます。
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+Timeout
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：デフォルト値は15,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+<code class="literal">timeout() = integer() | 'infinity'</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+正常終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">[do1_res_ok]</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`do1_res_ok`のリスト。リストの各項目が、`do`操作で指定した各基本操作に対応します。戻り値は、要求の`OpList`で基本操作を指定した順番でリストに戻されます。`do`操作でトランザクション処理を要求していない場合は、個別の基本操作が失敗しても`do`操作全体は失敗しないことに注意してください。
+</li><li>
+戻り値のリスト内で個別の基本操作に対応して返される`do1_res_ok`は、その基本操作を単独で実行した場合の戻り値と同じものです。たとえば、`do`操作が正常終了した場合の戻り値のリスト内に`add`基本操作の戻り値として返ってくるものは、
+    <a class="ulink" href="#brick-simple-add" target="_top">brick_simple:add/6</a> で説明したものと同じです。また、replace基本操作の戻り値として返ってくるものは、
+    <a class="ulink" href="#brick-simple-replace" target="_top">brick_simple:replace/6</a> で説明したものと同じです。これは、
+    likewise for <a class="ulink" href="#brick-simple-set" target="_top">set</a>、
+    <a class="ulink" href="#brick-simple-get" target="_top">get</a>、
+    <a class="ulink" href="#brick-simple-get-many" target="_top">get_many</a>、
+    <a class="ulink" href="#brick-simple-delete" target="_top">delete</a>の各基本操作に関しても同様です。
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+エラー終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">{txn_fail, [{integer(), do1_res_fail()}]}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`do`操作でトランザクション処理が要求され、トランザクション中の個別基本操作が失敗したため、操作が失敗しました。`integer()`は、どの基本操作が失敗したかを、要求時の`OpList`に指定した順番で示します。たとえば、2が返された場合は、要求時の`OpList`に指定された2番目の基本操作が失敗したことを示します。`OpList`の最初の`txn()`指定は順番に入っていないことに注意してください。
+</li><li><p>
+`do1_res_fail()`は、基本操作の失敗の種類を示します。次のものが考えられます。
+</p><div class="itemizedlist"><ul type="square"><li><p>
+<code class="literal">{'key_exists', timestamp()}</code>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">timestamp() = integer()</code>
+</li></ul></div></li><li>
+<code class="literal">'key_not_exist'</code>
+</li><li>
+<code class="literal">{'ts_error', timestamp()}</code>
+</li><li>
+<code class="literal">'invalid_flag_present'</code>
+</li></ul></div></li></ul></div></li><li><p>
+<code class="literal">'invalid_flag_present'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+`do`要求の`OpFlags`引数に無効な`do_flag()`が検出されたため、操作が失敗しました。これは、個別の基本操作で指定するフラグが誤ったエラーとは異なるエラーであることに注意してください。
+</li></ul></div></li><li><p>
+<code class="literal">'brick_not_available'</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+</li></ul></div></li><li><p>
+<code class="literal">{{'nodedown',node()},{'gen_server','call',term()}}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+</li><li>
+<code class="literal">node() = atom()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>エイリアス</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+brick_simple:do/2
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:do(Tab, OpList).</code>
+</li></ul></div></li><li><p>
+brick_simple:do/3
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:do(Tab, OpList, Timeout).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>例</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+トランザクション処理を要求しない`do`操作に成功し、2個の新しいキーをテーブル`tab1`に追加した場合
+</p><pre class="screen">&gt; brick_simple:do(tab1, [brick_server:make_add("foo3", "bar3"),brick_server:make_add("foo4", "bar4")]).
+[ok,ok]</pre></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+2個の`get`基本操作`Do1`と`Do2`を生成し、それつなげてトランザクション処理を要求しない`do`操作にして、実行に成功した場合
+</p><pre class="screen">&gt; Do1 = brick_server:make_get("foo").
+{get,&lt;&lt;"foo"&gt;&gt;,[]}
+&gt; Do2 = brick_server:make_get("foo2").
+{get,&lt;&lt;"foo2"&gt;&gt;,[]}
+&gt; brick_simple:do(tab1, [Do1, Do2]).
+[{ok,1271543102911775,&lt;&lt;"Foo again?"&gt;&gt;},key_not_exist]</pre></dd><dt><span class="term">
+ 
+</span></dt><dd>
+トランザクション処理を要求した操作に失敗した場合（トランザクション処理が要求されているため、基本操作`Do2b`の失敗により、操作全体が失敗）
+</dd></dl></div><pre class="screen">&gt; Do1b = brick_server:make_get("foo").
+{get,&lt;&lt;"foo"&gt;&gt;,[]}
+&gt; Do2b = brick_server:make_get("foo2", [must_exist]).
+{get,&lt;&lt;"foo2"&gt;&gt;,[must_exist]}
+&gt; brick_simple:do(tab1, [brick_server:make_txn(), Do1b, Do2b]).
+{txn_fail,[{2,key_not_exist}]}</pre></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-table"></a>3.9. brick_simple:fold_table/7</h3></div></div></div><p>書式</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags, MaxParallel, Timeout).</strong></span>
+</dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+テーブル内のすべてのキーに対して、フォールド操作を行います。この操作の基盤であるErlangのfold関数の概要については、http://www.erlang.org/doc/man/lists.html#foldl-3を参照してください。
+</dd></dl></div><div class="important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[重要項目]" src="./images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>データの移行処理中にこの操作を実行しないでください。</p></td></tr></table></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+フォールド操作を実行するテーブルの名前
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Tab = table()</code>
+</li><li>
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Fun</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+リストの連続要素に対して適用する関数
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Fun  = fun_arity_2()</code>
+</li><li><p>
+<code class="literal">fun_arity_2()</code> arguments =
+</p><div class="itemizedlist"><ul type="square"><li><p>
+<code class="literal">{ChainName, Tuple_from_get_many}</code>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">Tuple_From_get_many`は、
+link:#brick-simple-get-many[brick_simple:get_many()]のひとつの結果を単独のタプルで表わしたものです。`Flags`引数によりフォーマットが異なります。`Flags`引数はそのまま`get_many()</code> コールに渡されます。たとえば<code class="literal">Flags</code> = <code class="literal">[]`の場合、`Tuple_From_get_many`は</code>{Key, TS, Value}<code class="literal">というフォーマットとなり、`Flags</code> = <code class="literal">[witness]`の場合、`Tuple_From_get_many`は</code>{Key, TS}`というフォーマットとなります。
+</li></ul></div></li><li><p>
+<code class="literal">Acc</code>
+</p><div class="itemizedlist"><ul type="disc"><li>
+結果を累算する項
+</li></ul></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Acc</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+結果を累算する項の初期値
+</li><li>
+必須
+</li><li><p>
+型
+o Acc = term()
+NumItems
+</p><div class="itemizedlist"><ul type="circle"><li>
+フォールド操作によるget_many操作のバッチサイズ
+</li><li>
+必須
+</li><li>
+型
+</li><li>
+<code class="literal">Acc  = term()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>NumItems</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+フォールド関数に使う<code class="literal">get_many</code> 操作のバッチサイズ
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">NumItems  = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Flags</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+`fold_table`操作に適用される操作フラグのリスト。ここでサポートするフラグは、
+ink:#brick-simple-get-many[brick_simple:get_many()]と同じです。
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Flags = flags_list()</code>
+</li><li>
+<code class="literal">flags_list() = [do_op_flag() | property()]</code>
+</li><li>
+<code class="literal">do_op_flag() = 'get_all_attribs' | 'witness' | {'binary_prefix',
+    binary()} | {'max_bytes', integer()}</code>
+</li><li>
+<code class="literal">property() = atom() | {term(), term()}</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">'get_all_attribs'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+各キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+</li></ul></div></li><li><p>
+<code class="literal">'witness'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+検索結果としてバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
+</li></ul></div></li><li><p>
+<code class="literal">{'binary_prefix', binary()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+`binary()`と正確に一致するバイナリ値をプレフィクスとするキーのみを返します。
+</li></ul></div></li><li><p>
+<code class="literal">{'max_bytes', integer()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+対応するバリューBLOBのサイズの合計が`integer()`バイトを超えない範囲のキーだけを返します。
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>MaxParallel</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">MaxParallel</code>= 0を指定すると、本来の意味のフォールドを実行します。<code class="literal">MaxParallel</code>&gt;= 1を指定すると、それぞれのチェインで独立にフォールドを実行します。`MaxParallel`で指定した数に達するまでフォールドを並行して実行し、それぞれのチェインのフォールドの結果をそのまま要求者に返します。つまり、`map-reduce`サイクルの`reduce`フェーズのように処理結果を結合するわけでは*ありません*。
+</li><li>
+任意：デフォルト値は0
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">MaxParallel = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：デフォルト値は5,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+`timeout() = integer()
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+正常終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">{ok, Acc, Iterations}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Acc = term()</code>
+</li><li>
+<code class="literal">Iterations = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+エラー終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">{error, GdssError, Acc, Iterations}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">GdssError = term()</code>
+</li><li>
+<code class="literal">Acc = term()</code>
+</li><li>
+<code class="literal">Iterations = integer()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>エイリアス</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
+brick_simple:fold_table/5
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags).</code>
+</li></ul></div></li><li><p>
+brick_simple:fold_table/6
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags,
+    MaxParallel).</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>例</p><p>_（追加予定）</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-key"></a>3.10. brick_simple:fold_key_prefix/9</h3></div></div></div><p>書式</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+<span class="strong"><strong>brick_simple:fold_key_prefix(Tab, Prefix, StartKey, Fun, Acc, Flags0,
+ NumItems,SleepTime,Timeout).</strong></span>
+</dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd>
+テーブル`Tab`の`StartKey`から始まるすべてのキーに対して、フォールド操作を実行します。その際、バイナリ値が`Prefix`で始まるキーのみを対象とします。イテレーションの間で`SleepTime`ミリ秒だけスリープし、`Flags`と`NumItems`を
+<a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a>への引数として使用します。この操作の基盤であるErlangのfold関数の概要については、http://www.erlang.org/doc/man/lists.html#foldl-3を参照してください。
+</dd></dl></div><p>IMPORTANT:</p><p>データの移行処理中にこの操作を実行しないでください。
+引数</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Tab</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+フォールド操作を実行するテーブルの名前
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Tab = table()</code>
+</li><li>
+<code class="literal">table() = atom()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Prefix</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+フォールド操作を実行したいキーのプレフィクスの値
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Prefix = binary()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>StartKey</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+フォールド操作を開始したいキー値
+</li><li>
+任意：デフォルト値は指定した`Prefix`の値
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">StartKey = binary()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Fun</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+リストの連続要素に対して適用する関数
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Fun  = fun_arity_2()</code>
+</li><li><p>
+<code class="literal">fun_arity_2()</code> arguments =
+</p><div class="itemizedlist"><ul type="square"><li><p>
+<code class="literal">Tuple_from_get_many</code>
+</p><div class="itemizedlist"><ul type="disc"><li>
+<code class="literal">Tuple_From_get_many`は、
+  link:#brick-simple-get-many[brick_simple:get_many()]のひとつの結果を単独のタプルで表わしたものです。`Flags`引数によりフォーマットが異なります。`Flags`引数はそのまま`get_many()</code> コールに渡されます。たとえば、<code class="literal">Flags</code> = <code class="literal">[]`の場合、`Tuple_From_get_many`は</code>{Key, TS, Value}<code class="literal">というフォーマットとなり、`Flags</code> = <code class="literal">[witness]`の場合、`Tuple_From_get_many`は</code>{Key, TS}`というのフォーマットとなります。
+</li></ul></div></li><li><p>
+<code class="literal">UserAccumulatorTerm</code>
+</p><div class="itemizedlist"><ul type="disc"><li>
+_（説明を追加予定）
+</li></ul></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Acc</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+_（説明を追加予定）
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Acc  = term()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Flags0</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+`fold_key_prefix`操作に適用される操作フラグのリスト。ここでサポートするフラグは、
+  <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a>と同じです。ただし、 `{<span class="emphasis"><em>binary_prefix</em></span>, binary()}`フラグを除きます。キーのプレフィクス値は、`brick_simple:fold_key_prefix()`の`Prefix`引数を通して直接渡されるため、このフラグは使用されません。
+</li><li>
+必須
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Flags0 = 'get_all_attribs' | 'witness' | {'max_bytes', integer()}</code>
+</li></ul></div></li><li><p>
+操作フラグの使用方法
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+<code class="literal">'get_all_attribs'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+</li></ul></div></li><li><p>
+<code class="literal">'witness'</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+検索結果としてバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
+</li></ul></div></li><li><p>
+<code class="literal">{'max_bytes', integer()}</code>
+</p><div class="itemizedlist"><ul type="square"><li>
+対応するバリューBLOBのサイズの合計が`integer()`バイトを超えない範囲のキーだけを返します。
+</li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>NumItems</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+_（説明を追加予定）
+</li><li>
+任意：省略値は100
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">NumItems  = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>SleepTime</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+イテレーションの間のスリープ時間（単位はミリ秒）
+</li><li>
+任意：デフォルト値は0
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">SleepTime = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+<span class="strong"><strong>Timeout</strong></span>
+</p><div class="itemizedlist"><ul type="disc"><li>
+操作のタイムアウト時間（単位はミリ秒）
+</li><li>
+任意：デフォルト値は15,000（ミリ秒）
+</li><li><p>
+型
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Timeout = timeout()</code>
+</li><li>
+`timeout() = integer()
+</li></ul></div></li></ul></div></dd></dl></div><p>戻り値</p><div class="variablelist"><dl><dt><span class="term">
+ 
+</span></dt><dd><p>
+正常終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">{ok, Acc, Iterations}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">Acc = term()</code>
+</li><li>
+<code class="literal">Iterations = integer()</code>
+</li></ul></div></li></ul></div></dd><dt><span class="term">
+ 
+</span></dt><dd><p>
+エラー終了の場合
+</p><div class="itemizedlist"><ul type="disc"><li><p>
+<code class="literal">{error, GdssError, Acc, Iterations}</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+<code class="literal">GdssError = term()</code>
+</li><li>
+<code class="literal">Acc = term()</code>
+</li><li>
+<code class="literal">Iterations = integer()</code>
+</li></ul></div></li></ul></div></dd></dl></div><p>エイリアス
+ ::
+- brick_simple:fold_key_prefix/5
+  * <code class="literal">brick_simple:fold_key_prefix(Tab, Prefix, Fun, Acc, Flags).</code></p><p>例</p><p>_（追加予定）</p></div></div></div></body></html>
