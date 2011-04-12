@@ -311,7 +311,7 @@ Hibariをインストールするノード群に必要なソフトウェアは�
 [[download-hibari]]
 === Hibariをダウンロードする
 
-現在、Hibariはビルド済みで提供することができません。当面は、ソースコードからHibariをビルドしてください。第7章の<<「7. ソースコードからHibariをビルドする」>>の説明に従ってビルドして、その後、本節に戻ってセットアップを行ってください。
+現在、Hibariはビルド済みで提供することができません。当面は、ソースコードからHibariをビルドしてください。第7章の TODO(「7. ソースコードからHibariをビルドする」) の説明に従ってビルドして、その後、本節に戻ってセットアップを行ってください。
 
 Hibariをビルドすると、後でセットアップに使用する2つのファイルが出力されます。
 - tarballパッケージ“hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz”
@@ -543,10 +543,7 @@ link:hibari-sysadmin-guide.en.html#partition-detector[The Partition Detector App
 - +ALL_HEART_XMIT_UDP_PORT+
   * ハートビート・トランスミッター用のUDPポート。
 
-ネットワーク監視の設定に関する詳細は、パーティション検出のOTPアプリケー
-ションのソースファイル
-(https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src)
-を参照してください。
+ネットワーク監視の設定に関する詳細は、パーティション検出のOTPアプリケーションのソースファイル (https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src) を参照してください。
 
 
 CAUTION:
@@ -717,10 +714,7 @@ link:hibari-sysadmin-guide.en.html#3-chains-striped-across-3-bricks[3ノード�
 Erlang のAPIは、他のチェイン・レイアウトパターンで、テーブルの作成に使用されます。
 +
 - +NodeList+
-  * カンマ区切りの文字列。Local=falseの場合、新しいテーブルのために論
-  理ブリックを稼働させるノードの一覧を指定します。カンマ区切りの一覧は、
-  `NodeName@HostName` の形式で表記されます。たとえば、3ノードの指定に
-  は、`hibari1@machine-a、 hibari1@machine-b、 hibari1@machine-c` を使用します。
+  * カンマ区切りの文字列。Local=falseの場合、新しいテーブルのために論理ブリックを稼働させるノードの一覧を指定します。カンマ区切りの一覧は、`NodeName@HostName` の形式で表記されます。たとえば、3ノードの指定には、`hibari1@machine-a、 hibari1@machine-b、 hibari1@machine-c` を使用します。
 +
 - +NumNodesPerBlock+
   * Integer型。Local=falseの場合、この整数がデフォルトのチェイン・ストライピング・アルゴリズムのストライピングの振る舞いに影響します。この値はゼロ（パラメータが無視されます）または複数のBPCパラメータです。
@@ -739,3 +733,1531 @@ Erlang のAPIは、他のチェイン・レイアウトパターンで、テー�
     ** NumNodesPerBlock=0かつBlockMultFactor=0の場合、6チェインが6ノードにわたってストライプします。
     ** NumNodesPerBlock=2かつBlockMultFactor=5かつBPC=2の場合、トータル30チェインについて、2×5=10チェインがノードA と Bに、2×5=10チェインがノードC と Dに、2×5=10チェインがノードE とFにわたってストライプします。
     ** NumNodesPerBlock=3かつBlockMultFactor=4かつBPC=3の場合、トータル24チェインについて、3×4=12チェインがノードA と Bと Cに、3×4=12チェインがノードD と Eと Fにわたってストライプします。
+
+[[client-api-erlang]]
+== クライアント向けAPI ： ネイティブErlang
+
+=== Hibariのクライアント向けAPIの概要
+
+キー・バリュー型データベースとしてHibariが提供するクライアント向けAPIは非常にシンプルです。APIによって、データの追加、検索、削除という基本的な操作ができます。制限はありますが、その範囲内で操作を組み合わせればアトミック・トランザクションも実行できます。
+
+Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。
+
+*データの追加*
+
+ - まだ存在していないキーとバリューのペアを新たに追加します。オプションでフラグを追加できます。
+  * link:#brick-simple-add[brick_simple:add/6]
+ - 既に存在しているキーに対して、新しいバリューやフラグを割り当てます。
+  * link:#brick-simple-replace[brick_simple:replace/6]
+ - キーの存在の有無にかかわらず、キーとバリューのペアと、オプションでフラグを設定します。
+  * link:#brick-simple-set[brick_simple:set/6]
+
+*データの検索*
+
+ - キーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
+  * link:#brick-simple-get[brick_simple:get/4]
+ - 辞書の順に並んで連続している複数のキーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
+  * link:#brick-simple-get-many[brick_simple:get_many/5]
+
+*データの削除*
+
+ - キーとバリューのペア、およびそれに関連付けられたフラグを削除します。
+  * link:#brick-simple-delete[brick_simple:delete/4]
+
+*複合操作*
+
+ - 指定した操作のリストを実行します。オプションで、アトミック・トランザクションとして実行します。
+  * link:#brick-simple-do[brick_simple:do/4]
+
+*フォールド操作*
+
+ - テーブル内のすべてのキーに対して、フォールド操作を実行します。
+  * link:#brick-simple-fold-table[brick_simple:fold_table/7]
+ - 指定したprefixで始まるすべてのキーに対して、フォールド操作を実行します。
+  * link:#brick-simple-fold-key[brick_simple:fold_key_prefix/9]
+
+クライアント側の必要に応じて、データの追加、検索、削除に「テスト・アンド・セット」ロジックを適用すると、指定したキーのタイムスタンプと一致する場合にのみ操作を実行させることができます。
+
+==== Erlangの基本データ型
+
+この章で参照するErlangの基本データ型について、簡単に紹介します。これは、
+http://www.erlang.org/doc/reference_manual/data_types.html[Erlangのデータ型に関する公式ドキュメント]からの抜粋を少し変更したものです。詳細な情報は、Erlangの公式ドキュメントを参照してください。
+
+
+
+
+
+IMPORTANT: すべてのErlangのコマンドは、最後にピリオド（’.’）をつけてください。
+
+
+
+項（term）:: すべてのデータ型のデータを*項（term）*と呼びます。
+
+数値（number）:: 数値定数には、*Integer（整数）型*と*Float（浮動小数点）型*の2種類があります。
+
+アトム（atom）:: アトム（atom）はリテラル（名前を持つ定数）です。英小文字以外で始まるアトム、および英数字と下線（’_’）と’@’以外を含むアトム場合は、次の例のように一重引用符（’）で囲んでください。
++
+-----
+hello
+phone_number
+'Monday'
+'phone number'
+'hello'
+'phone_number'
+-----
+
+
+Bit string（ビット列）とBinary（バイナリ）:: *Bit string（ビット列）*は、型指定のないメモリー領域にデータを保管するときに使用します。表記は、
+http://www.erlang.org/doc/reference_manual/expressions.html#bit_syntax[Erlangのビット構文]に従います。また、8の倍数のビット数からなるビット列を、*Binary（バイナリ）*と呼びます。たとえば次のように表します。
++
+-----
+<<10,20>>
+<<"ABC">>
+-----
+
+Tuple（タプル）:: *Tuple（タプル）*は、固定数の項の組からなるデータ型です。次の例のように、中括弧（’{ }’）で囲んで表します。
++
+-----
+{Term1,...,TermN}
+-----
+
+List（リスト）:: *List（リスト）*は、可変数の項の組からなるデータ型です。次の例のように、大括弧（’[ ]’）で囲んで表します。
++
+-----
+[Term1,...,TermN]
+-----
+
+String（文字列）:: *String（文字列）*は、二重引用符（”）で囲んで表します。これは、Erlangの正式のデータ型ではありません。リスト[$h,$e,$l,$l,$o]、つまり[104,101,108,108,111]の代わりに、簡略化した表現として”hello”という文字列を使用します。
+
+Boolean（ブール）:: ErlangにBoolean型（論理型）はありません。ブール値を表す場合は、代わりにアトムの`真（true）`と`偽（false）`を使用します。
+
+==== Hibariのデータモデル
+
+HibariのテーブルをSQLデータベースの方法で表現すると、次のようになります。
+
+[[sql-definition-hibari]]
+
++
+-----
+CREATE TABLE foo (
+    BLOB key;
+    BLOB value;
+    INTEGER timestamp;                  -- 単調に増加
+    INTEGER expiration_time;            -- 通常はゼロ
+    LIST OF ATOMS_AND_TWO_TUPLES flags; -- 高速化のためRAMに保管されるメタデータ
+) PRIMARY KEY key;
+-----
+
+Hibariのテーブル名は、Erlangのデータ型では「アトム」になります。キーに関連するすべての属性の型は、次の表のとおりです。
+
+
+属性名
+	Erlangのデータ型
+ストレージ
+説明
+
+キー
+Binary（バイナリ）
+	RAM
+	バイナリ型のBLOBで、サイズは任意。ストレージがRAMであるため、すべてのキーがRAMに収まるサイズであることが必要です。
+
+バリュー
+	Binary（バイナリ）
+RAMまたはディスク
+バイナリ型のBLOBで、サイズは任意。バリューBLOBの現実的な上限は16MB程度です。タイムスタンプ
+	Integer（整数）
+RAM
+単調増加するカウンター。通常はクライアントの実時間（そうでない場合もあります）。キーの現在のタイムスタンプの値よりも小さい値のタイムスタンプでキーを更新することはできません。
+
+有効期限
+Integer（整数）
+RAM
+キーの有効期限は、UNIXのtime_tで表現されます。値が0の場合は有効期限がないので、RAMのオーバーヘッドが不要になります。フラグ
+List（リスト）
+RAM
+この属性をSQLで明確に表現することはできません。アトムおよび（または）{atom(), term()}のぺアのリストです。この属性はRAMストレージにあるので、あまり多用はできません。
+
+ストレージがRAMの場合、通常のクエリー処理では、RAM上のコピーでデータを検索します。キーの属性を更新する場合は、クラスター全体の電源障害が発生した場合のデータの損失を防ぐために、どんな場合でも更新前に先行ログに書き込まれます。詳細については、???を参照してください。
+
+ストレージがディスクの場合、属性の値はRAMには保管されていません。RAM内のメタデータは属性の場所として、ファイル番号、バイトオフセット値、およびバイト長に対するポインターを保持します。属性を検索するには、共通ログ内のログ・シーケンス・ファイルをオープンし、 `lseek(2) ` をコールしてから、 `read(2)` をコールします。
+
+最善のケース:: 対象データがすべてOSのページ・キャッシュ内にあるため、ディスクからキーのバリューBLOBを読み出す際に、ディスクのシークを必要としません。
+
+通常のケース:: ファイルのinode情報はキャッシュにありますが、必要なファイル・ページがキャッシュにないため、シークと読み出しが1回だけ必要になります。
+
+最悪のケース:: ファイルシステムは、中間ディレクトリ・データ、inode、inode内の間接ストレージ・ブロック・データを読み込むために、シークと読み出しをさらに実施する必要があります。
+
+バリューBLOBのサイズの現実的な上限値は、BLOB全体のサイズと、大きいサイズのBLOBのアクセス頻度によって異なります。たとえば、64MBのバリューBLOBをたまに保管する場合と、常に64MBのバリューBLOBを100％の負荷で書き込む場合とでは、話が違います。HibariのAPIを用いて更新またはフェッチを実行する場合は、バリューBLOB全体を対象とする以外の方法はありません。したがって極端な場合、4GBの単一BLOBを対象に操作を実行しようとすると、ブリックが何秒間もブロックされることがあります。さらに、大きいサイズのBLOBの処理中は、`busy_dist_port`イベントが他のプロセスをブロックすることもあります。
+
+[[brick-simple-add]]
+=== brick_simple:add/6
+
+
+書式
+
+ ::
+*brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout).*
+
+解説
+
+ ::
+テーブルTabにキーKeyがまだ存在していない場合、キーKeyとバリューValueのペアを追加します。さらにオプションでフラグFlagsも追加できます。キーKeyが既に存在している場合、操作は失敗します。
+
+引数
+
+ ::
+*Tab*
+
+- キーとバリューのペアを追加するテーブルの名前
+- 必須
+- 型
+- `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Key*
+
+- バリューとペアになり、テーブルに追加されるキー
+- 必須
+- 型
+  * `Key = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
++
+NOTE:
+
+
+Keyはiolist()またはbinary()で指定できますが、操作の実行前にBinary型に変換されます。これは、Valueに関しても同様です。+
+
+ ::
+*Value*
+
+- キーのペアとなるバリュー
+- 必須
+- 型:
+  * `Value = val()`
+  * `val() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
+
+ ::
+*ExpTime*
+
+- キーの有効期限。UNIXのtime_t()で表現されます。
+- 任意：デフォルト値は0（有効期限なし）
+- 型
+  * `ExpTime = exp_time()`
+  * `exp_time() = time_t()`
+  * `time_t() = integer()`
+
+ ::
+*Flags*
+
+- ‘add’ 操作に適用する操作フラグのリスト、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するため、カスタム特性フラグの多用はお勧めできません。
+- 任意：デフォルト値は空リスト
+- 型
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag() | property()]`
+  * `do_op_flag() = 'value_in_ram'`
+  * `property() = atom() | {term(), term()}`
+- 操作フラグの使用方法
+  * `'value_in_ram'`
+    ** ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
++
+NOTE:
+
+
+
+Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。
++
+
+ ::
+*Timeout*
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：デフォルト値は15,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer() | 'infinity'`
+
+戻り値
+
+ ::
+正常終了の場合
+
+- `'ok'`
+
+エラー終了の場合
+
+- `{'key_exists',timestamp()}`
+  * キーが既に存在しているため、操作が失敗しました。
+  * `timestamp() = integer()`
+- `'invalid_flag_present'`
+  * Flags引数に無効な `?do_op_flag() ` が検出されたため、操作が失敗しました。
+- `'brick_not_available'`
+  * 該当キーに相当するチェインの現在の長さがゼロのため利用できないので、操作が失敗しました。
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * 要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークのパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をお  * `node() = atom()`
+
+エイリアス
+ ::
+- brick_simple:add/3
+  * `brick_simple:add(Tab, Key, Value).`
+- brick_simple:add/4
+  * `brick_simple:add(Tab, Key, Value, Flags).`
+  * `brick_simple:add(Tab, Key, Value, Timeout).`
+
+例
+
+ ::新しいキーとバリューのペアの追加に成功した場合
++
+------
+> brick_simple:add(tab1, <<"foo">>, <<"Hello, world!">>).
+ok
+------
++
+
+ ::追加しようとして、キーが既に存在しているため失敗した場合
++
+------
+> brick_simple:add(tab1, <<"foo">>, <<"Goodbye, world!">>).
+{key_exists,1271542959131192}
+------
++
+
+ ::
+ブリックのデフォルトのストレージ設定にかかわらず、バリューをRAMに保管するように指定して、新しいキーとバリューのペアの追加に成功した場合
++
+------
+> brick_simple:add(tab1, "foo2", "this is value2", 20000).
+ok
+------
+
+
+[[brick-simple-replace]]
+=== brick_simple:replace/6
+
+書式
+
+ ::
+*brick_simple:replace(Tab, Key, Value, ExpTime, Flags, Timeout).*
+
+解説
+
+ ::テーブル`Tab`にキー`Key`が既に存在している場合に、キー`Key`とバリュー`Value`のペアを更新します。さらにオプションでフラグ`Flags`も更新します。キー`Key`が存在しない場合、操作は失敗します。
+
+引数
+ ::
+*Tab*
+
+- キーとバリューのペアを更新するテーブルの名前
+- 必須
+- 型
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Key*
+
+- 新たにバリューとペアになって、テーブルを更新するキー
+- 必須
+- 型
+  * `Key = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
++
+NOTE:
+
+
+`Key`は`iolist()`または`binary()`で指定できますが、操作の実行前にBinary型に変換されます。これは、`Value`に関しても同様です。+
+
+ ::
+*Value*
+
+- キーのペアとなる新しいバリュー
+- 必須
+- 型
+  * `Value = val()`
+  * `val() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
+
+ ::
+*ExpTime*
+
+- キーの有効期限。UNIXのtime_t()で表現されます。
+- 任意：デフォルト値は0（有効期限なし）
+- 型
+  * `ExpTime = exp_time()`
+  * `exp_time() = time_t()`
+  * `time_t() = integer()`
+
+ ::
+*Flags*
+
+- `replace` 操作に適用する操作フラグのリスト、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するので、カスタム特性フラグの多用はお勧めできません。
+- 任意：デフォルト値は空リスト
+- 型
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag() | property()]`
+  * `do_op_flag() = {'testset', timestamp()} |'value_in_ram'`
+  * `timestamp() = integer()`
+  * `property() = atom() | {term(), term()}`
+- 操作フラグの使用方法
+  * `{'testset', timestamp()}`
+    ** 既存のキーのタイムスタンプが`timestamp()`と正確に一致しない場合、操作は失敗します。
+link:#brick-simple-do[マイクロ・トランザクション]の中で使用するときは、キーのタイムスタンプが`timestamp()`と正確に一致しない場合、トランザクションは終了します。
+  * `'value_in_ram'`
+    ** ブリックのデフォルトのストレージの場所指定を無効にして、バリューBLOBをRAMに保管します。
++
+NOTE:
+
+
+
+Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+
+
+ ::
+*Timeout*
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：省略値は15,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer() | 'infinity'`
+
+戻り値
+
+ ::
+正常終了の場合
+
+- `'ok'`
+
+ ::
+エラー終了の場合
+
+- `'key_not_exist'`
+  * キーが存在しないため、操作が失敗しました。
+- `{'ts_error', timestamp()}`
+  * `{'testset', timestamp()}`フラグが使用され、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、該当のキーの現在のタイムスタンプの値です。
+  * `timestamp() = integer()`
+- `'invalid_flag_present'`
+  * `Flags`引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+- `'brick_not_available'`
+  * 該当キーに相当するチェインの最新の長さがゼロで利用できないため、操作が失敗しました。
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * 要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+  * `node() = atom()`
+
+エイリアス
+
+ ::
+- brick_simple:replace/3
+  * `brick_simple:replace(Tab, Key, Value).`
+- brick_simple:replace/4
+  * `brick_simple:replace(Tab, Key, Value, Flags).`
+  * `brick_simple:replace(Tab, Key, Value, Timeout).`
+
+例
+
+ ::
+キーとバリューのペアの更新に成功た場合
++
+------
+> brick_simple:replace(tab1, <<"foo">>, <<"Goodbye, world!">>).
+ok
+------
++
+
+ ::
+更新しようとして、キーが存在しないために失敗した場合
++
+------
+> brick_simple:replace(tab1, <<"key3">>, <<"new and improved value">>).
+key_not_exist
+------
++
+
+ ::
+ブリックのデフォルトのストレージ設定に関わらず、バリューをRAMに保管することを指定して、キーとバリューのペアの更新に成功した場合
++
+------
+> brick_simple:replace(tab1, "foo", "You again, world!", ['value_in_ram']).
+ok
+------
++
+
+ ::
+キーを更新しようとして、現在のタイムスタンプの指定が正しくなかったために失敗した場合
++
+------
+> brick_simple:replace(tab1, "foo", "Whole new value", [{'testset', 12345}]).
+{ts_error,1271543165272987}
+------
++
+
+ ::
+現在のタイムスタンプを正しく指定して、キーとバリューのペアの更新に成功した場合
++
+------
+> brick_simple:replace(tab1, "foo", "Whole new value", [{'testset', 1271543165272987}]).
+ok
+------
++
+
+ ::
+デフォルトではない操作のタイムアウト時間を指定して、キーとバリューのペアの更新に成功た場合
++
+------
+> brick_simple:replace(tab1, "foo", "Foo again?", 30000).
+ok
+------
+
+[[brick-simple-set]]
+=== brick_simple:set/6
+
+書式
+
+ ::
+*brick_simple:set(Tab, Key, Value, ExpTime, Flags, Timeout).*
+
+解説
+
+ ::
+テーブル`Tab`にキー`Key`が既に存在しているかどうかに関わらず、キー`Key`とバリュー`Value`のペアをテーブル`Tab`に設定します。さらにオプションで、フラグ`Flags`もテーブル`Tab`に設定します。
+
+引数
+
+ ::
+*Tab*
+
+- キーとバリューのペアを設定するテーブルの名前
+- 必須
+- 型
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Key*
+
+- バリューとペアにしてテーブルに設定するキー
+- 必須
+- 型
+  * `Key = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
++
+NOTE: `
+
+
+Key``iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。これは、`Value`に関しても同様です。
++
+
+ ::
+*Value*
+
+- キーとペアになるバリュー
+- 必須
+- 型
+  * `Value = val()`
+  * `val() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
+
+ ::
+*ExpTime*
+
+- キーの有効期限。UNIXのtime_t()で表現されます。
+- 任意：省略値は0（有効期限なし）
+- 型
+  * `ExpTime = exp_time()`
+  * `exp_time() = time_t()`
+  * `time_t() = integer()`
+
+ ::
+*Flags*
+
+- `set` 操作に適用される操作フラグ、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するので、カスタム特性フラグの多用はお勧めできません。
+- 任意：省略値は空リスト
+- 型
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag() | property()]`
+  * `do_op_flag() = {'testset', timestamp()} |'value_in_ram'`
+  * `timestamp() = integer()`
+  * `property() = atom() | {term(), term()}`
+- 操作フラグの使用方法
+  * `{'testset', timestamp()}`
+    ** 現在のキーのタイムスタンプが?timestamp()と正確に一致しない場合、操作は失敗します。
+link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーのタイムスタンプが `timestamp() `と正確に一致しない場合、トランザクションは終了します。このフラグを `set `で用いると、キーが存在しない場合やキーが存在してもタイムスタンプが一致しない場合、エラーとなります。
+  * `'value_in_ram'`
+    ** ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
++
+NOTE:
+
+
+Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+
+
+ ::
+*Timeout*
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：省略値は15,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer() | 'infinity'`
+
+戻り値
+
+ ::
+正常終了の場合
+
+- `'ok'`
+
+ ::
+エラー終了の場合
+
+- `'key_not_exist'`
+  * `{'testset', timestamp()}`フラグが使用され、キーが存在しないため、操作が失敗しました。
+- `{'ts_error', timestamp()}`
+  * `{'testset', timestamp()}`フラグが使用され、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+  * `timestamp() = integer()`
+- `'invalid_flag_present'`
+  * Flags引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+- `'brick_not_available'`
+  * 該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * 要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+  * `node() = atom()`
+
+エイリアス
+
+ ::
+- brick_simple:set/3
+  * `brick_simple:set(Tab, Key, Value).`
+- brick_simple:set/4
+  * `brick_simple:set(Tab, Key, Value, Flags).`
+  * `brick_simple:set(Tab, Key, Value, Timeout).`
+
+
+例
+
+ ::
+キーとバリューのペアの設定に成功した場合
++
+------
+> brick_simple:set(tab1, <<"key4">>, <<"cool value">>).
+ok
+------
++
+
+ ::
+ブリックのデフォルトのストレージ設定に関わらず、バリューをRAMに保管することを指定して、キーとバリューのペアの設定に成功した場合
++
+------
+> brick_simple:set(tab1, "goo", "value6", ['value_in_ram']).
+ok
+------
++
+
+ ::
+キーとバリューのペアを設定しようとして`testset`フラグを指定したにもかかわらず、キーが存在しないために失敗した場合
++
+------
+> brick_simple:set(tab1, "boo", "hoo", [{'testset', 1271543165272987}]).
+key_not_exist
+------
++
+
+ ::
+`testset`フラグを指定し、かつ既存のキーのタイムスタンプが指定したタイムスタンプと一致したため、キーとバリューのペアの設定に成功した場合
++
+------
+> brick_simple:set(tab1, "goo", "value7", [{'testset', 1271543165272432}]).
+ok
+------
+
+[[brick-simple-get]]
+=== brick_simple:get/4
+
+
+書式
+ ::
+*brick_simple:get(Tab, Key, Flags, Timeout).*
+
+解説
+
+ ::
+テーブル`Tab`から、キー`Key`とフラグ`Flags`で指定したキーの属性を検索します。
+
+引数
+
+ ::
+*Tab*
+
+- キーを検索するテーブルの名前
+- 必須
+- 型
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Key*
+
+- テーブルから検索したいキー
+- 必須
+- 型
+  * `Key = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
++
+NOTE: `
+
+
+Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。+
+
+ ::
+*Flags*
+
+- `get` 操作に適用される操作フラグのリスト
+- 任意：デフォルト値は空リスト
+- 型
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag()]`
+  * `do_op_flag() = 'get_all_attribs' | 'witness' | {'testset',
+    timestamp()} | 'must_exist' | 'must_not_exist'`
+  * `timestamp() = integer()`
+- 操作フラグの使用方法
+  * `'get_all_attribs'`
+    ** キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+  * `'witness'`
+    ** 検索結果のバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
+  * `{'testset', timestamp()}`
+    ** キーのタイムスタンプが`timestamp()`と正確に一致しない場合、操作は失敗します。
+link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーのタイムスタンプが`timestamp()`と正確に一致しない場合、トランザクションは終了します。このフラグは、`must_exist`と`must_not_exist`の両フラグに優先します。
+  * `'must_not_exist'`
+    ** link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーが存在しない場合にトランザクションが終了します。
+  * `'must_not_exist'`
+    ** link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーが存在する場合、トランザクションが終了します。このフラグは、クライアント・アプリケーションにとって2個以上のキーの間の関係が重要な場合に便利です。
+
+ ::
+*Timeout*
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：省略値は15,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer() | 'infinity'`
+
+戻り値
+
+正常終了の場合
+
+ ::
+- `{'ok', timestamp(), val()}`
+  *  `witness `フラグも `get_all_attribs `フラグも、どちらも指定していない `get `要求が成功しました。
+  * `timestamp() = integer()`
+  * `val() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
+- `{'ok', timestamp()}`
+  * `witness`フラグを指定して、`get_all_attribs`フラグは指定していない`get`要求が成功しました。
+- `{'ok', timestamp(), proplist()}`
+  * `witness`フラグも`get_all_attribs`フラグもともに指定した`get`要求が成功しました。
+  * `proplist() = [property()]`
+  * `property() = atom() | {term(), term()}`
+- `{'ok', timestamp(), val(), exp_time(), proplist()}`
+  * `get_all_attribs`フラグを指定して、`witness`フラグは指定していない`get`要求が成功しました。
+  * `exp_time() = time_t()`
++
+NOTE: `proplist()`が返される場合、リスト中の特性のひとつは常に`{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。
++
+
+ ::
+
+エラー終了の場合
+
+- `'key_not_exist'`
+  * キーが存在しないため、操作が失敗しました。
+- `{'ts_error', timestamp()}`
+  * `{'testset', timestamp()}`フラグを使用して、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+- `'invalid_flag_present'`
+  * Flags引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+- `'brick_not_available'`
+  * 該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * 要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再信してください。
+  * `node() = atom()`
+
+エイリアス
+
+ ::
+- brick_simple:get/2
+  * `brick_simple:get(Tab, Key).`
+- brick_simple:get/3
+  * `brick_simple:get(Tab, Key, Flags).`
+  * `brick_simple:get(Tab, Key, Timeout).`
+
+例
+
+ ::
+キーとバリューのペアの検索に成功した場合
++
+------
+> brick_simple:get(tab1, "goo").
+{ok,1271543165272432,<<"value7">>}
+------
++
+
+ :
+バリューBLOBなしでキーの検索に成功した場合
++
+------
+> brick_simple:get(tab1, "goo", ['witness']).
+{ok,1271543165272432}
+------
++
+
+ ::
+キーが存在しないため、検索に失敗した場合
++
+------
+> brick_simple:get(tab1, "moo").
+key_not_exist
+------
+
+[[brick-simple-get-many]]
+=== brick_simple:get_many/5
+
+書式
+
+ ::
+*brick_simple:get_many(Tab, Key, MaxNum, Flags, Timeout).*
+
+解説
+
+ ::
+テーブル`Tab`の単一チェインから、複数キーを検索します。引数`Key`で指定したキーの検索後、その次のキーから開始して、最大数`MaxNum`に達するまで検索を続け、辞書のように昇順で並べてキーを返します。戻り値のリストには、戻り値の最後のキーの後に続きがあるかどうかを示すブール値が付いてきます。
+
+
++
+IMPORTANT: `get_many()`関数を1回コールしただけでは、複数のストレージ・チェインをまたがってキーを検索することはできません。`Key`のコンシステント・ハッシングは、`get_many`命令を単一チェインのテイル・ブリックに送り、その後は、その単一チェインからのみ、すべてのキーを検索します。
++
+
+
+引数
+
+ ::
+*Tab*
+
+- 複数キーを検索するテーブルの名前
+- 必須
+- 型
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Key*
+- `get_many`の検索を開始するキー。指定した`Key`の検索後、その次のキーから開始して、辞書のように昇順で検索を続けます。
+- 必須
+- 型
+  * `Key = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
++
+NOTE: `Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。
++
+
+ ::
+*MaxNum*
+
+- 返すキーの数の最大値
+- 必須
+- 型
+  * `MaxNum = integer()`
+
+ ::
+*Flags*
+
+- `get_many`操作に適用される操作フラグのリスト
+- 任意：デフォルト値は空リスト
+- 型
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag()]`
+  * `do_op_flag() = 'get_all_attribs' | 'witness' | {'binary_prefix',
+    binary()} | {'max_bytes', integer()}` | `{'max_num', integer()}`
+- 操作フラグの使用方法
+  * `'get_all_attribs'`
+    ** 各キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+  * `'witness'`
+    ** 検索結果としてバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
+  * `{'binary_prefix', binary()}`
+    ** `binary()`と正確に一致するバイナリ値のプレフィクスを持つキーのみを返します。
+  * `{'max_bytes', integer()}`
+    ** 対応するバリューBLOBのサイズの合計が`integer()`バイトを超えない範囲のキーだけを返します。クライアントからの要求にこのフラグが明示的に指定されていない場合のデフォルト値は、2GBです。
+  * `{'max_num', integer()}`
+    ** 返すキーの数の最大値（デフォルト値は10）です。このフラグの目的は、MaxNum引数と同じであることに注意してください。
+
+ ::
+*Timeout*
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：省略値は15,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer() | 'infinity'`
+
+戻り値
+
+正常終了の場合
+
+ ::
+- `{ok, {[{key(), timestamp(), val()}], boolean()}}`
+  * `witness`フラグも`get_all_attribs`フラグもどちらも指定していない`get_many`要求が成功しました。
+  * `timestamp() = integer()`
+  * `val() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
+- `{ok, {[{key(), timestamp()}], boolean()}}`
+  * `witness`フラグを指定し、`get_all_attribs`フラグは指定していない`get_many`要求が成功しました。
+- `{ok, {[{key(), timestamp(), proplist()}], boolean()}}`
+  * `witness`フラグも`get_all_attribs`フラグもともに指定した`get_many`要求が成功しました。
+  * `proplist() = [property()]`
+  * `property() = atom() | {term(), term()}`
+- `{ok, {[{key(), timestamp(), val(), exp_time(), proplist()}], boolean()}}`
+  * `get_all_attribs`フラグを指定し、`witness`フラグは指定していない`get_many`要求が成功しました。
+  * `exp_time() = time_t()`
++
+NOTE:
+
+
+正常終了の戻り値の最後のブール値は、戻り値の最後のキーの後にチェイン内にまだキーが存在するかどうかを示します。存在する場合は真（`true`）、存在しない場合は偽（`false`）となります。`proplist()`が返される場合、リスト中の特性のひとつは常に`{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。
++
+
+ ::
+
+エラー終了の場合
+
+- `'invalid_flag_present'`
+  * `Flags`引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+- `'brick_not_available'`
+  * 該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * 要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+  * `node() = atom()`
+
+エイリアス
+
+ ::
+- brick_simple:get_many/3
+  * `brick_simple:get_many(Tab, Key, MaxNum).`
+- brick_simple:get_many/4
+  * `brick_simple:get_many(Tab, Key, MaxNum, Flags).`
+  * `brick_simple:get_many(Tab, Key, MaxNum, Timeout).`
+
+例
+
+ ::
+現在、キーが2個しかないテーブルから、すべてのキーの検索に成功した場合（ブール値の`false`は、キー`foo`に後続のキーが存在しないことを示します）
++
+------
+> brick_simple:get_many(tab1, "", 5).
+{ok,{[{<<"another">>,1271543102911775,<<"yes!">>},
+      {<<"foo">>,1271543165272987,<<"Foo again?">>}],
+     false}}
+------
++
+
+ ::
+`witness`フラグを指定して、現在キーが2個しかないテーブルから、すべてのキーの検索に成功した場合
++
+------
+> brick_simple:get_many(tab1, "", 5, ['witness']).
+{ok,{[{<<"another">>,1271543102911775},
+      {<<"foo">>,1271543165272987}],
+     false}}
+------
+
+ ::
+`get_all_attribs`フラグを指定して、現在キーが2個しかないテーブルから、すべてのキーの検索に成功した場合
++
+------
+> brick_simple:get_many(tab1, "", 5).
+{ok,{[{<<"another">>,1271543102911775,<<"yes!">>,0,
+       [{val_len,4}]},
+      {<<"foo">>,1271543165272987,<<"Foo again?">>,0,[{val_len,6}]}],
+     false}}
+------
+
+[[brick-simple-delete]]
+=== brick_simple:delete/4
+
+書式
+
+ ::
+*brick_simple:delete(Tab, Key, Flags, Timeout).*
+
+解説
+
+ ::
+テーブル`Tab`から、キー`Key`を削除します。
+
+引数
+
+ ::
+*Tab*
+
+- キーと、そのペアとなるバリューを削除するテーブルの名前
+- 必須
+- 型
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Key*
+
+- テーブルから削除するキー
+- 必須
+- 型
+  * `Key = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
++
+NOTE: `
+
+
+Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。
++
+
+ ::
+*Flags*
+
+- `delete` 操作に適用される操作フラグのリスト
+- 任意：デフォルト値は空リスト
+- 型
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag()]`
+  * `do_op_flag() = {'testset', timestamp()} |'must_exist' | 'must_not_exist'`
+  * `timestamp() = integer()`
+- 操作フラグの使用方法
+  * `{'testset', timestamp()}`
+    ** キーのタイムスタンプが`timestamp()`と正確に一致しない場合、操作は失敗します。
+link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーのタイムスタンプが`timestamp()`と正確に一致しない場合にトランザクションが終了します。このフラグは、`must_exist`と`must_not_exist`の両フラグに優先します。
+  * `'must_exist'`
+    ** link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーが存在しない場合にトランザクションが終了します。
+  * `'must_not_exist'`
+    ** link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーが存在する場合にトランザクションが終了します。このフラグは、クライアント・アプリケーションにとって2個以上のキーの間の関係が重要な場合に便利です。
+
+ ::
+*Timeout*
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：デフォルト値は15,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer() | 'infinity'`
+
+戻り値
+
+::
+正常終了の場合
+
+- `'ok'`
+
+ ::
+エラー終了の場合
+
+- `'key_not_exist'`
+  * キーが存在しないため、操作が失敗しました。
+- `{'ts_error', timestamp()}`
+  * `{'testset', timestamp()}`フラグが使用され、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+  * `timestamp() = integer()`
+- `'invalid_flag_present'`
+  * `Flags`引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+- `'brick_not_available'`
+  * 該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * 要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+  * `node() = atom()`
+
+エイリアス
+
+ ::
+- brick_simple:delete/2
+  * `brick_simple:delete(Tab, Key).`
+- brick_simple:delete/3
+  * `brick_simple:delete(Tab, Key, Flags).`
+  * `brick_simple:delete(Tab, Key, Timeout).`
+
+例
+
+ ::
+キーと、そのペアのバリュー、および属性の削除に成功した場合
++
+------
+> brick_simple:delete(tab1, <<"foo">>).
+ok
+------
++
+
+ ::
+キーを削除しようとしてキーが存在しないため、失敗した場合
++
+------
+> brick_simple:delete(tab1, "key6").
+key_not_exist
+------
++
+
+ ::
+キーを削除しようとして現在のタイムスタンプの指定が正しくなかったため、失敗した場合
++
+------
+> brick_simple:delete(tab1, "goo", [{'testset', 12345}]).
+{ts_error,1271543165272987}
+------
++
+
+ ::
+現在のタイムスタンプを正しく指定して、キーの削除に成功した場合
++
+------
+> brick_simple:delete(tab1, "goo", [{'testset', 1271543165272987}]).
+ok
+------
++
+
+ ::
+デフォルトではない操作のタイムアウト時間を指定して、キーの削除に成功した場合
++
+------
+> brick_simple:delete(tab1, "key3", 30000).
+ok
+------
+
+[[brick-simple-do]]
+=== brick_simple:do/4
+
+書式
+
+ ::
+*brick_simple:do(Tab, OpList, OpFlags, Timeout).*
+
+解説
+
+ ::
+テーブル`Tab`に基本操作のリストを送ります。それと同時に、Hibariのブリックがその基本操作を実行します。操作リスト`OpList`の最初の項目が`brick_server:make_txn()`の場合は、操作リストをマイクロ・トランザクションとして実行します。この場合は、すべての操作が成功するか、あるいはすべての操作が実行されないかのどちらかになります。これを「マイクロ」トランザクションと呼ぶのは、`brick_simple:do()`API を使用するすべての操作に適用される明確な制約となるからです。
+* 対象となるキーはすべて、同一テーブル内に存在しなければなりません。
+* 対象となるキーはすべて、同一チェイン内に存在しなければなりません。
+* トランザクション内のすべての操作は、1回の`brick_simple:do()`のコールで送らなければなりません。他のデータベースとは異なり、トランザクションのハンドルを要求し、そのトランザクションに対してアドホックに1個ずつ操作を追加することはできません。
+
+
+ ::
+マイクロ・トランザクションに関する詳細情報については、「Hibariシステム管理者ガイド」の
+link:hibari-sysadmin-guide.en.html#micro-transactions[「マイクロ・トランザクション」の節]を参照してください。
+
+引数
+
+ ::
+*Tab*
+
+- 操作を実行するテーブルの名前
+- 必須
+- 型
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*OpList*
+- 実行したい基本操作のリスト。各基本操作は、`brick_server:make_*()`APIによって起動されます。
+- 必須
+- 型
+  * `OpList = do_op_list()`
+  * `do_op_list() = [do1_op()]`
+  * `do1_op() =`
+    ** `brick_server:make_add(Key, Value, ExpTime, Flags)`
+    ** `brick_server:make_replace(Key, Value, ExpTime, Flags)`
+    ** `brick_server:make_set(Key, Value, ExpTime, Flags)`
+    ** `brick_server:make_get(Key, Flags)`
+    ** `brick_server:make_get_many(Key, Flags)`
+    ** `brick_server:make_delete(Key, Flags)`
+    ** `brick_server:make_txn()`
+       *** `do`操作をアトミック・トランザクションとして実行したい場合は、`OpList`の最初の項目として`brick_server:make_txn()` を入れてください。
+    ** 各基本操作の引数は、その操作を単独で実行する場合と同じであることに注意してください。ただし、`Tab`および`Timeout`引数は除きます。この両引数は、個別の操作の引数ではなく、`do`操作全体の引数となります。たとえば、`add`操作を単独で実行する場合の指定は`brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout)`となります。それに対して、`do`操作の中で実行する場合は`brick_server:make_add(Key, Value, ExpTime, Flags)`となります。
+
+    ** 各基本操作の詳細については、次を参照してください。
+       link:#brick-simple-add[brick_simple:add/6],
+       link:#brick-simple-replace[brick_simple:replace/6],
+       link:#brick-simple-set[brick_simple:set/6],
+       link:#brick-simple-get[brick_simple:get/4],
+       link:#brick-simple-get-many[brick_simple:get_many/5], and
+       link:#brick-simple-delete[brick_simple:delete/4].
+
+ ::
+*OpFlags*
+
+- `do`操作全体に適用される操作フラグのリスト
+- 任意：デフォルト値は空リスト
+- 型
+  * `OpFlags = do_flags_list()`
+  * `do_flags_list() = [do_flag()]`
+  * `do_flag() = 'fail_if_wrong_role' | 'ignore_role'`
+- 操作フラグの使用方法
+  * `'fail_if_wrong_role'`
+    ** do操作が対象のチェイン内の誤ったブリックに送られた場合（read要求が誤ってヘッド・ブリックに送られた、あるいはwrite要求が誤ってテイル・ブリックに送信された場合）、ただちにトランザクションは終了します。このフラグを指定していない場合のデフォルト処理では、誤りのブリックが要求を正しいブリックに転送します。
+  * `'ignore_role'`
+    ** このフラグを指定すると、要求を受けとったたブリックがどんな役割を割り振られていても、そのブリックが直接に要求にこたえます。
+
+
+ ::
+Timeout
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：デフォルト値は15,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer() | 'infinity'`
+
+戻り値
+
+ ::
+正常終了の場合
+
+- `[do1_res_ok]`
+  * `do1_res_ok`のリスト。リストの各項目が、`do`操作で指定した各基本操作に対応します。戻り値は、要求の`OpList`で基本操作を指定した順番でリストに戻されます。`do`操作でトランザクション処理を要求していない場合は、個別の基本操作が失敗しても`do`操作全体は失敗しないことに注意してください。
+  * 戻り値のリスト内で個別の基本操作に対応して返される`do1_res_ok`は、その基本操作を単独で実行した場合の戻り値と同じものです。たとえば、`do`操作が正常終了した場合の戻り値のリスト内に`add`基本操作の戻り値として返ってくるものは、
+    link:#brick-simple-add[brick_simple:add/6] で説明したものと同じです。また、replace基本操作の戻り値として返ってくるものは、
+    link:#brick-simple-replace[brick_simple:replace/6] で説明したものと同じです。これは、
+    likewise for link:#brick-simple-set[set]、
+    link:#brick-simple-get[get]、
+    link:#brick-simple-get-many[get_many]、
+    link:#brick-simple-delete[delete]の各基本操作に関しても同様です。
+
+
+ ::
+エラー終了の場合
+
+- `{txn_fail, [{integer(), do1_res_fail()}]}`
+  * `do`操作でトランザクション処理が要求され、トランザクション中の個別基本操作が失敗したため、操作が失敗しました。`integer()`は、どの基本操作が失敗したかを、要求時の`OpList`に指定した順番で示します。たとえば、2が返された場合は、要求時の`OpList`に指定された2番目の基本操作が失敗したことを示します。`OpList`の最初の`txn()`指定は順番に入っていないことに注意してください。
+  * `do1_res_fail()`は、基本操作の失敗の種類を示します。次のものが考えられます。
+    ** `{'key_exists', timestamp()}`
+       *** `timestamp() = integer()`
+    ** `'key_not_exist'`
+    ** `{'ts_error', timestamp()}`
+    ** `'invalid_flag_present'`
+- `'invalid_flag_present'`
+  * `do`要求の`OpFlags`引数に無効な`do_flag()`が検出されたため、操作が失敗しました。これは、個別の基本操作で指定するフラグが誤ったエラーとは異なるエラーであることに注意してください。
+- `'brick_not_available'`
+  * 該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * 要求を処理するサーバーのブリックに障害が発生した、あるいはクライアントとサーバー間のネットワークにパーティションが発生したため、操作が失敗しました。Adminサーバーが障害を検知してチェインの復旧処置を実施することを考慮して、少し時間をおいた後にクライアントから要求を再送してください。
+  * `node() = atom()`
+
+エイリアス
+
+ ::
+- brick_simple:do/2
+  * `brick_simple:do(Tab, OpList).`
+- brick_simple:do/3
+  * `brick_simple:do(Tab, OpList, Timeout).`
+
+例
+
+ ::
+トランザクション処理を要求しない`do`操作に成功し、2個の新しいキーをテーブル`tab1`に追加した場合
++
+------
+> brick_simple:do(tab1, [brick_server:make_add("foo3", "bar3"),brick_server:make_add("foo4", "bar4")]).
+[ok,ok]
+------
++
+
+ ::
+2個の`get`基本操作`Do1`と`Do2`を生成し、それつなげてトランザクション処理を要求しない`do`操作にして、実行に成功した場合
++
+------
+> Do1 = brick_server:make_get("foo").
+{get,<<"foo">>,[]}
+> Do2 = brick_server:make_get("foo2").
+{get,<<"foo2">>,[]}
+> brick_simple:do(tab1, [Do1, Do2]).
+[{ok,1271543102911775,<<"Foo again?">>},key_not_exist]
+------
++
+
+ ::
+トランザクション処理を要求した操作に失敗した場合（トランザクション処理が要求されているため、基本操作`Do2b`の失敗により、操作全体が失敗）
+
+------
+> Do1b = brick_server:make_get("foo").
+{get,<<"foo">>,[]}
+> Do2b = brick_server:make_get("foo2", [must_exist]).
+{get,<<"foo2">>,[must_exist]}
+> brick_simple:do(tab1, [brick_server:make_txn(), Do1b, Do2b]).
+{txn_fail,[{2,key_not_exist}]}
+------
+
+[[brick-simple-fold-table]]
+=== brick_simple:fold_table/7
+
+書式
+
+ ::
+*brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags, MaxParallel, Timeout).*
+
+解説
+
+ ::
+テーブル内のすべてのキーに対して、フォールド操作を行います。この操作の基盤であるErlangのfold関数の概要については、http://www.erlang.org/doc/man/lists.html#foldl-3を参照してください。
+
+
+IMPORTANT: データの移行処理中にこの操作を実行しないでください。
+
+
+引数
+
+ ::
+*Tab*
+
+- フォールド操作を実行するテーブルの名前
+- 必須
+- 型
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Fun*
+
+- リストの連続要素に対して適用する関数
+- 必須
+- 型
+  * `Fun  = fun_arity_2()`
+  * `fun_arity_2()` arguments =
+   ** `{ChainName, Tuple_from_get_many}`
+     *** `Tuple_From_get_many`は、
+link:#brick-simple-get-many[brick_simple:get_many()]のひとつの結果を単独のタプルで表わしたものです。`Flags`引数によりフォーマットが異なります。`Flags`引数はそのまま`get_many()` コールに渡されます。たとえば`Flags` = `[]`の場合、`Tuple_From_get_many`は`{Key, TS, Value}`というフォーマットとなり、`Flags` = `[witness]`の場合、`Tuple_From_get_many`は`{Key, TS}`というフォーマットとなります。
+   ** `Acc`
+     *** 結果を累算する項
+
+ ::
+*Acc*
+
+- 結果を累算する項の初期値
+- 必須
+- 型
+o Acc = term()
+NumItems
+* フォールド操作によるget_many操作のバッチサイズ
+* 必須
+* 型
+  * `Acc  = term()`
+
+ ::
+*NumItems*
+
+- フォールド関数に使う`get_many` 操作のバッチサイズ
+- 必須
+- 型
+  * `NumItems  = integer()`
+
+ ::
+*Flags*
+
+- `fold_table`操作に適用される操作フラグのリスト。ここでサポートするフラグは、
+ink:#brick-simple-get-many[brick_simple:get_many()]と同じです。
+- 必須
+- 型
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag() | property()]`
+  * `do_op_flag() = 'get_all_attribs' | 'witness' | {'binary_prefix',
+    binary()} | {'max_bytes', integer()}`
+  * `property() = atom() | {term(), term()}`
+- 操作フラグの使用方法
+  * `'get_all_attribs'`
+    ** 各キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+  * `'witness'`
+    ** 検索結果としてバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
+  * `{'binary_prefix', binary()}`
+    ** `binary()`と正確に一致するバイナリ値をプレフィクスとするキーのみを返します。
+  * `{'max_bytes', integer()}`
+    ** 対応するバリューBLOBのサイズの合計が`integer()`バイトを超えない範囲のキーだけを返します。
+
+ ::
+*MaxParallel*
+- `MaxParallel`= 0を指定すると、本来の意味のフォールドを実行します。`MaxParallel`>= 1を指定すると、それぞれのチェインで独立にフォールドを実行します。`MaxParallel`で指定した数に達するまでフォールドを並行して実行し、それぞれのチェインのフォールドの結果をそのまま要求者に返します。つまり、`map-reduce`サイクルの`reduce`フェーズのように処理結果を結合するわけでは*ありません*。
+- 任意：デフォルト値は0
+- 型
+  * `MaxParallel = integer()`
+
+ ::
+*Timeout*
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：デフォルト値は5,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer()
+
+戻り値
+
+ ::
+正常終了の場合
+- `{ok, Acc, Iterations}`
+  * `Acc = term()`
+  * `Iterations = integer()`
+
+ ::
+エラー終了の場合
+- `{error, GdssError, Acc, Iterations}`
+  * `GdssError = term()`
+  * `Acc = term()`
+  * `Iterations = integer()`
+
+エイリアス
+
+ ::
+- brick_simple:fold_table/5
+  * `brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags).`
+- brick_simple:fold_table/6
+  * `brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags,
+    MaxParallel).`
+
+例
+
+_（追加予定）
+
+[[brick-simple-fold-key]]
+=== brick_simple:fold_key_prefix/9
+
+書式
+
+ ::
+*brick_simple:fold_key_prefix(Tab, Prefix, StartKey, Fun, Acc, Flags0,
+ NumItems,SleepTime,Timeout).*
+
+解説
+
+ ::
+テーブル`Tab`の`StartKey`から始まるすべてのキーに対して、フォールド操作を実行します。その際、バイナリ値が`Prefix`で始まるキーのみを対象とします。イテレーションの間で`SleepTime`ミリ秒だけスリープし、`Flags`と`NumItems`を
+link:#brick-simple-get-many[brick_simple:get_many()]への引数として使用します。この操作の基盤であるErlangのfold関数の概要については、http://www.erlang.org/doc/man/lists.html#foldl-3を参照してください。
+
+IMPORTANT:
+
+
+データの移行処理中にこの操作を実行しないでください。
+引数
+
+ ::
+*Tab*
+
+- フォールド操作を実行するテーブルの名前
+- 必須
+- 型
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Prefix*
+
+- フォールド操作を実行したいキーのプレフィクスの値
+- 必須
+- 型
+  * `Prefix = binary()`
+
+ ::
+*StartKey*
+
+- フォールド操作を開始したいキー値
+- 任意：デフォルト値は指定した`Prefix`の値
+- 型
+  * `StartKey = binary()`
+
+ ::
+*Fun*
+
+- リストの連続要素に対して適用する関数
+- 必須
+- 型
+  * `Fun  = fun_arity_2()`
+  * `fun_arity_2()` arguments =
+   ** `Tuple_from_get_many`
+     *** `Tuple_From_get_many`は、
+  link:#brick-simple-get-many[brick_simple:get_many()]のひとつの結果を単独のタプルで表わしたものです。`Flags`引数によりフォーマットが異なります。`Flags`引数はそのまま`get_many()` コールに渡されます。たとえば、`Flags` = `[]`の場合、`Tuple_From_get_many`は`{Key, TS, Value}`というフォーマットとなり、`Flags` = `[witness]`の場合、`Tuple_From_get_many`は`{Key, TS}`というのフォーマットとなります。
+   ** `UserAccumulatorTerm`
+     *** _（説明を追加予定）
+
+ ::
+*Acc*
+
+- _（説明を追加予定）
+- 必須
+- 型
+  * `Acc  = term()`
+
+ ::
+*Flags0*
+
+- `fold_key_prefix`操作に適用される操作フラグのリスト。ここでサポートするフラグは、
+  link:#brick-simple-get-many[brick_simple:get_many()]と同じです。ただし、 `{'binary_prefix', binary()}`フラグを除きます。キーのプレフィクス値は、`brick_simple:fold_key_prefix()`の`Prefix`引数を通して直接渡されるため、このフラグは使用されません。
+- 必須
+- 型
+  * `Flags0 = 'get_all_attribs' | 'witness' | {'max_bytes', integer()}`
+- 操作フラグの使用方法
+  * `'get_all_attribs'`
+    ** キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+  * `'witness'`
+    ** 検索結果としてバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
+  * `{'max_bytes', integer()}`
+    ** 対応するバリューBLOBのサイズの合計が`integer()`バイトを超えない範囲のキーだけを返します。
+ ::
+*NumItems*
+- _（説明を追加予定）
+- 任意：省略値は100
+- 型
+  * `NumItems  = integer()`
+
+ ::
+*SleepTime*
+
+- イテレーションの間のスリープ時間（単位はミリ秒）
+- 任意：デフォルト値は0
+- 型
+  * `SleepTime = integer()`
+
+ ::
+*Timeout*
+
+- 操作のタイムアウト時間（単位はミリ秒）
+- 任意：デフォルト値は15,000（ミリ秒）
+- 型
+  * `Timeout = timeout()`
+  * `timeout() = integer()
+
+戻り値
+
+ ::
+正常終了の場合
+
+- `{ok, Acc, Iterations}`
+  * `Acc = term()`
+  * `Iterations = integer()`
+
+ ::
+エラー終了の場合
+- `{error, GdssError, Acc, Iterations}`
+  * `GdssError = term()`
+  * `Acc = term()`
+  * `Iterations = integer()`
+
+エイリアス
+ ::
+- brick_simple:fold_key_prefix/5
+  * `brick_simple:fold_key_prefix(Tab, Prefix, Fun, Acc, Flags).`
+
+例
+
+_（追加予定）
