@@ -2261,3 +2261,600 @@ IMPORTANT:
 例
 
 _（追加予定）
+[[client-api-ubf]]
+== クライアント向けAPI：UBF
+
+
+link:http://github.com/norton/ubf[UBFプロトコル] は、正式に規定されたプロトコル群です。多数のクライアント言語がこれをサポートしています。本章では、UBFプロトコル層の各層について説明します。さらに、UBFクライアントをErlangやその他の言語で使用する方法、およびそのクライアントを使ってHibariのストレージ・クラスターにアクセスする方法について説明します。
+
+Hibariのソースコードのディストリビューションには、次の言語におけるUBF/EBFプロトコルのサポートが含まれています。
+
+* Erlangに関しては xref:using-ubf-erlang-client[] を参照してください。
+* Javaに関しては xref:using-ubf-java-client[] を参照してください。
+* Pythonに関しては xref:using-ubf-python-client[] を参照してください。
+
+[[hibari-server-impl-of-ubf-proto-stack]]
+=== HibariサーバーにおけるUBFプロトコル層の実装
+
+UBF(A)：ボトム層、トランスポート・プロトコル層およびセッション・プロトコル層::
+この層は、link:http://en.wikipedia.org/wiki/Open_Network_Computing_Remote_Procedure_Call[ONC-RPC]や
+link:http://en.wikipedia.org/wiki/IIOP[CORBA IIOP]、
+link:http://en.wikipedia.org/wiki/Protocol_buffers[Protocol Buffers]、
+link:http://en.wikipedia.org/wiki/Thrift_(protocol)[Thrift] など、ホスト間伝送にTCPを用いる他の多くのシリアライズされたデータ伝送プロトコルと同様に、基本的な役割を果たします。
++
+Hibariサーバーは、TCP/IPトランスポート層の上に載るこれらのセッション・プロトコルをいくつかサポートします。どのセッション・プロトコルを選択するかは、使いやすいもの、あるいは、アプリケーション開発者が支持するものでよいでしょう。アプリケーション開発者にとって、HibariでRubyとJSON-RPCを使うのも、PythonとProtocol Buffersを使うのも、同じように容易なはずです。
++
+* UBF(A)：Joe Armstrongが作ったセッション層プロトコル。
+* EBF：Erlang Binary Format。このセッション層プロトコルは軽くて効率的なプロトコルです。Erlangの組込み関数である`term_to_binary()`と `binary_to_term()`を使用してErlangのデータ項をシリアライズします。link:http://bert-rpc.org/[BERTプロトコル]と非常に密接な関連を持ちます。
+* JSON over TCP：JSF（JavaScript Format）とも呼ばれるもの。Erlangの項を
+ link:http://en.wikipedia.org/wiki/JSON[JSONの項]として表記し、直接TCPトランスポート層上で送信します。このプロトコルは、あまり一般的に使用されているものではありませんが、UBFサーバーのフレームワーク内で容易に実装できます。
+* HTTP：link:http://en.wikipedia.org/wiki/HTTP[Hypertext Transfer Protocol]。このプロトコルはHibariの
+link:http://en.wikipedia.org/wiki/JSON-RPC[JSON-RPC]サーバーに使用され、Hibariを支えています。
+* link:http://en.wikipedia.org/wiki/Thrift_(protocol)[Thrift]：UBF(A) やErlangネイティブのワイヤ・フォーマットではなく、Thriftのバイナリ表記をワイヤ・プロトコルとして使用している点を除けば、EBFと同じです。
+* link:http://en.wikipedia.org/wiki/Protocol_buffers[Protocol Buffers]：UBF(A) やErlangネイティブのワイヤ・フォーマットではなく、Google のProtocol Buffers バイナリ表記をワイヤ・プロトコルとして使用している点を除けば、EBFと同じです。*Hibariでは実験的にサポートしています（まだ実装段階ではありません）。*
+* link:http://hadoop.apache.org/avro/docs/current/[Avro]：UBF(A) やErlangネイティブのワイヤ・フォーマットではなく、Avroのバイナリ表記をワイヤ・プロトコルとして使用している点を除けば、EBFと同じです。*Hibariでは実験的にサポートしています（まだ実装段階ではありません）。*
++
+UBF(B)：ミドル層、「コントラクト」::
+UBF(B)は、UBF(A)の型、およびクライアントとサーバー間のプロトコルを記述するプログラミング言語です。UBF(B)は、Verified XMLやXMLスキーマ、SOAP、WDSLとほぼ同等です。
++
+この層は、プロトコルの「コントラクト」、つまりクライアントおよびサーバーが送信する全データのフォーマット仕様として働きます。少しでもプロトコルに従わないデータがあれば、サーバー内に埋め込まれたコントラクト・チェッカーがそれを排除します。クライアントが望めば、コントラクト・チェッカーを使ってサーバーが送信するデータの妥当性を確認することもできますが、一般的にはあまり行われません。
++
+UBF(C)：トップ層、UBFメタプロトコル::
+メタプロトコルは、UBFセッションの開始時に、TCPリスナーが提供可能なUBF(B)コントラクトのひとつを選択します。現時点でHibariサーバーがサポートできるのは“gdss”コントラクトだけですが、将来は他のコントラクトも追加する予定です。
+
+
+[[ubf-representation-of-strings]]
+=== UBFにおけるストリングとバイナリの表現
+
+Erlang言語は、ストリング（文字列）をデータ型として明確にはサポートしておらず、整数（ASCIIバイト値）やバイナリのリストとして表現します。
+
+一方、UBFコントラクトは、ストリングとリストとバイナリを区別します。ストリングの場合、UBF(A)は、ストリング"Hello, world!"を`{'#S', "Hello, world!"}`と表記します。
+
+しかし、開発者にとって、このストリング表記を使用するのは煩雑です。Erlangでは、`ubf.hrl`ヘッダー・ファイルに`?S("Hello, world!")`というマクロが入っており、少しはましな近道になります。他の言語を使用する際には、いずれかの2項のタプルとアトムとして、2項のタプルとアトム `'#S'` を作成できます。
+
+幸いなことに、ストリングが必要になるのは、 `startSession`メタプロトコル・コマンドを用いてHibariデータ・サーバー・コントラクトの使用を開始する際の1回だけです。以下に例を示します。
+
+[[using-ubf-in-any-language]]
+=== すべての言語におけるUBFベースのプロトコルの使用手順
+
+UBFベースのプロトコルを使用する場合、すべての言語で同じ手順に従います。
+
+1. UBFサーバーへのコネクションを作成します。
+* EBFサーバー、JSON-RPCサーバー、 Thriftサーバーなど他のサーバーでも同様です。
+2. UBFメタプロトコルを用いて、`gdss`コントラクト、すなわちHibariサーバー・コントラクトの使用を開始します。
+3. Hibariサーバーに1回ないし複数回のクエリを送信し、サーバーの各応答を解析します。
+4. UBFサーバーへのコネクションをクローズします。
+
+[[the-hibari-ubf-protocol-contract]]
+=== HibariのUBFプロトコル・コントラクト
+
+HibariのUBFプロトコル・コントラクトは、ファイル`ubf_gdss_plugin.con`にあります。
+
+
+
+
+NOTE: このファイルの最新版は、Hibariのソースコードを参照してください。
+link:./misc-codes/ubf_gdss_plugin.con[このドキュメント内にもファイル`ubf_gdss_plugin.con`のコピーがあります]が、さらに改訂版が出ている可能性があります。
+
+コントラクト内で指定されるUBFの型名は、xref:client-api-erlang[]で使用している型名とは少し違います。たとえば、UBFコントラクトでは、キーの有効期限を `exp_time()`としていますが、このドキュメントでは `expiry()`としています。多少名前が違っても、有効期限として両方の名前が使用する基本データ型は同じ`integer()`です。
+
+UBFコントラクトでは、各コマンドに次の命名規約を使います。
+* `CommandName_req()`：クライアントからサーバーに送信する要求。たとえば`set`コマンドは`set_req()`となります。
+* `CommandName_res()`：サーバーからクライアントに送信する応答。たとえば`set`コマンドは`set_res()`となります。
+
+UBFのRPCコールは、タプルの形式になるのが一般的です。タプルの最初の要素がコマンド名で、後続の要素がそのコマンドの引数です。応答はErlangのいずれのデータ型の項でも返せますが、Hibariのコントラクトは、アトム型かタプル型の応答のみを返します。
+
+以下に、UBFのクライアント要求とErlangのAPIのマッピングをアルファベット順に示します。
+
+* `add_req()`→`brick_simple:add()`：xref:brick-simple-add[] を参照
+* `delete_req()`→`brick_simple:delete()`：xref:brick-simple-delete[] を参照
+* `do_req()`→ `brick_simple:do()`：xref:brick-simple-do[] を参照
+* `get_req()`→`brick_simple:get()`：xref:brick-simple-get[] を参照
+* `get_many_req()`→`brick_simple:get_many()`：xref:brick-simple-get-many[] を参照
+* `replace_req()`→ `brick_simple:replace()`：xref:brick-simple-replace[] を参照
+* `set_req()`→`brick_simple:set()`：xref:brick-simple-set[] を参照
+
+[[using-ubf-erlang-client]]
+=== Erlang用のUBFクライアント・ライブラリの使用法
+
+
+
+
+[IMPORTANT]
+==============================
+1. Erlangシェルを実験やプロトタイプで使用する場合、シェルのサーチ・パスに、ErlangのUBFクライアント・ライブラリへのパスを入れなければなりません。その一番簡単な方法は、Erlangシェルの `erl`コマンドの引数として、次を使用することです。
+`-pz /path/to/ubf/library/ebin`
+
+2. コードを作成する場合は、`?S()`マクロを使用できるように、ソースモジュールの先頭行に次のステートメントを置いてください。
+`-include("ubf.hrl").`
+Erlangシェルの制限により、シェル中ではマクロを使用できません。
+==============================
+
+xref:using-ubf-in-any-language[]
+ で概説したように、最初のステップは、Hibariサーバーへのコネクションを作成することです。Hibariクラスターにノードが複数ある場合は、どのノードへのコネクションを作成しても構いません。すべてのノードがすべてのUBF要求に対応し、要求を適切なブリックに回すことができます。
+
+
+.例1：UBFサーバー（“localhost”のTCPポート7581）へのコネクションを作成する
+----------------------------
+(asdf@bb3)54> {ok, P1, _} = ubf_client:connect("localhost", 7581, [{proto, ubf}], 5000).
+{ok,<0.139.0>,{'#S', "gdss_meta_server"}}
+----------------------------
+
+次に、このコネクションを用いてコマンドを使用していくために、UBFメタプロトコルを用いて、Hibariサーバーの“gdss”と呼ばれるコントラクトを選択します。
+
+TIP: 
+
+Hibariサーバーのコントラクトは「ステートレス」です。`ubf_client:rpc/2`関数からの応答に含まれる項はすべて`{reply,ServerReply,UBF_StateName}`の形式をとります。Hibariサーバーのコントラクトはステートレスであるため、`UBF_StateName`は常にアトム`none`になります。
+.例2：UBFメタプロトコルを用いて“gdss”コントラクトを要求する
+----------------------------
+(asdf@bb3)55> ubf_client:rpc(P1, {startSession, {'#S', "gdss"}, []}).
+{reply,{ok,ok},none}
+----------------------------
+
+これでUBFコネクションが確立しました。このコネクションを用いてキー「foo」を設定します。
+
+.例3：テーブル `tab1`に、キー「foo」を設定する（バリューは「foo val」、有効期限とフラグは指定なし、タイムアウト時間は5秒）
+----------------------------
+(asdf@bb3)59> ubf_client:rpc(P1, {set, tab1, <<"foo">>, <<"foo val">>, 0, [], 5000}).
+{reply,ok,none}
+----------------------------
+
+
+
+
+[NOTE]
+===========================================
+上記の例の`set_req()`と下記の例の`get_req()`の両方で、戻り値の値は、それぞれxref:brick-simple-set[] と xref:brick-simple-get[] に記述されたとおりであることに注意してください。
+
+唯一の違いは、`ubf_client:rpc/2`関数では、サーバーからの応答を3項のタプル `{reply,ServerReply,none}`.としてまとめることです。
+===========================================
+
+.例4：テーブル`tab1`から、キー「foo」を取得する（タイムアウト時間は5秒）
+----------------------------
+(asdf@bb3)66> ubf_client:rpc(P1, {get, tab1, <<"foo">>, [], 5000}).
+{reply,{ok,1273009092549799,<<"foo val">>},none}
+----------------------------
+
+クライアントがコントラクトに違反する要求を送信すると、下記の例のように、サーバーが違反を返します。
+
+.例5：コントラクト違反の要求を送信する
+----------------------------
+(asdf@bb3)89> ubf_client:rpc(P1, {bbb, 3000}).
+{reply,{clientBrokeContract,{bbb,3000},[]},none}
+----------------------------
+
+コネクションを使い終わったら、明示的にコネクションを終了させるのがきまりです。クライアントが`stop/1`の呼び出しを忘れた場合や呼び出せない場合は、サーバーがコネクションのサーバー側のクリーンナップ処理を暗黙のうちに実行します。
+
+.例6：UBFコネクションをクローズする
+----------------------------
+(asdf@bb3)92> ubf_client:stop(P1).
+ok
+----------------------------
+
+
+[[using-ubf-java-client]]
+=== Java用のUBFクライアント・ライブラリの使用法
+
+Java用UBFクライアント・ライブラリのソースコードは、
+link:http://github.com/norton/ubf[http://github.com/norton/ubf]にあるUBFソース・リポジトリの`priv/java`サブディレクトリにあります。
+
+==== Java用UBFクライアント・ライブラリのコンパイル
+
+1. UBFクライアント・ライブラリのコードを、2010年5月10日以降の「マスター」版にアップデートしてください。またはGitのタグ「v1.14」以降のものを使用してください。2010年5月10日より前でタグが「v1.14」より前の版のライブラリにはいくつかバグがあり、UBFクライアントが正しく機能しません。
+2. ディレクトリを、UBFクライアント・ライブラリの配布ソースの`priv/java`ディレクトリに変更します。
+3. `make`を実行します。
+4. （オプション）`classes`サブディレクトリ内のクラス・ファイルを、自分のJava開発環境の適切なディレクトリにコピーします。
+
+==== UBFクライアント・ライブラリのテストプログラムHibariTest.javaのコンパイル
+
+1. ディレクトリを、Hibariのソースコードのディストリビューション内の`gdss-ubf-proto/priv/java`サブディレクトリに変更します。
+2. `Makefile`を編集して、`UBF_CLASSES_DIR`変数を、UBFパッケージのソースコードの`priv/java/classes`サブディレクトリ（または、該当するクラスの自分のシステムへの正式インストール先のサブディレクトリ）を指すものに変更します。
+3. 次の2つの`make`コマンドを実行します。2つ目のコマンドは、HibariサーバーのUBFサーバーがローカルマシン（localhost）上にあると想定しています。
++
+-------------------------
+% make HibariTest
+% make run-HibariTest
+-------------------------
+4. Hibariサーバーがローカルマシン上で稼働していない場合は、`make -n run-HibariTest` を実行して、テストプログラムを実行するjavaコマンドを表示します。コマンドをシェルにカット・アンド・ペーストして、最後の引数がHibariサーバーのホスト名を指定するように編集してください。
+
+==== HibariTest.javaの確認
+
+`main()`関数は次の3つの処理を行います。
+
+1. HibariサーバーへのUBFコネクションを新しく作成します。ホスト名/IPアドレスは、最初のコマンドの引数で指定します。さらにUBFメタプロトコル経由で`gdss`コントラクトを要求します。
+2. `test_hibari_basics()`メソッド内の小さなテストケースを実行します。
+3. UBFセッションをクローズして終了します。
+
+
+[[the-ubf-hibaritest-main-method]]
+.例7：ubf.HibariTest.main()メソッド
+--------------------------------------
+public class HibariTest
+{
+    public static void main(String[] args)
+        throws Exception
+    {
+        Socket sock = null;
+        UBFClient ubf = null;
+
+        try {
+            sock = new Socket(args[0], 7581);
+            ubf = UBFClient.new_via_sock(new UBFString("gdss"), new UBFList(),
+                    new FooHandler(), sock);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            System.exit(1);
+        }
+
+        test_hibari_basics(ubf);
+
+        ubf.stopSession();
+        System.out.println("Success, it works");
+        System.exit(0);
+    }
+/* ... */
+}
+--------------------------------------
+
+`test_hibari_basics()` メソッドは、xref:using-ubf-python-client[] に記述するPythonのEBFデモスクリプトと同じUBF基本操作を実行します。以下のデモプログラムはPythonのデモスクリプトとは異なり、Hibariの`do()`コマンドではなく、`get()`や`set()`のような単独操作のコマンドを使用しています。
+
+1. テーブル`tab1` から、キー`foo`を削除します。
++
+---------------------------
+    public static void test_hibari_basics(UBFClient ubf)
+        throws IOException, UBFException
+    {
+        // setup
+        UBFObject res1 = ubf.rpc(
+                UBF.tuple( new UBFAtom("delete"), new UBFAtom("tab1"),
+                            new UBFBinary("foo"), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 1:" + res1.toString());
+---------------------------
+2. テーブル`tab1`に、キー `foo`を追加します。
++
+---------------------------
+        // add - ok
+        UBFObject res2 = ubf.rpc(
+                UBF.tuple( new UBFAtom("add"), atom_tab1,
+                            new UBFBinary("foo"), new UBFBinary("bar"),
+                            new UBFInteger(0), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 2:" + res2.toString());
+        if (! res2.equals(atom_ok))
+            System.exit(1);
+---------------------------
+3. テーブル`tab1`に、キー`foo` を再度追加します。今回はエラーとなるはずです。
++
+---------------------------
+        // add - ng
+        UBFObject res3 = ubf.rpc(
+                UBF.tuple( new UBFAtom("add"), atom_tab1,
+                            new UBFBinary("foo"), new UBFBinary("bar"),
+                            new UBFInteger(0), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 3:" + res3.toString());
+        if (! ((UBFTuple)res3).value[0].equals(atom_key_exists))
+            System.exit(1);
+---------------------------
+4. テーブルtab1 から、キー「foo」を取得します。
++
+---------------------------
+        // get - ok
+        UBFObject res4 = ubf.rpc(
+                UBF.tuple( new UBFAtom("get"), atom_tab1,
+                            new UBFBinary("foo"), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 4:" + res4.toString());
+        if (! ((UBFTuple)res4).value[0].equals(atom_ok) ||
+            ! ((UBFTuple)res4).value[2].equals("bar"))
+            System.exit(1);
+---------------------------
+5. テーブル`tab1` に、キー`foo`とバリュー`bar bar`を設定します。
++
+---------------------------
+        // set - ok
+        UBFObject res5 = ubf.rpc(
+                UBF.tuple( new UBFAtom("set"), atom_tab1,
+                            new UBFBinary("foo"), new UBFBinary("bar bar"),
+                            new UBFInteger(0), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 5:" + res5.toString());
+        if (! res5.equals(atom_ok))
+            System.exit(1);
+---------------------------
+6. 再度`foo`を読み出し、バリューが`bar bar`であることを確認します。
++
+---------------------------
+        // get - ok
+        UBFObject res6 = ubf.rpc(
+                UBF.tuple( new UBFAtom("get"), atom_tab1,
+                            new UBFBinary("foo"), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 6:" + res6.toString());
+        if (! ((UBFTuple)res6).value[0].equals(atom_ok) ||
+            ! ((UBFTuple)res6).value[2].equals("bar bar"))
+            System.exit(1);
+---------------------------
+
+==== UBFのイベント・ハンドラーのインターフェイス
+
+`UBFClient`の各インスタンスは、個別のスレッドを用いてサーバーからデータを読み出し、次のいずれかを実行します。
+
+1. 同期RPCの応答をサーバーから受信したというシグナルを他のスレッドに送ります。
+2. サーバーから`event_out`非同期イベントを受信した場合は、コールバック機能を実行します。
+3. ソケットをそのままクローズします。
+
+2番目と3番目は、`UBFEventHandler`インターフェイスを実装するクラスを用いて、この場合に実行するアクションを定義します。
+
+`HibariTest.java`は、非同期イベントに対応するコールバック機能のサンプルを実装しています。実際のアプリケーションでは、このサンプルよりずっと多くの処理が必要です。
+
+------------------------------
+    public static class FooHandler implements UBFEventHandler {
+        public FooHandler() {
+        }
+        public void handleEvent(UBFClient client, UBFObject event) {
+            System.out.println("Hey, got an event: " + event.toString());
+        }
+        public void connectionClosed(UBFClient client) {
+            System.out.println("Hey, connection closed, ignoring it¥n");
+        }
+    }
+------------------------------
+
+
+
+
+TIP: この`FooHandler`クラスの使用例は、xref:the-ubf-hibaritest-main-method[] を参照してください。
+
+[[using-ubf-python-client]]
+=== Python用のEBFクライアント・ライブラリの使用法
+
+Python用のEBFクライアント・ライブラリのソースコードは、link:http://github.com/norton/ubf[http://github.com/norton/ubf]にあるUBFソース・リポジトリの`priv/python`サブディレクトリにあります。
+
+NOTE: 
+
+EBFプロトコルは、UBFと非常に密接な関連があることを思い出してください。唯一の大きな違いは、「レイヤー5」のセッション・プロトコル層です。ここでは、UBF(A)を使用する代わりにEBF (Erlang Binary Format) プロトコルを使用しています。詳細はxref:hibari-server-impl-of-ubf-proto-stack[]  を参照してください。
+
+さらに、Tomas Abrahamssonらが開発した「py_interface」パッケージが必要です。「py_interface」は、link:http://www.fsf.org/licensing/education/licenses/lgpl.html[GNU Library General Public License]の下で配布されています。Gitのリポジトリは、repo.or.czにあります。それをコピーしてビルドするには、以下を使用します。
+
+-------------------
+git clone git://repo.or.cz/py_interface.git
+cd py_interface
+autoconf
+./configure
+make
+pwd
+-------------------
+
+最後のコマンドのアウトプット`pwd`を使用して、「py-interface」ライブラリへの完全なディレクトリ・パスを記憶します。下記の例は、パスが`/tmp/py-interface`であると想定しています。
+
+`pyebf.py`ファイルには、HibariのUBFコントラクトの`do_req()`コマンドを数回呼び出す小さな単体テストが入っています。ほとんどすべてのコマンドの実行結果は、`assert` 関数で確認します。
+
+--------------------
+env PYTHONPATH=/path/to/py_interface python pyebf.py
+--------------------
+
+1. 「localhost」のTCPポート7580のHibariサーバーに接続し、UBFメタプロトコルを用いて、gdssコントラクトに切り替えます。
++
+---------------------------
+    ## login
+    ebf.login('gdss', 'gdss_meta_server')
+---------------------------
+2. テーブル`tab1`から、キー`'foo'`を削除します。
++
+---------------------------
+    ## setup
+    req0 = (Atom('do'), Atom('tab1'), [(Atom('delete'), 'foo', [])], [], 1000)
+    res0 = ebf.rpc('gdss', req0)
+---------------------------
+3. テーブル`tab1`から、キー`'foo'`を取得します。
++
+---------------------------
+    ## get - ng
+    req1 = (Atom('do'), Atom('tab1'), [(Atom('get'), 'foo', [])], [], 1000)
+    res1 = ebf.rpc('gdss', req1)
+    assert res1[0] == 'key_not_exist'
+---------------------------
+4. テーブル`tab1`に、キー`'foo'`を追加します。`do_req()`インターフェイスは、クライアントがタイムスタンプの整数を明示的に管理しなければならず、ここではタイムスタンプとして`1`を使用しています。
++ 
+---------------------------
+    ## add - ok
+    req2 = (Atom('do'), Atom('tab1'), [(Atom('add'), 'foo', 1, 'bar', 0, [])], [
+], 1000)
+    res2 = ebf.rpc('gdss', req2)
+    assert res2[0] == 'ok'
+---------------------------
+5. テーブル`tab1`に、キー`'foo'`を追加します。
++
+---------------------------
+    ## add - ng
+    req3 = (Atom('do'), Atom('tab1'), [(Atom('add'), 'foo', 1, 'bar', 0, [])], [], 1000)
+    res3 = ebf.rpc('gdss', req3)
+    assert res3[0][0] == 'key_exists'
+    assert res3[0][1] == 1
+---------------------------
+6. テーブル`tab1`から、キー`'foo'`を取得し、タイムスタンプがまだ`1`でバリューが`'bar'`のままであることを確認します。
++
+---------------------------
+    ## get - ok
+    req4 = (Atom('do'), Atom('tab1'), [(Atom('get'), 'foo', [])], [], 1000)
+    res4 = ebf.rpc('gdss', req4)
+    assert res4[0][0] == 'ok'
+    assert res4[0][1] == 1
+    assert res4[0][2] == 'bar'
+---------------------------
+7. テーブル`tab1`に、キー`'foo'`を設定します。その際、新しいタイムスタンプとして`2`を用います。
++
+---------------------------
+    ## set - ok
+    req5 = (Atom('do'), Atom('tab1'), [(Atom('set'), 'foo', 2, 'baz', 0, [])], [], 1000)
+    res5 = ebf.rpc('gdss', req5)
+    assert res5[0] == 'ok'
+---------------------------
+8. テーブル`tab1`から、キー`'foo'`を取得し、タイムスタンプとバリューが両方とも新しく更新されていることを確認します。
++
+---------------------------
+    ## get - ok
+    req6 = (Atom('do'), Atom('tab1'), [(Atom('get'), 'foo', [])], [], 1000)
+    res6 = ebf.rpc('gdss', req6)
+    assert res6[0][0] == 'ok'
+    assert res6[0][1] == 2
+    assert res6[0][2] == 'baz'
+---------------------------
+[[client-api-tbf]]
+== クライアント向けAPI： Thrift
+
+「TBF」は、UBFコントラクトが規定するlink:https://github.com/apache/thrift[Thriftプロトコル]です（xref:the-hibari-ubf-protocol-contract[] 参照）。本章では、HibariのThrift APIについて説明します。ユーザーはこのAPIを使ってThriftクライアントからHibariにアクセスできます。Thrift がサポートするものであれば、プログラミング言語は問いません。さらに、アプリケーションの用途に応じてAPIを拡張する方法についても説明します。
+
+=== HibariのThrift API
+
+HibariのThrift APIは、link:./misc-codes/hibari.thrift[hibari.thrift] 中にHibariサービスとして規定されています。このAPIの開発時に利用できたのはThrift 0.4.0だけでした。私たちが初めて採用したのはこのバージョンです。まだサポートしていない関数やオプションもあります。
+
+
+IMPORTANT: 
+HibariのThrift APIがサポートするのは、Thrift 0.4.0以上のみです。
+---------------------------
+
+service Hibari {
+
+  /**
+   * Check connection availability / keepalive
+   */
+  oneway void keepalive()
+
+  /**
+   * Hibari Server Info
+   */
+  string info()
+
+  /**
+   * Hibari Description
+   */
+  string description()
+
+  /**
+   * Hibari Contract
+   */
+  string contract()
+
+  /**
+   * Add
+   */
+  HibariResponse Add(1: Add request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Replace
+   */
+  HibariResponse Replace(1: Replace request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Set
+   */
+  HibariResponse Set(1: Set request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Delete
+   */
+  HibariResponse Delete(1: Delete request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Get
+   */
+  HibariResponse Get(1: Get request)
+      throws (1:HibariException ouch)
+}
+---------------------------
+
+各基本ユーティリティ関数には、インプット用の引数が1つだけあります。この引数は機能に対応する名前を持つオブジェクトです。このオブジェクトが、Hibariに対して必須の引数も任意の引数もすべて引き渡します。将来は、このオブジェクトを利用してマイクロ・トランザクションを実装する予定です。
+
+=== UBFコントラクト型とThrift型とのマッピング
+UBFとThriftの型変換の詳細に関しては、link:https://github.com/norton/ubf-thrift[UBF-Thrift]を参照してください。
+
+=== UBFコントラクトとThriftサービスとのマッピング
+UBFの型をThriftの基本型にマッピングすることと、UBFのコントラクトをThriftのサービスにマッピングすることは、異なります。Thriftは主に2つの異なる型（structとfield）を用いて要求を組み立てます。
+
+Thriftを使ってクライアント・コードを作成するとき、要求をどのように組み立てたらいいのか、心配する必要はありません。Thriftをインストールしてクライアント・コードを作成する方法については、link:http://wiki.apache.org/thrift/ThriftGeneration[Thrift Wiki]を参照してください。また、着手にあたってはlink:./misc-codes/hibari.thrift[hibari.thrift]も必要です。
+
+UBFのコントラクトに関心がある場合は、`ntbf_gdss_plugin.con`のファイル内にHibariのNTBFのコントラクトがあります。
+
+=== Thriftクライアントの使用例
+コードさえ作成できれば、Hibariに接続するのは簡単です。下記の例では、3つの言語で、テーブル`tab1`に、キー`'fookey'` とバリュー`'Hello, world!'` を追加しています。
+
+Erlangの例：
+------------------------------------
+  -include("hibari_thrift.hrl").
+
+  % init
+  {ok, Client} = thrift_client:start_link("127.0.0.1", 7600, hibari_thrift),
+
+  % create the input parameter object
+  Request = #add{table=<<"tab1">>, key=<<"fookey">>, value=<<"Hello, world!">},
+
+  % send request
+  try
+    HibariResponse = thrift_client:call(Client, 'Add', [Request]),
+  catch
+    HibariException ->
+      HibariException
+  end,
+
+  ok = thrift_client:close(Client).
+------------------------------------
+
+Javaの例：
+------------------------------------
+  import com.hibari.rpc.*;
+
+  // init
+  TTransport transport = new TSocket("127.0.0.1", 7600);
+  TProtocol proto = new TBinaryProtocol(transport);
+  Hibari.Client client = new Hibari.Client(proto);
+  transport.open();
+
+  // create the input parameter object
+  Add request = new Add("tab1", ByteBuffer.wrap("fookey".getBytes()),
+    ByteBuffer.wrap("Hello, world!".getBytes())))
+
+  // send request
+  try {
+    HibariResponse response = client.Add(request);
+  } catch (HibariException e) {
+    // ...
+  }
+
+  transport.close();
+------------------------------------
+
+Pythonの例：
+------------------------------------
+  from hibari import Hibari
+
+  # init
+  transport = TSocket.TSocket('localhost', 7600)
+  transport.setTimeout(None)
+  transport = TTransport.TBufferedTransport(transport)
+  protocol = TBinaryProtocol.TBinaryProtocol(transport)
+  client = Hibari.Client(protocol)
+  transport.open()
+
+  # create the input parameter object
+  request = Add()
+  request.table = "tab1"
+  request.key = b"fookey"
+  request.value = b"Hello, world!"
+
+  # send request
+  response = client.Add(request)
+
+  transport.close()
+------------------------------------
+
+=== Thrift クライアントからのTBFコントラクト応答のマッピング
+
+TBFは、HibariのThrift APIのすべての関数に対して、2つの汎用型（HibariResponseとHibariException）のうち1つを返します。正常終了の場合はHibariResponseが返ることが期待できますが、そうでない場合は、HibariExceptionが返ることになっています。
