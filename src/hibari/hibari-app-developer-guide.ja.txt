@@ -95,9 +95,9 @@ http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf[Dyn
 [[engineered-erlang]]
 ==== Erlangによる開発
 
-Erlangは、高信頼性で高性能な分散型システムを構築するように設計された汎用プログラミング言語および実行環境です。Erlangは、まず1980年代に先進的通信事業のネットワーク・システム構築用にEricsson社によって開発され、その後1998年に、Erlang/OTP (Open Telecom Platform)としてオープンソース化されました。HibariはすべてErlangで記述されています。
+　Erlangは、高信頼性で高性能な分散型システムを構築するように設計された汎用プログラミング言語および実行環境です。Erlangは、まず1980年代に先進的通信事業のネットワーク・システム構築用にEricsson社によって開発され、その後1998年に、Erlang/OTP (Open Telecom Platform)としてオープンソース化されました。HibariはすべてErlangで記述されています。
 
-Erlangは次のような幅広い長所を持ち、分散型でキー・バリュー方式のストレージ・ソリューションにとって理想的な基盤を提供します。
+　Erlangは次のような幅広い長所を持ち、分散型でキー・バリュー方式のストレージ・ソリューションにとって理想的な基盤を提供します。
 
 - *並列*.Erlangのプロセスは、メッセージパッシングによる通信を行い、メモリを共有しないため、非常に軽く実行できます。スケジューリング、メモリ管理、その他並列処理に関するサービスを管理するのはErlang のVMであり、ホストのオペレーティング・システムに並列処理の要求を送ることはありません。
 - *分散*.Erlangは、分散環境に特化して設計されています。メッセージパッシングはTCP経由で透過的に行われるため、Erlangのプロセス同士が通信する際は、同一ノードでも違うノードでもまったく同じ方法です。シンプルかつ効率的な設計により、高性能の分散型ストレージ・システムに求められる高度な並列性と拡張性を達成しています。この優れた並列性と分散処理により、Erlangは複数ホスト上で連携しながら稼働する点を除いては、オペレーティング・システムに似た初めての
@@ -143,7 +143,7 @@ image:images/automatic_failover_2.png[]
 　Hibariのストレージ・システムにおけるチェイン・レプリケーション、フェイル・オーバー、および修復に関する詳しい情報について、さらにHibariのAdmin Serverと呼ぶ冗長構成クラスター・メンバー・アプリケーションに関する情報については、「Hibari(R)システム管理者ガイド」の以下の節を参照してください。
 
 - link:hibari-sysadmin-guide.en.html#hibari-architecture[Hibariのアーキテクチャー]
-- link:hibari-sysadmin-guide.en.html#life-of-brick[（論理）ブリックのライフサイクル］
+- link:hibari-sysadmin-guide.en.html#life-of-brick[（論理）ブリックのライフサイクル]
 - link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration[動的クラスター再構成]
 - link:hibari-sysadmin-guide.en.html#admin-server-app[Admin Serverアプリケーション]
 
@@ -158,12 +158,11 @@ image:images/automatic_failover_2.png[]
 
 　Hibariは、異種のハードウェアの混在をサポートするだけでなく、Erlangをベースとしているため、ほとんどすべてのオペレーティング・システム上で稼働します。異種のハードウェアおよびオペレーティング・システムに容易に対応できるので、利用できるあらゆるリソースを用いてHibariをインクリメンタルに拡張できます。すべてのリソースを同時に、また同一の種類に揃えて購入する必要はありません。
 
-NOTE:
-
-Hibariの水平拡張の上限値は、明確には決まっていませんが、Erlangに組み込まれたネットワーク分散機能の実装の限界から見て、200〜250ノードが実質的な限界になります。また、Hibariのチェインは、理論的には複数のデータ・センターをまたがって延長しで地理的な冗長性を確保することも可能ですが、現在のところ、単一のデータ・センター内の配置しかテストしておらず、稼働実績はありません。
+NOTE: Hibariの水平拡張の上限値は、明確には決まっていませんが、Erlangに組み込まれたネットワーク分散機能の実装の限界から見て、200〜250ノードが実質的な限界になります。また、Hibariのチェインは、理論的には複数のデータ・センターをまたがって延長しで地理的な冗長性を確保することも可能ですが、現在のところ、単一のデータ・センター内の配置しかテストしておらず、稼働実績はありません。
 
 　Hibariのクラスター・サイズの変更に関する詳細情報は、「Hibari(R)システム管理者ガイド」の
-link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration［動的クラスター再構成]の節を参照してください。
+link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration［Dynamic
+Cluster Reconfiguration]の節を参照してください。
 
 [[high-performance]]
 ==== 高性能 — 特に読み出しと大サイズのバリューの処理の場合
@@ -199,8 +198,7 @@ link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration［動的ク�
 
 　Hibariのクライアント・アプリケーションは、Java、 C/C++、Python、Ruby、Erlangなど幅広い言語で開発できます。
 
-   HibariのクライアントAPIに関する詳細情報は、
-link:#client-api-erlang[クライアントAPI：ネイティブErlang]および当ガイドでこのあと説明するクライアントAPIの章を参照してください。
+　HibariのクライアントAPIに関する詳細情報は、link:#client-api-erlang[Client API: Native Erlang]および当ガイドでこのあと説明するクライアントAPIの章を参照してください。
 
 [[production-proven]]
 ==== 稼働実績
@@ -273,6 +271,7 @@ Hibariに必要なサードパーティのソフトウェアは、シングル�
 ==== シングルノードのインストールに必要なソフトウェア
 
 Hibariをシングルノードにインストールする場合は、以下のソフトウェアが必要です。
+
 - OpenSSL - http://www.openssl.org/
   * Erlangの“crypto”モジュールに必要
 
@@ -304,6 +303,7 @@ $ git config --global user.name "Your Name"
 ===== Hibariノードに必要なソフトウェア
 
 Hibariをインストールするノード群に必要なソフトウェアは以下のとおりです。
+
 - SSH (server) - http://www.openssh.com/
 - OpenSSL - http://www.openssl.org/
   * Erlangの“crypto”モジュールに必要
@@ -377,14 +377,11 @@ $ your-favorite-browser http://127.0.0.1:23080
 $ running-directory-name/hibari/bin/hibari ping
 ------
 
-IMPORTANT:
-
-
-シングルノードのHibariシステムは、ローカルホストアドレス127.0.0.1のみに応答するようにハードコーディングされています。したがって、Hibari ノードにはそのノード自身からしか到達できません。
+IMPORTANT: シングルノードのHibariシステムは、ローカルホストアドレス127.0.0.1のみに応答するようにハードコーディングされています。したがって、Hibari ノードにはそのノード自身からしか到達できません。
 
 ==== Hibariの停止
 
-Hibariを停止するには、以下を実行でください。
+Hibariを停止するには、以下を実行してください。
 ------
 $ running-directory/hibari/bin/hibari stop
 ------
@@ -419,11 +416,7 @@ $ visudo
 $USER  ALL=(ALL)       NOPASSWD: ALL
 ------
 +
-
-
-NOTE:
-
-sudoのテスト中に“sudo: sorry, you must have a tty to run sudo”というエラーメッセージが出た場合は、+/etc/sudoers+ファイル内の次の行をコメントアウトしてください。
+NOTE: sudoのテスト中に“sudo: sorry, you must have a tty to run sudo”というエラーメッセージが出た場合は、+/etc/sudoers+ファイル内の次の行をコメントアウトしてください。
 +
 ------
 
@@ -452,11 +445,7 @@ $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3
 ------
 +
-NOTE:
-
-
-インストールノードがHibariのクラスターノードの１つである場合は、インストールノードにもssh-copy-idを実行する必要があります。
-
+NOTE: インストールノードがHibariのクラスターノードの１つである場合は、インストールノードにもssh-copy-idを実行する必要があります。
 +
 . 各Hibariノードへのパスワード認証のないSSHのアクセスが、期待どおりに行われることを確認します。
 +
@@ -464,11 +453,9 @@ NOTE:
 $ ssh $USER@dev1
 $ ssh $USER@dev2
 $ ssh $USER@dev3
-+
 ------
-TIP:
 
-SSHのセットアップの詳細について知りたい場合は、http://inside.mines.edu/~gmurray/HowTo/sshNotes.html を参照してください。
+TIP: SSHのセットアップの詳細について知りたい場合は、http://inside.mines.edu/~gmurray/HowTo/sshNotes.html を参照してください。
 
 [[download-cluster]]
 ==== Clusterインストーラーツールのダウンロード
@@ -518,7 +505,7 @@ ALL_HEART_XMIT_UDP_PORT="63100"
 ------
 
 [[eligible-admin-nodes]]
-- +ADMIN_NODES
+- +ADMIN_NODES+
   * Hibari Adminサーバーを起動できるノード群のホスト名。Adminサーバーに関する詳細は、「Hibariシステム管理者ガイド」の
    link:hibari-sysadmin-guide.en.html#admin-server-app[Adminサーバーアプリケーション]を参照してください。
 - +BRICK_NODES+
@@ -546,9 +533,7 @@ link:hibari-sysadmin-guide.en.html#partition-detector[The Partition Detector App
 ネットワーク監視の設定に関する詳細は、パーティション検出のOTPアプリケーションのソースファイル (https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src) を参照してください。
 
 
-CAUTION:
-
-稼働時の設定では、ネットワークAとネットワークBを、物理的に異なるネットワークおよびネットワークインターフェイスにするべきです。しかし、テストおよび開発時には、ネットワークAとネットワークBを物理的に同じネットワークにすることができます（設定ファイルの上記サンプルと同様）。
+CAUTION: 稼働時の設定では、ネットワークAとネットワークBを、物理的に異なるネットワークおよびネットワークインターフェイスにするべきです。しかし、テストおよび開発時には、ネットワークAとネットワークBを物理的に同じネットワークにすることができます（設定ファイルの上記サンプルと同様）。
 
 
 最終ステップとして、*各Hibariノード*で
@@ -591,7 +576,6 @@ NOTE: “hibari”ユーザーがすでにそのノードに存在する場合�
 +
 . 新たに作成した「hibari」ユーザーを通して、HibariのすべてのノードにHibariパッケージをインストールします。
 +
-+
 ------
 $ ./clus/priv/clus-hibari.sh -f init hibari hibari.config hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
 hibari@dev1
@@ -631,10 +615,9 @@ Hibariのブートストラッププロセスが、最初の
 link:#eligible-admin-nodes[適格なadminノード]で、HibariのAdminサーバーを起動し、Hibariのデフォルトテーブルとして機能する１つのテーブル「tab1」を作成します。追加テーブルの作成に関する詳細は、link:#creating-tables[新しいテーブルを作成する]を参照してください。
 +
 
-NOTE:
-
-ブートストラップで“another_admin_server_running”というエラーが出た場合は、そのネットワークで稼働中の他のHibariのクラスターを停止してください。あるいは他のHibariクラスターや他のアプリケーションで使われていない
+NOTE: ブートストラップで“another_admin_server_running”というエラーが出た場合は、そのネットワークで稼働中の他のHibariのクラスターを停止してください。あるいは他のHibariクラスターや他のアプリケーションで使われていない
 link:#eligible-admin-nodes[Hibariハートビートリスナーポート]をClusterツールに割り当てるように設定変更し、その後で、クラスターのインストール手続きを繰り返してください。
+
 ==== Hibariクラスターの検証
 
 Hibariが立ち上がって稼働していることを検証するため、以下の簡単なチェックを行ってください。
@@ -673,9 +656,7 @@ hibari@dev3
 新しいテーブルは、AdminサーバーのGUIを通して作成するのが最も簡単です。“http://localhost:23080/”を開き、“Add a table”をクリックしてください。GUIに加えて、hibari-admin ツールで新しいテーブルを作成することも可能です。詳しい使用法は、hibari-admin ツールの説明を参照してください。
 
 
-NOTE:
-
-管理用のAPIを使ったテーブル作成の方法については、「Hibariシステム管理者ガイド」を参照してください。
+NOTE: 管理用のAPIを使ったテーブル作成の方法については、「Hibariシステム管理者ガイド」を参照してください。
 
 
 GUIを使ってテーブルを追加する場合、以下のようなテーブル設定のオプションがあります。
@@ -694,10 +675,7 @@ GUIを使ってテーブルを追加する場合、以下のようなテーブ�
 ＋
 可変長または固定長のprefixのハッシング・スキームの使用は、多くのアプリケーションにとってメリットがあります。一例として、さまざまなユーザーの状態を保持するアプリケーションを考えてみましょう。アプリケーションは、マイクロ・トランザクションを使用して、そのユーザーに関連する（同一テーブルの）さまざまなキーを更新できると都合が良いでしょう。テーブルを作成することで、VarPrefix=trueをVarPrefixSeparator=47(ASCII 47は「/」) およびVarPrefixNumSeparator=2と共に使用し、キー/FooUser/summaryと/FooUser/thing1と/FooUser/thing9が同じチェインに保存されることを保証するハッシング・スキームを作成できます。
 +
-NOTE:
-
-
-テーブルを作成するHTTPインターフェイスは、固定長のprefixスキームを公開していません。この場合、Erlangの APIを使用しなければなりません。
+NOTE: テーブルを作成するHTTPインターフェイスは、固定長のprefixスキームを公開していません。この場合、Erlangの APIを使用しなければなりません。
 +
 - +VarPrefixSeparator+
   * Integer型。可変長のprefix計算で使われる文字コードを定義します。デフォルト値のASCII 47 (文字「/」)やその他の文字は、UNIX/POSIX形式のファイルやディレクトリを意味するものではないことに注意してください。
@@ -791,9 +769,9 @@ IMPORTANT: すべてのErlangのコマンドは、最後にピリオド（’.�
 
 
 
-項（term）:: すべてのデータ型のデータを*項（term）*と呼びます。
+項（term）:: すべてのデータ型のデータを*項(term)*と呼びます。
 
-数値（number）:: 数値定数には、*Integer（整数）型*と*Float（浮動小数点）型*の2種類があります。
+数値（number）:: 数値定数には、*Integer(整数)型*と*Float(浮動小数点)型*の2種類があります。
 
 アトム（atom）:: アトム（atom）はリテラル（名前を持つ定数）です。英小文字以外で始まるアトム、および英数字と下線（’_’）と’@’以外を含むアトム場合は、次の例のように一重引用符（’）で囲んでください。
 +
@@ -807,27 +785,27 @@ phone_number
 -----
 
 
-Bit string（ビット列）とBinary（バイナリ）:: *Bit string（ビット列）*は、型指定のないメモリー領域にデータを保管するときに使用します。表記は、
-http://www.erlang.org/doc/reference_manual/expressions.html#bit_syntax[Erlangのビット構文]に従います。また、8の倍数のビット数からなるビット列を、*Binary（バイナリ）*と呼びます。たとえば次のように表します。
+Bit string（ビット列）とBinary（バイナリ）:: *Bit string(ビット列)*は、型指定のないメモリー領域にデータを保管するときに使用します。表記は、
+http://www.erlang.org/doc/reference_manual/expressions.html#bit_syntax[Erlangのビット構文]に従います。また、8の倍数のビット数からなるビット列を、*Binary(バイナリ)*と呼びます。たとえば次のように表します。
 +
 -----
 <<10,20>>
 <<"ABC">>
 -----
 
-Tuple（タプル）:: *Tuple（タプル）*は、固定数の項の組からなるデータ型です。次の例のように、中括弧（’{ }’）で囲んで表します。
+Tuple（タプル）:: *Tuple(タプル)*は、固定数の項の組からなるデータ型です。次の例のように、中括弧（’{ }’）で囲んで表します。
 +
 -----
 {Term1,...,TermN}
 -----
 
-List（リスト）:: *List（リスト）*は、可変数の項の組からなるデータ型です。次の例のように、大括弧（’[ ]’）で囲んで表します。
+List（リスト）:: *List(リスト)*は、可変数の項の組からなるデータ型です。次の例のように、大括弧（’[ ]’）で囲んで表します。
 +
 -----
 [Term1,...,TermN]
 -----
 
-String（文字列）:: *String（文字列）*は、二重引用符（”）で囲んで表します。これは、Erlangの正式のデータ型ではありません。リスト[$h,$e,$l,$l,$o]、つまり[104,101,108,108,111]の代わりに、簡略化した表現として”hello”という文字列を使用します。
+String（文字列）:: *String(文字列)*は、二重引用符（”）で囲んで表します。これは、Erlangの正式のデータ型ではありません。リスト[$h,$e,$l,$l,$o]、つまり[104,101,108,108,111]の代わりに、簡略化した表現として”hello”という文字列を使用します。
 
 Boolean（ブール）:: ErlangにBoolean型（論理型）はありません。ブール値を表す場合は、代わりにアトムの`真（true）`と`偽（false）`を使用します。
 
@@ -925,10 +903,7 @@ RAM
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 +
-NOTE:
-
-
-Keyはiolist()またはbinary()で指定できますが、操作の実行前にBinary型に変換されます。これは、Valueに関しても同様です。+
+NOTE: Keyはiolist()またはbinary()で指定できますが、操作の実行前にBinary型に変換されます。これは、Valueに関しても同様です。+
 
  ::
 *Value*
@@ -965,11 +940,7 @@ Keyはiolist()またはbinary()で指定できますが、操作の実行前にB
   * `'value_in_ram'`
     ** ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
 +
-NOTE:
-
-
-
-Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。
+NOTE: Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。
 +
 
  ::
@@ -1162,7 +1133,7 @@ Gemini社の品質管理部門は、このフラグのテストを完全には�
 例
 
  ::
-キーとバリューのペアの更新に成功た場合
+キーとバリューのペアの更新に成功した場合
 +
 ------
 > brick_simple:replace(tab1, <<"foo">>, <<"Goodbye, world!">>).
@@ -1294,10 +1265,7 @@ link:#brick-simple-do[マイクロ・トランザクション]の中で使用す
   * `'value_in_ram'`
     ** ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
 +
-NOTE:
-
-
-Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+
+NOTE: Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+
 
  ::
 *Timeout*
@@ -1413,10 +1381,7 @@ ok
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 +
-NOTE: `
-
-
-Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。+
+NOTE: Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。+
 
  ::
 *Flags*
@@ -1476,7 +1441,6 @@ NOTE: `proplist()`が返される場合、リスト中の特性のひとつは�
 +
 
  ::
-
 エラー終了の場合
 
 - `'key_not_exist'`
@@ -1631,10 +1595,7 @@ NOTE: `Key`を`iolist()`または`binary()`で指定することもできます�
   * `get_all_attribs`フラグを指定し、`witness`フラグは指定していない`get_many`要求が成功しました。
   * `exp_time() = time_t()`
 +
-NOTE:
-
-
-正常終了の戻り値の最後のブール値は、戻り値の最後のキーの後にチェイン内にまだキーが存在するかどうかを示します。存在する場合は真（`true`）、存在しない場合は偽（`false`）となります。`proplist()`が返される場合、リスト中の特性のひとつは常に`{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。
+NOTE: 正常終了の戻り値の最後のブール値は、戻り値の最後のキーの後にチェイン内にまだキーが存在するかどうかを示します。存在する場合は真（`true`）、存在しない場合は偽（`false`）となります。`proplist()`が返される場合、リスト中の特性のひとつは常に`{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。
 +
 
  ::
@@ -2145,10 +2106,7 @@ _（追加予定）
 テーブル`Tab`の`StartKey`から始まるすべてのキーに対して、フォールド操作を実行します。その際、バイナリ値が`Prefix`で始まるキーのみを対象とします。イテレーションの間で`SleepTime`ミリ秒だけスリープし、`Flags`と`NumItems`を
 link:#brick-simple-get-many[brick_simple:get_many()]への引数として使用します。この操作の基盤であるErlangのfold関数の概要については、http://www.erlang.org/doc/man/lists.html#foldl-3を参照してください。
 
-IMPORTANT:
-
-
-データの移行処理中にこの操作を実行しないでください。
+IMPORTANT: データの移行処理中にこの操作を実行しないでください。
 引数
 
  ::
@@ -2382,9 +2340,7 @@ xref:using-ubf-in-any-language[]
 
 次に、このコネクションを用いてコマンドを使用していくために、UBFメタプロトコルを用いて、Hibariサーバーの“gdss”と呼ばれるコントラクトを選択します。
 
-TIP: 
-
-Hibariサーバーのコントラクトは「ステートレス」です。`ubf_client:rpc/2`関数からの応答に含まれる項はすべて`{reply,ServerReply,UBF_StateName}`の形式をとります。Hibariサーバーのコントラクトはステートレスであるため、`UBF_StateName`は常にアトム`none`になります。
+TIP: Hibariサーバーのコントラクトは「ステートレス」です。`ubf_client:rpc/2`関数からの応答に含まれる項はすべて`{reply,ServerReply,UBF_StateName}`の形式をとります。Hibariサーバーのコントラクトはステートレスであるため、`UBF_StateName`は常にアトム`none`になります。
 .例2：UBFメタプロトコルを用いて“gdss”コントラクトを要求する
 ----------------------------
 (asdf@bb3)55> ubf_client:rpc(P1, {startSession, {'#S', "gdss"}, []}).
