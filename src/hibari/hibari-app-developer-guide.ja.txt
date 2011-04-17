@@ -1923,7 +1923,7 @@ Timeout
 解説
 
  ::
-テーブル内のすべてのキーに対して、フォールド操作を行います。この操作の基盤であるErlangのfold関数の概要については、 http://www.erlang.org/doc/man/lists.html#foldl-3を参照してください。
+テーブル内のすべてのキーに対して、フォールド操作を行います。この操作の基盤であるErlangのfold関数の概要については、 http://www.erlang.org/doc/man/lists.html#foldl-3 を参照してください。
 
 
 IMPORTANT: データの移行処理中にこの操作を実行しないでください。
