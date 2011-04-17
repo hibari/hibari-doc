@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari ® アプリケーション開発者ガイド</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.74.3" /></head><body><div class="article" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title"><a id="id412959"></a>Hibari ® アプリケーション開発者ガイド</h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>改訂履歴</b></th></tr><tr><td align="left">改訂 0.2.1(ja)</td><td align="left">2011/03/14</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>目次</b></p><dl><dt><span class="section"><a href="#_1_hibari">1. 1. Hibariとは</a></span></dt><dd><dl><dt><span class="section"><a href="#_1_1_nosql">1.1. 1.1. なぜNOSQLか？</a></span></dt><dt><span class="section"><a href="#_1_2_hibari">1.2. 1.2. なぜHibariか？</a></span></dt><dd><dl><dt><span class="section"><a href="#engineered-erlang">1.2.1. Erlangによる開発</a></span></dt><dt><span class="section"><a href="#chain-replication">1.2.2. チェイン・レプリケーションによる高可用性と強い一貫性</a></span></dt><dt><span class="section"><a href="#scalability">1.2.3. 簡単でコストが低廉な拡張性</a></span></dt><dt><span class="section"><a href="#high-performance">1.2.4. 高性能 — 特に読み出しと大サイズのバリューの処理の場合</a></span></dt><dt><span class="section"><a href="#simple-powerful-api">1.2.5. シンプルながら強力なクライアントAPI</a></span></dt><dt><span class="section"><a href="#production-proven">1.2.6. 稼働実績</a></span></dt><dt><span class="section"><a href="#hibari-benefits-by-user">1.2.7. 開発者とシステム管理者、そしてビジネスに対するHibariの利点</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#getting-started">2. はじめに</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. システム要件</a></span></dt><dt><span class="section"><a href="#required-software">2.2. 必要なサードパーティのソフトウェア</a></span></dt><dd><dl><dt><span class="section"><a href="#_">2.2.1. シングルノードのインストールに必要なソフトウェア</a></span></dt><dt><span class="section"><a href="#__2">2.2.2. マルチノードのインストールに必要なソフトウェア</a></span></dt></dl></dd><dt><span class="section"><a href="#download-hibari">2.3. Hibariをダウンロードする</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. シングルノードにHibariをインストールする</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. シングルノードのHibariを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_2">2.5.1. Hibariの起動とブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_3">2.5.2. Hibariの検証</a></span></dt><dt><span class="section"><a href="#_hibari_4">2.5.3. Hibariの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#installing-multi-node">2.6. マルチノードのクラスターにHibariをインストールする</a></span></dt><dd><dl><dt><span class="section"><a href="#__4">2.6.1. ユーザー権限の設定</a></span></dt><dt><span class="section"><a href="#download-cluster">2.6.2. Clusterインストーラーツールのダウンロード</a></span></dt><dt><span class="section"><a href="#config-cluster">2.6.3. Clusterツールの設定</a></span></dt><dt><span class="section"><a href="#_hibari_5">2.6.4. Hibariのインストール</a></span></dt></dl></dd><dt><span class="section"><a href="#starting-multi-node">2.7. マルチノードのHibariクラスターを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_6">2.7.1. Hibariクラスターの起動およびブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_7">2.7.2. Hibariクラスターの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#creating-tables">2.8. 新しいテーブルを作成する</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. クライアント向けAPI ： ネイティブErlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_api">3.1. Hibariのクライアント向けAPIの概要</a></span></dt><dd><dl><dt><span class="section"><a href="#_erlang">3.1.1. Erlangの基本データ型</a></span></dt><dt><span class="section"><a href="#_hibari_8">3.1.2. Hibariのデータモデル</a></span></dt></dl></dd><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd></dl></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_1_hibari"></a>1. 1. Hibariとは</h2></div></div></div><p>　Hibari®は、キー・バリュー・ストア（KVS）方式を用いた分散型データベースです。大規模化し続けるデータ、いわゆる“Big Data”に対応し、商用にすぐに活用できます。大量のデータをどのように保管するかが大きな問題となる現在、それに対処する「NOSQL」というソリューションが出てきました。Hibariはこの分野で、次のような多くの理由から注目を集めています。</p><div class="itemizedlist"><ul type="disc"><li>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari ® アプリケーション開発者ガイド</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.74.3" /></head><body><div class="article" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title"><a id="id418694"></a>Hibari ® アプリケーション開発者ガイド</h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>改訂履歴</b></th></tr><tr><td align="left">改訂 0.2.1(ja)</td><td align="left">2011/03/14</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>目次</b></p><dl><dt><span class="section"><a href="#_hibari">1. Hibariとは</a></span></dt><dd><dl><dt><span class="section"><a href="#_nosql">1.1. なぜNOSQLか？</a></span></dt><dt><span class="section"><a href="#_hibari_2">1.2. なぜHibariか？</a></span></dt><dd><dl><dt><span class="section"><a href="#engineered-erlang">1.2.1. Erlangによる開発</a></span></dt><dt><span class="section"><a href="#chain-replication">1.2.2. チェイン・レプリケーションによる高可用性と強い一貫性</a></span></dt><dt><span class="section"><a href="#scalability">1.2.3. 簡単でコストが低廉な拡張性</a></span></dt><dt><span class="section"><a href="#high-performance">1.2.4. 高性能 — 特に読み出しと大サイズのバリューの処理の場合</a></span></dt><dt><span class="section"><a href="#simple-powerful-api">1.2.5. シンプルながら強力なクライアントAPI</a></span></dt><dt><span class="section"><a href="#production-proven">1.2.6. 稼働実績</a></span></dt><dt><span class="section"><a href="#hibari-benefits-by-user">1.2.7. 開発者とシステム管理者、そしてビジネスに対するHibariの利点</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#getting-started">2. はじめに</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. システム要件</a></span></dt><dt><span class="section"><a href="#required-software">2.2. 必要なサードパーティのソフトウェア</a></span></dt><dd><dl><dt><span class="section"><a href="#_">2.2.1. シングルノードのインストールに必要なソフトウェア</a></span></dt><dt><span class="section"><a href="#__2">2.2.2. マルチノードのインストールに必要なソフトウェア</a></span></dt></dl></dd><dt><span class="section"><a href="#download-hibari">2.3. Hibariをダウンロードする</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. シングルノードにHibariをインストールする</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. シングルノードのHibariを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_4">2.5.1. Hibariの起動とブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_5">2.5.2. Hibariの検証</a></span></dt><dt><span class="section"><a href="#_hibari_6">2.5.3. Hibariの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#installing-multi-node">2.6. マルチノードのクラスターにHibariをインストールする</a></span></dt><dd><dl><dt><span class="section"><a href="#__4">2.6.1. ユーザー権限の設定</a></span></dt><dt><span class="section"><a href="#download-cluster">2.6.2. Clusterインストーラーツールのダウンロード</a></span></dt><dt><span class="section"><a href="#config-cluster">2.6.3. Clusterツールの設定</a></span></dt><dt><span class="section"><a href="#_hibari_7">2.6.4. Hibariのインストール</a></span></dt></dl></dd><dt><span class="section"><a href="#starting-multi-node">2.7. マルチノードのHibariクラスターを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_8">2.7.1. Hibariクラスターの起動およびブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_9">2.7.2. Hibariクラスターの検証</a></span></dt><dt><span class="section"><a href="#_hibari_10">2.7.3. Hibariクラスターの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#creating-tables">2.8. 新しいテーブルを作成する</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. クライアント向けAPI ： ネイティブErlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_api">3.1. Hibariのクライアント向けAPIの概要</a></span></dt><dd><dl><dt><span class="section"><a href="#_erlang">3.1.1. Erlangの基本データ型</a></span></dt><dt><span class="section"><a href="#_hibari_11">3.1.2. Hibariのデータモデル</a></span></dt></dl></dd><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. クライアント向けAPI：UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. HibariサーバーにおけるUBFプロトコル層の実装</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBFにおけるストリングとバイナリの表現</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. すべての言語におけるUBFベースのプロトコルの使用手順</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. HibariのUBFプロトコル・コントラクト</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Erlang用のUBFクライアント・ライブラリの使用法</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Java用のUBFクライアント・ライブラリの使用法</a></span></dt><dd><dl><dt><span class="section"><a href="#_java_ubf">4.6.1. Java用UBFクライアント・ライブラリのコンパイル</a></span></dt><dt><span class="section"><a href="#_ubf_hibaritest_java">4.6.2. UBFクライアント・ライブラリのテストプログラムHibariTest.javaのコンパイル</a></span></dt><dt><span class="section"><a href="#_hibaritest_java">4.6.3. HibariTest.javaの確認</a></span></dt><dt><span class="section"><a href="#_ubf">4.6.4. UBFのイベント・ハンドラーのインターフェイス</a></span></dt></dl></dd><dt><span class="section"><a href="#using-ubf-python-client">4.7. Python用のEBFクライアント・ライブラリの使用法</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. クライアント向けAPI： Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_thrift_api">5.1. HibariのThrift API</a></span></dt><dt><span class="section"><a href="#_ubf_thrift">5.2. UBFコントラクト型とThrift型とのマッピング</a></span></dt><dt><span class="section"><a href="#_ubf_thrift_2">5.3. UBFコントラクトとThriftサービスとのマッピング</a></span></dt><dt><span class="section"><a href="#_thrift">5.4. Thriftクライアントの使用例</a></span></dt><dt><span class="section"><a href="#_thrift_tbf">5.5. Thrift クライアントからのTBFコントラクト応答のマッピング</a></span></dt></dl></dd></dl></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari"></a>1. Hibariとは</h2></div></div></div><p>　Hibari®は、キー・バリュー・ストア（KVS）方式を用いた分散型データベースです。大規模化し続けるデータ、いわゆる“Big Data”に対応し、商用にすぐに活用できます。大量のデータをどのように保管するかが大きな問題となる現在、それに対処する「NOSQL」というソリューションが出てきました。Hibariはこの分野で、次のような多くの理由から注目を集めています。</p><div class="itemizedlist"><ul type="disc"><li>
 Hibariは、<span class="strong"><strong>プログラミング言語Erlangと革新的なチェイン・レプリケーション技術を使った唯一のオープンソースのキー・バリュー型データベース（KVDB）</strong></span> です。Erlangは、堅牢で高性能な分散型ストレージ・ソリューションの構築には理想的なプログラミング基盤を提供します。一方、チェイン・レプリケーションは、データの一貫性を犠牲にすることなく、高いスループットと高可用性を提供します。
 </li><li>
 Hibariは、<span class="strong"><strong>キャリアクラスの通信事業分野で要求される厳格な基準を満たすように作られた唯一のオープンソースのキー・バリュー型データベース</strong></span> です。通信事業分野の製品では、数百万ユーザーの利用実績を持ちます。
@@ -20,7 +20,7 @@ Hibariは、次のような優れた特長を備えています。
 コードのライブ・アップグレードをサポートします。
 </li><li>
 複数のクライアントAPIを実装しています。
-</li></ul></div></li></ul></div><p>　この最初の章では、「Big Data」の時代が投げかける問題に対処するために近年出現した「NOSQL」ソリューションについて簡単に説明します。その後、大規模データを扱うアプリケーションの開発者や管理者、あるいはユーザーにHibariが提供する大きな利点について、さらに詳しく紹介します。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_1_1_nosql"></a>1.1. 1.1. なぜNOSQLか？</h3></div></div></div><p>　まず、NOSQLという新しい動向は、伝統的なRDBMS（リレーショナル・データベース管理システム）を無条件に否定するものではありません。この動向は、今日のデータ環境がSQLだけに留まらず（Not Only SQL：NOSQL）、ストレージに多様なツールが必要であるという認識が急速に広がっていることの表われです。リレーショナル型のデータ・ストレージとNOSQL型のデータ・ストレージは、それぞれ異なるアプローチを持ち、異なる種類のアプリケーションやサービスに適しています。これらは互いに補完するものであると理解してください。
+</li></ul></div></li></ul></div><p>　この最初の章では、「Big Data」の時代が投げかける問題に対処するために近年出現した「NOSQL」ソリューションについて簡単に説明します。その後、大規模データを扱うアプリケーションの開発者や管理者、あるいはユーザーにHibariが提供する大きな利点について、さらに詳しく紹介します。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_nosql"></a>1.1. なぜNOSQLか？</h3></div></div></div><p>　まず、NOSQLという新しい動向は、伝統的なRDBMS（リレーショナル・データベース管理システム）を無条件に否定するものではありません。この動向は、今日のデータ環境がSQLだけに留まらず（Not Only SQL：NOSQL）、ストレージに多様なツールが必要であるという認識が急速に広がっていることの表われです。リレーショナル型のデータ・ストレージとNOSQL型のデータ・ストレージは、それぞれ異なるアプローチを持ち、異なる種類のアプリケーションやサービスに適しています。これらは互いに補完するものであると理解してください。
 　NOSQLが注目されるようになった背景には、TB（テラバイト）あるいはPB（ぺタバイト）級のデータを保管して使うアプリケーションやサービスの急増という現状があります。その分野では頻繁に「常時使用可能」な可用性を保証し、エンドユーザーの待ち時間を減らす努力が払われてきました。たとえば次のような多くの市場分野で、さまざまな組織がBig Data時代の到来に備えて取り組んでいます。</p><div class="itemizedlist"><ul type="disc"><li>
 Webサービス：検索、eコマース、ソーシャルメディア、ユーザー作成コンテンツ等による大量データの要求への対応
 </li><li>
@@ -50,7 +50,7 @@ Webサービス：検索、eコマース、ソーシャルメディア、ユー�
 汎用型のPCを基盤とした複数ノードに分散できます。何十、何百、何千とある汎用型のPCにスケールアウトすることにより、Big Dataの容量を低廉なコストで実現できます。受信した要求の並列処理と連動するデータ分割スキームにより、必要な高性能を得られます。
 </li><li>
 データ・オブジェクトを複数ノードでレプリケーション（複製）することにより、コンポーネントの障害発生時にも高可用性を確保できます。
-</li></ul></div><p>　NOSQLストレージ・ソリューションの歴史や長所、あるいは設計の問題等についてさらに詳しく知りたい場合は、Webで検索してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_1_2_hibari"></a>1.2. 1.2. なぜHibariか？</h3></div></div></div><p>　Hibariは、Gemini Mobile Technologies社が社内で開発したものです。Gemini Mobile Technologies社は、アジア、ヨーロッパ、アメリカで、Tier 1モバイル・オペレータ向けの大規模メッセージングおよびトランザクション・システム開発分野の先頭に立つ企業です。Gemini社が必要とするデータストアは、Tier 1通信事業分野向け製品の導入環境に必須の堅牢さに加えて、効率的で高速かつ柔軟性を備え、拡張可能なものです。ところが、当時利用できる選択肢の中には満足できるものはありませんでした。そこで2005年に、Gemini社はのちに「Hibari」となるシステムの開発に着手しました。Hibariという名称は、日本語でヒバリ（雲雀）、漢字では「クラウド（雲）の鳥」を意味します。その後、システムが成熟して製品化できるようになったのを機に、2010年7月、Gemini社はApache 2.0ライセンスの下でHibariをオープンソースのコミュニティにリリースしました。Hibariが成長を続けて完成度を高める場として最も適しているのはオープンソースのコミュニティであると、Gemini社は考えています。</p><p>　ここからは、Hibariの特長について説明します。これらの特長によって、Hibariは現代のBig Dataストレージ・システムを求めるビジネスおよび開発者にとって魅力的な選択肢となっています。</p><div class="itemizedlist"><ul type="disc"><li>
+</li></ul></div><p>　NOSQLストレージ・ソリューションの歴史や長所、あるいは設計の問題等についてさらに詳しく知りたい場合は、Webで検索してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_2"></a>1.2. なぜHibariか？</h3></div></div></div><p>　Hibariは、Gemini Mobile Technologies社が社内で開発したものです。Gemini Mobile Technologies社は、アジア、ヨーロッパ、アメリカで、Tier 1モバイル・オペレータ向けの大規模メッセージングおよびトランザクション・システム開発分野の先頭に立つ企業です。Gemini社が必要とするデータストアは、Tier 1通信事業分野向け製品の導入環境に必須の堅牢さに加えて、効率的で高速かつ柔軟性を備え、拡張可能なものです。ところが、当時利用できる選択肢の中には満足できるものはありませんでした。そこで2005年に、Gemini社はのちに「Hibari」となるシステムの開発に着手しました。Hibariという名称は、日本語でヒバリ（雲雀）、漢字では「クラウド（雲）の鳥」を意味します。その後、システムが成熟して製品化できるようになったのを機に、2010年7月、Gemini社はApache 2.0ライセンスの下でHibariをオープンソースのコミュニティにリリースしました。Hibariが成長を続けて完成度を高める場として最も適しているのはオープンソースのコミュニティであると、Gemini社は考えています。</p><p>　ここからは、Hibariの特長について説明します。これらの特長によって、Hibariは現代のBig Dataストレージ・システムを求めるビジネスおよび開発者にとって魅力的な選択肢となっています。</p><div class="itemizedlist"><ul type="disc"><li>
 <a class="ulink" href="#engineered-erlang" target="_top">Erlangによる開発</a>
 </li><li>
 <a class="ulink" href="#chain-replication" target="_top">チェイン・レプリケーションによる高い可用性と強い一貫性</a>
@@ -64,17 +64,17 @@ Webサービス：検索、eコマース、ソーシャルメディア、ユー�
 <a class="ulink" href="#production-prove" target="_top">稼働実績</a>
 </li><li>
 <a class="ulink" href="#hibari-benefits-by-user" target="_top">開発者、システム管理者、そしてビジネスに対するHibariの利点</a>
-</li></ul></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="engineered-erlang"></a>1.2.1. Erlangによる開発</h4></div></div></div><pre class="literallayout">Erlangは、高信頼性で高性能な分散型システムを構築するように設計された汎用プログラミング言語および実行環境です。Erlangは、まず1980年代に先進的通信事業のネットワーク・システム構築用にEricsson社によって開発され、その後1998年に、Erlang/OTP (Open Telecom Platform)としてオープンソース化されました。HibariはすべてErlangで記述されています。</pre><p>　Erlangは次のような幅広い長所を持ち、分散型でキー・バリュー方式のストレージ・ソリューションにとって理想的な基盤を提供します。</p><div class="itemizedlist"><ul type="disc"><li>
-*並列*：Erlangのプロセスは、メッセージパッシングによる通信を行い、メモリを共有しないため、非常に軽く実行できます。スケジューリング、メモリ管理、その他並列処理に関するサービスを管理するのはErlang のVMであり、ホストのオペレーティング・システムに並列処理の要求を送ることはありません。
+</li></ul></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="engineered-erlang"></a>1.2.1. Erlangによる開発</h4></div></div></div><p>　Erlangは、高信頼性で高性能な分散型システムを構築するように設計された汎用プログラミング言語および実行環境です。Erlangは、まず1980年代に先進的通信事業のネットワーク・システム構築用にEricsson社によって開発され、その後1998年に、Erlang/OTP (Open Telecom Platform)としてオープンソース化されました。HibariはすべてErlangで記述されています。</p><p>　Erlangは次のような幅広い長所を持ち、分散型でキー・バリュー方式のストレージ・ソリューションにとって理想的な基盤を提供します。</p><div class="itemizedlist"><ul type="disc"><li>
+<span class="strong"><strong>並列</strong></span>.Erlangのプロセスは、メッセージパッシングによる通信を行い、メモリを共有しないため、非常に軽く実行できます。スケジューリング、メモリ管理、その他並列処理に関するサービスを管理するのはErlang のVMであり、ホストのオペレーティング・システムに並列処理の要求を送ることはありません。
 </li><li>
-*分散*：Erlangは、分散環境に特化して設計されています。メッセージパッシングはTCP経由で透過的に行われるため、Erlangのプロセス同士が通信する際は、同一ノードでも違うノードでもまったく同じ方法です。シンプルかつ効率的な設計により、高性能の分散型ストレージ・システムに求められる高度な並列性と拡張性を達成しています。この優れた並列性と分散処理により、Erlangは複数ホスト上で連携しながら稼働する点を除いては、オペレーティング・システムに似た初めての
+<span class="strong"><strong>分散</strong></span>.Erlangは、分散環境に特化して設計されています。メッセージパッシングはTCP経由で透過的に行われるため、Erlangのプロセス同士が通信する際は、同一ノードでも違うノードでもまったく同じ方法です。シンプルかつ効率的な設計により、高性能の分散型ストレージ・システムに求められる高度な並列性と拡張性を達成しています。この優れた並列性と分散処理により、Erlangは複数ホスト上で連携しながら稼働する点を除いては、オペレーティング・システムに似た初めての
 <a class="ulink" href="http://www.oreillygmt.eu/open-sourcefree-software/erlang-the-ceos-view/" target="_top">“アプリケーション・システム”</a>と言われています。
 </li><li>
-*堅牢性*：Erlangのプロセスは、互いに完全に独立しており、データを共有しません。各プロセスが個別に動作するため、プロセスが互いを監視してプロセス障害を検知した場合は、すぐに対応できます。これは、リモート・ノードにおいても可能です。
+<span class="strong"><strong>堅牢性</strong></span>.Erlangのプロセスは、互いに完全に独立しており、データを共有しません。各プロセスが個別に動作するため、プロセスが互いを監視してプロセス障害を検知した場合は、すぐに対応できます。これは、リモート・ノードにおいても可能です。
 </li><li>
-*移植性*：Erlangの VMは、Linux上だけでなく、UNIX、Windows、Macintosh、VxWorks上でもすべて同じものが稼働します。Erlangの分散プロセスは、異なるホスト・オペレーティング・システムが混在する環境でも、シームレスに相互の通信ができます。システム管理者は環境の変化に対応してホストをうまく組み合わせる必要があることを考えると、オペレーティング・システムを問わないこの移植性は、ストレージ・システムの弾力性の向上に大きく寄与します。
+<span class="strong"><strong>移植性</strong></span>.Erlangの VMは、Linux上だけでなく、UNIX、Windows、Macintosh、VxWorks上でもすべて同じものが稼働します。Erlangの分散プロセスは、異なるホスト・オペレーティング・システムが混在する環境でも、シームレスに相互の通信ができます。システム管理者は環境の変化に対応してホストをうまく組み合わせる必要があることを考えると、オペレーティング・システムを問わないこの移植性は、ストレージ・システムの弾力性の向上に大きく寄与します。
 </li><li>
-*ホット・コードアップグレード*：HibariのようなErlang ベースのアプリケーションは、ホット・コードアップグレードをサポートしています。そのため、システムを終了せずにアップグレードを適用できます。切り替え中は旧コードと新コードが同時に稼働します。これは、エンドユーザーに「常時使用可能」な可用性を提供する必要がある環境にとって重要な利点です。
+<span class="strong"><strong>ホット・コードアップグレード</strong></span>.HibariのようなErlang ベースのアプリケーションは、ホット・コードアップグレードをサポートしています。そのため、システムを終了せずにアップグレードを適用できます。切り替え中は旧コードと新コードが同時に稼働します。これは、エンドユーザーに「常時使用可能」な可用性を提供する必要がある環境にとって重要な利点です。
 </li></ul></div><p>　他にも、インクリメンタルなガベージ・コレクションやシングル・アサインメント変数、強固な例外処理機能などにより、Erlangは信頼性の高い分散型アプリケーションに最適なものとなっています。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="chain-replication"></a>1.2.2. チェイン・レプリケーションによる高可用性と強い一貫性</h4></div></div></div><p>　分散型でキー・バリュー・ストア方式を用いたHibariは、チェイン・レプリケーション方式を実装しています。チェイン・レプリケーションとは、データの一貫性を犠牲にせず、冗長性を確保して高可用性を得るために、
 <a class="ulink" href="http://www.usenix.org/event/osdi04/tech/full_papers/renesse/renesse.pdf" target="_top">van Renesse and Schneider</a>が最初に提案したものです。Hibariのストレージ・クラスターにおけるチェイン・レプリケーションの動作を簡単に説明すると、次のようになります。</p><div class="itemizedlist"><ul type="disc"><li>
 コンシステント・ハッシングにより、キー・スペースを複数のストレージの「チェイン」に分割します。
@@ -89,7 +89,7 @@ Webサービス：検索、eコマース、ソーシャルメディア、ユー�
 　書き込み要求を受けるヘッド・ブリックと、書き込み要求に応答して読み出し要求を処理するテイル・ブリックには、ミドル・ブリックより多くの負荷がかかることに注意してください。上図に示すように、異なる役割のブリックを均等に割り振ることも、マシン間の負荷分散の一助となります。</p><p>　物理ノードに障害が発生した場合は、影響を受ける各チェイン内のブリックが自動的に役割を変更して、各チェインはクライアントに対して正常にサービスを続行します。</p><p><span class="inlinemediaobject"><img src="images/automatic_failover_2.png" alt="images/automatic_failover_2.png" /></span></p><p>　Hibariのストレージ・システムにおけるチェイン・レプリケーション、フェイル・オーバー、および修復に関する詳しい情報について、さらにHibariのAdmin Serverと呼ぶ冗長構成クラスター・メンバー・アプリケーションに関する情報については、「Hibari®システム管理者ガイド」の以下の節を参照してください。</p><div class="itemizedlist"><ul type="disc"><li>
 <a class="ulink" href="hibari-sysadmin-guide.en.html#hibari-architecture" target="_top">Hibariのアーキテクチャー</a>
 </li><li>
-link:hibari-sysadmin-guide.en.html#life-of-brick[（論理）ブリックのライフサイクル］
+<a class="ulink" href="hibari-sysadmin-guide.en.html#life-of-brick" target="_top">（論理）ブリックのライフサイクル</a>
 </li><li>
 <a class="ulink" href="hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration" target="_top">動的クラスター再構成</a>
 </li><li>
@@ -100,8 +100,9 @@ Hibariは、物理ノードを追加して、そこに追加チェインを配�
 クラスターにチェインを追加（または削減）する場合、システムは中断時間なしでストレージの自動データ配置バランシングを行うため、サービスを中断せずにHibariのストレージ・クラスターを拡大（または縮小）できます。
 </li><li>
 Hibariは、汎用のPC上で稼働します。またシステムは、異なるハードウェア・リソースに容易に対応できます。ストレージ・クラスター内のブリックは、異なる容量のRAMやディスクを使用でき、CPUのさまざまな処理速度にも対応できます。異なるハードウェアを組み合わせてクラスターを構成する場合、Hibariのコンシステント・ハッシング機能をチューニングしてクラスターの使用状況を最適化することも可能です。各チェインに重み付けファクターを指定して、キー・スペース全体に占めるチェインの割り当てを、他のチェインに比べて増加または減少させることもできます。
-</li></ul></div><p>　Hibariは、異種のハードウェアの混在をサポートするだけでなく、Erlangをベースとしているため、ほとんどすべてのオペレーティング・システム上で稼働します。異種のハードウェアおよびオペレーティング・システムに容易に対応できるので、利用できるあらゆるリソースを用いてHibariをインクリメンタルに拡張できます。すべてのリソースを同時に、また同一の種類に揃えて購入する必要はありません。</p><p>NOTE:</p><p>Hibariの水平拡張の上限値は、明確には決まっていませんが、Erlangに組み込まれたネットワーク分散機能の実装の限界から見て、200〜250ノードが実質的な限界になります。また、Hibariのチェインは、理論的には複数のデータ・センターをまたがって延長しで地理的な冗長性を確保することも可能ですが、現在のところ、単一のデータ・センター内の配置しかテストしておらず、稼働実績はありません。</p><p>　Hibariのクラスター・サイズの変更に関する詳細情報は、「Hibari®システム管理者ガイド」の
-link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration［動的クラスター再構成]の節を参照してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="high-performance"></a>1.2.4. 高性能 — 特に読み出しと大サイズのバリューの処理の場合</h4></div></div></div><p>　Hibariのストレージ・クラスターでは、Big Dataの環境においても高性能を発揮できるよう、複数の機能が連携して働きます。</p><div class="itemizedlist"><ul type="disc"><li>
+</li></ul></div><p>　Hibariは、異種のハードウェアの混在をサポートするだけでなく、Erlangをベースとしているため、ほとんどすべてのオペレーティング・システム上で稼働します。異種のハードウェアおよびオペレーティング・システムに容易に対応できるので、利用できるあらゆるリソースを用いてHibariをインクリメンタルに拡張できます。すべてのリソースを同時に、また同一の種類に揃えて購入する必要はありません。</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Hibariの水平拡張の上限値は、明確には決まっていませんが、Erlangに組み込まれたネットワーク分散機能の実装の限界から見て、200〜250ノードが実質的な限界になります。また、Hibariのチェインは、理論的には複数のデータ・センターをまたがって延長しで地理的な冗長性を確保することも可能ですが、現在のところ、単一のデータ・センター内の配置しかテストしておらず、稼働実績はありません。</p></td></tr></table></div><p>　Hibariのクラスター・サイズの変更に関する詳細情報は、「Hibari®システム管理者ガイド」の
+link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration［Dynamic
+Cluster Reconfiguration]の節を参照してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="high-performance"></a>1.2.4. 高性能 — 特に読み出しと大サイズのバリューの処理の場合</h4></div></div></div><p>　Hibariのストレージ・クラスターでは、Big Dataの環境においても高性能を発揮できるよう、複数の機能が連携して働きます。</p><div class="itemizedlist"><ul type="disc"><li>
 Hibariを支えるErlang技術は、分散並行処理に特化して設計されており、分散並行処理環境で優れた実力を発揮します。
 </li><li>
 Hibariに実装されているコンシステント・ハッシングとチェイン・レプリケーションは、複数のチェインが分割されたキー・スペースをまたがって使用することによって、個々のチェインが受ける要求を同時に並行処理できます。チェイン間のデータの配置をチューニングして、異種のハードウェア・リソースの使用状況を最適化することも可能です。
@@ -127,8 +128,7 @@ Thrift
 Amazon S3
 </li><li>
 JSON-RPC
-</li></ul></div><p>　Hibariのクライアント・アプリケーションは、Java、 C/C++、Python、Ruby、Erlangなど幅広い言語で開発できます。</p><pre class="literallayout">   HibariのクライアントAPIに関する詳細情報は、
-link:#client-api-erlang[クライアントAPI：ネイティブErlang]および当ガイドでこのあと説明するクライアントAPIの章を参照してください。</pre></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="production-proven"></a>1.2.6. 稼働実績</h4></div></div></div><pre class="literallayout">当初、Hibariを開発したのは、主にTier 1通信事業分野におけるデータ保管の要望に応えるためでした。ところがシステムが進化すると、アジアのある大手キャリアから、GB（ギガバイト）級のWebメール・サービスを開始したいという要望が寄せられました。Hibariに対するこの顧客の要求は、次のように厳しいものでした。</pre><div class="itemizedlist"><ul type="disc"><li>
+</li></ul></div><p>　Hibariのクライアント・アプリケーションは、Java、 C/C++、Python、Ruby、Erlangなど幅広い言語で開発できます。</p><p>　HibariのクライアントAPIに関する詳細情報は、<a class="ulink" href="#client-api-erlang" target="_top">Client API: Native Erlang</a>および当ガイドでこのあと説明するクライアントAPIの章を参照してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="production-proven"></a>1.2.6. 稼働実績</h4></div></div></div><pre class="literallayout">当初、Hibariを開発したのは、主にTier 1通信事業分野におけるデータ保管の要望に応えるためでした。ところがシステムが進化すると、アジアのある大手キャリアから、GB（ギガバイト）級のWebメール・サービスを開始したいという要望が寄せられました。Hibariに対するこの顧客の要求は、次のように厳しいものでした。</pre><div class="itemizedlist"><ul type="disc"><li>
 開始時点で数百万ユーザー
 </li><li>
 開始から数ヶ月で、保管するメッセージは数十億件
@@ -186,9 +186,11 @@ link:#client-api-erlang[クライアントAPI：ネイティブErlang]および�
 <a class="ulink" href="http://www.erlang.org/faq/implementations.html" target="_top">Implementation and Ports of Erlang</a> を参照してください。
 　
 また、稼働環境に必要なハードウェア要件については、「Hibariシステム管理者ガイド」の
-<a class="ulink" href="hibari-sysadmin-guide.en.html#brick-hardware" target="_top">ブリックのハードウェアに関する注意</a>を参照してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="required-software"></a>2.2. 必要なサードパーティのソフトウェア</h3></div></div></div><p>Hibariに必要なサードパーティのソフトウェアは、シングルノードのインストールか、マルチノードのインストールかによって、異なります。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_"></a>2.2.1. シングルノードのインストールに必要なソフトウェア</h4></div></div></div><p>Hibariをシングルノードにインストールする場合は、以下のソフトウェアが必要です。
-- OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
-  * Erlangの“crypto”モジュールに必要</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="__2"></a>2.2.2. マルチノードのインストールに必要なソフトウェア</h4></div></div></div><p>Hibariをマルチノードにインストールする際にインストーラーツールを使用すると、クラスターのセットアッププロセスを簡略化できます。最初にHibariをインストールするホストさえ決めれば、あとはこのツールが管理して、Hibariをホストにインストールします。このツールは、Hibariのノードのマシンからでも、その他のマシンからでも起動できます。「インストールノード」（インストールツールを稼働させるマシン）とHibariノード（Hibariをインストールして稼働させるマシン）では、必要となるサードパーティのソフトウェアが異なります。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h5 class="title"><a id="__3"></a>2.2.2.1. インストールノードに必要なソフトウェア</h5></div></div></div><p>インストールノードに必要なソフトウェアは以下のとおりです。必要に応じて、リンク先のインストールガイドに従ってダウンロードしてください。</p><div class="itemizedlist"><ul type="disc"><li>
+<a class="ulink" href="hibari-sysadmin-guide.en.html#brick-hardware" target="_top">ブリックのハードウェアに関する注意</a>を参照してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="required-software"></a>2.2. 必要なサードパーティのソフトウェア</h3></div></div></div><p>Hibariに必要なサードパーティのソフトウェアは、シングルノードのインストールか、マルチノードのインストールかによって、異なります。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_"></a>2.2.1. シングルノードのインストールに必要なソフトウェア</h4></div></div></div><p>Hibariをシングルノードにインストールする場合は、以下のソフトウェアが必要です。</p><div class="itemizedlist"><ul type="disc"><li><p>
+OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
+</p><div class="itemizedlist"><ul type="circle"><li>
+Erlangの“crypto”モジュールに必要
+</li></ul></div></li></ul></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="__2"></a>2.2.2. マルチノードのインストールに必要なソフトウェア</h4></div></div></div><p>Hibariをマルチノードにインストールする際にインストーラーツールを使用すると、クラスターのセットアッププロセスを簡略化できます。最初にHibariをインストールするホストさえ決めれば、あとはこのツールが管理して、Hibariをホストにインストールします。このツールは、Hibariのノードのマシンからでも、その他のマシンからでも起動できます。「インストールノード」（インストールツールを稼働させるマシン）とHibariノード（Hibariをインストールして稼働させるマシン）では、必要となるサードパーティのソフトウェアが異なります。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h5 class="title"><a id="__3"></a>2.2.2.1. インストールノードに必要なソフトウェア</h5></div></div></div><p>インストールノードに必要なソフトウェアは以下のとおりです。必要に応じて、リンク先のインストールガイドに従ってダウンロードしてください。</p><div class="itemizedlist"><ul type="disc"><li>
 Bash - <a class="ulink" href="http://www.gnu.org/software/bash/" target="_top">http://www.gnu.org/software/bash/</a>
 </li><li>
 Expect - <a class="ulink" href="http://www.nist.gov/el/msid/expect.cfm" target="_top">http://www.nist.gov/el/msid/expect.cfm</a>
@@ -205,25 +207,28 @@ Git用の電子メールアドレスと名前を設定していない場合は�
 </p><pre class="screen">$ git config --global user.email "you@example.com"
 $ git config --global user.name "Your Name"</pre></li><li>
 GitHubアカウントを取得していない場合は、ここで取得してください。 - <a class="ulink" href="https://github.com/" target="_top">https://github.com/</a>
-</li></ul></div></li></ul></div><p>現在、Bash、Expect、Perl、SSHにはバージョン指定はありません。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h5 class="title"><a id="_hibari"></a>2.2.2.2. Hibariノードに必要なソフトウェア</h5></div></div></div><p>Hibariをインストールするノード群に必要なソフトウェアは以下のとおりです。
-- SSH (server) - <a class="ulink" href="http://www.openssh.com/" target="_top">http://www.openssh.com/</a>
-- OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
-  * Erlangの“crypto”モジュールに必要</p></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="download-hibari"></a>2.3. Hibariをダウンロードする</h3></div></div></div><p>現在、Hibariはビルド済みで提供することができません。当面は、ソースコードからHibariをビルドしてください。第7章の TODO(「7. ソースコードからHibariをビルドする」) の説明に従ってビルドして、その後、本節に戻ってセットアップを行ってください。</p><p>Hibariをビルドすると、後でセットアップに使用する2つのファイルが出力されます。
+</li></ul></div></li></ul></div><p>現在、Bash、Expect、Perl、SSHにはバージョン指定はありません。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h5 class="title"><a id="_hibari_3"></a>2.2.2.2. Hibariノードに必要なソフトウェア</h5></div></div></div><p>Hibariをインストールするノード群に必要なソフトウェアは以下のとおりです。</p><div class="itemizedlist"><ul type="disc"><li>
+SSH (server) - <a class="ulink" href="http://www.openssh.com/" target="_top">http://www.openssh.com/</a>
+</li><li><p>
+OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
+</p><div class="itemizedlist"><ul type="circle"><li>
+Erlangの“crypto”モジュールに必要
+</li></ul></div></li></ul></div></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="download-hibari"></a>2.3. Hibariをダウンロードする</h3></div></div></div><p>現在、Hibariはビルド済みで提供することができません。当面は、ソースコードからHibariをビルドしてください。第7章の TODO(「7. ソースコードからHibariをビルドする」) の説明に従ってビルドして、その後、本節に戻ってセットアップを行ってください。</p><p>Hibariをビルドすると、後でセットアップに使用する2つのファイルが出力されます。
 - tarballパッケージ“hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz”
 - md5sumファイル“hibari-X.Y.Z-DIST-ARCH-WORDSIZE-md5sum.txt”</p><p>_X.Y.Z_はリリースバージョン、_DIST_はリリースのディストリビューション、_ARCH_はリリースのアーキテクチャ、_WORDSIZE_はリリースのワードサイズです。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="installing-single-node"></a>2.4. シングルノードにHibariをインストールする</h3></div></div></div><p>シングルノードにHibariをインストールしたシステムには、マルチノードのHibariクラスターが提供するようなデータのレプリケーションや冗長性はありません。しかし、テストや開発上の目的で簡単にHibariをシングルノードにインストールして配置したいときは、この方法を利用します。</p><div class="orderedlist"><ol type="1"><li><p>
 Hibariを稼働させるディレクトリを作成します。
 </p><pre class="screen">$ mkdir running-directory</pre></li><li><p>
 Hibariをソースコードからビルドする際に出力されたtarballパッケージを解凍します。
-</p><pre class="screen">$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz</pre></li></ol></div><div class="important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[重要項目]" src="./images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Hibariノードでは、システムの+/etc/sysctl.conf+ファイルに+vm.swappiness=0+を設定してください。ErlangのVMにおいてswappinesssの指定は望ましくありません。</p></td></tr></table></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="starting-single-node"></a>2.5. シングルノードのHibariを起動する／停止する</h3></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_2"></a>2.5.1. Hibariの起動とブートストラップ</h4></div></div></div><div class="orderedlist"><ol type="1"><li><p>
+</p><pre class="screen">$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz</pre></li></ol></div><div class="important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[重要項目]" src="./images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Hibariノードでは、システムの+/etc/sysctl.conf+ファイルに+vm.swappiness=0+を設定してください。ErlangのVMにおいてswappinesssの指定は望ましくありません。</p></td></tr></table></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="starting-single-node"></a>2.5. シングルノードのHibariを起動する／停止する</h3></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_4"></a>2.5.1. Hibariの起動とブートストラップ</h4></div></div></div><div class="orderedlist"><ol type="1"><li><p>
 Hibariを起動します。
 </p><pre class="screen">$ running-directory/hibari/bin/hibari start</pre></li><li><p>
 Hibariを初めて起動する場合は、システムのブートストラップを実行します。
 </p><pre class="screen">$ running-directory/hibari/bin/hibari-admin bootstrap</pre><p>Hibariのブートストラッププロセスでは、まずシングルノードのAdminサーバーを起動した後、Hibariのデフォルトテーブルとして機能する１つのテーブル「tab1」を作成します。追加テーブルの作成に関する詳細は、
-<a class="ulink" href="#creating-tables" target="_top">新しいテーブルの作成</a>を参照してください。</p></li></ol></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_3"></a>2.5.2. Hibariの検証</h4></div></div></div><p>シングルノードのHibariシステムの稼働状況を検証するには、以下のようにクイックチェックを実行してください。</p><div class="orderedlist"><ol type="1"><li><p>
+<a class="ulink" href="#creating-tables" target="_top">新しいテーブルの作成</a>を参照してください。</p></li></ol></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_5"></a>2.5.2. Hibariの検証</h4></div></div></div><p>シングルノードのHibariシステムの稼働状況を検証するには、以下のようにクイックチェックを実行してください。</p><div class="orderedlist"><ol type="1"><li><p>
 “Hibari Web Administration”ページがオープンできることを確認します。
 </p><pre class="screen">$ your-favorite-browser http://127.0.0.1:23080</pre></li><li><p>
 Hibariノードにpingが打てることを確認します。
-</p><pre class="screen">$ running-directory-name/hibari/bin/hibari ping</pre></li></ol></div><p>IMPORTANT:</p><p>シングルノードのHibariシステムは、ローカルホストアドレス127.0.0.1のみに応答するようにハードコーディングされています。したがって、Hibari ノードにはそのノード自身からしか到達できません。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_4"></a>2.5.3. Hibariの停止</h4></div></div></div><p>Hibariを停止するには、以下を実行でください。</p><pre class="screen">$ running-directory/hibari/bin/hibari stop</pre></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="installing-multi-node"></a>2.6. マルチノードのクラスターにHibariをインストールする</h3></div></div></div><p>ターゲットノードにHibariをインストールする前に、以下の準備を実行してください。</p><div class="itemizedlist"><ul type="disc"><li>
+</p><pre class="screen">$ running-directory-name/hibari/bin/hibari ping</pre></li></ol></div><div class="important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[重要項目]" src="./images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>シングルノードのHibariシステムは、ローカルホストアドレス127.0.0.1のみに応答するようにハードコーディングされています。したがって、Hibari ノードにはそのノード自身からしか到達できません。</p></td></tr></table></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_6"></a>2.5.3. Hibariの停止</h4></div></div></div><p>Hibariを停止するには、以下を実行してください。</p><pre class="screen">$ running-directory/hibari/bin/hibari stop</pre></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="installing-multi-node"></a>2.6. マルチノードのクラスターにHibariをインストールする</h3></div></div></div><p>ターゲットノードにHibariをインストールする前に、以下の準備を実行してください。</p><div class="itemizedlist"><ul type="disc"><li>
 インストールノードおよびターゲットのHibariノード群に、必要なユーザー権限を設定してください。
 </li><li>
 クラスター用のインストーラーツールをダウンロードしてください。
@@ -243,23 +248,25 @@ rootユーザーとして、インストールノードにインストールユ�
 $ passwd $USER
 $ visudo
 # append the following line and save it
-$USER  ALL=(ALL)       NOPASSWD: ALL</pre><p>NOTE:</p></li></ol></div><p>sudoのテスト中に“sudo: sorry, you must have a tty to run sudo”というエラーメッセージが出た場合は、+/etc/sudoers+ファイル内の次の行をコメントアウトしてください。</p><p>+</p><pre class="screen">$ visudo
-Defaults    requiretty</pre><p>+
-. インストールノードに、インストールユーザー用のSSHの公開鍵と秘密鍵を新たに作成します。</p><p>+</p><pre class="screen">$ ssh-keygen
+$USER  ALL=(ALL)       NOPASSWD: ALL</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>sudoのテスト中に“sudo: sorry, you must have a tty to run sudo”というエラーメッセージが出た場合は、+/etc/sudoers+ファイル内の次の行をコメントアウトしてください。</p></td></tr></table></div><pre class="screen">$ visudo
+Defaults    requiretty</pre></li><li><p>
+インストールノードに、インストールユーザー用のSSHの公開鍵と秘密鍵を新たに作成します。
+</p><pre class="screen">$ ssh-keygen
 # enter your password for the private key
 $ eval `ssh-agent`
 $ ssh-add ~/.ssh/id_rsa
-# re-enter your password for the private key</pre><p>+
-. 各Hibariノードにおいて
-- +~/.ssh/known_hosts+ファイルに、インストールノードのエントリーを追加します。
-- +~/.ssh/authorized_keys+ファイルに、SSHの公開鍵のエントリーを追加します。</p><p>+
-以下の例では、dev1、dev2、dev3がターゲットのHibariノード群です。</p><p>+</p><pre class="screen">$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3</pre><p>+
-NOTE:</p><p>インストールノードがHibariのクラスターノードの１つである場合は、インストールノードにもssh-copy-idを実行する必要があります。</p><p>+
-. 各Hibariノードへのパスワード認証のないSSHのアクセスが、期待どおりに行われることを確認します。</p><p>+</p><pre class="screen">$ ssh $USER@dev1
+# re-enter your password for the private key</pre></li><li><p>
+各Hibariノードにおいて
+</p><div class="itemizedlist"><ul type="disc"><li>
++\~/.ssh/known_hosts+ファイルに、インストールノードのエントリーを追加します。
+</li><li><p>
++~/.ssh/authorized_keys+ファイルに、SSHの公開鍵のエントリーを追加します。
+</p><p>以下の例では、dev1、dev2、dev3がターゲットのHibariノード群です。</p><pre class="screen">$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>インストールノードがHibariのクラスターノードの１つである場合は、インストールノードにもssh-copy-idを実行する必要があります。</p></td></tr></table></div></li></ul></div></li><li><p>
+各Hibariノードへのパスワード認証のないSSHのアクセスが、期待どおりに行われることを確認します。
+</p><pre class="screen">$ ssh $USER@dev1
 $ ssh $USER@dev2
-$ ssh $USER@dev3
-+</pre><p>TIP:</p><p>SSHのセットアップの詳細について知りたい場合は、http://inside.mines.edu/~gmurray/HowTo/sshNotes.html を参照してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="download-cluster"></a>2.6.2. Clusterインストーラーツールのダウンロード</h4></div></div></div><p>“Cluster”とは、Hibariのノード群のクラスターのインストールと設定、およびブートストラップに使用する簡単なツールです。このツールはHibariパッケージの一部ではありませんが、GitHubから入手できます。</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Clusterは、多くのユーザーのニーズを満たすツールです。ただし現在、このツールの「ターゲットノード」のレシピはLinux主体に書かれています（たとえばuseraddや userdelなど）。その他のOSやプラットフォーム向けのパッチ類の提供が望まれます。Linux以外の配置の場合のClusterツールは比較的単純で、ツールのレシピどおりに操作すれば手動でインストールできます。</p></td></tr></table></div><div class="orderedlist"><ol type="1"><li><p>
+$ ssh $USER@dev3</pre></li></ol></div><div class="tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[ティップ]" src="./images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>SSHのセットアップの詳細について知りたい場合は、http://inside.mines.edu/~gmurray/HowTo/sshNotes.html を参照してください。</p></td></tr></table></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="download-cluster"></a>2.6.2. Clusterインストーラーツールのダウンロード</h4></div></div></div><p>“Cluster”とは、Hibariのノード群のクラスターのインストールと設定、およびブートストラップに使用する簡単なツールです。このツールはHibariパッケージの一部ではありませんが、GitHubから入手できます。</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Clusterは、多くのユーザーのニーズを満たすツールです。ただし現在、このツールの「ターゲットノード」のレシピはLinux主体に書かれています（たとえばuseraddや userdelなど）。その他のOSやプラットフォーム向けのパッチ類の提供が望まれます。Linux以外の配置の場合のClusterツールは比較的単純で、ツールのレシピどおりに操作すれば手動でインストールできます。</p></td></tr></table></div><div class="orderedlist"><ol type="1"><li><p>
 Clusterツールをダウンロードするための作業用ディレクトリを作成します。
 </p><pre class="screen">$ mkdir working-directory</pre></li><li><p>
 GitHubからClusterツールのGitリポジトリをダウンロードします。
@@ -274,7 +281,7 @@ ALL_NETB_BCAST="10.181.165.255" ALL_NETA_TIEBREAKER="10.181.165.1"
 
 ALL_HEART_UDP_PORT="63099"
 ALL_HEART_XMIT_UDP_PORT="63100"</pre><div class="itemizedlist"><a id="eligible-admin-nodes"></a><ul type="disc"><li><p>
-+ADMIN_NODES
+<code class="literal">ADMIN_NODES</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
 Hibari Adminサーバーを起動できるノード群のホスト名。Adminサーバーに関する詳細は、「Hibariシステム管理者ガイド」の
    <a class="ulink" href="hibari-sysadmin-guide.en.html#admin-server-app" target="_top">Adminサーバーアプリケーション</a>を参照してください。
@@ -319,12 +326,12 @@ Hibariのストレージ・ブリックとして機能するノード群のホ�
 <code class="literal">ALL_HEART_XMIT_UDP_PORT</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
 ハートビート・トランスミッター用のUDPポート。
-</li></ul></div></li></ul></div><p>ネットワーク監視の設定に関する詳細は、パーティション検出のOTPアプリケーションのソースファイル (<a class="ulink" href="https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src" target="_top">https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src</a>) を参照してください。</p><p>CAUTION:</p><p>稼働時の設定では、ネットワークAとネットワークBを、物理的に異なるネットワークおよびネットワークインターフェイスにするべきです。しかし、テストおよび開発時には、ネットワークAとネットワークBを物理的に同じネットワークにすることができます（設定ファイルの上記サンプルと同様）。</p><p>最終ステップとして、*各Hibariノード*で</p><div class="itemizedlist"><ul type="disc"><li><p>
+</li></ul></div></li></ul></div><p>ネットワーク監視の設定に関する詳細は、パーティション検出のOTPアプリケーションのソースファイル (<a class="ulink" href="https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src" target="_top">https://github.com/hibari/partition-detector/raw/master/src/partition_detector.app.src</a>) を参照してください。</p><div class="caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>稼働時の設定では、ネットワークAとネットワークBを、物理的に異なるネットワークおよびネットワークインターフェイスにするべきです。しかし、テストおよび開発時には、ネットワークAとネットワークBを物理的に同じネットワークにすることができます（設定ファイルの上記サンプルと同様）。</p></td></tr></table></div><p>最終ステップとして、*各Hibariノード*で</p><div class="itemizedlist"><ul type="disc"><li><p>
 +/etc/hosts+ファイルに、クラスター内のすべてのHibariノード群のエントリーがあることを確認します。
 </p><pre class="screen">10.181.165.230  dev1.your-domain.com    dev1
 10.181.165.231  dev2.your-domain.com    dev2 10.181.165.232  dev3.your-domain.com    dev3</pre></li><li>
 システムの+/etc/sysctl.conf+ファイルに+vm.swappiness=0+を設定してください。Erlangの VMにおいてswappinessを指定することは望ましくありません。
-</li></ul></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_5"></a>2.6.4. Hibariのインストール</h4></div></div></div><p>インストールノードからインストールユーザーとしてログインし、以下の手順でHibariクラスターを作成します。</p><div class="orderedlist"><ol type="1"><li><p>
+</li></ul></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_7"></a>2.6.4. Hibariのインストール</h4></div></div></div><p>インストールノードからインストールユーザーとしてログインし、以下の手順でHibariクラスターを作成します。</p><div class="orderedlist"><ol type="1"><li><p>
 <a class="ulink" href="#download-cluster" target="_top">Clusterツールのダウンロード</a>および
   <a class="ulink" href="#config-cluster" target="_top">クラスター設定情報ファイルの作成</a>を行った作業ディレクトリに、Hibariのtarballパッケージとmd5sumファイルがあることを確認します。
 </p><pre class="screen">$ cd working-directory
@@ -339,11 +346,11 @@ Hibariのすべてのノードに、”hibari”というユーザーを作成�
 hibari@dev1 hibari@dev2
 hibari@dev3</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>“hibari”ユーザーがすでにそのノードに存在する場合は、-fオプションが“hibari”ユーザーを強制的に削除して、再度作成します。</p></td></tr></table></div></li><li><p>
 新たに作成した「hibari」ユーザーを通して、HibariのすべてのノードにHibariパッケージをインストールします。
-</p><p>+</p></li></ol></div><pre class="screen">$ ./clus/priv/clus-hibari.sh -f init hibari hibari.config hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+</p><pre class="screen">$ ./clus/priv/clus-hibari.sh -f init hibari hibari.config hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
 hibari@dev1
 hibari@dev2
-hibari@dev3</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>デフォルト設定では、Clusterツールはターゲットノード群の<code class="literal">/usr/local/var/lib+にHibariをインストールします。別の場所へインストールしたい場合は、インストールの前に+clus.sh+スクリプト（作業用ディレクトリの</code>/clus/priv/+の下）を開き、+CT_HOMEBASEDIR+変数を編集してください。</p></td></tr></table></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="starting-multi-node"></a>2.7. マルチノードのHibariクラスターを起動する／停止する</h3></div></div></div><p>マルチノードのHibariクラスターの起動および停止は、インストールプロセスを管理したノードから、Clusterツールを使って行います。本節で説明するHibariの各コマンドは、インストール手続き中に作成した
-<a class="ulink" href="#config-cluster" target="_top">Clusterツール設定情報ファイル</a>のファイル名を参照することに注意してください。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_6"></a>2.7.1. Hibariクラスターの起動およびブートストラップ</h4></div></div></div><div class="orderedlist"><ol type="1"><li><p>
+hibari@dev3</pre></li></ol></div><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>デフォルト設定では、Clusterツールはターゲットノード群の<code class="literal">/usr/local/var/lib+にHibariをインストールします。別の場所へインストールしたい場合は、インストールの前に+clus.sh+スクリプト（作業用ディレクトリの</code>/clus/priv/+の下）を開き、+CT_HOMEBASEDIR+変数を編集してください。</p></td></tr></table></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="starting-multi-node"></a>2.7. マルチノードのHibariクラスターを起動する／停止する</h3></div></div></div><p>マルチノードのHibariクラスターの起動および停止は、インストールプロセスを管理したノードから、Clusterツールを使って行います。本節で説明するHibariの各コマンドは、インストール手続き中に作成した
+<a class="ulink" href="#config-cluster" target="_top">Clusterツール設定情報ファイル</a>のファイル名を参照することに注意してください。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_8"></a>2.7.1. Hibariクラスターの起動およびブートストラップ</h4></div></div></div><div class="orderedlist"><ol type="1"><li><p>
 Clusterツールをダウンロードした作業用ディレクトリに移り、“hibari”ユーザーによって、HibariのすべてのノードでHibariを起動します。
 </p><pre class="screen">$ cd working-directory
 $ ./clus/priv/clus-hibari.sh -f start hibari hibari.config
@@ -353,21 +360,20 @@ hibari@dev3</pre></li><li><p>
 Hibariを初めて起動する場合は、“hibari”ユーザーを通じて、システムのブートストラップを実行します。
 </p><pre class="screen">$ ./clus/priv/clus-hibari.sh -f bootstrap hibari hibari.config
 hibari@dev1 =&gt; hibari@dev1 hibari@dev2 hibari@dev3</pre><p>Hibariのブートストラッププロセスが、最初の
-<a class="ulink" href="#eligible-admin-nodes" target="_top">適格なadminノード</a>で、HibariのAdminサーバーを起動し、Hibariのデフォルトテーブルとして機能する１つのテーブル「tab1」を作成します。追加テーブルの作成に関する詳細は、<a class="ulink" href="#creating-tables" target="_top">新しいテーブルを作成する</a>を参照してください。</p><p>NOTE:</p></li></ol></div><p>ブートストラップで“another_admin_server_running”というエラーが出た場合は、そのネットワークで稼働中の他のHibariのクラスターを停止してください。あるいは他のHibariクラスターや他のアプリケーションで使われていない
-<a class="ulink" href="#eligible-admin-nodes" target="_top">Hibariハートビートリスナーポート</a>をClusterツールに割り当てるように設定変更し、その後で、クラスターのインストール手続きを繰り返してください。
-==== Hibariクラスターの検証</p><p>Hibariが立ち上がって稼働していることを検証するため、以下の簡単なチェックを行ってください。
+<a class="ulink" href="#eligible-admin-nodes" target="_top">適格なadminノード</a>で、HibariのAdminサーバーを起動し、Hibariのデフォルトテーブルとして機能する１つのテーブル「tab1」を作成します。追加テーブルの作成に関する詳細は、<a class="ulink" href="#creating-tables" target="_top">新しいテーブルを作成する</a>を参照してください。</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>ブートストラップで“another_admin_server_running”というエラーが出た場合は、そのネットワークで稼働中の他のHibariのクラスターを停止してください。あるいは他のHibariクラスターや他のアプリケーションで使われていない
+<a class="ulink" href="#eligible-admin-nodes" target="_top">Hibariハートビートリスナーポート</a>をClusterツールに割り当てるように設定変更し、その後で、クラスターのインストール手続きを繰り返してください。</p></td></tr></table></div></li></ol></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_9"></a>2.7.2. Hibariクラスターの検証</h4></div></div></div><p>Hibariが立ち上がって稼働していることを検証するため、以下の簡単なチェックを行ってください。
 . “Hibari Web Administration”ページをオープンできるかどうか確認します。</p><p>+</p><pre class="screen">$ your-favorite-browser http://dev1:23080</pre><p>+
 . 各Hibariノードにpingが打てることを確認します。</p><p>+</p><pre class="screen">$ ./clus/priv/clus-hibari.sh -f ping hibari hibari.config
 hibari@dev1 ... pong
 hibari@dev2 ... pong
-hibari@dev3 ... pong</pre></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_7"></a>2.7.2. Hibariクラスターの停止</h4></div></div></div><p>“hibari”ユーザーを通じて、すべてのHibariノードでHibariを停止します。</p><pre class="screen">$ cd working-directory
+hibari@dev3 ... pong</pre></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_10"></a>2.7.3. Hibariクラスターの停止</h4></div></div></div><p>“hibari”ユーザーを通じて、すべてのHibariノードでHibariを停止します。</p><pre class="screen">$ cd working-directory
 $ ./clus/priv/clus-hibari.sh -f stop hibari hibari.config
 ok
 ok
 ok
 hibari@dev1
 hibari@dev2
-hibari@dev3</pre></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="creating-tables"></a>2.8. 新しいテーブルを作成する</h3></div></div></div><p>新しいテーブルは、AdminサーバーのGUIを通して作成するのが最も簡単です。“http://localhost:23080/”を開き、“Add a table”をクリックしてください。GUIに加えて、hibari-admin ツールで新しいテーブルを作成することも可能です。詳しい使用法は、hibari-admin ツールの説明を参照してください。</p><p>NOTE:</p><p>管理用のAPIを使ったテーブル作成の方法については、「Hibariシステム管理者ガイド」を参照してください。</p><p>GUIを使ってテーブルを追加する場合、以下のようなテーブル設定のオプションがあります。</p><div class="itemizedlist"><ul type="disc"><li><p>
+hibari@dev3</pre></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="creating-tables"></a>2.8. 新しいテーブルを作成する</h3></div></div></div><p>新しいテーブルは、AdminサーバーのGUIを通して作成するのが最も簡単です。“http://localhost:23080/”を開き、“Add a table”をクリックしてください。GUIに加えて、hibari-admin ツールで新しいテーブルを作成することも可能です。詳しい使用法は、hibari-admin ツールの説明を参照してください。</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>管理用のAPIを使ったテーブル作成の方法については、「Hibariシステム管理者ガイド」を参照してください。</p></td></tr></table></div><p>GUIを使ってテーブルを追加する場合、以下のようなテーブル設定のオプションがあります。</p><div class="itemizedlist"><ul type="disc"><li><p>
 <code class="literal">Local</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
 Boolean型。真の場合、新しいテーブルのデータを保存するブリックは、ローカルノード（Adminサーバーが稼働しているノード）に作成されます。偽の場合、「NodeList」フィールドを使って新たなブリックを作成するクラスターノードを指定します。
@@ -389,32 +395,48 @@ Boolean型。真の場合、先行書き込みログへの書き込みは、シ�
 Boolean型。真の場合、キーの可変長prefixが、コンシステント・ハッシング関数へのインプットとして使われます。偽の場合は、キー全体が使われます。
 ＋
 可変長または固定長のprefixのハッシング・スキームの使用は、多くのアプリケーションにとってメリットがあります。一例として、さまざまなユーザーの状態を保持するアプリケーションを考えてみましょう。アプリケーションは、マイクロ・トランザクションを使用して、そのユーザーに関連する（同一テーブルの）さまざまなキーを更新できると都合が良いでしょう。テーブルを作成することで、VarPrefix=trueをVarPrefixSeparator=47(ASCII 47は「/」) およびVarPrefixNumSeparator=2と共に使用し、キー/FooUser/summaryと/FooUser/thing1と/FooUser/thing9が同じチェインに保存されることを保証するハッシング・スキームを作成できます。
-</p><p>NOTE:</p></li></ul></div></li></ul></div><p>テーブルを作成するHTTPインターフェイスは、固定長のprefixスキームを公開していません。この場合、Erlangの APIを使用しなければなりません。</p><p>+
-- <code class="literal">VarPrefixSeparator</code>
-  * Integer型。可変長のprefix計算で使われる文字コードを定義します。デフォルト値のASCII 47 (文字「/」)やその他の文字は、UNIX/POSIX形式のファイルやディレクトリを意味するものではないことに注意してください。
-- <code class="literal">VarPrefixNumSeparators</code>
-  * Integer型。コンシステント・ハッシングで使われるVarPrefixSeparatorのバイト数、およびその間のすべてのバイトを定義します。たとえば/foo/bar/bazというキーについて、VarPrefixSeparator=47、VarPrefixNumSeparators=3であれば、コンシステント・ハッシングで使われるprefixは/foo/bar/となります。
-- <code class="literal">Bricks</code>
-  * Integer型。Local=true（上記を参照）の場合、この整数は、ローカルノードに作成される論理ブリックの総数を定義します。Local=falseの場合、この値は無視されます。
-- <code class="literal">BPC</code>
-  * Integer型。チェインごとのブリック数を定義します。</p><p>+
-チェインを作成するアルゴリズム → ブリック・マッピングは「ストライピング」の原則に基づいています。ブリックは十分な長さのチェインにストライプ状に置かれ、その結果、ヘッド、ミドル、テイルの役割をする同数の論理ブリックを持つことになります。「Hibariシステム管理者ガイド」の、
-<a class="ulink" href="hibari-sysadmin-guide.en.html#3-chains-striped-across-3-bricks" target="_top">3ノードでストライプ構造を持つ3チェイン</a>の例を参照してください。</p><p>+
-Erlang のAPIは、他のチェイン・レイアウトパターンで、テーブルの作成に使用されます。</p><p>+
-- <code class="literal">NodeList</code>
-  * カンマ区切りの文字列。Local=falseの場合、新しいテーブルのために論理ブリックを稼働させるノードの一覧を指定します。カンマ区切りの一覧は、<code class="literal">NodeName@HostName</code> の形式で表記されます。たとえば、3ノードの指定には、<code class="literal">hibari1@machine-a、 hibari1@machine-b、 hibari1@machine-c</code> を使用します。</p><p>+
-- <code class="literal">NumNodesPerBlock</code>
-  * Integer型。Local=falseの場合、この整数がデフォルトのチェイン・ストライピング・アルゴリズムのストライピングの振る舞いに影響します。この値はゼロ（パラメータが無視されます）または複数のBPCパラメータです。</p><p>+
-たとえば、NodeListにA、B、C、D、E、Fというノードがあれば、以下のストライピングパターンが使用されます。</p><p>+
-    <span class="strong"><strong> NumNodesPerBlock=0の場合、6チェインが6ノードにわたってストライプします。
-    </strong></span> NumNodesPerBlock=2かつBPC=2の場合、2チェインがノードA と B、2チェインがノードC と D、2チェインがノードEと Fにわたってストライプします。
-    ** NumNodesPerBlock=3かつBPC=3の場合、3チェインがノード A と Bと C、3チェインがノードD と Eと Fにわたってストライプします。</p><p>+
-- <code class="literal">BlockMultFactor</code>
-  * Integer型。Local=falseの場合、この整数がデフォルトのチェイン・ストライピング・アルゴリズムのストライピングの振る舞いに影響します。この値はゼロ（パラメータが無視されます）またはゼロ以上にしなければなりません。</p><p>+
-たとえば、NodeListにA、B、C、D、E、Fというノードがあれば、以下のストライピングパターンが使用されます。</p><p>+
-    <span class="strong"><strong> NumNodesPerBlock=0かつBlockMultFactor=0の場合、6チェインが6ノードにわたってストライプします。
-    </strong></span> NumNodesPerBlock=2かつBlockMultFactor=5かつBPC=2の場合、トータル30チェインについて、2×5=10チェインがノードA と Bに、2×5=10チェインがノードC と Dに、2×5=10チェインがノードE とFにわたってストライプします。
-    ** NumNodesPerBlock=3かつBlockMultFactor=4かつBPC=3の場合、トータル24チェインについて、3×4=12チェインがノードA と Bと Cに、3×4=12チェインがノードD と Eと Fにわたってストライプします。</p></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-erlang"></a>3. クライアント向けAPI ： ネイティブErlang</h2></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_api"></a>3.1. Hibariのクライアント向けAPIの概要</h3></div></div></div><p>キー・バリュー型データベースとしてHibariが提供するクライアント向けAPIは非常にシンプルです。APIによって、データの追加、検索、削除という基本的な操作ができます。制限はありますが、その範囲内で操作を組み合わせればアトミック・トランザクションも実行できます。</p><p>Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。</p><p>*データの追加*</p><div class="itemizedlist"><ul type="disc"><li><p>
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>テーブルを作成するHTTPインターフェイスは、固定長のprefixスキームを公開していません。この場合、Erlangの APIを使用しなければなりません。</p></td></tr></table></div></li></ul></div></li><li><p>
+<code class="literal">VarPrefixSeparator</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+Integer型。可変長のprefix計算で使われる文字コードを定義します。デフォルト値のASCII 47 (文字「/」)やその他の文字は、UNIX/POSIX形式のファイルやディレクトリを意味するものではないことに注意してください。
+</li></ul></div></li><li><p>
+<code class="literal">VarPrefixNumSeparators</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+Integer型。コンシステント・ハッシングで使われるVarPrefixSeparatorのバイト数、およびその間のすべてのバイトを定義します。たとえば/foo/bar/bazというキーについて、VarPrefixSeparator=47、VarPrefixNumSeparators=3であれば、コンシステント・ハッシングで使われるprefixは/foo/bar/となります。
+</li></ul></div></li><li><p>
+<code class="literal">Bricks</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+Integer型。Local=true（上記を参照）の場合、この整数は、ローカルノードに作成される論理ブリックの総数を定義します。Local=falseの場合、この値は無視されます。
+</li></ul></div></li><li><p>
+<code class="literal">BPC</code>
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+Integer型。チェインごとのブリック数を定義します。
+</p><p>チェインを作成するアルゴリズム → ブリック・マッピングは「ストライピング」の原則に基づいています。ブリックは十分な長さのチェインにストライプ状に置かれ、その結果、ヘッド、ミドル、テイルの役割をする同数の論理ブリックを持つことになります。「Hibariシステム管理者ガイド」の、
+<a class="ulink" href="hibari-sysadmin-guide.en.html#3-chains-striped-across-3-bricks" target="_top">3ノードでストライプ構造を持つ3チェイン</a>の例を参照してください。</p><p>Erlang のAPIは、他のチェイン・レイアウトパターンで、テーブルの作成に使用されます。</p></li></ul></div></li><li><p>
+<code class="literal">NodeList</code>
+</p><div class="itemizedlist"><ul type="circle"><li>
+カンマ区切りの文字列。Local=falseの場合、新しいテーブルのために論理ブリックを稼働させるノードの一覧を指定します。カンマ区切りの一覧は、<code class="literal">NodeName@HostName</code> の形式で表記されます。たとえば、3ノードの指定には、<code class="literal">hibari1@machine-a、 hibari1@machine-b、 hibari1@machine-c</code> を使用します。
+</li></ul></div></li><li><p>
+<code class="literal">NumNodesPerBlock</code>
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+Integer型。Local=falseの場合、この整数がデフォルトのチェイン・ストライピング・アルゴリズムのストライピングの振る舞いに影響します。この値はゼロ（パラメータが無視されます）または複数のBPCパラメータです。
+</p><p>たとえば、NodeListにA、B、C、D、E、Fというノードがあれば、以下のストライピングパターンが使用されます。</p><div class="itemizedlist"><ul type="square"><li>
+NumNodesPerBlock=0の場合、6チェインが6ノードにわたってストライプします。
+</li><li>
+NumNodesPerBlock=2かつBPC=2の場合、2チェインがノードA と B、2チェインがノードC と D、2チェインがノードEと Fにわたってストライプします。
+</li><li>
+NumNodesPerBlock=3かつBPC=3の場合、3チェインがノード A と Bと C、3チェインがノードD と Eと Fにわたってストライプします。
+</li></ul></div></li></ul></div></li><li><p>
+<code class="literal">BlockMultFactor</code>
+</p><div class="itemizedlist"><ul type="circle"><li><p>
+Integer型。Local=falseの場合、この整数がデフォルトのチェイン・ストライピング・アルゴリズムのストライピングの振る舞いに影響します。この値はゼロ（パラメータが無視されます）またはゼロ以上にしなければなりません。
+</p><p>たとえば、NodeListにA、B、C、D、E、Fというノードがあれば、以下のストライピングパターンが使用されます。</p><div class="itemizedlist"><ul type="square"><li>
+NumNodesPerBlock=0かつBlockMultFactor=0の場合、6チェインが6ノードにわたってストライプします。
+</li><li>
+NumNodesPerBlock=2かつBlockMultFactor=5かつBPC=2の場合、トータル30チェインについて、2×5=10チェインがノードA と Bに、2×5=10チェインがノードC と Dに、2×5=10チェインがノードE とFにわたってストライプします。
+</li><li>
+NumNodesPerBlock=3かつBlockMultFactor=4かつBPC=3の場合、トータル24チェインについて、3×4=12チェインがノードA と Bと Cに、3×4=12チェインがノードD と Eと Fにわたってストライプします。
+</li></ul></div></li></ul></div></li></ul></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-erlang"></a>3. クライアント向けAPI ： ネイティブErlang</h2></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_api"></a>3.1. Hibariのクライアント向けAPIの概要</h3></div></div></div><p>キー・バリュー型データベースとしてHibariが提供するクライアント向けAPIは非常にシンプルです。APIによって、データの追加、検索、削除という基本的な操作ができます。制限はありますが、その範囲内で操作を組み合わせればアトミック・トランザクションも実行できます。</p><p>Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。</p><p>*データの追加*</p><div class="itemizedlist"><ul type="disc"><li><p>
 まだ存在していないキーとバリューのペアを新たに追加します。オプションでフラグを追加できます。
 </p><div class="itemizedlist"><ul type="circle"><li>
 <a class="ulink" href="#brick-simple-add" target="_top">brick_simple:add/6</a>
@@ -454,11 +476,11 @@ Erlang のAPIは、他のチェイン・レイアウトパターンで、テー�
 <a class="ulink" href="http://www.erlang.org/doc/reference_manual/data_types.html" target="_top">Erlangのデータ型に関する公式ドキュメント</a>からの抜粋を少し変更したものです。詳細な情報は、Erlangの公式ドキュメントを参照してください。</p><div class="important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[重要項目]" src="./images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>すべてのErlangのコマンドは、最後にピリオド（’.’）をつけてください。</p></td></tr></table></div><div class="variablelist"><dl><dt><span class="term">
 項（term）
 </span></dt><dd>
-すべてのデータ型のデータを*項（term）*と呼びます。
+すべてのデータ型のデータを*項(term)*と呼びます。
 </dd><dt><span class="term">
 数値（number）
 </span></dt><dd>
-数値定数には、*Integer（整数）型*と*Float（浮動小数点）型*の2種類があります。
+数値定数には、*Integer(整数)型*と*Float(浮動小数点)型*の2種類があります。
 </dd><dt><span class="term">
 アトム（atom）
 </span></dt><dd><p>
@@ -471,26 +493,26 @@ phone_number
 'phone_number'</pre></dd><dt><span class="term">
 Bit string（ビット列）とBinary（バイナリ）
 </span></dt><dd><p>
-*Bit string（ビット列）*は、型指定のないメモリー領域にデータを保管するときに使用します。表記は、
-<a class="ulink" href="http://www.erlang.org/doc/reference_manual/expressions.html#bit_syntax" target="_top">Erlangのビット構文</a>に従います。また、8の倍数のビット数からなるビット列を、*Binary（バイナリ）*と呼びます。たとえば次のように表します。
+*Bit string(ビット列)*は、型指定のないメモリー領域にデータを保管するときに使用します。表記は、
+<a class="ulink" href="http://www.erlang.org/doc/reference_manual/expressions.html#bit_syntax" target="_top">Erlangのビット構文</a>に従います。また、8の倍数のビット数からなるビット列を、*Binary(バイナリ)*と呼びます。たとえば次のように表します。
 </p><pre class="screen">&lt;&lt;10,20&gt;&gt;
 &lt;&lt;"ABC"&gt;&gt;</pre></dd><dt><span class="term">
 Tuple（タプル）
 </span></dt><dd><p>
-*Tuple（タプル）*は、固定数の項の組からなるデータ型です。次の例のように、中括弧（’{ }’）で囲んで表します。
+*Tuple(タプル)*は、固定数の項の組からなるデータ型です。次の例のように、中括弧（’{ }’）で囲んで表します。
 </p><pre class="screen">{Term1,...,TermN}</pre></dd><dt><span class="term">
 List（リスト）
 </span></dt><dd><p>
-*List（リスト）*は、可変数の項の組からなるデータ型です。次の例のように、大括弧（’[ ]’）で囲んで表します。
+*List(リスト)*は、可変数の項の組からなるデータ型です。次の例のように、大括弧（’[ ]’）で囲んで表します。
 </p><pre class="screen">[Term1,...,TermN]</pre></dd><dt><span class="term">
 String（文字列）
 </span></dt><dd>
-*String（文字列）*は、二重引用符（”）で囲んで表します。これは、Erlangの正式のデータ型ではありません。リスト[$h,$e,$l,$l,$o]、つまり[104,101,108,108,111]の代わりに、簡略化した表現として”hello”という文字列を使用します。
+*String(文字列)*は、二重引用符（”）で囲んで表します。これは、Erlangの正式のデータ型ではありません。リスト[$h,$e,$l,$l,$o]、つまり[104,101,108,108,111]の代わりに、簡略化した表現として”hello”という文字列を使用します。
 </dd><dt><span class="term">
 Boolean（ブール）
 </span></dt><dd>
 ErlangにBoolean型（論理型）はありません。ブール値を表す場合は、代わりにアトムの`真（true）`と`偽（false）`を使用します。
-</dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_8"></a>3.1.2. Hibariのデータモデル</h4></div></div></div><p>HibariのテーブルをSQLデータベースの方法で表現すると、次のようになります。</p><p><a id="sql-definition-hibari"></a>+</p><pre class="screen">CREATE TABLE foo (
+</dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_11"></a>3.1.2. Hibariのデータモデル</h4></div></div></div><p>HibariのテーブルをSQLデータベースの方法で表現すると、次のようになります。</p><p><a id="sql-definition-hibari"></a>+</p><pre class="screen">CREATE TABLE foo (
     BLOB key;
     BLOB value;
     INTEGER timestamp;                  -- 単調に増加
@@ -566,7 +588,7 @@ RAM
 <code class="literal">iodata() = iolist() | binary()</code>
 </li><li><p>
 <code class="literal">iolist()  = [char() | binary() | iolist()]</code>
-</p><p>NOTE:</p></li></ul></div></li></ul></div></dd></dl></div><p>Keyはiolist()またはbinary()で指定できますが、操作の実行前にBinary型に変換されます。これは、Valueに関しても同様です。+</p><div class="variablelist"><dl><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Keyはiolist()またはbinary()で指定できますが、操作の実行前にBinary型に変換されます。これは、Valueに関しても同様です。+</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Value</strong></span>
@@ -624,7 +646,7 @@ RAM
 <code class="literal">'value_in_ram'</code>
 </p><div class="itemizedlist"><ul type="square"><li><p>
 ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
-</p><p>NOTE:</p></li></ul></div></li></ul></div></li></ul></div></dd></dl></div><p>Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。</p><p>+</p><div class="variablelist"><dl><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Timeout</strong></span>
@@ -837,7 +859,7 @@ brick_simple:replace/4
 </li></ul></div></li></ul></div></dd></dl></div><p>例</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p>
-キーとバリューのペアの更新に成功た場合
+キーとバリューのペアの更新に成功した場合
 </p><pre class="screen">&gt; brick_simple:replace(tab1, &lt;&lt;"foo"&gt;&gt;, &lt;&lt;"Goodbye, world!"&gt;&gt;).
 ok</pre></dd><dt><span class="term">
  
@@ -969,7 +991,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 <code class="literal">'value_in_ram'</code>
 </p><div class="itemizedlist"><ul type="square"><li><p>
 ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
-</p><p>NOTE:</p></li></ul></div></li></ul></div></li></ul></div></dd></dl></div><p>Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+</p><div class="variablelist"><dl><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Timeout</strong></span>
@@ -1087,7 +1109,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 <code class="literal">iodata() = iolist() | binary()</code>
 </li><li><p>
 <code class="literal">iolist()  = [char() | binary() | iolist()]</code>
-</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>`</p></td></tr></table></div></li></ul></div></li></ul></div></dd></dl></div><p>Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。+</p><div class="variablelist"><dl><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。+</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Flags</strong></span>
@@ -1363,7 +1385,7 @@ IMPORTANT: `get_many()`関数を1回コールしただけでは、複数のス�
 `get_all_attribs`フラグを指定し、`witness`フラグは指定していない`get_many`要求が成功しました。
 </li><li><p>
 <code class="literal">exp_time() = time_t()</code>
-</p><p>NOTE:</p></li></ul></div></li></ul></div></dd></dl></div><p>正常終了の戻り値の最後のブール値は、戻り値の最後のキーの後にチェイン内にまだキーが存在するかどうかを示します。存在する場合は真（<code class="literal">true`）、存在しない場合は偽（`false`）となります。`proplist()`が返される場合、リスト中の特性のひとつは常に</code>{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。</p><p>+</p><div class="variablelist"><dl><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>正常終了の戻り値の最後のブール値は、戻り値の最後のキーの後にチェイン内にまだキーが存在するかどうかを示します。存在する場合は真（<code class="literal">true`）、存在しない場合は偽（`false`）となります。`proplist()`が返される場合、リスト中の特性のひとつは常に</code>{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 エラー終了の場合
@@ -1952,8 +1974,8 @@ brick_simple:fold_table/6
 </span></dt><dd>
 テーブル`Tab`の`StartKey`から始まるすべてのキーに対して、フォールド操作を実行します。その際、バイナリ値が`Prefix`で始まるキーのみを対象とします。イテレーションの間で`SleepTime`ミリ秒だけスリープし、`Flags`と`NumItems`を
 <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many()</a>への引数として使用します。この操作の基盤であるErlangのfold関数の概要については、http://www.erlang.org/doc/man/lists.html#foldl-3を参照してください。
-</dd></dl></div><p>IMPORTANT:</p><p>データの移行処理中にこの操作を実行しないでください。
-引数</p><div class="variablelist"><dl><dt><span class="term">
+</dd></dl></div><div class="important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[重要項目]" src="./images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>データの移行処理中にこの操作を実行しないでください。
+引数</p></td></tr></table></div><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Tab</strong></span>
@@ -2116,4 +2138,361 @@ _（説明を追加予定）
 </li></ul></div></li></ul></div></dd></dl></div><p>エイリアス
  ::
 - brick_simple:fold_key_prefix/5
-  * <code class="literal">brick_simple:fold_key_prefix(Tab, Prefix, Fun, Acc, Flags).</code></p><p>例</p><p>_（追加予定）</p></div></div></div></body></html>
+  * <code class="literal">brick_simple:fold_key_prefix(Tab, Prefix, Fun, Acc, Flags).</code></p><p>例</p><p>_（追加予定）</p></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-ubf"></a>4. クライアント向けAPI：UBF</h2></div></div></div><p><a class="ulink" href="http://github.com/norton/ubf" target="_top">UBFプロトコル</a> は、正式に規定されたプロトコル群です。多数のクライアント言語がこれをサポートしています。本章では、UBFプロトコル層の各層について説明します。さらに、UBFクライアントをErlangやその他の言語で使用する方法、およびそのクライアントを使ってHibariのストレージ・クラスターにアクセスする方法について説明します。</p><p>Hibariのソースコードのディストリビューションには、次の言語におけるUBF/EBFプロトコルのサポートが含まれています。</p><div class="itemizedlist"><ul type="disc"><li>
+Erlangに関しては <a class="xref" href="#using-ubf-erlang-client" title="4.5. Erlang用のUBFクライアント・ライブラリの使用法">「Erlang用のUBFクライアント・ライブラリの使用法」</a> を参照してください。
+</li><li>
+Javaに関しては <a class="xref" href="#using-ubf-java-client" title="4.6. Java用のUBFクライアント・ライブラリの使用法">「Java用のUBFクライアント・ライブラリの使用法」</a> を参照してください。
+</li><li>
+Pythonに関しては <a class="xref" href="#using-ubf-python-client" title="4.7. Python用のEBFクライアント・ライブラリの使用法">「Python用のEBFクライアント・ライブラリの使用法」</a> を参照してください。
+</li></ul></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="hibari-server-impl-of-ubf-proto-stack"></a>4.1. HibariサーバーにおけるUBFプロトコル層の実装</h3></div></div></div><div class="variablelist"><dl><dt><span class="term">
+UBF(A)：ボトム層、トランスポート・プロトコル層およびセッション・プロトコル層
+</span></dt><dd><p>
+この層は、<a class="ulink" href="http://en.wikipedia.org/wiki/Open_Network_Computing_Remote_Procedure_Call" target="_top">ONC-RPC</a>や
+<a class="ulink" href="http://en.wikipedia.org/wiki/IIOP" target="_top">CORBA IIOP</a>、
+<a class="ulink" href="http://en.wikipedia.org/wiki/Protocol_buffers" target="_top">Protocol Buffers</a>、
+<a class="ulink" href="http://en.wikipedia.org/wiki/Thrift_(protocol)" target="_top">Thrift</a> など、ホスト間伝送にTCPを用いる他の多くのシリアライズされたデータ伝送プロトコルと同様に、基本的な役割を果たします。
+</p><p>Hibariサーバーは、TCP/IPトランスポート層の上に載るこれらのセッション・プロトコルをいくつかサポートします。どのセッション・プロトコルを選択するかは、使いやすいもの、あるいは、アプリケーション開発者が支持するものでよいでしょう。アプリケーション開発者にとって、HibariでRubyとJSON-RPCを使うのも、PythonとProtocol Buffersを使うのも、同じように容易なはずです。</p><div class="itemizedlist"><ul type="disc"><li>
+UBF(A)：Joe Armstrongが作ったセッション層プロトコル。
+</li><li>
+EBF：Erlang Binary Format。このセッション層プロトコルは軽くて効率的なプロトコルです。Erlangの組込み関数である`term_to_binary()`と `binary_to_term()`を使用してErlangのデータ項をシリアライズします。<a class="ulink" href="http://bert-rpc.org/" target="_top">BERTプロトコル</a>と非常に密接な関連を持ちます。
+</li><li>
+JSON over TCP：JSF（JavaScript Format）とも呼ばれるもの。Erlangの項を
+ <a class="ulink" href="http://en.wikipedia.org/wiki/JSON" target="_top">JSONの項</a>として表記し、直接TCPトランスポート層上で送信します。このプロトコルは、あまり一般的に使用されているものではありませんが、UBFサーバーのフレームワーク内で容易に実装できます。
+</li><li>
+HTTP：<a class="ulink" href="http://en.wikipedia.org/wiki/HTTP" target="_top">Hypertext Transfer Protocol</a>。このプロトコルはHibariの
+<a class="ulink" href="http://en.wikipedia.org/wiki/JSON-RPC" target="_top">JSON-RPC</a>サーバーに使用され、Hibariを支えています。
+</li><li>
+<a class="ulink" href="http://en.wikipedia.org/wiki/Thrift_(protocol)" target="_top">Thrift</a>：UBF(A) やErlangネイティブのワイヤ・フォーマットではなく、Thriftのバイナリ表記をワイヤ・プロトコルとして使用している点を除けば、EBFと同じです。
+</li><li>
+<a class="ulink" href="http://en.wikipedia.org/wiki/Protocol_buffers" target="_top">Protocol Buffers</a>：UBF(A) やErlangネイティブのワイヤ・フォーマットではなく、Google のProtocol Buffers バイナリ表記をワイヤ・プロトコルとして使用している点を除けば、EBFと同じです。<span class="strong"><strong>Hibariでは実験的にサポートしています（まだ実装段階ではありません）。</strong></span>
+</li><li>
+<a class="ulink" href="http://hadoop.apache.org/avro/docs/current/" target="_top">Avro</a>：UBF(A) やErlangネイティブのワイヤ・フォーマットではなく、Avroのバイナリ表記をワイヤ・プロトコルとして使用している点を除けば、EBFと同じです。<span class="strong"><strong>Hibariでは実験的にサポートしています（まだ実装段階ではありません）。</strong></span>
+</li></ul></div></dd><dt><span class="term">
+UBF(B)：ミドル層、「コントラクト」
+</span></dt><dd><p>
+UBF(B)は、UBF(A)の型、およびクライアントとサーバー間のプロトコルを記述するプログラミング言語です。UBF(B)は、Verified XMLやXMLスキーマ、SOAP、WDSLとほぼ同等です。
+</p><p>この層は、プロトコルの「コントラクト」、つまりクライアントおよびサーバーが送信する全データのフォーマット仕様として働きます。少しでもプロトコルに従わないデータがあれば、サーバー内に埋め込まれたコントラクト・チェッカーがそれを排除します。クライアントが望めば、コントラクト・チェッカーを使ってサーバーが送信するデータの妥当性を確認することもできますが、一般的にはあまり行われません。</p></dd><dt><span class="term">
+UBF©：トップ層、UBFメタプロトコル
+</span></dt><dd>
+メタプロトコルは、UBFセッションの開始時に、TCPリスナーが提供可能なUBF(B)コントラクトのひとつを選択します。現時点でHibariサーバーがサポートできるのは“gdss”コントラクトだけですが、将来は他のコントラクトも追加する予定です。
+</dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="ubf-representation-of-strings"></a>4.2. UBFにおけるストリングとバイナリの表現</h3></div></div></div><p>Erlang言語は、ストリング（文字列）をデータ型として明確にはサポートしておらず、整数（ASCIIバイト値）やバイナリのリストとして表現します。</p><p>一方、UBFコントラクトは、ストリングとリストとバイナリを区別します。ストリングの場合、UBF(A)は、ストリング"Hello, world!"を`{<span class="emphasis"><em>#S</em></span>, "Hello, world!"}`と表記します。</p><p>しかし、開発者にとって、このストリング表記を使用するのは煩雑です。Erlangでは、<code class="literal">ubf.hrl`ヘッダー・ファイルに</code>?S("Hello, world!")<code class="literal">というマクロが入っており、少しはましな近道になります。他の言語を使用する際には、いずれかの2項のタプルとアトムとして、2項のタプルとアトム `'#S'</code> を作成できます。</p><p>幸いなことに、ストリングが必要になるのは、 `startSession`メタプロトコル・コマンドを用いてHibariデータ・サーバー・コントラクトの使用を開始する際の1回だけです。以下に例を示します。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-in-any-language"></a>4.3. すべての言語におけるUBFベースのプロトコルの使用手順</h3></div></div></div><p>UBFベースのプロトコルを使用する場合、すべての言語で同じ手順に従います。</p><div class="orderedlist"><ol type="1"><li><p>
+UBFサーバーへのコネクションを作成します。
+</p><div class="itemizedlist"><ul type="disc"><li>
+EBFサーバー、JSON-RPCサーバー、 Thriftサーバーなど他のサーバーでも同様です。
+</li></ul></div></li><li>
+UBFメタプロトコルを用いて、`gdss`コントラクト、すなわちHibariサーバー・コントラクトの使用を開始します。
+</li><li>
+Hibariサーバーに1回ないし複数回のクエリを送信し、サーバーの各応答を解析します。
+</li><li>
+UBFサーバーへのコネクションをクローズします。
+</li></ol></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="the-hibari-ubf-protocol-contract"></a>4.4. HibariのUBFプロトコル・コントラクト</h3></div></div></div><p>HibariのUBFプロトコル・コントラクトは、ファイル`ubf_gdss_plugin.con`にあります。</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>このファイルの最新版は、Hibariのソースコードを参照してください。
+<a class="ulink" href="./misc-codes/ubf_gdss_plugin.con" target="_top">このドキュメント内にもファイル`ubf_gdss_plugin.con`のコピーがあります</a>が、さらに改訂版が出ている可能性があります。</p></td></tr></table></div><p>コントラクト内で指定されるUBFの型名は、<a class="xref" href="#client-api-erlang" title="3. クライアント向けAPI ： ネイティブErlang">「クライアント向けAPI ： ネイティブErlang」</a>で使用している型名とは少し違います。たとえば、UBFコントラクトでは、キーの有効期限を `exp_time()`としていますが、このドキュメントでは `expiry()`としています。多少名前が違っても、有効期限として両方の名前が使用する基本データ型は同じ`integer()`です。</p><p>UBFコントラクトでは、各コマンドに次の命名規約を使います。
+* `CommandName_req()`：クライアントからサーバーに送信する要求。たとえば`set`コマンドは`set_req()`となります。
+* `CommandName_res()`：サーバーからクライアントに送信する応答。たとえば`set`コマンドは`set_res()`となります。</p><p>UBFのRPCコールは、タプルの形式になるのが一般的です。タプルの最初の要素がコマンド名で、後続の要素がそのコマンドの引数です。応答はErlangのいずれのデータ型の項でも返せますが、Hibariのコントラクトは、アトム型かタプル型の応答のみを返します。</p><p>以下に、UBFのクライアント要求とErlangのAPIのマッピングをアルファベット順に示します。</p><div class="itemizedlist"><ul type="disc"><li>
+`add_req()`→`brick_simple:add()`：<a class="xref" href="#brick-simple-add" title="3.2. brick_simple:add/6">「brick_simple:add/6」</a> を参照
+</li><li>
+`delete_req()`→`brick_simple:delete()`：<a class="xref" href="#brick-simple-delete" title="3.7. brick_simple:delete/4">「brick_simple:delete/4」</a> を参照
+</li><li>
+`do_req()`→ `brick_simple:do()`：<a class="xref" href="#brick-simple-do" title="3.8. brick_simple:do/4">「brick_simple:do/4」</a> を参照
+</li><li>
+`get_req()`→`brick_simple:get()`：<a class="xref" href="#brick-simple-get" title="3.5. brick_simple:get/4">「brick_simple:get/4」</a> を参照
+</li><li>
+`get_many_req()`→`brick_simple:get_many()`：<a class="xref" href="#brick-simple-get-many" title="3.6. brick_simple:get_many/5">「brick_simple:get_many/5」</a> を参照
+</li><li>
+`replace_req()`→ `brick_simple:replace()`：<a class="xref" href="#brick-simple-replace" title="3.3. brick_simple:replace/6">「brick_simple:replace/6」</a> を参照
+</li><li>
+`set_req()`→`brick_simple:set()`：<a class="xref" href="#brick-simple-set" title="3.4. brick_simple:set/6">「brick_simple:set/6」</a> を参照
+</li></ul></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-erlang-client"></a>4.5. Erlang用のUBFクライアント・ライブラリの使用法</h3></div></div></div><div class="important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[重要項目]" src="./images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><div class="orderedlist"><ol type="1"><li>
+Erlangシェルを実験やプロトタイプで使用する場合、シェルのサーチ・パスに、ErlangのUBFクライアント・ライブラリへのパスを入れなければなりません。その一番簡単な方法は、Erlangシェルの <code class="literal">erl`コマンドの引数として、次を使用することです。
+`-pz /path/to/ubf/library/ebin</code>
+</li><li>
+コードを作成する場合は、<code class="literal">?S()`マクロを使用できるように、ソースモジュールの先頭行に次のステートメントを置いてください。
+`-include("ubf.hrl").</code>
+Erlangシェルの制限により、シェル中ではマクロを使用できません。
+</li></ol></div></td></tr></table></div><p><a class="xref" href="#using-ubf-in-any-language" title="4.3. すべての言語におけるUBFベースのプロトコルの使用手順">「すべての言語におけるUBFベースのプロトコルの使用手順」</a>
+ で概説したように、最初のステップは、Hibariサーバーへのコネクションを作成することです。Hibariクラスターにノードが複数ある場合は、どのノードへのコネクションを作成しても構いません。すべてのノードがすべてのUBF要求に対応し、要求を適切なブリックに回すことができます。</p><div class="example"><a id="id476857"></a><p class="title"><b>例1 例1：UBFサーバー（“localhost”のTCPポート7581）へのコネクションを作成する</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)54&gt; {ok, P1, _} = ubf_client:connect("localhost", 7581, [{proto, ubf}], 5000).
+{ok,&lt;0.139.0&gt;,{'#S', "gdss_meta_server"}}</pre></div></div><br class="example-break" /><p>次に、このコネクションを用いてコマンドを使用していくために、UBFメタプロトコルを用いて、Hibariサーバーの“gdss”と呼ばれるコントラクトを選択します。</p><div class="tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[ティップ]" src="./images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Hibariサーバーのコントラクトは「ステートレス」です。<code class="literal">ubf_client:rpc/2`関数からの応答に含まれる項はすべて</code>{reply,ServerReply,UBF_StateName}`の形式をとります。Hibariサーバーのコントラクトはステートレスであるため、`UBF_StateName`は常にアトム`none`になります。
+.例2：UBFメタプロトコルを用いて“gdss”コントラクトを要求する</p></td></tr></table></div><pre class="screen">(asdf@bb3)55&gt; ubf_client:rpc(P1, {startSession, {'#S', "gdss"}, []}).
+{reply,{ok,ok},none}</pre><p>これでUBFコネクションが確立しました。このコネクションを用いてキー「foo」を設定します。</p><div class="example"><a id="id476904"></a><p class="title"><b>例2 例3：テーブル `tab1`に、キー「foo」を設定する（バリューは「foo val」、有効期限とフラグは指定なし、タイムアウト時間は5秒）</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)59&gt; ubf_client:rpc(P1, {set, tab1, &lt;&lt;"foo"&gt;&gt;, &lt;&lt;"foo val"&gt;&gt;, 0, [], 5000}).
+{reply,ok,none}</pre></div></div><br class="example-break" /><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>上記の例の`set_req()`と下記の例の`get_req()`の両方で、戻り値の値は、それぞれ<a class="xref" href="#brick-simple-set" title="3.4. brick_simple:set/6">「brick_simple:set/6」</a> と <a class="xref" href="#brick-simple-get" title="3.5. brick_simple:get/4">「brick_simple:get/4」</a> に記述されたとおりであることに注意してください。</p><p>唯一の違いは、<code class="literal">ubf_client:rpc/2`関数では、サーバーからの応答を3項のタプル `{reply,ServerReply,none}</code>.としてまとめることです。</p></td></tr></table></div><div class="example"><a id="id476945"></a><p class="title"><b>例3 例4：テーブル`tab1`から、キー「foo」を取得する（タイムアウト時間は5秒）</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)66&gt; ubf_client:rpc(P1, {get, tab1, &lt;&lt;"foo"&gt;&gt;, [], 5000}).
+{reply,{ok,1273009092549799,&lt;&lt;"foo val"&gt;&gt;},none}</pre></div></div><br class="example-break" /><p>クライアントがコントラクトに違反する要求を送信すると、下記の例のように、サーバーが違反を返します。</p><div class="example"><a id="id476962"></a><p class="title"><b>例4 例5：コントラクト違反の要求を送信する</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)89&gt; ubf_client:rpc(P1, {bbb, 3000}).
+{reply,{clientBrokeContract,{bbb,3000},[]},none}</pre></div></div><br class="example-break" /><p>コネクションを使い終わったら、明示的にコネクションを終了させるのがきまりです。クライアントが`stop/1`の呼び出しを忘れた場合や呼び出せない場合は、サーバーがコネクションのサーバー側のクリーンナップ処理を暗黙のうちに実行します。</p><div class="example"><a id="id476983"></a><p class="title"><b>例5 例6：UBFコネクションをクローズする</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)92&gt; ubf_client:stop(P1).
+ok</pre></div></div><br class="example-break" /></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-java-client"></a>4.6. Java用のUBFクライアント・ライブラリの使用法</h3></div></div></div><p>Java用UBFクライアント・ライブラリのソースコードは、
+<a class="ulink" href="http://github.com/norton/ubf" target="_top">http://github.com/norton/ubf</a>にあるUBFソース・リポジトリの`priv/java`サブディレクトリにあります。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_java_ubf"></a>4.6.1. Java用UBFクライアント・ライブラリのコンパイル</h4></div></div></div><div class="orderedlist"><ol type="1"><li>
+UBFクライアント・ライブラリのコードを、2010年5月10日以降の「マスター」版にアップデートしてください。またはGitのタグ「v1.14」以降のものを使用してください。2010年5月10日より前でタグが「v1.14」より前の版のライブラリにはいくつかバグがあり、UBFクライアントが正しく機能しません。
+</li><li>
+ディレクトリを、UBFクライアント・ライブラリの配布ソースの`priv/java`ディレクトリに変更します。
+</li><li>
+`make`を実行します。
+</li><li>
+（オプション）`classes`サブディレクトリ内のクラス・ファイルを、自分のJava開発環境の適切なディレクトリにコピーします。
+</li></ol></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_ubf_hibaritest_java"></a>4.6.2. UBFクライアント・ライブラリのテストプログラムHibariTest.javaのコンパイル</h4></div></div></div><div class="orderedlist"><ol type="1"><li>
+ディレクトリを、Hibariのソースコードのディストリビューション内の`gdss-ubf-proto/priv/java`サブディレクトリに変更します。
+</li><li>
+`Makefile`を編集して、`UBF_CLASSES_DIR`変数を、UBFパッケージのソースコードの`priv/java/classes`サブディレクトリ（または、該当するクラスの自分のシステムへの正式インストール先のサブディレクトリ）を指すものに変更します。
+</li><li><p>
+次の2つの`make`コマンドを実行します。2つ目のコマンドは、HibariサーバーのUBFサーバーがローカルマシン（localhost）上にあると想定しています。
+</p><pre class="screen">% make HibariTest
+% make run-HibariTest</pre></li><li>
+Hibariサーバーがローカルマシン上で稼働していない場合は、<code class="literal">make -n run-HibariTest</code> を実行して、テストプログラムを実行するjavaコマンドを表示します。コマンドをシェルにカット・アンド・ペーストして、最後の引数がHibariサーバーのホスト名を指定するように編集してください。
+</li></ol></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibaritest_java"></a>4.6.3. HibariTest.javaの確認</h4></div></div></div><p>`main()`関数は次の3つの処理を行います。</p><div class="orderedlist"><ol type="1"><li>
+HibariサーバーへのUBFコネクションを新しく作成します。ホスト名/IPアドレスは、最初のコマンドの引数で指定します。さらにUBFメタプロトコル経由で`gdss`コントラクトを要求します。
+</li><li>
+`test_hibari_basics()`メソッド内の小さなテストケースを実行します。
+</li><li>
+UBFセッションをクローズして終了します。
+</li></ol></div><div class="example"><a id="the-ubf-hibaritest-main-method"></a><p class="title"><b>例6 例7：ubf.HibariTest.main()メソッド</b></p><div class="example-contents"><pre class="screen">public class HibariTest
+{
+    public static void main(String[] args)
+        throws Exception
+    {
+        Socket sock = null;
+        UBFClient ubf = null;
+
+        try {
+            sock = new Socket(args[0], 7581);
+            ubf = UBFClient.new_via_sock(new UBFString("gdss"), new UBFList(),
+                    new FooHandler(), sock);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            System.exit(1);
+        }
+
+        test_hibari_basics(ubf);
+
+        ubf.stopSession();
+        System.out.println("Success, it works");
+        System.exit(0);
+    }
+/* ... */
+}</pre></div></div><br class="example-break" /><p><code class="literal">test_hibari_basics()</code> メソッドは、<a class="xref" href="#using-ubf-python-client" title="4.7. Python用のEBFクライアント・ライブラリの使用法">「Python用のEBFクライアント・ライブラリの使用法」</a> に記述するPythonのEBFデモスクリプトと同じUBF基本操作を実行します。以下のデモプログラムはPythonのデモスクリプトとは異なり、Hibariの`do()`コマンドではなく、`get()`や`set()`のような単独操作のコマンドを使用しています。</p><div class="orderedlist"><ol type="1"><li><p>
+テーブル<code class="literal">tab1</code> から、キー`foo`を削除します。
+</p><pre class="screen">    public static void test_hibari_basics(UBFClient ubf)
+        throws IOException, UBFException
+    {
+        // setup
+        UBFObject res1 = ubf.rpc(
+                UBF.tuple( new UBFAtom("delete"), new UBFAtom("tab1"),
+                            new UBFBinary("foo"), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 1:" + res1.toString());</pre></li><li><p>
+テーブル`tab1`に、キー `foo`を追加します。
+</p><pre class="screen">        // add - ok
+        UBFObject res2 = ubf.rpc(
+                UBF.tuple( new UBFAtom("add"), atom_tab1,
+                            new UBFBinary("foo"), new UBFBinary("bar"),
+                            new UBFInteger(0), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 2:" + res2.toString());
+        if (! res2.equals(atom_ok))
+            System.exit(1);</pre></li><li><p>
+テーブル<code class="literal">tab1`に、キー`foo</code> を再度追加します。今回はエラーとなるはずです。
+</p><pre class="screen">        // add - ng
+        UBFObject res3 = ubf.rpc(
+                UBF.tuple( new UBFAtom("add"), atom_tab1,
+                            new UBFBinary("foo"), new UBFBinary("bar"),
+                            new UBFInteger(0), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 3:" + res3.toString());
+        if (! ((UBFTuple)res3).value[0].equals(atom_key_exists))
+            System.exit(1);</pre></li><li><p>
+テーブルtab1 から、キー「foo」を取得します。
+</p><pre class="screen">        // get - ok
+        UBFObject res4 = ubf.rpc(
+                UBF.tuple( new UBFAtom("get"), atom_tab1,
+                            new UBFBinary("foo"), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 4:" + res4.toString());
+        if (! ((UBFTuple)res4).value[0].equals(atom_ok) ||
+            ! ((UBFTuple)res4).value[2].equals("bar"))
+            System.exit(1);</pre></li><li><p>
+テーブル<code class="literal">tab1</code> に、キー`foo`とバリュー`bar bar`を設定します。
+</p><pre class="screen">        // set - ok
+        UBFObject res5 = ubf.rpc(
+                UBF.tuple( new UBFAtom("set"), atom_tab1,
+                            new UBFBinary("foo"), new UBFBinary("bar bar"),
+                            new UBFInteger(0), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 5:" + res5.toString());
+        if (! res5.equals(atom_ok))
+            System.exit(1);</pre></li><li><p>
+再度`foo`を読み出し、バリューが`bar bar`であることを確認します。
+</p><pre class="screen">        // get - ok
+        UBFObject res6 = ubf.rpc(
+                UBF.tuple( new UBFAtom("get"), atom_tab1,
+                            new UBFBinary("foo"), new UBFList(),
+                            new UBFInteger(4000)));
+        System.out.println("Res 6:" + res6.toString());
+        if (! ((UBFTuple)res6).value[0].equals(atom_ok) ||
+            ! ((UBFTuple)res6).value[2].equals("bar bar"))
+            System.exit(1);</pre></li></ol></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_ubf"></a>4.6.4. UBFのイベント・ハンドラーのインターフェイス</h4></div></div></div><p>`UBFClient`の各インスタンスは、個別のスレッドを用いてサーバーからデータを読み出し、次のいずれかを実行します。</p><div class="orderedlist"><ol type="1"><li>
+同期RPCの応答をサーバーから受信したというシグナルを他のスレッドに送ります。
+</li><li>
+サーバーから`event_out`非同期イベントを受信した場合は、コールバック機能を実行します。
+</li><li>
+ソケットをそのままクローズします。
+</li></ol></div><p>2番目と3番目は、`UBFEventHandler`インターフェイスを実装するクラスを用いて、この場合に実行するアクションを定義します。</p><p>`HibariTest.java`は、非同期イベントに対応するコールバック機能のサンプルを実装しています。実際のアプリケーションでは、このサンプルよりずっと多くの処理が必要です。</p><pre class="screen">    public static class FooHandler implements UBFEventHandler {
+        public FooHandler() {
+        }
+        public void handleEvent(UBFClient client, UBFObject event) {
+            System.out.println("Hey, got an event: " + event.toString());
+        }
+        public void connectionClosed(UBFClient client) {
+            System.out.println("Hey, connection closed, ignoring it¥n");
+        }
+    }</pre><div class="tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[ティップ]" src="./images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>この`FooHandler`クラスの使用例は、<a class="xref" href="#the-ubf-hibaritest-main-method" title="例6 例7：ubf.HibariTest.main()メソッド">例6「例7：ubf.HibariTest.main()メソッド」</a> を参照してください。</p></td></tr></table></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-python-client"></a>4.7. Python用のEBFクライアント・ライブラリの使用法</h3></div></div></div><p>Python用のEBFクライアント・ライブラリのソースコードは、<a class="ulink" href="http://github.com/norton/ubf" target="_top">http://github.com/norton/ubf</a>にあるUBFソース・リポジトリの`priv/python`サブディレクトリにあります。</p><p>NOTE:</p><p>EBFプロトコルは、UBFと非常に密接な関連があることを思い出してください。唯一の大きな違いは、「レイヤー5」のセッション・プロトコル層です。ここでは、UBF(A)を使用する代わりにEBF (Erlang Binary Format) プロトコルを使用しています。詳細は<a class="xref" href="#hibari-server-impl-of-ubf-proto-stack" title="4.1. HibariサーバーにおけるUBFプロトコル層の実装">「HibariサーバーにおけるUBFプロトコル層の実装」</a>  を参照してください。</p><p>さらに、Tomas Abrahamssonらが開発した「py_interface」パッケージが必要です。「py_interface」は、<a class="ulink" href="http://www.fsf.org/licensing/education/licenses/lgpl.html" target="_top">GNU Library General Public License</a>の下で配布されています。Gitのリポジトリは、repo.or.czにあります。それをコピーしてビルドするには、以下を使用します。</p><pre class="screen">git clone git://repo.or.cz/py_interface.git
+cd py_interface
+autoconf
+./configure
+make
+pwd</pre><p>最後のコマンドのアウトプット<code class="literal">pwd`を使用して、「py-interface」ライブラリへの完全なディレクトリ・パスを記憶します。下記の例は、パスが</code>/tmp/py-interface`であると想定しています。</p><p><code class="literal">pyebf.py`ファイルには、HibariのUBFコントラクトの`do_req()`コマンドを数回呼び出す小さな単体テストが入っています。ほとんどすべてのコマンドの実行結果は、`assert</code> 関数で確認します。</p><pre class="screen">env PYTHONPATH=/path/to/py_interface python pyebf.py</pre><div class="orderedlist"><ol type="1"><li><p>
+「localhost」のTCPポート7580のHibariサーバーに接続し、UBFメタプロトコルを用いて、gdssコントラクトに切り替えます。
+</p><pre class="screen">    ## login
+    ebf.login('gdss', 'gdss_meta_server')</pre></li><li><p>
+テーブル<code class="literal">tab1`から、キー</code><span class="emphasis"><em>foo</em></span>`を削除します。
+</p><pre class="screen">    ## setup
+    req0 = (Atom('do'), Atom('tab1'), [(Atom('delete'), 'foo', [])], [], 1000)
+    res0 = ebf.rpc('gdss', req0)</pre></li><li><p>
+テーブル<code class="literal">tab1`から、キー</code><span class="emphasis"><em>foo</em></span>`を取得します。
+</p><pre class="screen">    ## get - ng
+    req1 = (Atom('do'), Atom('tab1'), [(Atom('get'), 'foo', [])], [], 1000)
+    res1 = ebf.rpc('gdss', req1)
+    assert res1[0] == 'key_not_exist'</pre></li><li><p>
+テーブル<code class="literal">tab1`に、キー</code><span class="emphasis"><em>foo</em></span>`を追加します。`do_req()`インターフェイスは、クライアントがタイムスタンプの整数を明示的に管理しなければならず、ここではタイムスタンプとして`1`を使用しています。
+</p><pre class="screen">    ## add - ok
+    req2 = (Atom('do'), Atom('tab1'), [(Atom('add'), 'foo', 1, 'bar', 0, [])], [
+], 1000)
+    res2 = ebf.rpc('gdss', req2)
+    assert res2[0] == 'ok'</pre></li><li><p>
+テーブル<code class="literal">tab1`に、キー</code><span class="emphasis"><em>foo</em></span>`を追加します。
+</p><pre class="screen">    ## add - ng
+    req3 = (Atom('do'), Atom('tab1'), [(Atom('add'), 'foo', 1, 'bar', 0, [])], [], 1000)
+    res3 = ebf.rpc('gdss', req3)
+    assert res3[0][0] == 'key_exists'
+    assert res3[0][1] == 1</pre></li><li><p>
+テーブル<code class="literal">tab1`から、キー</code><span class="emphasis"><em>foo</em></span><code class="literal">を取得し、タイムスタンプがまだ`1`でバリューが</code><span class="emphasis"><em>bar</em></span>`のままであることを確認します。
+</p><pre class="screen">    ## get - ok
+    req4 = (Atom('do'), Atom('tab1'), [(Atom('get'), 'foo', [])], [], 1000)
+    res4 = ebf.rpc('gdss', req4)
+    assert res4[0][0] == 'ok'
+    assert res4[0][1] == 1
+    assert res4[0][2] == 'bar'</pre></li><li><p>
+テーブル<code class="literal">tab1`に、キー</code><span class="emphasis"><em>foo</em></span>`を設定します。その際、新しいタイムスタンプとして`2`を用います。
+</p><pre class="screen">    ## set - ok
+    req5 = (Atom('do'), Atom('tab1'), [(Atom('set'), 'foo', 2, 'baz', 0, [])], [], 1000)
+    res5 = ebf.rpc('gdss', req5)
+    assert res5[0] == 'ok'</pre></li><li><p>
+テーブル<code class="literal">tab1`から、キー</code><span class="emphasis"><em>foo</em></span>`を取得し、タイムスタンプとバリューが両方とも新しく更新されていることを確認します。
+</p><pre class="screen">    ## get - ok
+    req6 = (Atom('do'), Atom('tab1'), [(Atom('get'), 'foo', [])], [], 1000)
+    res6 = ebf.rpc('gdss', req6)
+    assert res6[0][0] == 'ok'
+    assert res6[0][1] == 2
+    assert res6[0][2] == 'baz'</pre></li></ol></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-tbf"></a>5. クライアント向けAPI： Thrift</h2></div></div></div><p>「TBF」は、UBFコントラクトが規定する<a class="ulink" href="https://github.com/apache/thrift" target="_top">Thriftプロトコル</a>です（<a class="xref" href="#the-hibari-ubf-protocol-contract" title="4.4. HibariのUBFプロトコル・コントラクト">「HibariのUBFプロトコル・コントラクト」</a> 参照）。本章では、HibariのThrift APIについて説明します。ユーザーはこのAPIを使ってThriftクライアントからHibariにアクセスできます。Thrift がサポートするものであれば、プログラミング言語は問いません。さらに、アプリケーションの用途に応じてAPIを拡張する方法についても説明します。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_thrift_api"></a>5.1. HibariのThrift API</h3></div></div></div><p>HibariのThrift APIは、<a class="ulink" href="./misc-codes/hibari.thrift" target="_top">hibari.thrift</a> 中にHibariサービスとして規定されています。このAPIの開発時に利用できたのはThrift 0.4.0だけでした。私たちが初めて採用したのはこのバージョンです。まだサポートしていない関数やオプションもあります。</p><p>IMPORTANT:
+HibariのThrift APIがサポートするのは、Thrift 0.4.0以上のみです。</p><pre class="screen">service Hibari {
+
+  /**
+   * Check connection availability / keepalive
+   */
+  oneway void keepalive()
+
+  /**
+   * Hibari Server Info
+   */
+  string info()
+
+  /**
+   * Hibari Description
+   */
+  string description()
+
+  /**
+   * Hibari Contract
+   */
+  string contract()
+
+  /**
+   * Add
+   */
+  HibariResponse Add(1: Add request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Replace
+   */
+  HibariResponse Replace(1: Replace request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Set
+   */
+  HibariResponse Set(1: Set request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Delete
+   */
+  HibariResponse Delete(1: Delete request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Get
+   */
+  HibariResponse Get(1: Get request)
+      throws (1:HibariException ouch)
+}</pre><p>各基本ユーティリティ関数には、インプット用の引数が1つだけあります。この引数は機能に対応する名前を持つオブジェクトです。このオブジェクトが、Hibariに対して必須の引数も任意の引数もすべて引き渡します。将来は、このオブジェクトを利用してマイクロ・トランザクションを実装する予定です。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_ubf_thrift"></a>5.2. UBFコントラクト型とThrift型とのマッピング</h3></div></div></div><p>UBFとThriftの型変換の詳細に関しては、<a class="ulink" href="https://github.com/norton/ubf-thrift" target="_top">UBF-Thrift</a>を参照してください。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_ubf_thrift_2"></a>5.3. UBFコントラクトとThriftサービスとのマッピング</h3></div></div></div><p>UBFの型をThriftの基本型にマッピングすることと、UBFのコントラクトをThriftのサービスにマッピングすることは、異なります。Thriftは主に2つの異なる型（structとfield）を用いて要求を組み立てます。</p><p>Thriftを使ってクライアント・コードを作成するとき、要求をどのように組み立てたらいいのか、心配する必要はありません。Thriftをインストールしてクライアント・コードを作成する方法については、<a class="ulink" href="http://wiki.apache.org/thrift/ThriftGeneration" target="_top">Thrift Wiki</a>を参照してください。また、着手にあたっては<a class="ulink" href="./misc-codes/hibari.thrift" target="_top">hibari.thrift</a>も必要です。</p><p>UBFのコントラクトに関心がある場合は、`ntbf_gdss_plugin.con`のファイル内にHibariのNTBFのコントラクトがあります。</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_thrift"></a>5.4. Thriftクライアントの使用例</h3></div></div></div><p>コードさえ作成できれば、Hibariに接続するのは簡単です。下記の例では、3つの言語で、テーブル<code class="literal">tab1`に、キー</code><span class="emphasis"><em>fookey</em></span>` とバリュー`<span class="emphasis"><em>Hello, world!</em></span>` を追加しています。</p><p>Erlangの例：</p><pre class="screen">  -include("hibari_thrift.hrl").
+
+  % init
+  {ok, Client} = thrift_client:start_link("127.0.0.1", 7600, hibari_thrift),
+
+  % create the input parameter object
+  Request = #add{table=&lt;&lt;"tab1"&gt;&gt;, key=&lt;&lt;"fookey"&gt;&gt;, value=&lt;&lt;"Hello, world!"&gt;},
+
+  % send request
+  try
+    HibariResponse = thrift_client:call(Client, 'Add', [Request]),
+  catch
+    HibariException -&gt;
+      HibariException
+  end,
+
+  ok = thrift_client:close(Client).</pre><p>Javaの例：</p><pre class="screen">  import com.hibari.rpc.*;
+
+  // init
+  TTransport transport = new TSocket("127.0.0.1", 7600);
+  TProtocol proto = new TBinaryProtocol(transport);
+  Hibari.Client client = new Hibari.Client(proto);
+  transport.open();
+
+  // create the input parameter object
+  Add request = new Add("tab1", ByteBuffer.wrap("fookey".getBytes()),
+    ByteBuffer.wrap("Hello, world!".getBytes())))
+
+  // send request
+  try {
+    HibariResponse response = client.Add(request);
+  } catch (HibariException e) {
+    // ...
+  }
+
+  transport.close();</pre><p>Pythonの例：</p><pre class="screen">  from hibari import Hibari
+
+  # init
+  transport = TSocket.TSocket('localhost', 7600)
+  transport.setTimeout(None)
+  transport = TTransport.TBufferedTransport(transport)
+  protocol = TBinaryProtocol.TBinaryProtocol(transport)
+  client = Hibari.Client(protocol)
+  transport.open()
+
+  # create the input parameter object
+  request = Add()
+  request.table = "tab1"
+  request.key = b"fookey"
+  request.value = b"Hello, world!"
+
+  # send request
+  response = client.Add(request)
+
+  transport.close()</pre></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_thrift_tbf"></a>5.5. Thrift クライアントからのTBFコントラクト応答のマッピング</h3></div></div></div><p>TBFは、HibariのThrift APIのすべての関数に対して、2つの汎用型（HibariResponseとHibariException）のうち1つを返します。正常終了の場合はHibariResponseが返ることが期待できますが、そうでない場合は、HibariExceptionが返ることになっています。</p></div></div></div></body></html>
