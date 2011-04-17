@@ -442,7 +442,8 @@ $ ssh-add ~/.ssh/id_rsa
 +
 ------
 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2 
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3
 ------
 +
 NOTE: インストールノードがHibariのクラスターノードの１つである場合は、インストールノードにもssh-copy-idを実行する必要があります。
@@ -497,7 +498,8 @@ BRICK_NODES=(dev1 dev2 dev3)
 BRICKS_PER_CHAIN=2
 
 ALL_NODES=(dev1 dev2 dev3)
-ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETA_BCAST="10.181.165.255"
+ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") 
+ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETA_BCAST="10.181.165.255"
 ALL_NETB_BCAST="10.181.165.255" ALL_NETA_TIEBREAKER="10.181.165.1"
 
 ALL_HEART_UDP_PORT="63099"
@@ -635,6 +637,7 @@ hibari@dev1 ... pong
 hibari@dev2 ... pong
 hibari@dev3 ... pong
 ------
++
 
 ==== Hibariクラスターの停止
 
@@ -653,7 +656,7 @@ hibari@dev3
 [[creating-tables]]
 === 新しいテーブルを作成する
 
-新しいテーブルは、AdminサーバーのGUIを通して作成するのが最も簡単です。“http://localhost:23080/”を開き、“Add a table”をクリックしてください。GUIに加えて、hibari-admin ツールで新しいテーブルを作成することも可能です。詳しい使用法は、hibari-admin ツールの説明を参照してください。
+新しいテーブルは、AdminサーバーのGUIを通して作成するのが最も簡単です。“http://localhost:23080/” を開き、“Add a table” をクリックしてください。GUIに加えて、hibari-admin ツールで新しいテーブルを作成することも可能です。詳しい使用法は、hibari-admin ツールの説明を参照してください。
 
 
 NOTE: 管理用のAPIを使ったテーブル作成の方法については、「Hibariシステム管理者ガイド」を参照してください。
@@ -721,7 +724,7 @@ Erlang のAPIは、他のチェイン・レイアウトパターンで、テー�
 
 Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。
 
-*データの追加*
+ *データの追加* 
 
  - まだ存在していないキーとバリューのペアを新たに追加します。オプションでフラグを追加できます。
   * link:#brick-simple-add[brick_simple:add/6]
@@ -730,24 +733,24 @@ Hibariのクライアント向けAPIで実行できる操作は、次のとお�
  - キーの存在の有無にかかわらず、キーとバリューのペアと、オプションでフラグを設定します。
   * link:#brick-simple-set[brick_simple:set/6]
 
-*データの検索*
+ *データの検索* 
 
  - キーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
   * link:#brick-simple-get[brick_simple:get/4]
  - 辞書の順に並んで連続している複数のキーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
   * link:#brick-simple-get-many[brick_simple:get_many/5]
 
-*データの削除*
+ *データの削除* 
 
  - キーとバリューのペア、およびそれに関連付けられたフラグを削除します。
   * link:#brick-simple-delete[brick_simple:delete/4]
 
-*複合操作*
+ *複合操作* 
 
  - 指定した操作のリストを実行します。オプションで、アトミック・トランザクションとして実行します。
   * link:#brick-simple-do[brick_simple:do/4]
 
-*フォールド操作*
+ *フォールド操作* 
 
  - テーブル内のすべてのキーに対して、フォールド操作を実行します。
   * link:#brick-simple-fold-table[brick_simple:fold_table/7]
@@ -887,7 +890,7 @@ NOTE: Keyはiolist()またはbinary()で指定できますが、操作の実行�
  ::
 *Flags*
 
-- ‘add’ 操作に適用する操作フラグのリスト、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するため、カスタム特性フラグの多用はお勧めできません。
+-  ‘add’ 操作に適用する操作フラグのリスト、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するため、カスタム特性フラグの多用はお勧めできません。
 - 任意：デフォルト値は空リスト
 - 型
   * `Flags = flags_list()`
@@ -978,7 +981,7 @@ ok
 解説
 
  ::
-テーブル`Tab`にキー`Key`が既に存在している場合に、キー`Key`とバリュー`Value`のペアを更新します。さらにオプションでフラグ`Flags`も更新します。キー`Key`が存在しない場合、操作は失敗します。
+テーブル`Tab` にキー`Key` が既に存在している場合に、キー`Key` とバリュー`Value` のペアを更新します。さらにオプションでフラグ`Flags` も更新します。キー`Key` が存在しない場合、操作は失敗します。
 
 引数
 
@@ -1002,7 +1005,8 @@ ok
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 +
-NOTE: `Key`は`iolist()`または`binary()`で指定できますが、操作の実行前にBinary型に変換されます。これは、`Value`に関しても同様です。+
+NOTE: `Key` は`iolist()` または`binary()` で指定できますが、操作の実行前にBinary型に変換されます。これは、`Value` に関しても同様です。
++
 
  ::
 *Value*
@@ -1043,7 +1047,8 @@ link:#brick-simple-do[マイクロ・トランザクション]の中で使用す
   * `'value_in_ram'`
     ** ブリックのデフォルトのストレージの場所指定を無効にして、バリューBLOBをRAMに保管します。
 +
-NOTE:Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+
+NOTE: Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。
++
 
  ::
 *Timeout*
@@ -1152,7 +1157,7 @@ ok
 解説
 
  ::
-テーブル`Tab`にキー`Key`が既に存在しているかどうかに関わらず、キー`Key`とバリュー`Value`のペアをテーブル`Tab`に設定します。さらにオプションで、フラグ`Flags`もテーブル`Tab`に設定します。
+テーブル`Tab` にキー`Key` が既に存在しているかどうかに関わらず、キー`Key` とバリュー`Value` のペアをテーブル`Tab`に設定します。さらにオプションで、フラグ`Flags` もテーブル`Tab`に設定します。
 
 引数
 
@@ -1176,7 +1181,7 @@ ok
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 +
-NOTE: Key``iolist()` または`binary()` で指定することもできますが、操作の実行前にBinary型に変換されます。これは、`Value`に関しても同様です。
+NOTE: `Key` は、 `iolist()` または`binary()` で指定することもできますが、操作の実行前にBinary型に変換されます。これは、`Value` に関しても同様です。
 +
 
  ::
@@ -1283,7 +1288,7 @@ ok
 +
 
  ::
-キーとバリューのペアを設定しようとして`testset`フラグを指定したにもかかわらず、キーが存在しないために失敗した場合
+キーとバリューのペアを設定しようとして`testset` フラグを指定したにもかかわらず、キーが存在しないために失敗した場合
 +
 ------
 > brick_simple:set(tab1, "boo", "hoo", [{'testset', 1271543165272987}]).
@@ -1292,7 +1297,7 @@ key_not_exist
 +
 
  ::
-`testset`フラグを指定し、かつ既存のキーのタイムスタンプが指定したタイムスタンプと一致したため、キーとバリューのペアの設定に成功した場合
+`testset` フラグを指定し、かつ既存のキーのタイムスタンプが指定したタイムスタンプと一致したため、キーとバリューのペアの設定に成功した場合
 +
 ------
 > brick_simple:set(tab1, "goo", "value7", [{'testset', 1271543165272432}]).
@@ -1310,7 +1315,7 @@ ok
 解説
 
  ::
-テーブル`Tab`から、キー`Key`とフラグ`Flags`で指定したキーの属性を検索します。
+テーブル`Tab` から、キー`Key` とフラグ`Flags` で指定したキーの属性を検索します。
 
 引数
 
@@ -1334,7 +1339,8 @@ ok
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 +
-NOTE: Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。+
+NOTE: `Key` を`iolist()` または`binary()` で指定することもできますが、操作の実行前にBinary型に変換されます。
++
 
  ::
 *Flags*
@@ -1349,12 +1355,12 @@ NOTE: Key`を`iolist()`または`binary()`で指定することもできます�
   * `timestamp() = integer()`
 - 操作フラグの使用方法
   * `'get_all_attribs'`
-    ** キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+    ** キーのすべての属性を返します。`witness` フラグと組み合わせて使用できます。
   * `'witness'`
     ** 検索結果のバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
   * `{'testset', timestamp()}`
-    ** キーのタイムスタンプが`timestamp()`と正確に一致しない場合、操作は失敗します。
-link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーのタイムスタンプが`timestamp()`と正確に一致しない場合、トランザクションは終了します。このフラグは、`must_exist`と`must_not_exist`の両フラグに優先します。
+    ** キーのタイムスタンプが`timestamp()` と正確に一致しない場合、操作は失敗します。
+link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーのタイムスタンプが`timestamp()` と正確に一致しない場合、トランザクションは終了します。このフラグは、`must_exist` と`must_not_exist` の両フラグに優先します。
   * `'must_not_exist'`
     ** link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーが存在しない場合にトランザクションが終了します。
   * `'must_not_exist'`
@@ -1375,22 +1381,22 @@ link:#brick-simple-do[マイクロ・トランザクション]の中で使用す
 
  ::
 - `{'ok', timestamp(), val()}`
-  *  `witness `フラグも `get_all_attribs `フラグも、どちらも指定していない `get `要求が成功しました。
+  *  `witness `フラグも `get_all_attribs` フラグも、どちらも指定していない `get` 要求が成功しました。
   * `timestamp() = integer()`
   * `val() = iodata()`
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 - `{'ok', timestamp()}`
-  * `witness`フラグを指定して、`get_all_attribs`フラグは指定していない`get`要求が成功しました。
+  * `witness` フラグを指定して、`get_all_attribs` フラグは指定していない`get` 要求が成功しました。
 - `{'ok', timestamp(), proplist()}`
-  * `witness`フラグも`get_all_attribs`フラグもともに指定した`get`要求が成功しました。
+  * `witness` フラグも`get_all_attribs` フラグもともに指定した`get` 要求が成功しました。
   * `proplist() = [property()]`
   * `property() = atom() | {term(), term()}`
 - `{'ok', timestamp(), val(), exp_time(), proplist()}`
-  * `get_all_attribs`フラグを指定して、`witness`フラグは指定していない`get`要求が成功しました。
+  * `get_all_attribs` フラグを指定して、`witness` フラグは指定していない`get` 要求が成功しました。
   * `exp_time() = time_t()`
 +
-NOTE: `proplist()`が返される場合、リスト中の特性のひとつは常に`{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。
+NOTE: `proplist()` が返される場合、リスト中の特性のひとつは常に`{val_len,Size::integer()}` となります。ここで`Size` は、バリューBLOBのバイト数を表します。
 +
 
  ::
@@ -1399,9 +1405,9 @@ NOTE: `proplist()`が返される場合、リスト中の特性のひとつは�
 - `'key_not_exist'`
   * キーが存在しないため、操作が失敗しました。
 - `{'ts_error', timestamp()}`
-  * `{'testset', timestamp()}`フラグを使用して、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+  * `{'testset', timestamp()}` フラグを使用して、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()` は、既存のキーの現在のタイムスタンプの値です。
 - `'invalid_flag_present'`
-  * Flags引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+  * Flags引数に無効な`do_op_flag()` が検出されたため、操作が失敗しました。
 - `'brick_not_available'`
   * 該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
 - `{{'nodedown',node()},{'gen_server','call',term()}}`
@@ -1456,7 +1462,7 @@ key_not_exist
 解説
 
  ::
-テーブル`Tab`の単一チェインから、複数キーを検索します。引数`Key`で指定したキーの検索後、その次のキーから開始して、最大数`MaxNum`に達するまで検索を続け、辞書のように昇順で並べてキーを返します。戻り値のリストには、戻り値の最後のキーの後に続きがあるかどうかを示すブール値が付いてきます。
+テーブル`Tab` の単一チェインから、複数キーを検索します。引数`Key` で指定したキーの検索後、その次のキーから開始して、最大数`MaxNum` に達するまで検索を続け、辞書のように昇順で並べてキーを返します。戻り値のリストには、戻り値の最後のキーの後に続きがあるかどうかを示すブール値が付いてきます。
 
 
 +
