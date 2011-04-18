@@ -338,7 +338,7 @@ $ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
 
 ------
 
-IMPORTANT: Hibariノードでは、システムの+/etc/sysctl.conf+ファイルに+vm.swappiness=0+を設定してください。ErlangのVMにおいてswappinesssの指定は望ましくありません。
+IMPORTANT: Hibariノードでは、システムの +/etc/sysctl.conf+ ファイルに +vm.swappiness=0+ を設定してください。ErlangのVMにおいてswappinesssの指定は望ましくありません。
 
 [[starting-single-node]]
 === シングルノードのHibariを起動する／停止する
@@ -501,7 +501,8 @@ ALL_NODES=(dev1 dev2 dev3)
 ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") 
 ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") 
 ALL_NETA_BCAST="10.181.165.255"
-ALL_NETB_BCAST="10.181.165.255" ALL_NETA_TIEBREAKER="10.181.165.1"
+ALL_NETB_BCAST="10.181.165.255" 
+ALL_NETA_TIEBREAKER="10.181.165.1"
 
 ALL_HEART_UDP_PORT="63099"
 ALL_HEART_XMIT_UDP_PORT="63100"
@@ -589,7 +590,7 @@ hibari@dev3
 ------
 
 
-NOTE: デフォルト設定では、Clusterツールはターゲットノード群の +/usr/local/var/lib+ にHibariをインストールします。別の場所へインストールしたい場合は、インストールの前に +clus.sh+ スクリプト（作業用ディレクトリの +/clus/priv/+ の下）を開き、　+CT_HOMEBASEDIR+　変数を編集してください。
+NOTE: デフォルト設定では、Clusterツールはターゲットノード群の +/usr/local/var/lib+ にHibariをインストールします。別の場所へインストールしたい場合は、インストールの前に +clus.sh+ スクリプト（作業用ディレクトリの +/clus/priv/+ の下）を開き、 +CT_HOMEBASEDIR+ 変数を編集してください。
 
 [[starting-multi-node]]
 === マルチノードのHibariクラスターを起動する／停止する
@@ -729,8 +730,8 @@ Erlang のAPIは、他のチェイン・レイアウトパターンで、テー�
 キー・バリュー型データベースとしてHibariが提供するクライアント向けAPIは非常にシンプルです。APIによって、データの追加、検索、削除という基本的な操作ができます。制限はありますが、その範囲内で操作を組み合わせればアトミック・トランザクションも実行できます。
 
 Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。
-
- *データの追加* 
+ 
+*データの追加* 
 
  - まだ存在していないキーとバリューのペアを新たに追加します。オプションでフラグを追加できます。
   * link:#brick-simple-add[brick_simple:add/6]
@@ -739,24 +740,24 @@ Hibariのクライアント向けAPIで実行できる操作は、次のとお�
  - キーの存在の有無にかかわらず、キーとバリューのペアと、オプションでフラグを設定します。
   * link:#brick-simple-set[brick_simple:set/6]
 
- *データの検索* 
+*データの検索* 
 
  - キーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
   * link:#brick-simple-get[brick_simple:get/4]
  - 辞書の順に並んで連続している複数のキーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
   * link:#brick-simple-get-many[brick_simple:get_many/5]
 
- *データの削除* 
+*データの削除* 
 
  - キーとバリューのペア、およびそれに関連付けられたフラグを削除します。
   * link:#brick-simple-delete[brick_simple:delete/4]
 
- *複合操作* 
+*複合操作* 
 
  - 指定した操作のリストを実行します。オプションで、アトミック・トランザクションとして実行します。
   * link:#brick-simple-do[brick_simple:do/4]
 
- *フォールド操作* 
+*フォールド操作* 
 
  - テーブル内のすべてのキーに対して、フォールド操作を実行します。
   * link:#brick-simple-fold-table[brick_simple:fold_table/7]
@@ -795,7 +796,7 @@ phone_number
 
 
 Bit string（ビット列）とBinary（バイナリ）::  *Bit string(ビット列)* は、型指定のないメモリー領域にデータを保管するときに使用します。表記は、
-http://www.erlang.org/doc/reference_manual/expressions.html#bit_syntax[Erlangのビット構文]に従います。また、8の倍数のビット数からなるビット列を、*Binary(バイナリ)*と呼びます。たとえば次のように表します。
+http://www.erlang.org/doc/reference_manual/expressions.html#bit_syntax[Erlangのビット構文]に従います。また、8の倍数のビット数からなるビット列を、 *Binary(バイナリ)* と呼びます。たとえば次のように表します。
 +
 -----
 <<10,20>>
@@ -816,7 +817,7 @@ List（リスト）::  *List(リスト)* は、可変数の項の組からなる
 
 String（文字列）::  *String(文字列)* は、二重引用符（”）で囲んで表します。これは、Erlangの正式のデータ型ではありません。リスト[$h,$e,$l,$l,$o]、つまり[104,101,108,108,111]の代わりに、簡略化した表現として”hello”という文字列を使用します。
 
-Boolean（ブール）:: ErlangにBoolean型（論理型）はありません。ブール値を表す場合は、代わりにアトムの`真（true）`と`偽（false）`を使用します。
+Boolean（ブール）:: ErlangにBoolean型（論理型）はありません。ブール値を表す場合は、代わりにアトムの `真（true）` と `偽（false）` を使用します。
 
 ==== Hibariのデータモデル
 
@@ -830,7 +831,24 @@ Hibariのテーブル名は、Erlangのデータ型では「アトム」にな�
 
 include::texts-src/hibari-key-value-attrs.txt[]
 
-include::texts-src/hibari-key-value-attrs-expl.txt[]
+ストレージがRAMの場合、通常のクエリー処理では、RAM上のコピーでデータを検索します。キーの属性を更新する場合は、クラスター全体の電源障害が発生した場合のデータの損失を防ぐために、どんな場合でも更新前に先行ログに書き込まれます。詳細については、???を参照してください。
+
+ストレージがディスクの場合、属性の値はRAMには保管されていません。RAM内のメタデータは属性の場所として、ファイル番号、バイトオフセット値、およびバイト長に対するポインターを保持します。属性を検索するには、共通ログ内のログ・シーケンス・ファイルをオープンし、 `lseek(2) ` をコールしてから、 `read(2)` をコールします。
+
+最善のケース
+
+:: 
+対象データがすべてOSのページ・キャッシュ内にあるため、ディスクからキーのバリューBLOBを読み出す際に、ディスクのシークを必要としません。
+
+通常のケース
+
+:: 
+ファイルのinode情報はキャッシュにありますが、必要なファイル・ページがキャッシュにないため、シークと読み出しが1回だけ必要になります。
+
+最悪のケース
+
+:: 
+ファイルシステムは、中間ディレクトリ・データ、inode、inode内の間接ストレージ・ブロック・データを読み込むために、シークと読み出しをさらに実施する必要があります。
 
 バリューBLOBのサイズの現実的な上限値は、BLOB全体のサイズと、大きいサイズのBLOBのアクセス頻度によって異なります。たとえば、64MBのバリューBLOBをたまに保管する場合と、常に64MBのバリューBLOBを100％の負荷で書き込む場合とでは、話が違います。HibariのAPIを用いて更新またはフェッチを実行する場合は、バリューBLOB全体を対象とする以外の方法はありません。したがって極端な場合、4GBの単一BLOBを対象に操作を実行しようとすると、ブリックが何秒間もブロックされることがあります。さらに、大きいサイズのBLOBの処理中は、`busy_dist_port`イベントが他のプロセスをブロックすることもあります。
 
@@ -846,7 +864,7 @@ include::texts-src/hibari-key-value-attrs-expl.txt[]
 解説
 
  ::
-テーブルTabにキーKeyがまだ存在していない場合、キーKeyとバリューValueのペアを追加します。さらにオプションでフラグFlagsも追加できます。キーKeyが既に存在している場合、操作は失敗します。
+テーブルTabにキーKeyがまだ存在していない場合、キー `Key` とバリュー `Value` のペアを追加します。さらにオプションでフラグFlagsも追加できます。キー `Key` が既に存在している場合、操作は失敗します。
 
 引数
 
@@ -870,7 +888,8 @@ include::texts-src/hibari-key-value-attrs-expl.txt[]
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 +
-NOTE: Keyはiolist()またはbinary()で指定できますが、操作の実行前にBinary型に変換されます。これは、Valueに関しても同様です。+
+NOTE: Keyはiolist()またはbinary()で指定できますが、操作の実行前にBinary型に変換されます。これは、Valueに関しても同様です。
++
 
  ::
 *Value*
@@ -896,7 +915,7 @@ NOTE: Keyはiolist()またはbinary()で指定できますが、操作の実行�
  ::
 *Flags*
 
--  ‘add’ 操作に適用する操作フラグのリスト、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するため、カスタム特性フラグの多用はお勧めできません。
+- ‘add’ 操作に適用する操作フラグのリスト、および（または）データベース中のキーとバリューのペアに関連付けるカスタム特性フラグのリスト。RAMベースのストレージを使用するため、カスタム特性フラグの多用はお勧めできません。
 - 任意：デフォルト値は空リスト
 - 型
   * `Flags = flags_list()`
@@ -932,7 +951,7 @@ NOTE: Gemini社の品質管理部門は、このフラグのテストを完全�
   * キーが既に存在しているため、操作が失敗しました。
   * `timestamp() = integer()`
 - `'invalid_flag_present'`
-  * Flags引数に無効な `?do_op_flag() ` が検出されたため、操作が失敗しました。
+  * Flags引数に無効な`?do_op_flag() ` が検出されたため、操作が失敗しました。
 - `'brick_not_available'`
   * 該当キーに相当するチェインの現在の長さがゼロのため利用できないので、操作が失敗しました。
 - `{{'nodedown',node()},{'gen_server','call',term()}}`
@@ -987,7 +1006,7 @@ ok
 解説
 
  ::
-テーブル`Tab` にキー`Key` が既に存在している場合に、キー`Key` とバリュー`Value` のペアを更新します。さらにオプションでフラグ`Flags` も更新します。キー`Key` が存在しない場合、操作は失敗します。
+テーブル`Tab` にキー`Key` が既に存在している場合に、キー `Key` とバリュー `Value` のペアを更新します。さらにオプションでフラグ `Flags` も更新します。キー `Key` が存在しない場合、操作は失敗します。
 
 引数
 
@@ -1224,12 +1243,13 @@ NOTE: `Key` は、 `iolist()` または`binary()` で指定することもでき
   * `property() = atom() | {term(), term()}`
 - 操作フラグの使用方法
   * `{'testset', timestamp()}`
-    ** 現在のキーのタイムスタンプが?timestamp()と正確に一致しない場合、操作は失敗します。
-link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーのタイムスタンプが `timestamp() `と正確に一致しない場合、トランザクションは終了します。このフラグを `set `で用いると、キーが存在しない場合やキーが存在してもタイムスタンプが一致しない場合、エラーとなります。
+    ** 現在のキーのタイムスタンプが '?timestamp()' と正確に一致しない場合、操作は失敗します。
+link:#brick-simple-do[マイクロ・トランザクション]の中で使用すると、キーのタイムスタンプが `timestamp()` と正確に一致しない場合、トランザクションは終了します。このフラグを `set` で用いると、キーが存在しない場合やキーが存在してもタイムスタンプが一致しない場合、エラーとなります。
   * `'value_in_ram'`
     ** ブリックのデフォルトのストレージの場所にオーバーライドして、バリューBLOBをRAMに保管します。
 +
-NOTE: Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+
+NOTE: Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。
++
 
  ::
 *Timeout*
@@ -1251,12 +1271,12 @@ NOTE: Gemini社の品質管理部門は、このフラグのテストを完全�
 エラー終了の場合
 
 - `'key_not_exist'`
-  * `{'testset', timestamp()}`フラグが使用され、キーが存在しないため、操作が失敗しました。
+  * `{'testset', timestamp()}` フラグが使用され、キーが存在しないため、操作が失敗しました。
 - `{'ts_error', timestamp()}`
-  * `{'testset', timestamp()}`フラグが使用され、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+  * `{'testset', timestamp()}`フラグが使用され、タイムスタンプが一致しないため、操作が失敗しました。戻り値の `timestamp()` は、既存のキーの現在のタイムスタンプの値です。
   * `timestamp() = integer()`
 - `'invalid_flag_present'`
-  * Flags引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+  * Flags引数に無効な `do_op_flag()` が検出されたため、操作が失敗しました。
 - `'brick_not_available'`
   * 該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
 - `{{'nodedown',node()},{'gen_server','call',term()}}`
@@ -1321,7 +1341,7 @@ ok
 解説
 
  ::
-テーブル`Tab` から、キー`Key` とフラグ`Flags` で指定したキーの属性を検索します。
+テーブル`Tab` から、キー `Key` とフラグ`Flags` で指定したキーの属性を検索します。
 
 引数
 
@@ -1472,7 +1492,7 @@ key_not_exist
 
 
 +
-IMPORTANT: `get_many()` 関数を1回コールしただけでは、複数のストレージ・チェインをまたがってキーを検索することはできません。`Key`のコンシステント・ハッシングは、`get_many`命令を単一チェインのテイル・ブリックに送り、その後は、その単一チェインからのみ、すべてのキーを検索します。
+IMPORTANT:`get_many()` 関数を1回コールしただけでは、複数のストレージ・チェインをまたがってキーを検索することはできません。`Key` のコンシステント・ハッシングは、`get_many` 命令を単一チェインのテイル・ブリックに送り、その後は、その単一チェインからのみ、すべてのキーを検索します。
 +
 
 
@@ -1497,7 +1517,7 @@ IMPORTANT: `get_many()` 関数を1回コールしただけでは、複数のス�
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 +
-NOTE: `Key`を`iolist()` または`binary()` で指定することもできますが、操作の実行前にBinary型に変換されます。
+NOTE: `Key` を`iolist()` または`binary()` で指定することもできますが、操作の実行前にBinary型に変換されます。
 +
 
  ::
@@ -1560,7 +1580,7 @@ NOTE: `Key`を`iolist()` または`binary()` で指定することもできま�
   * `get_all_attribs` フラグを指定し、`witness` フラグは指定していない`get_many` 要求が成功しました。
   * `exp_time() = time_t()`
 +
-NOTE: 正常終了の戻り値の最後のブール値は、戻り値の最後のキーの後にチェイン内にまだキーが存在するかどうかを示します。存在する場合は真（`true`）、存在しない場合は偽（`false`）となります。`proplist()` が返される場合、リスト中の特性のひとつは常に`{val_len,Size::integer()}` となります。ここで`Size` は、バリューBLOBのバイト数を表します。
+NOTE: 正常終了の戻り値の最後のブール値は、戻り値の最後のキーの後にチェイン内にまだキーが存在するかどうかを示します。存在する場合は真（`true` ）、存在しない場合は偽（`false` ）となります。`proplist()` が返される場合、リスト中の特性のひとつは常に`{val_len,Size::integer()}` となります。ここで`Size` は、バリューBLOBのバイト数を表します。
 +
 
  ::
@@ -1568,7 +1588,7 @@ NOTE: 正常終了の戻り値の最後のブール値は、戻り値の最後�
 エラー終了の場合
 
 - `'invalid_flag_present'`
-  * `Flags` 引数に無効な`do_op_flag()` が検出されたため、操作が失敗しました。
+  * `Flags` 引数に無効な `do_op_flag()` が検出されたため、操作が失敗しました。
 - `'brick_not_available'`
   * 該当キーに相当するチェインの現在の長さがゼロで利用できないため、操作が失敗しました。
 - `{{'nodedown',node()},{'gen_server','call',term()}}`
@@ -1587,7 +1607,7 @@ NOTE: 正常終了の戻り値の最後のブール値は、戻り値の最後�
 例
 
  ::
-現在、キーが2個しかないテーブルから、すべてのキーの検索に成功した場合（ブール値の`false` は、キー`foo` に後続のキーが存在しないことを示します）
+現在、キーが2個しかないテーブルから、すべてのキーの検索に成功した場合（ブール値の`false` は、キー `foo` に後続のキーが存在しないことを示します）
 +
 ------
 > brick_simple:get_many(tab1, "", 5).
@@ -1629,7 +1649,7 @@ NOTE: 正常終了の戻り値の最後のブール値は、戻り値の最後�
 解説
 
  ::
-テーブル`Tab` から、キー`Key` を削除します。
+テーブル `Tab` から、キー `Key` を削除します。
 
 引数
 
@@ -1773,10 +1793,10 @@ ok
 解説
 
  ::
-テーブル`Tab` に基本操作のリストを送ります。それと同時に、Hibariのブリックがその基本操作を実行します。操作リスト`OpList` の最初の項目が`brick_server:make_txn()` の場合は、操作リストをマイクロ・トランザクションとして実行します。この場合は、すべての操作が成功するか、あるいはすべての操作が実行されないかのどちらかになります。これを「マイクロ」トランザクションと呼ぶのは、`brick_simple:do()`API を使用するすべての操作に適用される明確な制約となるからです。
+テーブル`Tab` に基本操作のリストを送ります。それと同時に、Hibariのブリックがその基本操作を実行します。操作リスト`OpList` の最初の項目が`brick_server:make_txn()` の場合は、操作リストをマイクロ・トランザクションとして実行します。この場合は、すべての操作が成功するか、あるいはすべての操作が実行されないかのどちらかになります。これを「マイクロ」トランザクションと呼ぶのは、`brick_simple:do()` API を使用するすべての操作に適用される明確な制約となるからです。
 * 対象となるキーはすべて、同一テーブル内に存在しなければなりません。
 * 対象となるキーはすべて、同一チェイン内に存在しなければなりません。
-* トランザクション内のすべての操作は、1回の`brick_simple:do()`のコールで送らなければなりません。他のデータベースとは異なり、トランザクションのハンドルを要求し、そのトランザクションに対してアドホックに1個ずつ操作を追加することはできません。
+* トランザクション内のすべての操作は、1回の`brick_simple:do()` のコールで送らなければなりません。他のデータベースとは異なり、トランザクションのハンドルを要求し、そのトランザクションに対してアドホックに1個ずつ操作を追加することはできません。
 
 
  ::
@@ -1796,7 +1816,7 @@ link:hibari-sysadmin-guide.en.html#micro-transactions[「マイクロ・トラ�
 
  ::
 *OpList*
-- 実行したい基本操作のリスト。各基本操作は、`brick_server:make_*()`APIによって起動されます。
+- 実行したい基本操作のリスト。各基本操作は、`brick_server:make_*()` APIによって起動されます。
 - 必須
 - 型
   * `OpList = do_op_list()`
@@ -1810,7 +1830,7 @@ link:hibari-sysadmin-guide.en.html#micro-transactions[「マイクロ・トラ�
     ** `brick_server:make_delete(Key, Flags)`
     ** `brick_server:make_txn()`
        ***  `do` 操作をアトミック・トランザクションとして実行したい場合は、 `OpList` の最初の項目として `brick_server:make_txn()` を入れてください。
-    ** 各基本操作の引数は、その操作を単独で実行する場合と同じであることに注意してください。ただし、`Tab` および`Timeout` 引数は除きます。この両引数は、個別の操作の引数ではなく、`do` 操作全体の引数となります。たとえば、`add` 操作を単独で実行する場合の指定は`brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout)` となります。それに対して、`do`操作の中で実行する場合は`brick_server:make_add(Key, Value, ExpTime, Flags)` となります。
+    ** 各基本操作の引数は、その操作を単独で実行する場合と同じであることに注意してください。ただし、`Tab` および`Timeout` 引数は除きます。この両引数は、個別の操作の引数ではなく、`do` 操作全体の引数となります。たとえば、`add` 操作を単独で実行する場合の指定は`brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout)` となります。それに対して、`do` 操作の中で実行する場合は`brick_server:make_add(Key, Value, ExpTime, Flags)` となります。
 
     ** 各基本操作の詳細については、次を参照してください。
        link:#brick-simple-add[brick_simple:add/6],
@@ -1823,7 +1843,7 @@ link:hibari-sysadmin-guide.en.html#micro-transactions[「マイクロ・トラ�
  ::
 *OpFlags*
 
-- `do`操作全体に適用される操作フラグのリスト
+- `do` 操作全体に適用される操作フラグのリスト
 - 任意：デフォルト値は空リスト
 - 型
   * `OpFlags = do_flags_list()`
@@ -1851,7 +1871,7 @@ Timeout
 正常終了の場合
 
 - `[do1_res_ok]`
-  * `do1_res_ok` のリスト。リストの各項目が、`do` 操作で指定した各基本操作に対応します。戻り値は、要求の`OpList` で基本操作を指定した順番でリストに戻されます。`do` 操作でトランザクション処理を要求していない場合は、個別の基本操作が失敗しても`do`操作全体は失敗しないことに注意してください。
+  * `do1_res_ok` のリスト。リストの各項目が、`do` 操作で指定した各基本操作に対応します。戻り値は、要求の`OpList` で基本操作を指定した順番でリストに戻されます。`do` 操作でトランザクション処理を要求していない場合は、個別の基本操作が失敗しても`do` 操作全体は失敗しないことに注意してください。
   * 戻り値のリスト内で個別の基本操作に対応して返される`do1_res_ok` は、その基本操作を単独で実行した場合の戻り値と同じものです。たとえば、`do` 操作が正常終了した場合の戻り値のリスト内に`add`基本操作の戻り値として返ってくるものは、
     link:#brick-simple-add[brick_simple:add/6] で説明したものと同じです。また、replace基本操作の戻り値として返ってくるものは、
     link:#brick-simple-replace[brick_simple:replace/6] で説明したものと同じです。これは、
@@ -2005,7 +2025,7 @@ link:#brick-simple-get-many[brick_simple:get_many()]と同じです。
   * `'witness'`
     ** 検索結果としてバリューBLOBを返しません。このフラグを指定すると、ブリックが要求に対応するためにディスクにアクセスする必要がないことを保証できます。
   * `{'binary_prefix', binary()}`
-    ** `binary()`と正確に一致するバイナリ値をプレフィクスとするキーのみを返します。
+    ** `binary()` と正確に一致するバイナリ値をプレフィクスとするキーのみを返します。
   * `{'max_bytes', integer()}`
     ** 対応するバリューBLOBのサイズの合計が`integer()` バイトを超えない範囲のキーだけを返します。
 
@@ -2023,7 +2043,7 @@ link:#brick-simple-get-many[brick_simple:get_many()]と同じです。
 - 任意：デフォルト値は5,000（ミリ秒）
 - 型
   * `Timeout = timeout()`
-  * `timeout() = integer()
+  * `timeout() = integer()`
 
 戻り値
 
@@ -2093,7 +2113,7 @@ IMPORTANT: データの移行処理中にこの操作を実行しないでくだ
 *StartKey*
 
 - フォールド操作を開始したいキー値
-- 任意：デフォルト値は指定した`Prefix`の値
+- 任意：デフォルト値は指定した`Prefix` の値
 - 型
   * `StartKey = binary()`
 
@@ -2107,7 +2127,7 @@ IMPORTANT: データの移行処理中にこの操作を実行しないでくだ
   * `fun_arity_2()` arguments =
    ** `Tuple_from_get_many`
      *** `Tuple_From_get_many` は、
-  link:#brick-simple-get-many[brick_simple:get_many()]のひとつの結果を単独のタプルで表わしたものです。`Flags` 引数によりフォーマットが異なります。`Flags` 引数はそのまま`get_many()` コールに渡されます。たとえば、`Flags` = `[]` の場合、`Tuple_From_get_many` は`{Key, TS, Value}` というフォーマットとなり、`Flags` = `[witness]` の場合、`Tuple_From_get_many` は`{Key, TS}` というのフォーマットとなります。
+  link:#brick-simple-get-many[brick_simple:get_many()]のひとつの結果を単独のタプルで表わしたものです。`Flags` 引数によりフォーマットが異なります。`Flags` 引数はそのまま `get_many()` コールに渡されます。たとえば、`Flags` = `[]` の場合、`Tuple_From_get_many` は`{Key, TS, Value}` というフォーマットとなり、`Flags` = `[witness]` の場合、`Tuple_From_get_many` は`{Key, TS}` というのフォーマットとなります。
    ** `UserAccumulatorTerm`
      *** _（説明を追加予定）
 
@@ -2156,7 +2176,7 @@ IMPORTANT: データの移行処理中にこの操作を実行しないでくだ
 - 任意：デフォルト値は15,000（ミリ秒）
 - 型
   * `Timeout = timeout()`
-  * `timeout() = integer()
+  * `timeout() = integer()`
 
 戻り値
 
@@ -2258,11 +2278,11 @@ HibariのUBFプロトコル・コントラクトは、ファイル`ubf_gdss_plug
 NOTE: このファイルの最新版は、Hibariのソースコードを参照してください。
 link:./misc-codes/ubf_gdss_plugin.con[このドキュメント内にもファイル`ubf_gdss_plugin.con` のコピーがあります]が、さらに改訂版が出ている可能性があります。
 
-コントラクト内で指定されるUBFの型名は、xref:client-api-erlang[]で使用している型名とは少し違います。たとえば、UBFコントラクトでは、キーの有効期限を `exp_time()` としていますが、このドキュメントでは `expiry()`としています。多少名前が違っても、有効期限として両方の名前が使用する基本データ型は同じ`integer()` です。
+コントラクト内で指定されるUBFの型名は、xref:client-api-erlang[]で使用している型名とは少し違います。たとえば、UBFコントラクトでは、キーの有効期限を `exp_time()` としていますが、このドキュメントでは `expiry()` としています。多少名前が違っても、有効期限として両方の名前が使用する基本データ型は同じ`integer()` です。
 
 UBFコントラクトでは、各コマンドに次の命名規約を使います。
-* `CommandName_req()`：クライアントからサーバーに送信する要求。たとえば`set` コマンドは`set_req()` となります。
-* `CommandName_res()`：サーバーからクライアントに送信する応答。たとえば`set` コマンドは`set_res()` となります。
+* `CommandName_req()` ：クライアントからサーバーに送信する要求。たとえば`set` コマンドは`set_req()` となります。
+* `CommandName_res()` ：サーバーからクライアントに送信する応答。たとえば`set` コマンドは`set_res()` となります。
 
 UBFのRPCコールは、タプルの形式になるのが一般的です。タプルの最初の要素がコマンド名で、後続の要素がそのコマンドの引数です。応答はErlangのいずれのデータ型の項でも返せますが、Hibariのコントラクトは、アトム型かタプル型の応答のみを返します。
 
@@ -2287,7 +2307,7 @@ UBFのRPCコールは、タプルの形式になるのが一般的です。タ�
 1. Erlangシェルを実験やプロトタイプで使用する場合、シェルのサーチ・パスに、ErlangのUBFクライアント・ライブラリへのパスを入れなければなりません。その一番簡単な方法は、Erlangシェルの `erl` コマンドの引数として、次を使用することです。
 `-pz /path/to/ubf/library/ebin` 
 
-2. コードを作成する場合は、`?S()`マクロを使用できるように、ソースモジュールの先頭行に次のステートメントを置いてください。
+2. コードを作成する場合は、`?S()` マクロを使用できるように、ソースモジュールの先頭行に次のステートメントを置いてください。
 `-include("ubf.hrl").` 
 Erlangシェルの制限により、シェル中ではマクロを使用できません。
 ==============================
@@ -2314,7 +2334,7 @@ TIP: Hibariサーバーのコントラクトは「ステートレス」です。
 
 これでUBFコネクションが確立しました。このコネクションを用いてキー「foo」を設定します。
 
-.テーブル `tab1`に、キー「foo」を設定する（バリューは「foo val」、有効期限とフラグは指定なし、タイムアウト時間は5秒）
+.テーブル `tab1` に、キー「foo」を設定する（バリューは「foo val」、有効期限とフラグは指定なし、タイムアウト時間は5秒）
 ----------------------------
 (asdf@bb3)59> ubf_client:rpc(P1, {set, tab1, <<"foo">>, <<"foo val">>, 0, [], 5000}).
 {reply,ok,none}
@@ -2323,9 +2343,9 @@ TIP: Hibariサーバーのコントラクトは「ステートレス」です。
 
 [NOTE]
 ===========================================
-上記の例の`set_req()`と下記の例の`get_req()`の両方で、戻り値の値は、それぞれxref:brick-simple-set[] と xref:brick-simple-get[] に記述されたとおりであることに注意してください。
+上記の例の`set_req()` と下記の例の`get_req()`の両方で、戻り値の値は、それぞれxref:brick-simple-set[] と xref:brick-simple-get[] に記述されたとおりであることに注意してください。
 
-唯一の違いは、`ubf_client:rpc/2`関数では、サーバーからの応答を3項のタプル `{reply,ServerReply,none}`.としてまとめることです。
+唯一の違いは、`ubf_client:rpc/2` 関数では、サーバーからの応答を3項のタプル `{reply,ServerReply,none}`.としてまとめることです。
 ===========================================
 
 .テーブル`tab1`から、キー「foo」を取得する（タイムアウト時間は5秒）
@@ -2342,7 +2362,7 @@ TIP: Hibariサーバーのコントラクトは「ステートレス」です。
 {reply,{clientBrokeContract,{bbb,3000},[]},none}
 ----------------------------
 
-コネクションを使い終わったら、明示的にコネクションを終了させるのがきまりです。クライアントが`stop/1`の呼び出しを忘れた場合や呼び出せない場合は、サーバーがコネクションのサーバー側のクリーンナップ処理を暗黙のうちに実行します。
+コネクションを使い終わったら、明示的にコネクションを終了させるのがきまりです。クライアントが`stop/1` の呼び出しを忘れた場合や呼び出せない場合は、サーバーがコネクションのサーバー側のクリーンナップ処理を暗黙のうちに実行します。
 
 .UBFコネクションをクローズする
 ----------------------------
@@ -2367,7 +2387,7 @@ link:http://github.com/norton/ubf[http://github.com/norton/ubf]にあるUBFソ�
 ==== UBFクライアント・ライブラリのテストプログラムHibariTest.javaのコンパイル
 
 1. ディレクトリを、Hibariのソースコードのディストリビューション内の`gdss-ubf-proto/priv/java` サブディレクトリに変更します。
-2. `Makefile` を編集して、`UBF_CLASSES_DIR`変数を、UBFパッケージのソースコードの`priv/java/classes` サブディレクトリ（または、該当するクラスの自分のシステムへの正式インストール先のサブディレクトリ）を指すものに変更します。
+2. `Makefile` を編集して、`UBF_CLASSES_DIR` 変数を、UBFパッケージのソースコードの`priv/java/classes` サブディレクトリ（または、該当するクラスの自分のシステムへの正式インストール先のサブディレクトリ）を指すものに変更します。
 3. 次の2つの`make` コマンドを実行します。2つ目のコマンドは、HibariサーバーのUBFサーバーがローカルマシン（localhost）上にあると想定しています。
 +
 -------------------------
@@ -2416,9 +2436,9 @@ public class HibariTest
 }
 --------------------------------------
 
-`test_hibari_basics()` メソッドは、xref:using-ubf-python-client[] に記述するPythonのEBFデモスクリプトと同じUBF基本操作を実行します。以下のデモプログラムはPythonのデモスクリプトとは異なり、Hibariの`do()`コマンドではなく、`get()` や`set()` のような単独操作のコマンドを使用しています。
+`test_hibari_basics()` メソッドは、xref:using-ubf-python-client[] に記述するPythonのEBFデモスクリプトと同じUBF基本操作を実行します。以下のデモプログラムはPythonのデモスクリプトとは異なり、Hibariの`do()` コマンドではなく、`get()` や`set()` のような単独操作のコマンドを使用しています。
 
-1. テーブル`tab1` から、キー`foo` を削除します。
+1. テーブル`tab1` から、キー `foo` を削除します。
 +
 ---------------------------
     public static void test_hibari_basics(UBFClient ubf)
@@ -2470,7 +2490,7 @@ public class HibariTest
             ! ((UBFTuple)res4).value[2].equals("bar"))
             System.exit(1);
 ---------------------------
-5. テーブル`tab1` に、キー `foo` とバリュー`bar bar` を設定します。
+5. テーブル`tab1` に、キー `foo` とバリュー `bar bar` を設定します。
 +
 ---------------------------
         // set - ok
@@ -2502,7 +2522,7 @@ public class HibariTest
 `UBFClient` の各インスタンスは、個別のスレッドを用いてサーバーからデータを読み出し、次のいずれかを実行します。
 
 1. 同期RPCの応答をサーバーから受信したというシグナルを他のスレッドに送ります。
-2. サーバーから`event_out`非同期イベントを受信した場合は、コールバック機能を実行します。
+2. サーバーから `event_out` 非同期イベントを受信した場合は、コールバック機能を実行します。
 3. ソケットをそのままクローズします。
 
 2番目と3番目は、`UBFEventHandler` インターフェイスを実装するクラスを用いて、この場合に実行するアクションを定義します。
@@ -2532,9 +2552,7 @@ TIP: この`FooHandler` クラスの使用例は、xref:the-ubf-hibaritest-main-
 
 Python用のEBFクライアント・ライブラリのソースコードは、link:http://github.com/norton/ubf[http://github.com/norton/ubf]にあるUBFソース・リポジトリの`priv/python` サブディレクトリにあります。
 
-NOTE: 
-
-EBFプロトコルは、UBFと非常に密接な関連があることを思い出してください。唯一の大きな違いは、「レイヤー5」のセッション・プロトコル層です。ここでは、UBF(A)を使用する代わりにEBF (Erlang Binary Format) プロトコルを使用しています。詳細はxref:hibari-server-impl-of-ubf-proto-stack[]  を参照してください。
+NOTE: EBFプロトコルは、UBFと非常に密接な関連があることを思い出してください。唯一の大きな違いは、「レイヤー5」のセッション・プロトコル層です。ここでは、UBF(A)を使用する代わりにEBF (Erlang Binary Format) プロトコルを使用しています。詳細はxref:hibari-server-impl-of-ubf-proto-stack[]  を参照してください。
 
 さらに、Tomas Abrahamssonらが開発した「py_interface」パッケージが必要です。「py_interface」は、link:http://www.fsf.org/licensing/education/licenses/lgpl.html[GNU Library General Public License]の下で配布されています。Gitのリポジトリは、repo.or.czにあります。それをコピーしてビルドするには、以下を使用します。
 
@@ -2561,14 +2579,14 @@ env PYTHONPATH=/path/to/py_interface python pyebf.py
     ## login
     ebf.login('gdss', 'gdss_meta_server')
 ---------------------------
-2. テーブル `tab1` から、キー `'foo'` を削除します。
+2. テーブル `tab1` から、キー 'foo' を削除します。
 +
 ---------------------------
     ## setup
     req0 = (Atom('do'), Atom('tab1'), [(Atom('delete'), 'foo', [])], [], 1000)
     res0 = ebf.rpc('gdss', req0)
 ---------------------------
-3. テーブル `tab1` から、キー `'foo'` を取得します。
+3. テーブル `tab1` から、キー 'foo' を取得します。
 +
 ---------------------------
     ## get - ng
@@ -2576,7 +2594,7 @@ env PYTHONPATH=/path/to/py_interface python pyebf.py
     res1 = ebf.rpc('gdss', req1)
     assert res1[0] == 'key_not_exist'
 ---------------------------
-4. テーブル `tab1` に、キー `'foo'` を追加します。 `do_req()` インターフェイスは、クライアントがタイムスタンプの整数を明示的に管理しなければならず、ここではタイムスタンプとして `1` を使用しています。
+4. テーブル `tab1` に、キー 'foo' を追加します。 `do_req()` インターフェイスは、クライアントがタイムスタンプの整数を明示的に管理しなければならず、ここではタイムスタンプとして `1` を使用しています。
 + 
 ---------------------------
     ## add - ok
@@ -2585,7 +2603,7 @@ env PYTHONPATH=/path/to/py_interface python pyebf.py
     res2 = ebf.rpc('gdss', req2)
     assert res2[0] == 'ok'
 ---------------------------
-5. テーブル `tab1` に、キー `'foo'` を追加します。
+5. テーブル `tab1` に、キー 'foo' を追加します。
 +
 ---------------------------
     ## add - ng
@@ -2594,7 +2612,7 @@ env PYTHONPATH=/path/to/py_interface python pyebf.py
     assert res3[0][0] == 'key_exists'
     assert res3[0][1] == 1
 ---------------------------
-6. テーブル `tab1` から、キー` 'foo'` を取得し、タイムスタンプがまだ` 1` でバリューが`' bar'` のままであることを確認します。
+6. テーブル `tab1` から、キー 'foo' を取得し、タイムスタンプがまだ` 1` でバリューが `bar' のままであることを確認します。
 +
 ---------------------------
     ## get - ok
@@ -2604,7 +2622,7 @@ env PYTHONPATH=/path/to/py_interface python pyebf.py
     assert res4[0][1] == 1
     assert res4[0][2] == 'bar'
 ---------------------------
-7. テーブル`tab1`に、キー`'foo'`を設定します。その際、新しいタイムスタンプとして`2`を用います。
+7. テーブル`tab1` に、キー 'foo' を設定します。その際、新しいタイムスタンプとして`2` を用います。
 +
 ---------------------------
     ## set - ok
@@ -2612,7 +2630,7 @@ env PYTHONPATH=/path/to/py_interface python pyebf.py
     res5 = ebf.rpc('gdss', req5)
     assert res5[0] == 'ok'
 ---------------------------
-8. テーブル`tab1`から、キー`'foo'`を取得し、タイムスタンプとバリューが両方とも新しく更新されていることを確認します。
+8. テーブル`tab1` から、キー 'foo' を取得し、タイムスタンプとバリューが両方とも新しく更新されていることを確認します。
 +
 ---------------------------
     ## get - ok
@@ -2632,8 +2650,7 @@ env PYTHONPATH=/path/to/py_interface python pyebf.py
 HibariのThrift APIは、link:./misc-codes/hibari.thrift[hibari.thrift] 中にHibariサービスとして規定されています。このAPIの開発時に利用できたのはThrift 0.4.0だけでした。私たちが初めて採用したのはこのバージョンです。まだサポートしていない関数やオプションもあります。
 
 
-IMPORTANT: 
-HibariのThrift APIがサポートするのは、Thrift 0.4.0以上のみです。
+IMPORTANT:HibariのThrift APIがサポートするのは、Thrift 0.4.0以上のみです。
 ---------------------------
 
 service Hibari {
@@ -2703,7 +2720,7 @@ Thriftを使ってクライアント・コードを作成するとき、要求�
 UBFのコントラクトに関心がある場合は、`ntbf_gdss_plugin.con` のファイル内にHibariのNTBFのコントラクトがあります。
 
 === Thriftクライアントの使用例
-コードさえ作成できれば、Hibariに接続するのは簡単です。下記の例では、3つの言語で、テーブル`tab1` に、キー`'fookey'` とバリュー `'Hello, world!'` を追加しています。
+コードさえ作成できれば、Hibariに接続するのは簡単です。下記の例では、3つの言語で、テーブル`tab1` に、キー 'fookey' とバリュー 'Hello, world!' を追加しています。
 
 Erlangの例：
 ------------------------------------
