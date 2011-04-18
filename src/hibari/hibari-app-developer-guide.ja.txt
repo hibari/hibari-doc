@@ -416,7 +416,7 @@ $ visudo
 $USER  ALL=(ALL)       NOPASSWD: ALL
 ------
 +
-NOTE: sudoのテスト中に“sudo: sorry, you must have a tty to run sudo”というエラーメッセージが出た場合は、+/etc/sudoers+ファイル内の次の行をコメントアウトしてください。
+NOTE: sudoのテスト中に“sudo: sorry, you must have a tty to run sudo”というエラーメッセージが出た場合は、 +/etc/sudoers+ ファイル内の次の行をコメントアウトしてください。
 +
 ------
 
@@ -456,7 +456,7 @@ $ ssh $USER@dev2
 $ ssh $USER@dev3
 ------
 
-TIP: SSHのセットアップの詳細について知りたい場合は、http://inside.mines.edu/~gmurray/HowTo/sshNotes.htmlを参照してください。
+TIP: SSHのセットアップの詳細について知りたい場合は、http://inside.mines.edu/~gmurray/HowTo/sshNotes.html を参照してください。
 
 [[download-cluster]]
 ==== Clusterインストーラーツールのダウンロード
@@ -480,7 +480,7 @@ $ git clone git://github.com/hibari/clus.git
 ------
 +
 
-このダウンロードにより、+clus+というサブディレクトリが作成され、その下に、インストーラーツールと種々のサポートファイルが格納されます。
+このダウンロードにより、+clus+ というサブディレクトリが作成され、その下に、インストーラーツールと種々のサポートファイルが格納されます。
 
 
 [[config-cluster]]
@@ -488,9 +488,9 @@ $ git clone git://github.com/hibari/clus.git
 
 Clusterツールには、Hibariのクラスターのセットアップ方法を示す基本的な設定情報が必要です。必要な設定を明記した簡単なテキストファイルを作り、Clusterツールを稼働させる際に、そのファイルをインプットとして使ってください。
 
-設定情報ファイルは、Clusterツールをダウンロードした作業用ディレクトリ内に作成するのが最も簡単です。ファイル名は何でもかまいません。ここでは説明のために+hibari.config+というファイル名を使用します。
+設定情報ファイルは、Clusterツールをダウンロードした作業用ディレクトリ内に作成するのが最も簡単です。ファイル名は何でもかまいません。ここでは説明のために +hibari.config+ というファイル名を使用します。
 
-以下は+hibari.config+ファイルのサンプルです。作成するファイルには、ここに示したすべてのパラメータを記載する必要があります。またその値は、この例と同じ書式（括弧や引用符も）でなければなりません。パラメータの記述はサンプルに従ってください。
+以下は +hibari.config+ ファイルのサンプルです。作成するファイルには、ここに示したすべてのパラメータを記載する必要があります。またその値は、この例と同じ書式（括弧や引用符も）でなければなりません。パラメータの記述はサンプルに従ってください。
 
 ------
 ADMIN_NODES=(dev1 dev2 dev3)
@@ -499,7 +499,8 @@ BRICKS_PER_CHAIN=2
 
 ALL_NODES=(dev1 dev2 dev3)
 ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") 
-ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETA_BCAST="10.181.165.255"
+ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") 
+ALL_NETA_BCAST="10.181.165.255"
 ALL_NETB_BCAST="10.181.165.255" ALL_NETA_TIEBREAKER="10.181.165.1"
 
 ALL_HEART_UDP_PORT="63099"
@@ -518,7 +519,7 @@ ALL_HEART_XMIT_UDP_PORT="63100"
   * +ADMIN_NODES+ と +BRICK_NODES+ の和集合によって得られるHibariの全ノードのリスト。
 - +ALL_NETA_ADDRS+
   * 「Hibariシステム管理者ガイド」の
-link:hibari-sysadmin-guide.en.html#partition-detector[The Partition Detector Application]に記述されているように、マルチノードのHibariのクラスター内の各ノードは、2つのネットワーク（ネットワークAおよびネットワークB）に接続されていなければなりません。これは、ネットワークのパーティションを検出および管理するためです。+ALL_NETA_ADDRS+パラメータで、ネットワークA内の各HibariノードのIPアドレスを指定します。このネットワークAを介して、データ・レプリケーションおよびその他のErlangの通信が行われます。IPアドレスの一覧は、+ALL_NODES+で指定したホスト名に対応している必要があります。
+link:hibari-sysadmin-guide.en.html#partition-detector[The Partition Detector Application]に記述されているように、マルチノードのHibariのクラスター内の各ノードは、2つのネットワーク（ネットワークAおよびネットワークB）に接続されていなければなりません。これは、ネットワークのパーティションを検出および管理するためです。 +ALL_NETA_ADDRS+ パラメータで、ネットワークA内の各HibariノードのIPアドレスを指定します。このネットワークAを介して、データ・レプリケーションおよびその他のErlangの通信が行われます。IPアドレスの一覧は、 +ALL_NODES+ で指定したホスト名に対応している必要があります。
 - +ALL_NETB_ADDRS+
   * ネットワークB内におけるHibariの各ノードのIP アドレス。ネットワークBは、ネットワークパーティションの検出に役立つハートビートブロードキャストのためだけに使用されます。IPアドレスの一覧の順番は、ALL_NODESで設定したホスト名の順番に対応している必要があります。
 - +ALL_NETA_BCAST+
@@ -544,7 +545,8 @@ CAUTION: 稼働時の設定では、ネットワークAとネットワークBを
 +
 ------
 10.181.165.230  dev1.your-domain.com    dev1
-10.181.165.231  dev2.your-domain.com    dev2 10.181.165.232  dev3.your-domain.com    dev3
+10.181.165.231  dev2.your-domain.com    dev2 
+10.181.165.232  dev3.your-domain.com    dev3
 ------
 +
 - システムの +/etc/sysctl.conf+ ファイルに +vm.swappiness=0+ を設定してください。Erlangの VMにおいてswappinessを指定することは望ましくありません。
@@ -570,7 +572,8 @@ $
 +
 ------
 $ for i in dev1 dev2 dev3 ; do ./clus/priv/clus.sh -f init hibari $i ; done
-hibari@dev1 hibari@dev2
+hibari@dev1 
+hibari@dev2
 hibari@dev3
 ------
 +
@@ -586,7 +589,7 @@ hibari@dev3
 ------
 
 
-NOTE: デフォルト設定では、Clusterツールはターゲットノード群の +/usr/local/var/lib+ にHibariをインストールします。別の場所へインストールしたい場合は、インストールの前に +clus.sh+ スクリプト（作業用ディレクトリの+/clus/priv/+の下）を開き、 +CT_HOMEBASEDIR+ 変数を編集してください。
+NOTE: デフォルト設定では、Clusterツールはターゲットノード群の +/usr/local/var/lib+ にHibariをインストールします。別の場所へインストールしたい場合は、インストールの前に +clus.sh+ スクリプト（作業用ディレクトリの +/clus/priv/+ の下）を開き、　+CT_HOMEBASEDIR+　変数を編集してください。
 
 [[starting-multi-node]]
 === マルチノードのHibariクラスターを起動する／停止する
@@ -610,7 +613,9 @@ hibari@dev3
 +
 ------
 $ ./clus/priv/clus-hibari.sh -f bootstrap hibari hibari.config
-hibari@dev1 => hibari@dev1 hibari@dev2 hibari@dev3
+hibari@dev1 => hibari@dev1 
+hibari@dev2 
+hibari@dev3
 ------
 +
 Hibariのブートストラッププロセスが、最初の
@@ -623,6 +628,7 @@ link:#eligible-admin-nodes[Hibariハートビートリスナーポート]をClus
 ==== Hibariクラスターの検証
 
 Hibariが立ち上がって稼働していることを検証するため、以下の簡単なチェックを行ってください。
+
 . “Hibari Web Administration”ページをオープンできるかどうか確認します。
 +
 ------
