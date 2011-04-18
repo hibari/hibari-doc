@@ -644,7 +644,6 @@ hibari@dev1 ... pong
 hibari@dev2 ... pong
 hibari@dev3 ... pong
 ------
-+
 
 ==== Hibariクラスターの停止
 
