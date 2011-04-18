@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari ® アプリケーション開発者ガイド</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.74.3" /></head><body><div class="article" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title"><a id="id442553"></a>Hibari ® アプリケーション開発者ガイド</h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>改訂履歴</b></th></tr><tr><td align="left">改訂 0.2.1(ja)</td><td align="left">2011/03/14</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>目次</b></p><dl><dt><span class="section"><a href="#_hibari">1. Hibariとは</a></span></dt><dd><dl><dt><span class="section"><a href="#_nosql">1.1. なぜNOSQLか？</a></span></dt><dt><span class="section"><a href="#_hibari_2">1.2. なぜHibariか？</a></span></dt><dd><dl><dt><span class="section"><a href="#engineered-erlang">1.2.1. Erlangによる開発</a></span></dt><dt><span class="section"><a href="#chain-replication">1.2.2. チェイン・レプリケーションによる高可用性と強い一貫性</a></span></dt><dt><span class="section"><a href="#scalability">1.2.3. 簡単でコストが低廉な拡張性</a></span></dt><dt><span class="section"><a href="#high-performance">1.2.4. 高性能 — 特に読み出しと大サイズのバリューの処理の場合</a></span></dt><dt><span class="section"><a href="#simple-powerful-api">1.2.5. シンプルながら強力なクライアントAPI</a></span></dt><dt><span class="section"><a href="#production-proven">1.2.6. 稼働実績</a></span></dt><dt><span class="section"><a href="#hibari-benefits-by-user">1.2.7. 開発者とシステム管理者、そしてビジネスに対するHibariの利点</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#getting-started">2. はじめに</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. システム要件</a></span></dt><dt><span class="section"><a href="#required-software">2.2. 必要なサードパーティのソフトウェア</a></span></dt><dd><dl><dt><span class="section"><a href="#_">2.2.1. シングルノードのインストールに必要なソフトウェア</a></span></dt><dt><span class="section"><a href="#__2">2.2.2. マルチノードのインストールに必要なソフトウェア</a></span></dt></dl></dd><dt><span class="section"><a href="#download-hibari">2.3. Hibariをダウンロードする</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. シングルノードにHibariをインストールする</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. シングルノードのHibariを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_4">2.5.1. Hibariの起動とブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_5">2.5.2. Hibariの検証</a></span></dt><dt><span class="section"><a href="#_hibari_6">2.5.3. Hibariの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#installing-multi-node">2.6. マルチノードのクラスターにHibariをインストールする</a></span></dt><dd><dl><dt><span class="section"><a href="#__4">2.6.1. ユーザー権限の設定</a></span></dt><dt><span class="section"><a href="#download-cluster">2.6.2. Clusterインストーラーツールのダウンロード</a></span></dt><dt><span class="section"><a href="#config-cluster">2.6.3. Clusterツールの設定</a></span></dt><dt><span class="section"><a href="#_hibari_7">2.6.4. Hibariのインストール</a></span></dt></dl></dd><dt><span class="section"><a href="#starting-multi-node">2.7. マルチノードのHibariクラスターを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_8">2.7.1. Hibariクラスターの起動およびブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_9">2.7.2. Hibariクラスターの検証</a></span></dt><dt><span class="section"><a href="#_hibari_10">2.7.3. Hibariクラスターの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#creating-tables">2.8. 新しいテーブルを作成する</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. クライアント向けAPI ： ネイティブErlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_api">3.1. Hibariのクライアント向けAPIの概要</a></span></dt><dd><dl><dt><span class="section"><a href="#_erlang">3.1.1. Erlangの基本データ型</a></span></dt><dt><span class="section"><a href="#_hibari_11">3.1.2. Hibariのデータモデル</a></span></dt></dl></dd><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. クライアント向けAPI：UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. HibariサーバーにおけるUBFプロトコル層の実装</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBFにおけるストリングとバイナリの表現</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. すべての言語におけるUBFベースのプロトコルの使用手順</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. HibariのUBFプロトコル・コントラクト</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Erlang用のUBFクライアント・ライブラリの使用法</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Java用のUBFクライアント・ライブラリの使用法</a></span></dt><dd><dl><dt><span class="section"><a href="#_java_ubf">4.6.1. Java用UBFクライアント・ライブラリのコンパイル</a></span></dt><dt><span class="section"><a href="#_ubf_hibaritest_java">4.6.2. UBFクライアント・ライブラリのテストプログラムHibariTest.javaのコンパイル</a></span></dt><dt><span class="section"><a href="#_hibaritest_java">4.6.3. HibariTest.javaの確認</a></span></dt><dt><span class="section"><a href="#_ubf">4.6.4. UBFのイベント・ハンドラーのインターフェイス</a></span></dt></dl></dd><dt><span class="section"><a href="#using-ubf-python-client">4.7. Python用のEBFクライアント・ライブラリの使用法</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. クライアント向けAPI： Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_thrift_api">5.1. HibariのThrift API</a></span></dt><dt><span class="section"><a href="#_ubf_thrift">5.2. UBFコントラクト型とThrift型とのマッピング</a></span></dt><dt><span class="section"><a href="#_ubf_thrift_2">5.3. UBFコントラクトとThriftサービスとのマッピング</a></span></dt><dt><span class="section"><a href="#_thrift">5.4. Thriftクライアントの使用例</a></span></dt><dt><span class="section"><a href="#_thrift_tbf">5.5. Thrift クライアントからのTBFコントラクト応答のマッピング</a></span></dt></dl></dd></dl></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari"></a>1. Hibariとは</h2></div></div></div><p>　Hibari®は、キー・バリュー・ストア（KVS）方式を用いた分散型データベースです。大規模化し続けるデータ、いわゆる“Big Data”に対応し、商用にすぐに活用できます。大量のデータをどのように保管するかが大きな問題となる現在、それに対処する「NOSQL」というソリューションが出てきました。Hibariはこの分野で、次のような多くの理由から注目を集めています。</p><div class="itemizedlist"><ul type="disc"><li>
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari ® アプリケーション開発者ガイド</title><link rel="stylesheet" href="./docbook-xsl.css" type="text/css" /><meta name="generator" content="DocBook XSL Stylesheets V1.74.3" /></head><body><div class="article" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title"><a id="id297759"></a>Hibari ® アプリケーション開発者ガイド</h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><b>改訂履歴</b></th></tr><tr><td align="left">改訂 0.2.1(ja)</td><td align="left">2011/03/14</td></tr></table></div></div></div><hr /></div><div class="toc"><p><b>目次</b></p><dl><dt><span class="section"><a href="#_hibari">1. Hibariとは</a></span></dt><dd><dl><dt><span class="section"><a href="#_nosql">1.1. なぜNOSQLか？</a></span></dt><dt><span class="section"><a href="#_hibari_2">1.2. なぜHibariか？</a></span></dt><dd><dl><dt><span class="section"><a href="#engineered-erlang">1.2.1. Erlangによる開発</a></span></dt><dt><span class="section"><a href="#chain-replication">1.2.2. チェイン・レプリケーションによる高可用性と強い一貫性</a></span></dt><dt><span class="section"><a href="#scalability">1.2.3. 簡単でコストが低廉な拡張性</a></span></dt><dt><span class="section"><a href="#high-performance">1.2.4. 高性能 — 特に読み出しと大サイズのバリューの処理の場合</a></span></dt><dt><span class="section"><a href="#simple-powerful-api">1.2.5. シンプルながら強力なクライアントAPI</a></span></dt><dt><span class="section"><a href="#production-proven">1.2.6. 稼働実績</a></span></dt><dt><span class="section"><a href="#hibari-benefits-by-user">1.2.7. 開発者とシステム管理者、そしてビジネスに対するHibariの利点</a></span></dt></dl></dd></dl></dd><dt><span class="section"><a href="#getting-started">2. はじめに</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. システム要件</a></span></dt><dt><span class="section"><a href="#required-software">2.2. 必要なサードパーティのソフトウェア</a></span></dt><dd><dl><dt><span class="section"><a href="#_">2.2.1. シングルノードのインストールに必要なソフトウェア</a></span></dt><dt><span class="section"><a href="#__2">2.2.2. マルチノードのインストールに必要なソフトウェア</a></span></dt></dl></dd><dt><span class="section"><a href="#download-hibari">2.3. Hibariをダウンロードする</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. シングルノードにHibariをインストールする</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. シングルノードのHibariを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_4">2.5.1. Hibariの起動とブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_5">2.5.2. Hibariの検証</a></span></dt><dt><span class="section"><a href="#_hibari_6">2.5.3. Hibariの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#installing-multi-node">2.6. マルチノードのクラスターにHibariをインストールする</a></span></dt><dd><dl><dt><span class="section"><a href="#__4">2.6.1. ユーザー権限の設定</a></span></dt><dt><span class="section"><a href="#download-cluster">2.6.2. Clusterインストーラーツールのダウンロード</a></span></dt><dt><span class="section"><a href="#config-cluster">2.6.3. Clusterツールの設定</a></span></dt><dt><span class="section"><a href="#_hibari_7">2.6.4. Hibariのインストール</a></span></dt></dl></dd><dt><span class="section"><a href="#starting-multi-node">2.7. マルチノードのHibariクラスターを起動する／停止する</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_8">2.7.1. Hibariクラスターの起動およびブートストラップ</a></span></dt><dt><span class="section"><a href="#_hibari_9">2.7.2. Hibariクラスターの検証</a></span></dt><dt><span class="section"><a href="#_hibari_10">2.7.3. Hibariクラスターの停止</a></span></dt></dl></dd><dt><span class="section"><a href="#creating-tables">2.8. 新しいテーブルを作成する</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. クライアント向けAPI ： ネイティブErlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_api">3.1. Hibariのクライアント向けAPIの概要</a></span></dt><dd><dl><dt><span class="section"><a href="#_erlang">3.1.1. Erlangの基本データ型</a></span></dt><dt><span class="section"><a href="#_hibari_11">3.1.2. Hibariのデータモデル</a></span></dt></dl></dd><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. クライアント向けAPI：UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. HibariサーバーにおけるUBFプロトコル層の実装</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBFにおけるストリングとバイナリの表現</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. すべての言語におけるUBFベースのプロトコルの使用手順</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. HibariのUBFプロトコル・コントラクト</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Erlang用のUBFクライアント・ライブラリの使用法</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Java用のUBFクライアント・ライブラリの使用法</a></span></dt><dd><dl><dt><span class="section"><a href="#_java_ubf">4.6.1. Java用UBFクライアント・ライブラリのコンパイル</a></span></dt><dt><span class="section"><a href="#_ubf_hibaritest_java">4.6.2. UBFクライアント・ライブラリのテストプログラムHibariTest.javaのコンパイル</a></span></dt><dt><span class="section"><a href="#_hibaritest_java">4.6.3. HibariTest.javaの確認</a></span></dt><dt><span class="section"><a href="#_ubf">4.6.4. UBFのイベント・ハンドラーのインターフェイス</a></span></dt></dl></dd><dt><span class="section"><a href="#using-ubf-python-client">4.7. Python用のEBFクライアント・ライブラリの使用法</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. クライアント向けAPI： Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_thrift_api">5.1. HibariのThrift API</a></span></dt><dt><span class="section"><a href="#_ubf_thrift">5.2. UBFコントラクト型とThrift型とのマッピング</a></span></dt><dt><span class="section"><a href="#_ubf_thrift_2">5.3. UBFコントラクトとThriftサービスとのマッピング</a></span></dt><dt><span class="section"><a href="#_thrift">5.4. Thriftクライアントの使用例</a></span></dt><dt><span class="section"><a href="#_thrift_tbf">5.5. Thrift クライアントからのTBFコントラクト応答のマッピング</a></span></dt></dl></dd></dl></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari"></a>1. Hibariとは</h2></div></div></div><p>　Hibari®は、キー・バリュー・ストア（KVS）方式を用いた分散型データベースです。大規模化し続けるデータ、いわゆる“Big Data”に対応し、商用にすぐに活用できます。大量のデータをどのように保管するかが大きな問題となる現在、それに対処する「NOSQL」というソリューションが出てきました。Hibariはこの分野で、次のような多くの理由から注目を集めています。</p><div class="itemizedlist"><ul type="disc"><li>
 Hibariは、<span class="strong"><strong>プログラミング言語Erlangと革新的なチェイン・レプリケーション技術を使った唯一のオープンソースのキー・バリュー型データベース（KVDB）</strong></span> です。Erlangは、堅牢で高性能な分散型ストレージ・ソリューションの構築には理想的なプログラミング基盤を提供します。一方、チェイン・レプリケーションは、データの一貫性を犠牲にすることなく、高いスループットと高可用性を提供します。
 </li><li>
 Hibariは、<span class="strong"><strong>キャリアクラスの通信事業分野で要求される厳格な基準を満たすように作られた唯一のオープンソースのキー・バリュー型データベース</strong></span> です。通信事業分野の製品では、数百万ユーザーの利用実績を持ちます。
@@ -262,7 +262,8 @@ $ ssh-add ~/.ssh/id_rsa
 </li><li><p>
 <code class="literal">~/.ssh/authorized_keys</code> ファイルに、SSHの公開鍵のエントリーを追加します。
 </p><p>以下の例では、dev1、dev2、dev3がターゲットのHibariノード群です。</p><pre class="screen">$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>インストールノードがHibariのクラスターノードの１つである場合は、インストールノードにもssh-copy-idを実行する必要があります。</p></td></tr></table></div></li></ul></div></li><li><p>
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3</pre><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>インストールノードがHibariのクラスターノードの１つである場合は、インストールノードにもssh-copy-idを実行する必要があります。</p></td></tr></table></div></li></ul></div></li><li><p>
 各Hibariノードへのパスワード認証のないSSHのアクセスが、期待どおりに行われることを確認します。
 </p><pre class="screen">$ ssh $USER@dev1
 $ ssh $USER@dev2
@@ -276,7 +277,8 @@ BRICK_NODES=(dev1 dev2 dev3)
 BRICKS_PER_CHAIN=2
 
 ALL_NODES=(dev1 dev2 dev3)
-ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETA_BCAST="10.181.165.255"
+ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232")
+ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") ALL_NETA_BCAST="10.181.165.255"
 ALL_NETB_BCAST="10.181.165.255" ALL_NETA_TIEBREAKER="10.181.165.1"
 
 ALL_HEART_UDP_PORT="63099"
@@ -366,14 +368,14 @@ hibari@dev1 =&gt; hibari@dev1 hibari@dev2 hibari@dev3</pre><p>Hibariのブート
 . 各Hibariノードにpingが打てることを確認します。</p><p>+</p><pre class="screen">$ ./clus/priv/clus-hibari.sh -f ping hibari hibari.config
 hibari@dev1 ... pong
 hibari@dev2 ... pong
-hibari@dev3 ... pong</pre></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_10"></a>2.7.3. Hibariクラスターの停止</h4></div></div></div><p>“hibari”ユーザーを通じて、すべてのHibariノードでHibariを停止します。</p><pre class="screen">$ cd working-directory
+hibari@dev3 ... pong</pre><p>+</p></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_10"></a>2.7.3. Hibariクラスターの停止</h4></div></div></div><p>“hibari”ユーザーを通じて、すべてのHibariノードでHibariを停止します。</p><pre class="screen">$ cd working-directory
 $ ./clus/priv/clus-hibari.sh -f stop hibari hibari.config
 ok
 ok
 ok
 hibari@dev1
 hibari@dev2
-hibari@dev3</pre></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="creating-tables"></a>2.8. 新しいテーブルを作成する</h3></div></div></div><p>新しいテーブルは、AdminサーバーのGUIを通して作成するのが最も簡単です。“http://localhost:23080/”を開き、“Add a table”をクリックしてください。GUIに加えて、hibari-admin ツールで新しいテーブルを作成することも可能です。詳しい使用法は、hibari-admin ツールの説明を参照してください。</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>管理用のAPIを使ったテーブル作成の方法については、「Hibariシステム管理者ガイド」を参照してください。</p></td></tr></table></div><p>GUIを使ってテーブルを追加する場合、以下のようなテーブル設定のオプションがあります。</p><div class="itemizedlist"><ul type="disc"><li><p>
+hibari@dev3</pre></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="creating-tables"></a>2.8. 新しいテーブルを作成する</h3></div></div></div><p>新しいテーブルは、AdminサーバーのGUIを通して作成するのが最も簡単です。“http://localhost:23080/” を開き、“Add a table” をクリックしてください。GUIに加えて、hibari-admin ツールで新しいテーブルを作成することも可能です。詳しい使用法は、hibari-admin ツールの説明を参照してください。</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>管理用のAPIを使ったテーブル作成の方法については、「Hibariシステム管理者ガイド」を参照してください。</p></td></tr></table></div><p>GUIを使ってテーブルを追加する場合、以下のようなテーブル設定のオプションがあります。</p><div class="itemizedlist"><ul type="disc"><li><p>
 <code class="literal">Local</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
 Boolean型。真の場合、新しいテーブルのデータを保存するブリックは、ローカルノード（Adminサーバーが稼働しているノード）に作成されます。偽の場合、「NodeList」フィールドを使って新たなブリックを作成するクラスターノードを指定します。
@@ -436,7 +438,7 @@ NumNodesPerBlock=0かつBlockMultFactor=0の場合、6チェインが6ノード�
 NumNodesPerBlock=2かつBlockMultFactor=5かつBPC=2の場合、トータル30チェインについて、2×5=10チェインがノードA と Bに、2×5=10チェインがノードC と Dに、2×5=10チェインがノードE とFにわたってストライプします。
 </li><li>
 NumNodesPerBlock=3かつBlockMultFactor=4かつBPC=3の場合、トータル24チェインについて、3×4=12チェインがノードA と Bと Cに、3×4=12チェインがノードD と Eと Fにわたってストライプします。
-</li></ul></div></li></ul></div></li></ul></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-erlang"></a>3. クライアント向けAPI ： ネイティブErlang</h2></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_api"></a>3.1. Hibariのクライアント向けAPIの概要</h3></div></div></div><p>キー・バリュー型データベースとしてHibariが提供するクライアント向けAPIは非常にシンプルです。APIによって、データの追加、検索、削除という基本的な操作ができます。制限はありますが、その範囲内で操作を組み合わせればアトミック・トランザクションも実行できます。</p><p>Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。</p><p>*データの追加*</p><div class="itemizedlist"><ul type="disc"><li><p>
+</li></ul></div></li></ul></div></li></ul></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-erlang"></a>3. クライアント向けAPI ： ネイティブErlang</h2></div></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_api"></a>3.1. Hibariのクライアント向けAPIの概要</h3></div></div></div><p>キー・バリュー型データベースとしてHibariが提供するクライアント向けAPIは非常にシンプルです。APIによって、データの追加、検索、削除という基本的な操作ができます。制限はありますが、その範囲内で操作を組み合わせればアトミック・トランザクションも実行できます。</p><p>Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。</p><pre class="literallayout">*データの追加*</pre><div class="itemizedlist"><ul type="disc"><li><p>
 まだ存在していないキーとバリューのペアを新たに追加します。オプションでフラグを追加できます。
 </p><div class="itemizedlist"><ul type="circle"><li>
 <a class="ulink" href="#brick-simple-add" target="_top">brick_simple:add/6</a>
@@ -446,25 +448,25 @@ NumNodesPerBlock=3かつBlockMultFactor=4かつBPC=3の場合、トータル24�
 <a class="ulink" href="#brick-simple-replace" target="_top">brick_simple:replace/6</a>
 </li></ul></div></li><li><p>
 キーの存在の有無にかかわらず、キーとバリューのペアと、オプションでフラグを設定します。
-</p><div class="itemizedlist"><ul type="circle"><li>
+</p><div class="itemizedlist"><ul type="circle"><li><p>
 <a class="ulink" href="#brick-simple-set" target="_top">brick_simple:set/6</a>
-</li></ul></div></li></ul></div><p><span class="strong"><strong>データの検索</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>
+</p><pre class="literallayout">*データの検索*</pre></li></ul></div></li><li><p>
 キーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
 </p><div class="itemizedlist"><ul type="circle"><li>
 <a class="ulink" href="#brick-simple-get" target="_top">brick_simple:get/4</a>
 </li></ul></div></li><li><p>
 辞書の順に並んで連続している複数のキーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
-</p><div class="itemizedlist"><ul type="circle"><li>
+</p><div class="itemizedlist"><ul type="circle"><li><p>
 <a class="ulink" href="#brick-simple-get-many" target="_top">brick_simple:get_many/5</a>
-</li></ul></div></li></ul></div><p><span class="strong"><strong>データの削除</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>
+</p><pre class="literallayout">*データの削除*</pre></li></ul></div></li><li><p>
 キーとバリューのペア、およびそれに関連付けられたフラグを削除します。
-</p><div class="itemizedlist"><ul type="circle"><li>
+</p><div class="itemizedlist"><ul type="circle"><li><p>
 <a class="ulink" href="#brick-simple-delete" target="_top">brick_simple:delete/4</a>
-</li></ul></div></li></ul></div><p><span class="strong"><strong>複合操作</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>
+</p><pre class="literallayout">*複合操作*</pre></li></ul></div></li><li><p>
 指定した操作のリストを実行します。オプションで、アトミック・トランザクションとして実行します。
-</p><div class="itemizedlist"><ul type="circle"><li>
+</p><div class="itemizedlist"><ul type="circle"><li><p>
 <a class="ulink" href="#brick-simple-do" target="_top">brick_simple:do/4</a>
-</li></ul></div></li></ul></div><p><span class="strong"><strong>フォールド操作</strong></span></p><div class="itemizedlist"><ul type="disc"><li><p>
+</p><pre class="literallayout">*フォールド操作*</pre></li></ul></div></li><li><p>
 テーブル内のすべてのキーに対して、フォールド操作を実行します。
 </p><div class="itemizedlist"><ul type="circle"><li>
 <a class="ulink" href="#brick-simple-fold-table" target="_top">brick_simple:fold_table/7</a>
@@ -713,7 +715,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 </dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
-テーブル`Tab`にキー`Key`が既に存在している場合に、キー`Key`とバリュー`Value`のペアを更新します。さらにオプションでフラグ`Flags`も更新します。キー`Key`が存在しない場合、操作は失敗します。
+テーブル<code class="literal">Tab</code> にキー`Key` が既に存在している場合に、キー`Key` とバリュー`Value` のペアを更新します。さらにオプションでフラグ<code class="literal">Flags</code> も更新します。キー`Key` が存在しない場合、操作は失敗します。
 </dd></dl></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p>
@@ -746,7 +748,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 <code class="literal">iodata() = iolist() | binary()</code>
 </li><li><p>
 <code class="literal">iolist()  = [char() | binary() | iolist()]</code>
-</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>`Key`は`iolist()`または`binary()`で指定できますが、操作の実行前にBinary型に変換されます。これは、`Value`に関しても同様です。+</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">Key</code> は<code class="literal">iolist()</code> または<code class="literal">binary()</code> で指定できますが、操作の実行前にBinary型に変換されます。これは、<code class="literal">Value</code> に関しても同様です。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Value</strong></span>
@@ -811,7 +813,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 <code class="literal">'value_in_ram'</code>
 </p><div class="itemizedlist"><ul type="square"><li><p>
 ブリックのデフォルトのストレージの場所指定を無効にして、バリューBLOBをRAMに保管します。
-</p><p>NOTE:Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。+</p></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Gemini社の品質管理部門は、このフラグのテストを完全には終了していません。</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Timeout</strong></span>
@@ -908,7 +910,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 </dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
-テーブル`Tab`にキー`Key`が既に存在しているかどうかに関わらず、キー`Key`とバリュー`Value`のペアをテーブル`Tab`に設定します。さらにオプションで、フラグ`Flags`もテーブル`Tab`に設定します。
+テーブル<code class="literal">Tab</code> にキー`Key` が既に存在しているかどうかに関わらず、キー`Key` とバリュー`Value` のペアをテーブル<code class="literal">Tab`に設定します。さらにオプションで、フラグ`Flags</code> もテーブル`Tab`に設定します。
 </dd></dl></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p>
@@ -941,7 +943,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 <code class="literal">iodata() = iolist() | binary()</code>
 </li><li><p>
 <code class="literal">iolist()  = [char() | binary() | iolist()]</code>
-</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Key`<code class="literal">iolist()</code> または<code class="literal">binary()</code> で指定することもできますが、操作の実行前にBinary型に変換されます。これは、`Value`に関しても同様です。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">Key</code> は、 <code class="literal">iolist()</code> または<code class="literal">binary()</code> で指定することもできますが、操作の実行前にBinary型に変換されます。これは、<code class="literal">Value</code> に関しても同様です。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Value</strong></span>
@@ -1079,19 +1081,19 @@ ok</pre></dd><dt><span class="term">
 ok</pre></dd><dt><span class="term">
  
 </span></dt><dd><p>
-キーとバリューのペアを設定しようとして`testset`フラグを指定したにもかかわらず、キーが存在しないために失敗した場合
+キーとバリューのペアを設定しようとして<code class="literal">testset</code> フラグを指定したにもかかわらず、キーが存在しないために失敗した場合
 </p><pre class="screen">&gt; brick_simple:set(tab1, "boo", "hoo", [{'testset', 1271543165272987}]).
 key_not_exist</pre></dd><dt><span class="term">
  
 </span></dt><dd><p>
-`testset`フラグを指定し、かつ既存のキーのタイムスタンプが指定したタイムスタンプと一致したため、キーとバリューのペアの設定に成功した場合
+<code class="literal">testset</code> フラグを指定し、かつ既存のキーのタイムスタンプが指定したタイムスタンプと一致したため、キーとバリューのペアの設定に成功した場合
 </p><pre class="screen">&gt; brick_simple:set(tab1, "goo", "value7", [{'testset', 1271543165272432}]).
 ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-get"></a>3.5. brick_simple:get/4</h3></div></div></div><p>書式
  ::
 <span class="strong"><strong>brick_simple:get(Tab, Key, Flags, Timeout).</strong></span></p><p>解説</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
-テーブル`Tab`から、キー`Key`とフラグ`Flags`で指定したキーの属性を検索します。
+テーブル<code class="literal">Tab</code> から、キー`Key` とフラグ<code class="literal">Flags</code> で指定したキーの属性を検索します。
 </dd></dl></div><p>引数</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p>
@@ -1124,7 +1126,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 <code class="literal">iodata() = iolist() | binary()</code>
 </li><li><p>
 <code class="literal">iolist()  = [char() | binary() | iolist()]</code>
-</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Key`を`iolist()`または`binary()`で指定することもできますが、操作の実行前にBinary型に変換されます。+</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">Key</code> を<code class="literal">iolist()</code> または<code class="literal">binary()</code> で指定することもできますが、操作の実行前にBinary型に変換されます。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 <span class="strong"><strong>Flags</strong></span>
@@ -1148,7 +1150,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 </p><div class="itemizedlist"><ul type="circle"><li><p>
 <code class="literal">'get_all_attribs'</code>
 </p><div class="itemizedlist"><ul type="square"><li>
-キーのすべての属性を返します。`witness`フラグと組み合わせて使用できます。
+キーのすべての属性を返します。<code class="literal">witness</code> フラグと組み合わせて使用できます。
 </li></ul></div></li><li><p>
 <code class="literal">'witness'</code>
 </p><div class="itemizedlist"><ul type="square"><li>
@@ -1156,8 +1158,8 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 </li></ul></div></li><li><p>
 <code class="literal">{'testset', timestamp()}</code>
 </p><div class="itemizedlist"><ul type="square"><li>
-キーのタイムスタンプが`timestamp()`と正確に一致しない場合、操作は失敗します。
-<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーのタイムスタンプが`timestamp()`と正確に一致しない場合、トランザクションは終了します。このフラグは、`must_exist`と`must_not_exist`の両フラグに優先します。
+キーのタイムスタンプが<code class="literal">timestamp()</code> と正確に一致しない場合、操作は失敗します。
+<a class="ulink" href="#brick-simple-do" target="_top">マイクロ・トランザクション</a>の中で使用すると、キーのタイムスタンプが<code class="literal">timestamp()</code> と正確に一致しない場合、トランザクションは終了します。このフラグは、<code class="literal">must_exist</code> と<code class="literal">must_not_exist</code> の両フラグに優先します。
 </li></ul></div></li><li><p>
 <code class="literal">'must_not_exist'</code>
 </p><div class="itemizedlist"><ul type="square"><li>
@@ -1185,7 +1187,7 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 </span></dt><dd><div class="itemizedlist"><ul type="disc"><li><p>
 <code class="literal">{'ok', timestamp(), val()}</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
-`witness `フラグも `get_all_attribs `フラグも、どちらも指定していない `get `要求が成功しました。
+<code class="literal">witness `フラグも `get_all_attribs</code> フラグも、どちらも指定していない <code class="literal">get</code> 要求が成功しました。
 </li><li>
 <code class="literal">timestamp() = integer()</code>
 </li><li>
@@ -1197,11 +1199,11 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 </li></ul></div></li><li><p>
 <code class="literal">{'ok', timestamp()}</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
-`witness`フラグを指定して、`get_all_attribs`フラグは指定していない`get`要求が成功しました。
+<code class="literal">witness</code> フラグを指定して、<code class="literal">get_all_attribs</code> フラグは指定していない<code class="literal">get</code> 要求が成功しました。
 </li></ul></div></li><li><p>
 <code class="literal">{'ok', timestamp(), proplist()}</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
-`witness`フラグも`get_all_attribs`フラグもともに指定した`get`要求が成功しました。
+<code class="literal">witness</code> フラグも<code class="literal">get_all_attribs</code> フラグもともに指定した<code class="literal">get</code> 要求が成功しました。
 </li><li>
 <code class="literal">proplist() = [property()]</code>
 </li><li>
@@ -1209,10 +1211,10 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 </li></ul></div></li><li><p>
 <code class="literal">{'ok', timestamp(), val(), exp_time(), proplist()}</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
-`get_all_attribs`フラグを指定して、`witness`フラグは指定していない`get`要求が成功しました。
+<code class="literal">get_all_attribs</code> フラグを指定して、<code class="literal">witness</code> フラグは指定していない<code class="literal">get</code> 要求が成功しました。
 </li><li><p>
 <code class="literal">exp_time() = time_t()</code>
-</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">proplist()`が返される場合、リスト中の特性のひとつは常に</code>{val_len,Size::integer()}`となります。ここで`Size`は、バリューBLOBのバイト数を表します。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">proplist()</code> が返される場合、リスト中の特性のひとつは常に<code class="literal">{val_len,Size::integer()}</code> となります。ここで<code class="literal">Size</code> は、バリューBLOBのバイト数を表します。</p></td></tr></table></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p>
 エラー終了の場合
@@ -1223,11 +1225,11 @@ ok</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang="ja"><div 
 </li></ul></div></li><li><p>
 <code class="literal">{'ts_error', timestamp()}</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
-`{<span class="emphasis"><em>testset</em></span>, timestamp()}`フラグを使用して、タイムスタンプが一致しないため、操作が失敗しました。戻り値の`timestamp()`は、既存のキーの現在のタイムスタンプの値です。
+<code class="literal">{'testset', timestamp()}</code> フラグを使用して、タイムスタンプが一致しないため、操作が失敗しました。戻り値の<code class="literal">timestamp()</code> は、既存のキーの現在のタイムスタンプの値です。
 </li></ul></div></li><li><p>
 <code class="literal">'invalid_flag_present'</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
-Flags引数に無効な`do_op_flag()`が検出されたため、操作が失敗しました。
+Flags引数に無効な`do_op_flag()` が検出されたため、操作が失敗しました。
 </li></ul></div></li><li><p>
 <code class="literal">'brick_not_available'</code>
 </p><div class="itemizedlist"><ul type="circle"><li>
@@ -1269,7 +1271,7 @@ key_not_exist</pre></dd></dl></div></div><div class="section" lang="ja" xml:lang
 </dd></dl></div><p>解説</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
-テーブル`Tab`の単一チェインから、複数キーを検索します。引数`Key`で指定したキーの検索後、その次のキーから開始して、最大数`MaxNum`に達するまで検索を続け、辞書のように昇順で並べてキーを返します。戻り値のリストには、戻り値の最後のキーの後に続きがあるかどうかを示すブール値が付いてきます。
+テーブル<code class="literal">Tab</code> の単一チェインから、複数キーを検索します。引数<code class="literal">Key</code> で指定したキーの検索後、その次のキーから開始して、最大数<code class="literal">MaxNum</code> に達するまで検索を続け、辞書のように昇順で並べてキーを返します。戻り値のリストには、戻り値の最後のキーの後に続きがあるかどうかを示すブール値が付いてきます。
 </dd></dl></div><p>+
 IMPORTANT: <code class="literal">get_many()</code> 関数を1回コールしただけでは、複数のストレージ・チェインをまたがってキーを検索することはできません。`Key`のコンシステント・ハッシングは、`get_many`命令を単一チェインのテイル・ブリックに送り、その後は、その単一チェインからのみ、すべてのキーを検索します。</p><p>+</p><p>引数</p><div class="variablelist"><dl><dt><span class="term">
  
@@ -2227,12 +2229,12 @@ Erlangシェルを実験やプロトタイプで使用する場合、シェル�
 `-include("ubf.hrl").</code>
 Erlangシェルの制限により、シェル中ではマクロを使用できません。
 </li></ol></div></td></tr></table></div><p><a class="xref" href="#using-ubf-in-any-language" title="4.3. すべての言語におけるUBFベースのプロトコルの使用手順">「すべての言語におけるUBFベースのプロトコルの使用手順」</a>
- で概説したように、最初のステップは、Hibariサーバーへのコネクションを作成することです。Hibariクラスターにノードが複数ある場合は、どのノードへのコネクションを作成しても構いません。すべてのノードがすべてのUBF要求に対応し、要求を適切なブリックに回すことができます。</p><div class="example"><a id="id501787"></a><p class="title"><b>例1 UBFサーバー（“localhost”のTCPポート7581）へのコネクションを作成する</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)54&gt; {ok, P1, _} = ubf_client:connect("localhost", 7581, [{proto, ubf}], 5000).
-{ok,&lt;0.139.0&gt;,{'#S', "gdss_meta_server"}}</pre></div></div><br class="example-break" /><p>次に、このコネクションを用いてコマンドを使用していくために、UBFメタプロトコルを用いて、Hibariサーバーの“gdss” と呼ばれるコントラクトを選択します。</p><div class="tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[ティップ]" src="./images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Hibariサーバーのコントラクトは「ステートレス」です。<code class="literal">ubf_client:rpc/2</code> 関数からの応答に含まれる項はすべて<code class="literal">{reply,ServerReply,UBF_StateName}</code> の形式をとります。Hibariサーバーのコントラクトはステートレスであるため、<code class="literal">UBF_StateName</code> は常にアトム<code class="literal">none</code> になります。</p></td></tr></table></div><div class="example"><a id="id501836"></a><p class="title"><b>例2 UBFメタプロトコルを用いて“gdss”コントラクトを要求する</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)55&gt; ubf_client:rpc(P1, {startSession, {'#S', "gdss"}, []}).
-{reply,{ok,ok},none}</pre></div></div><br class="example-break" /><p>これでUBFコネクションが確立しました。このコネクションを用いてキー「foo」を設定します。</p><div class="example"><a id="id501854"></a><p class="title"><b>例3 テーブル `tab1`に、キー「foo」を設定する（バリューは「foo val」、有効期限とフラグは指定なし、タイムアウト時間は5秒）</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)59&gt; ubf_client:rpc(P1, {set, tab1, &lt;&lt;"foo"&gt;&gt;, &lt;&lt;"foo val"&gt;&gt;, 0, [], 5000}).
-{reply,ok,none}</pre></div></div><br class="example-break" /><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>上記の例の`set_req()`と下記の例の`get_req()`の両方で、戻り値の値は、それぞれ<a class="xref" href="#brick-simple-set" title="3.4. brick_simple:set/6">「brick_simple:set/6」</a> と <a class="xref" href="#brick-simple-get" title="3.5. brick_simple:get/4">「brick_simple:get/4」</a> に記述されたとおりであることに注意してください。</p><p>唯一の違いは、<code class="literal">ubf_client:rpc/2`関数では、サーバーからの応答を3項のタプル `{reply,ServerReply,none}</code>.としてまとめることです。</p></td></tr></table></div><div class="example"><a id="id501895"></a><p class="title"><b>例4 テーブル`tab1`から、キー「foo」を取得する（タイムアウト時間は5秒）</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)66&gt; ubf_client:rpc(P1, {get, tab1, &lt;&lt;"foo"&gt;&gt;, [], 5000}).
-{reply,{ok,1273009092549799,&lt;&lt;"foo val"&gt;&gt;},none}</pre></div></div><br class="example-break" /><p>クライアントがコントラクトに違反する要求を送信すると、下記の例のように、サーバーが違反を返します。</p><div class="example"><a id="id501912"></a><p class="title"><b>例5 コントラクト違反の要求を送信する</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)89&gt; ubf_client:rpc(P1, {bbb, 3000}).
-{reply,{clientBrokeContract,{bbb,3000},[]},none}</pre></div></div><br class="example-break" /><p>コネクションを使い終わったら、明示的にコネクションを終了させるのがきまりです。クライアントが`stop/1`の呼び出しを忘れた場合や呼び出せない場合は、サーバーがコネクションのサーバー側のクリーンナップ処理を暗黙のうちに実行します。</p><div class="example"><a id="id501932"></a><p class="title"><b>例6 UBFコネクションをクローズする</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)92&gt; ubf_client:stop(P1).
+ で概説したように、最初のステップは、Hibariサーバーへのコネクションを作成することです。Hibariクラスターにノードが複数ある場合は、どのノードへのコネクションを作成しても構いません。すべてのノードがすべてのUBF要求に対応し、要求を適切なブリックに回すことができます。</p><div class="example"><a id="id357198"></a><p class="title"><b>例1 UBFサーバー（“localhost”のTCPポート7581）へのコネクションを作成する</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)54&gt; {ok, P1, _} = ubf_client:connect("localhost", 7581, [{proto, ubf}], 5000).
+{ok,&lt;0.139.0&gt;,{'#S', "gdss_meta_server"}}</pre></div></div><br class="example-break" /><p>次に、このコネクションを用いてコマンドを使用していくために、UBFメタプロトコルを用いて、Hibariサーバーの“gdss” と呼ばれるコントラクトを選択します。</p><div class="tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[ティップ]" src="./images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Hibariサーバーのコントラクトは「ステートレス」です。<code class="literal">ubf_client:rpc/2</code> 関数からの応答に含まれる項はすべて<code class="literal">{reply,ServerReply,UBF_StateName}</code> の形式をとります。Hibariサーバーのコントラクトはステートレスであるため、<code class="literal">UBF_StateName</code> は常にアトム<code class="literal">none</code> になります。</p></td></tr></table></div><div class="example"><a id="id357247"></a><p class="title"><b>例2 UBFメタプロトコルを用いて“gdss”コントラクトを要求する</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)55&gt; ubf_client:rpc(P1, {startSession, {'#S', "gdss"}, []}).
+{reply,{ok,ok},none}</pre></div></div><br class="example-break" /><p>これでUBFコネクションが確立しました。このコネクションを用いてキー「foo」を設定します。</p><div class="example"><a id="id357264"></a><p class="title"><b>例3 テーブル `tab1`に、キー「foo」を設定する（バリューは「foo val」、有効期限とフラグは指定なし、タイムアウト時間は5秒）</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)59&gt; ubf_client:rpc(P1, {set, tab1, &lt;&lt;"foo"&gt;&gt;, &lt;&lt;"foo val"&gt;&gt;, 0, [], 5000}).
+{reply,ok,none}</pre></div></div><br class="example-break" /><div class="note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[注意]" src="./images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>上記の例の`set_req()`と下記の例の`get_req()`の両方で、戻り値の値は、それぞれ<a class="xref" href="#brick-simple-set" title="3.4. brick_simple:set/6">「brick_simple:set/6」</a> と <a class="xref" href="#brick-simple-get" title="3.5. brick_simple:get/4">「brick_simple:get/4」</a> に記述されたとおりであることに注意してください。</p><p>唯一の違いは、<code class="literal">ubf_client:rpc/2`関数では、サーバーからの応答を3項のタプル `{reply,ServerReply,none}</code>.としてまとめることです。</p></td></tr></table></div><div class="example"><a id="id357306"></a><p class="title"><b>例4 テーブル`tab1`から、キー「foo」を取得する（タイムアウト時間は5秒）</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)66&gt; ubf_client:rpc(P1, {get, tab1, &lt;&lt;"foo"&gt;&gt;, [], 5000}).
+{reply,{ok,1273009092549799,&lt;&lt;"foo val"&gt;&gt;},none}</pre></div></div><br class="example-break" /><p>クライアントがコントラクトに違反する要求を送信すると、下記の例のように、サーバーが違反を返します。</p><div class="example"><a id="id357323"></a><p class="title"><b>例5 コントラクト違反の要求を送信する</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)89&gt; ubf_client:rpc(P1, {bbb, 3000}).
+{reply,{clientBrokeContract,{bbb,3000},[]},none}</pre></div></div><br class="example-break" /><p>コネクションを使い終わったら、明示的にコネクションを終了させるのがきまりです。クライアントが`stop/1`の呼び出しを忘れた場合や呼び出せない場合は、サーバーがコネクションのサーバー側のクリーンナップ処理を暗黙のうちに実行します。</p><div class="example"><a id="id357343"></a><p class="title"><b>例6 UBFコネクションをクローズする</b></p><div class="example-contents"><pre class="screen">(asdf@bb3)92&gt; ubf_client:stop(P1).
 ok</pre></div></div><br class="example-break" /></div><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-java-client"></a>4.6. Java用のUBFクライアント・ライブラリの使用法</h3></div></div></div><p>Java用UBFクライアント・ライブラリのソースコードは、
 <a class="ulink" href="http://github.com/norton/ubf" target="_top">http://github.com/norton/ubf</a>にあるUBFソース・リポジトリの<code class="literal">priv/java</code> サブディレクトリにあります。</p><div class="section" lang="ja" xml:lang="ja"><div class="titlepage"><div><div><h4 class="title"><a id="_java_ubf"></a>4.6.1. Java用UBFクライアント・ライブラリのコンパイル</h4></div></div></div><div class="orderedlist"><ol type="1"><li>
 UBFクライアント・ライブラリのコードを、2010年5月10日以降の「マスター」版にアップデートしてください。またはGitのタグ「v1.14」以降のものを使用してください。2010年5月10日より前でタグが「v1.14」より前の版のライブラリにはいくつかバグがあり、UBFクライアントが正しく機能しません。
