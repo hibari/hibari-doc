@@ -2793,3 +2793,352 @@ Pythonの例：
 === Thrift クライアントからのTBFコントラクト応答のマッピング
 
 TBFは、HibariのThrift APIのすべての関数に対して、2つの汎用型（HibariResponseとHibariException）のうち1つを返します。正常終了の場合はHibariResponseが返ることが期待できますが、そうでない場合は、HibariExceptionが返ることになっています。
+
+== 開発者向けユーティリティ
+_（作成中）_
+
+=== Basho Bench
+_（追加予定）_
+
+=== Yahoo! クラウド・サービス・ベンチマーク
+_（追加予定）_
+
+[[HibariBuildingSource]]
+== ソースコードからHibariをビルドする
+
+この章では、以下をビルドするための基本的な方法を説明します。
+
+- Hibari リリースパッケージ 
+- Hibari ドキュメント 
+- Erlang/OTP システム 
+
+=== 必要なサードパーティのソフトウェア
+
+事前準備として、ツールとソフトウェアのチェックリストをよく読み、必要に応じてインストールとセットアップを行ってください。
+
+==== 必須アイテム (Hibariをビルドするために必要なソフトウェア)
+
+Hibariのダウンロード、およびリリースパッケージのビルドには、以下のソフトウェアが必要です。
+
+- Git - http://git-scm.com/
+
+  * バージョン1.5.4以降を使用してください。
+    ** バージョン1.7.3.4 がHibariでテスト済みの最新バージョンです。
+  * Git用の電子メールアドレスと名前を設定していない場合は、以下のように設定してください。
++
+------
+$ git config --global user.email "you@example.com"
+$ git config --global user.name "Your Name"
+------
++
+  * GitHubアカウントを取得していない場合は、ここで取得してください。
+    - https://github.com/
+    ** GITプロトコルを使った読み取り専用の匿名アクセスがデフォルトです。
+    ** 読み書きアクセス可能なメンバーには、GitHubアカウントにSSHの公開鍵を必ず追加してください。
+- Python - http://www.python.org
+  * バージョン2.4以降を使用してください。
+    ** バージョン2.7がHibariでテスト済みの最新バージョンです。 
+    ** 注意: Python 3.x には対応できていない可能性があります。
+- Repo - http://source.android.com/source/git-repo.html
+  * 以下のようにインストールしてください。
++
+------
+$ mkdir -p ~/bin
+$ wget -O - http://android.git.kernel.org/repo > ~/bin/repo
+$ chmod a+x ~/bin/repo
+------
++
+  * ダウンロードおよびパッケージのプロセスでは、Rebar (https://github.com/basho/rebar/wiki)も使用しますが、このツールはHibari Gitリポジトリに入っています。そのため、あらためてインストールする必要はありません。
+- OpenSSL - http://www.openssl.org/
+  * Erlangの“crypto”モジュールに必要です。
+- Erlang/OTP - http://www.erlang.org/
+  * バージョンR13B04以降を使用してください。 
+    ** R14B01がHibariでテスト済みの最新バージョンです。
+  * ソースコードからErlang/OTPをビルドする方法は、 <<ErlangOTP>>を参照して下さい。 
+
+==== オプションアイテム(Hibariのドキュメントのビルドに必要なソフトウェア)
+
+以下のソフトウェアは、ソースコードからHibariのドキュメントをビルドしたい場合にのみ必要です。http://hibari.github.com/hibari-doc/に、ドキュメントのオンライン版があるので参考にしてください。
+
+- AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
+  * バージョン8.6.1以降を使用してください。
+    ** バージョン9.6.3がHibariでテスト済みの最新バージョンです。
+  * その他にも、以下のサポートツールが必要です。
+    ** ImageMagick - http://www.imagemagick.org/
+    ** Graphviz - http://www.graphviz.org/
+    ** Mscgen - http://www.mcternan.me.uk/mscgen/
+- Docbook - http://www.docbook.org/
+  * HibariドキュメントのPDF版をビルドする際に必要なオプションです。
+- xmlto - https://fedorahosted.org/xmlto/
+  * Hibariドキュメントのテキストバージョンをビルドする際に必要なオプションです。
+
+=== Hibariをダウンロードする
+
+以下の手順に従って、GitHubからHibariリポジトリをダウンロードします。
+
+. 作業ディレクトリを作成し、Hibariマニフェストファイルを読み出します。
++
+------
+$ mkdir working-directory
+$ cd working-directory
+$ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
+------
++
+
+NOTE: 
+repo initでは、"Git" IDが必要です。このIDを取得済みの場合は、GitHubアカウントの名前とemailを入力してください。読み書きアクセス可能なメンバーは、"repo init -u
+git@github.com:hibari/manifests.git -m hibari-default-rw.xml" を使用してください。
+
++
+TIP: 
+Hibariの最新開発バージョンをチェックアウトしたい場合は、repo initコマンドに、" -b dev" を付けてください。
+
++
+. HibariのGitリポジトリをダウンロードします。
++
+------
+$ repo sync
+------
++
+
+repo syncを実行すると、作業ディレクトリの構造は以下のようになります。
+
+-----
+<working-directory>
+  |- hibari/
+    |- .git/
+    |- .gitignore
+    |- Makefile
+    |- dialyze-ignore-warnings.txt
+    |- dialyze-nospec-ignore-warnings.txt
+    |- lib/                             <1>
+      |- <application_name>/
+        |- .git/
+        |- .gitignore
+        |- ebin/
+        |- include/
+          |- *.hrl
+        |- priv/
+        |- rebar.config
+        |- src/
+          |- <application_name>.app.src
+          |- *.erl
+        |- test/
+          |- eunit/
+            |- *.erl
+          |- eqc/
+            |- *.erl
+      :
+    |- rebar
+    |- rebar.config
+    |- rel/                             <2>
+      |- files/
+        |- app.config
+        |- erl
+        |- hibari
+        |- hibari-admin
+        |- nodetool
+        |- nodetool-admin
+        |- vm.args
+      |- hibari/
+        :
+        |- releases/
+          |- <release_vsn>/
+            :
+          :
+        :
+      |- reltool.config
+  |- hibari-doc/                        <3>
+    :
+  |- manifests/                         <4>
+    :
+  |- patches/                           <5>
+    :
+  |- rebar/                             <6>
+    :
+  |- .repo/
+    :
+-----
+
+<1> 
+アプリケーション
+<2> リリース
+<3> 
+ドキュメント
+<4> 
+マニフェスト
+<5> 
+パッチ
+<6> Rebar
+
+=== Hibariのリリースパッケージをビルドする
+
+以下の手順に従って、Hibariのリリースパッケージをビルドします。
+
+. _basic recipe_をビルドします。
++
+------
+$ cd working-directory/hibari
+$ make
+------
++
+TIP: "make: erl: Command not found" というメッセージが出た場合、 Erlang/OTPが確かにインストールされていること、および$PATH環境変数に"otp-installing-directory-name/bin" が追加されていることを確認してください。
++
+. パッケージ化した_basic recipe_をリリースします。
++
+------
+$ cd working-directory/hibari
+$ make package
+------
++
+NOTE: リリースパッケージのtarball "hibari-X.Y.Z-dev-ARCH-WORDSIZE.tgz" およびmd5sumファイル "hibari-X.Y.Z-dev-ARCH-WORDSIZE-md5sum.txt" が、作業ディレクトリ内に書き込まれます。<<getting-started>>で説明したように、これらのファイルを使って、シングルノードまたはマルチノードのHibariのインストールを実行できます。
+
+
+[[HibariAsciiDoc]]
+=== Hibariのドキュメントをビルドする
+
+以下の手順に従って、Hibariのドキュメントをビルドします。
+
+. Hibariの"Guides" の _basic recipe_をビルドします。
++
+------
+$ cd working-directory/hibari-doc/src/hibari
+$ make clean -OR- make realclean
+$ make
+------
++
+. Hibariの"Website" の_basic recipe_をビルドします。
++
+------
+$ cd working-directory/hibari-doc/src/hibari/website
+$ make clean -OR- make realclean
+$ make
+------
++
+NOTE: "./public_html" ディレクトリに、 HTMLドキュメントが書き込まれます。
+
+Hibariのドキュメントは、AsciiDocと、次の補助ツールを使って作成されます。
+
+- ImageMagick
+- Docbook
+- Graphviz
+- Mscgen
+- xmlto
+ 
+Hibariのドキュメントは、AsciiDocと、手動で修正したa2xツールを使って生成されます。
+
+------
+$ diff -u /usr/local/Cellar/asciidoc/8.6.3/bin/a2x{.orig,}
+--- /usr/local/Cellar/asciidoc/8.6.3/bin/a2x.orig	2011-01-02 18:09:35.000000000 +0900
++++ /usr/local/Cellar/asciidoc/8.6.3/bin/a2x	2011-01-02 18:11:19.000000000 +0900
+@@ -156,7 +156,10 @@
+ def shell_copy(src, dst):
+     verbose('copying "%s" to "%s"' % (src,dst))
+     if not OPTIONS.dry_run:
+-        shutil.copy(src, dst)
++        try:
++            shutil.copy(src, dst)
++        except shutil.Error:
++            return
+
+ def shell_rm(path):
+     if not os.path.exists(path):
+------
+
+[[ErlangOTP]]
+=== Erlang/OTPをビルドしてインストールする
+
+以下の手順に従ってソースコードをダウンロードし、Erlang/OTPをビルドします。続いてシステムをインストールします。以下の手順が基本的なやり方ですが、すべてのオプションに対応しているわけではありません。
+
+
+NOTE: 
+Erlang/OTP の設定とビルドを行う前に、システムに'openssl-devel' パッケージがインストールされていることを確認してください。
+
+
+. Erlang/OTPシステムのソースコードをダウンロードします。
++
+------
+$ cd working-directory
+$ wget http://www.erlang.org/download/otp_src_R14B01.tar.gz
+------
++
+. Erlang/OTPシステムのソースコードを解凍します。
++
+------
+$ tar -xzf otp_src_R14B01.tar.gz
+------
++
+. Erlang/OTPを設定します。
++
+------
+$ cd working-directory/otp_src_R14B01
+$ ./configure --prefix=otp-installing-directory-name
+------
++
+. Erlang/OTPをビルドします。
++
+------
+$ make
+------
++
+. Erlang/OTPをインストールします。
++
+------
+$ sudo make install
+------
+
+
+CAUTION: 
+"otp-installing-directory-name/bin" が$PATH環境変数に追加されたことを確認してください。
+　　
+== サンプル・アプリケーション
+_（作成中）_
+
+== Hibariをより使いこなすために
+
+=== GitHubとGitとRepo
+_（追加予定）_
+
+Hibariのすべての"プロジェクト" に関する作業ディレクトリをリストします。
+------
+$ repo forall -c "pwd" 
+------
+
+
+
+
+NOTE: プロジェクトにはそれぞれ、対応するGitリポジトリとデフォルトの改訂版があります。詳細は"manifests/hibari-default.xml" ファイルを確認してください。
+
+
+新しいトピック（例：new-topic-name）のブランチを作成します。
+------
+$ repo start new-topic-name `repo forall -c "pwd" | xargs echo`
+------
+
+既存のトピック（例：topic-name）のブランチを中断します。
+------
+$ repo abandon topic-name `repo forall -c "pwd" | xargs echo`
+------
+
+マスター・ブランチを構成管理下に置き、チェックアウトします。
+------
+$ repo forall -c "git branch --track master github/master"
+$ repo forall -c "git checkout master"
+------
+
+dev（開発）ブランチを構成管理下に置き、チェックアウトします。
+------
+$ repo forall -c "git branch --track dev github/dev"
+$ repo forall -c "git checkout dev"
+------
+
+=== コードとブランチとバージョンの管理
+_（追加予定）_
+
+=== 文書化
+_（追加予定）_
+
+=== パッチの提供
+_（追加予定）_
+
+
