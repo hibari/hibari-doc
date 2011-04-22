@@ -2848,9 +2848,9 @@ $ wget -O - http://android.git.kernel.org/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
 ------
 +
-  * ダウンロードおよびパッケージのプロセスでは、Rebar (https://github.com/basho/rebar/wiki)も使用しますが、このツールはHibari Gitリポジトリに入っています。そのため、あらためてインストールする必要はありません。
+  * ダウンロードおよびパッケージのプロセスでは、Rebar (https://github.com/basho/rebar/wiki) も使用しますが、このツールはHibari Gitリポジトリに入っています。そのため、あらためてインストールする必要はありません。
 - OpenSSL - http://www.openssl.org/
-  * Erlangの“crypto”モジュールに必要です。
+  * Erlangの “crypto” モジュールに必要です。
 - Erlang/OTP - http://www.erlang.org/
   * バージョンR13B04以降を使用してください。 
     ** R14B01がHibariでテスト済みの最新バージョンです。
@@ -2858,7 +2858,7 @@ $ chmod a+x ~/bin/repo
 
 ==== オプションアイテム(Hibariのドキュメントのビルドに必要なソフトウェア)
 
-以下のソフトウェアは、ソースコードからHibariのドキュメントをビルドしたい場合にのみ必要です。http://hibari.github.com/hibari-doc/に、ドキュメントのオンライン版があるので参考にしてください。
+以下のソフトウェアは、ソースコードからHibariのドキュメントをビルドしたい場合にのみ必要です。 (http://hibari.github.com/hibari-doc/) に、ドキュメントのオンライン版があるので参考にしてください。
 
 - AsciiDoc - http://www.methods.co.nz/asciidoc/index.html
   * バージョン8.6.1以降を使用してください。
@@ -2885,13 +2885,12 @@ $ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
 ------
 +
 
-NOTE: 
-repo initでは、"Git" IDが必要です。このIDを取得済みの場合は、GitHubアカウントの名前とemailを入力してください。読み書きアクセス可能なメンバーは、"repo init -u
+NOTE: repo initでは、"Git" IDが必要です。このIDを取得済みの場合は、GitHubアカウントの名前とemailを入力してください。読み書きアクセス可能なメンバーは、
+"repo init -u 
 git@github.com:hibari/manifests.git -m hibari-default-rw.xml" を使用してください。
 
 +
-TIP: 
-Hibariの最新開発バージョンをチェックアウトしたい場合は、repo initコマンドに、" -b dev" を付けてください。
+TIP: Hibariの最新開発バージョンをチェックアウトしたい場合は、repo initコマンドに、" -b dev" を付けてください。
 
 +
 . HibariのGitリポジトリをダウンロードします。
@@ -2999,7 +2998,7 @@ NOTE: リリースパッケージのtarball "hibari-X.Y.Z-dev-ARCH-WORDSIZE.tgz"
 
 以下の手順に従って、Hibariのドキュメントをビルドします。
 
-. Hibariの"Guides" の _basic recipe_をビルドします。
+. Hibariの "Guides" の _basic recipe_をビルドします。
 +
 ------
 $ cd working-directory/hibari-doc/src/hibari
@@ -3007,7 +3006,7 @@ $ make clean -OR- make realclean
 $ make
 ------
 +
-. Hibariの"Website" の_basic recipe_をビルドします。
+. Hibariの "Website" の_basic recipe_をビルドします。
 +
 ------
 $ cd working-directory/hibari-doc/src/hibari/website
@@ -3051,8 +3050,7 @@ $ diff -u /usr/local/Cellar/asciidoc/8.6.3/bin/a2x{.orig,}
 以下の手順に従ってソースコードをダウンロードし、Erlang/OTPをビルドします。続いてシステムをインストールします。以下の手順が基本的なやり方ですが、すべてのオプションに対応しているわけではありません。
 
 
-NOTE: 
-Erlang/OTP の設定とビルドを行う前に、システムに'openssl-devel' パッケージがインストールされていることを確認してください。
+NOTE: Erlang/OTP の設定とビルドを行う前に、システムに 'openssl-devel' パッケージがインストールされていることを確認してください。
 
 
 . Erlang/OTPシステムのソースコードをダウンロードします。
@@ -3088,8 +3086,7 @@ $ sudo make install
 ------
 
 
-CAUTION: 
-"otp-installing-directory-name/bin" が$PATH環境変数に追加されたことを確認してください。
+CAUTION: "otp-installing-directory-name/bin" が$PATH環境変数に追加されたことを確認してください。
 　　
 == サンプル・アプリケーション
 _（作成中）_
@@ -3107,7 +3104,7 @@ $ repo forall -c "pwd"
 
 
 
-NOTE: プロジェクトにはそれぞれ、対応するGitリポジトリとデフォルトの改訂版があります。詳細は"manifests/hibari-default.xml" ファイルを確認してください。
+NOTE: プロジェクトにはそれぞれ、対応するGitリポジトリとデフォルトの改訂版があります。詳細は "manifests/hibari-default.xml" ファイルを確認してください。
 
 
 新しいトピック（例：new-topic-name）のブランチを作成します。
