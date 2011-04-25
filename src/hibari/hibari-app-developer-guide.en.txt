@@ -2763,7 +2763,7 @@ SYNOPSIS
 
  ::
 *brick_simple:fold_key_prefix(Tab, Prefix, StartKey, Fun, Acc, Flags0,
- NumItems,SleepTime,Timeout).*
+ NumItems, SleepTime, Timeout).*
 
 DESCRIPTION
 

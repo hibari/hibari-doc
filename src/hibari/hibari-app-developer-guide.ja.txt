@@ -442,7 +442,7 @@ $ ssh-add ~/.ssh/id_rsa
 +
 ------
 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev1
-$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2 
+$ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev2
 $ ssh-copy-id -i ~/.ssh/id_rsa.pub $USER@dev3
 ------
 +
@@ -498,10 +498,10 @@ BRICK_NODES=(dev1 dev2 dev3)
 BRICKS_PER_CHAIN=2
 
 ALL_NODES=(dev1 dev2 dev3)
-ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") 
-ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232") 
+ALL_NETA_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232")
+ALL_NETB_ADDRS=("10.181.165.230" "10.181.165.231" "10.181.165.232")
 ALL_NETA_BCAST="10.181.165.255"
-ALL_NETB_BCAST="10.181.165.255" 
+ALL_NETB_BCAST="10.181.165.255"
 ALL_NETA_TIEBREAKER="10.181.165.1"
 
 ALL_HEART_UDP_PORT="63099"
@@ -546,7 +546,7 @@ CAUTION: 稼働時の設定では、ネットワークAとネットワークBを
 +
 ------
 10.181.165.230  dev1.your-domain.com    dev1
-10.181.165.231  dev2.your-domain.com    dev2 
+10.181.165.231  dev2.your-domain.com    dev2
 10.181.165.232  dev3.your-domain.com    dev3
 ------
 +
@@ -573,7 +573,7 @@ $
 +
 ------
 $ for i in dev1 dev2 dev3 ; do ./clus/priv/clus.sh -f init hibari $i ; done
-hibari@dev1 
+hibari@dev1
 hibari@dev2
 hibari@dev3
 ------
@@ -614,8 +614,8 @@ hibari@dev3
 +
 ------
 $ ./clus/priv/clus-hibari.sh -f bootstrap hibari hibari.config
-hibari@dev1 => hibari@dev1 
-hibari@dev2 
+hibari@dev1 => hibari@dev1
+hibari@dev2
 hibari@dev3
 ------
 +
@@ -731,7 +731,7 @@ Erlang のAPIは、他のチェイン・レイアウトパターンで、テー�
 Hibariのクライアント向けAPIで実行できる操作は、次のとおりです。ネイティブErlangのAPIの各操作の詳細に関しては、リンク先を参照してください。.
 
 //fix me
-*データの追加* 
+*データの追加*
 
  - まだ存在していないキーとバリューのペアを新たに追加します。オプションでフラグを追加できます。
   * link:#brick-simple-add[brick_simple:add/6]
@@ -740,24 +740,24 @@ Hibariのクライアント向けAPIで実行できる操作は、次のとお�
  - キーの存在の有無にかかわらず、キーとバリューのペアと、オプションでフラグを設定します。
   * link:#brick-simple-set[brick_simple:set/6]
 
-*データの検索* 
+*データの検索*
 
  - キーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
   * link:#brick-simple-get[brick_simple:get/4]
  - 辞書の順に並んで連続している複数のキーを検索します。オプションで、そのキーに関連付けられたバリューとフラグを検索します。
   * link:#brick-simple-get-many[brick_simple:get_many/5]
 
-*データの削除* 
+*データの削除*
 
  - キーとバリューのペア、およびそれに関連付けられたフラグを削除します。
   * link:#brick-simple-delete[brick_simple:delete/4]
 
-*複合操作* 
+*複合操作*
 
  - 指定した操作のリストを実行します。オプションで、アトミック・トランザクションとして実行します。
   * link:#brick-simple-do[brick_simple:do/4]
 
-*フォールド操作* 
+*フォールド操作*
 
  - テーブル内のすべてのキーに対して、フォールド操作を実行します。
   * link:#brick-simple-fold-table[brick_simple:fold_table/7]
@@ -2078,7 +2078,7 @@ _（追加予定）
 
  ::
 *brick_simple:fold_key_prefix(Tab, Prefix, StartKey, Fun, Acc, Flags0,
- NumItems,SleepTime,Timeout).*
+ NumItems, SleepTime, Timeout).*
 
 解説
 
@@ -2304,10 +2304,10 @@ UBFのRPCコールは、タプルの形式になるのが一般的です。タ�
 [IMPORTANT]
 ==============================
 1. Erlangシェルを実験やプロトタイプで使用する場合、シェルのサーチ・パスに、ErlangのUBFクライアント・ライブラリへのパスを入れなければなりません。その一番簡単な方法は、Erlangシェルの `erl` コマンドの引数として、次を使用することです。
-`-pz /path/to/ubf/library/ebin` 
+`-pz /path/to/ubf/library/ebin`
 
 2. コードを作成する場合は、`?S()` マクロを使用できるように、ソースモジュールの先頭行に次のステートメントを置いてください。
-`-include("ubf.hrl").` 
+`-include("ubf.hrl").`
 Erlangシェルの制限により、シェル中ではマクロを使用できません。
 ==============================
 
@@ -2594,7 +2594,7 @@ env PYTHONPATH=/path/to/py_interface python pyebf.py
     assert res1[0] == 'key_not_exist'
 ---------------------------
 4. テーブル `tab1` に、キー `'foo'` を追加します。 `do_req()` インターフェイスは、クライアントがタイムスタンプの整数を明示的に管理しなければならず、ここではタイムスタンプとして `1` を使用しています。
-+ 
++
 ---------------------------
     ## add - ok
     req2 = (Atom('do'), Atom('tab1'), [(Atom('add'), 'foo', 1, 'bar', 0, [])], [
@@ -2808,9 +2808,9 @@ _（追加予定）_
 
 この章では、以下をビルドするための基本的な方法を説明します。
 
-- Hibari リリースパッケージ 
-- Hibari ドキュメント 
-- Erlang/OTP システム 
+- Hibari リリースパッケージ
+- Hibari ドキュメント
+- Erlang/OTP システム
 
 === 必要なサードパーティのソフトウェア
 
@@ -2837,7 +2837,7 @@ $ git config --global user.name "Your Name"
     ** 読み書きアクセス可能なメンバーには、GitHubアカウントにSSHの公開鍵を必ず追加してください。
 - Python - http://www.python.org
   * バージョン2.4以降を使用してください。
-    ** バージョン2.7がHibariでテスト済みの最新バージョンです。 
+    ** バージョン2.7がHibariでテスト済みの最新バージョンです。
     ** 注意: Python 3.x には対応できていない可能性があります。
 - Repo - http://source.android.com/source/git-repo.html
   * 以下のようにインストールしてください。
@@ -2852,9 +2852,9 @@ $ chmod a+x ~/bin/repo
 - OpenSSL - http://www.openssl.org/
   * Erlangの “crypto” モジュールに必要です。
 - Erlang/OTP - http://www.erlang.org/
-  * バージョンR13B04以降を使用してください。 
+  * バージョンR13B04以降を使用してください。
     ** R14B01がHibariでテスト済みの最新バージョンです。
-  * ソースコードからErlang/OTPをビルドする方法は、 <<ErlangOTP>>を参照して下さい。 
+  * ソースコードからErlang/OTPをビルドする方法は、 <<ErlangOTP>>を参照して下さい。
 
 ==== オプションアイテム(Hibariのドキュメントのビルドに必要なソフトウェア)
 
@@ -2885,7 +2885,7 @@ $ repo init -u git://github.com/hibari/manifests.git -m hibari-default.xml
 ------
 +
 NOTE: repo initでは、"Git" IDが必要です。このIDを取得済みの場合は、GitHubアカウントの名前とemailを入力してください。読み書きアクセス可能なメンバーは、
-"repo init -u 
+"repo init -u
 git@github.com:hibari/manifests.git -m hibari-default-rw.xml" を使用してください。
 +
 TIP: Hibariの最新開発バージョンをチェックアウトしたい場合は、repo initコマンドに、" -b dev" を付けてください。
@@ -2956,14 +2956,14 @@ repo syncを実行すると、作業ディレクトリの構造は以下のよ�
     :
 -----
 
-<1> 
+<1>
 アプリケーション
 <2> リリース
-<3> 
+<3>
 ドキュメント
-<4> 
+<4>
 マニフェスト
-<5> 
+<5>
 パッチ
 <6> Rebar
 
@@ -3020,7 +3020,7 @@ Hibariのドキュメントは、AsciiDocと、次の補助ツールを使って
 - Graphviz
 - Mscgen
 - xmlto
- 
+
 Hibariのドキュメントは、AsciiDocと、手動で修正したa2xツールを使って生成されます。
 
 ------
@@ -3095,7 +3095,7 @@ _（追加予定）_
 
 Hibariのすべての"プロジェクト" に関する作業ディレクトリをリストします。
 ------
-$ repo forall -c "pwd" 
+$ repo forall -c "pwd"
 ------
 
 
