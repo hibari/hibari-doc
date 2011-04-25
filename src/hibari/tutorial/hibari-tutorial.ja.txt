@@ -1,0 +1,626 @@
+// -*- Doc -*-
+// vim: set syntax=asciidoc:
+
+= 2011Q2 Tutorial - Hibari Hands On *DRAFT*
+:Author: Joseph Wayne Norton
+:Email: norton@geminimobile.com
+:Date: 2011/04/24
+:Revision: 0.1
+:Copyright: 2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+
+== Overview
+
+Part 1::
+- Hibari Overview
+Part 2::
+- Erlang Basics
+- Native Client
+- _UBF Basics (extra)_
+- _UBF Client (extra)_
+Part 3::
+- Hibari Basics
+- Hands On Exercises
+
+== Part 1
+
+- Hibari Overview
+
+== Hibari Overview
+// == Introduction
+
+- Hibari is a production-ready, distributed, key-value, big data
+  store.
+- Hibari combines Chain Replication and Erlang to build a robust,
+  high-performance distributed storage solution.
+- Hibari delivers high throughput and availability without scarificing
+  data consistency.
+- Hibari is open source and built for the carrier-class telecom sector
+  and proven in multi-million user telecom production environments.
+
+== Hibari - Distinctive Features
+// == Introduction
+
+- High Performance, Especially for Reads and Large Values
+- Per-table options for RAM+disk-based or disk-only value storage (#)
+- Support for per-key expiration times and per-key custom meta-data
+- Support for multi-key atomic transactions, within range limits
+- A key timestamping mechanism that facilitates "test-and-set" type
+  operations
+- Automatic data rebalancing as the system scales
+- Support for live code upgrades
+- Multiple client API implementations
+
+[role="incremental"]
+_# per-key options have been implemented but not yet deployed in a
+production setting._
+
+==  Hibari - Engineered in Erlang
+// ==== Engineered in Erlang
+
+- Hibari's server is written entirely in Erlang.  Hibari clients may
+  be written in Erlang and/or other programming languages.
+- Erlang is a general purpose programming language and runtime
+  environment designed specifically to support reliable,
+  high-performance distributed systems.
+- Erlang's Key Benefits are
+  * Concurrency
+  * Distribution
+  * Robustness
+  * Portability
+  * Hot code upgrades
+  * Predictable Garbage collection behavior
+
+== Hibari - Chain Replication
+// ==== Chain Replication for High Availability and Strong Consistency
+
+image:images/chain_replication.png[]
+
+- Chain Replication is a technique that achieves redundancy and high
+  availability without sacrificing data consistency.
+- Write requests are directed to "head", to "middle", and to "tail"
+  bricks.
+- Read requests are directed to the "tail" brick.
+- The length of a chain is configurable and decides the degree of
+  replication.
+- Through consistent hashing, the key space is divided across multiple
+  storage "chains".
+- The entire key or a prefix of the key can be the subject of
+  consistent hashing.
+
+== Hibari - Automatic Failover
+// ==== Chain Replication for High Availability and Strong Consistency
+
+image:images/automatic_failover.png[]
+
+- Hibari detects failures within a chain and automatically adjusts
+  member brick roles.
+- If the head brick goes down, the middle brick automatically takes
+  over the head brick role.
+- If the new head brick failed also, the long remaining brick would
+  play both the head and the tail role.
+- By following the properties of chain replication, Hibari can
+  guarantee strong consistency even in the event of brick failures.
+
+== Hibari - Load Balancing
+// ==== Chain Replication for High Availability and Strong Consistency
+image:images/load_balanced_chains.png[]
+
+- Head bricks and tail bricks bear more load than do middle bricks.
+
+- Load balancing of roles and of chains across physical machines can
+  better utilize hardware resources.
+
+== Hibari - Node Failure
+// ==== Chain Replication for High Availability and Strong Consistency
+
+image:images/automatic_failover_2.png[]
+
+In the event of physical node failure, bricks automatically shift
+roles and each chain continues to provide service to clients.
+
+Chain Repair Process::
+  1. Failed node is restarted.
+  2. Failed bricks are restarted and moved to the end of the chain.
+  3. Failed bricks repair themselves against the "official tail".
+  4. Repaired bricks are moved to their original position and then
+     resume normal service.
+
+== Hibari - Cluster
+
+image:images/cap-01.png[]
+
+== Hibari - Load Balancing (again)
+
+image:images/chain-01.png[]
+
+== Hibari - Admin Server(s)
+
+image:images/cap-02-admin.png[]
+
+== Hibari - Chains
+
+image:images/cap-02-chain.png[]
+
+== Hibari - Clients
+
+image:images/cap-02-client.png[]
+
+== Hibari - 3 Layers
+
+Top layer:: consistent hashing
+Middle layer:: chain replication
+Bottom layer:: the storage brick
+
+[role="incremental"]
+image:images/logical-architecture1.png[]
+
+== Hibari - Consistent Hashing
+
+- Hibari clients use the algorithm to calculate which chain must
+  handle operations for a key.
+- Clients obtain this information via updates from the Hibari Admin
+  Server.
+- These updates allow the client to send its request directly to the
+  correct server in most use cases.  Servers use the algorithm to
+  verify that the client's calculation was correct.
+- If a client sends an operation to the wrong brick, the brick will
+  forward the operation to the correct brick.
+
+== Hibari - Chain Migration
+
+image:images/chain-migration-3to4.png[]
+
+Motivations for rebalancing of data:
+
+- Chains are added or removed from the cluster.
+- Brick hardware is changed, e.g. adding extra disk or RAM capacity.
+- A change in a table's consistent hashing algorithm configuration
+  forces data (by definition) to another chain.
+
+== Hibari - Chain Migration (cont.)
+
+image:images/migration-3to4.png[]
+
+Key Points::
+
+- Minimize the moving of data from one place to another.
+- Support rate control features to minimize service impact.
+- Ability to "test" and to "customize" key distribution before
+  migration.
+
+== Hibari - Write-Ahead-Logs
+
+image:images/private-and-common-logs.png[]
+
+- The shared "common log" per server. Provides durability guarantees
+  to all logical bricks within the server node via the fsync() system
+  call.
+- Individual "private logs" per brick. All metadata regarding keys in
+  the logical brick are stored in the logical brick's private log.
+
+== Hibari - Client API
+// Simple But Powerful Client API
+
+As a key-value store, Hibari's core data model and client API model
+are simple by design:
+
+- blob-based key-value pairs
+  * keys: typically path-like names separated by "/'
+  * values: binary blobs (often serialized Erlang terms)
+- operations
+  * insertion (add, set, replace)
+  * deletion (delete)
+  * retrieval (get, get_many)
+- lexicographically sorted tables
+- key prefixes (often) used for implementing atomic
+  "micro-transactions" with individual chains
+
+== Hibari - Client API (cont.)
+// Simple But Powerful Client API
+
+Hibari supports multiple client API implementations:
+
+- Native Erlang
+- Universal Binary Format (UBF/EBF)
+- Thrift
+- Amazon S3
+- JSON-RPC
+
+[role="incremental"]
+You can develop Hibari client applications in a variety of languages
+including Java, C/C++, Python, Ruby, and Erlang.
+
+== Part 2
+
+- Intermission #1
+  * 10 minute break
+
+- Erlang Basics
+- Native Client
+- _UBF Basics (extra)_
+- _UBF Client (extra)_
+
+== Erlang - Basic Types
+// ==== Erlang Basic Data Types
+
+Number:: There are two types of numeric literals, *integers* and
+*floats*.
+
+Atom:: An *atom* is a literal, a constant with name. An atom should be
+enclosed in single quotes (') if it does not begin with a lower-case
+letter or if it contains other characters than alphanumeric
+characters, underscore (_), or @.
++
+-----
+hello
+phone_number
+'Monday'
+'phone number'
+'hello'
+'phone_number'
+-----
+
+Bit String and Binary:: A *bit string* is used to store an area of
+untyped memory.  A bit string that consists of a number of bits that
+is evenly divisible by eight is called a *binary*.
++
+-----
+<<10,20>>
+<<"ABC">>
+-----
+
+== Erlang - Compound Types
+
+Term:: A piece of data of any data type is called a *term*.
+
+Tuple:: A *tuple* is a compound data type with a fixed number of
+terms, enclosed by braces:
++
+-----
+{Term1,...,TermN}
+-----
+
+List:: A *list* is a compound data type with a variable number of
+terms, enclosed by square brackets:
++
+-----
+[Term1,...,TermN]
+-----
+
+String:: Strings are enclosed in double quotes ("), but are not a true
+data type in Erlang. Instead a string "hello" is shorthand for the
+list [$h,$e,$l,$l,$o], that is [104,101,108,108,111].
+
+== Erlang - Miscellaneous
+
+Boolean:: There is no Boolean data type in Erlang. Instead the atoms
+`true` and `false` are used to denote Boolean values.
+
+None or Null:: There is no such type in Erlang.  However, the atom
+'undefined' is often (by convention) used for this purpose.
+
+Pid:: A process identifier, pid, identifies an Erlang process.
+
+Reference:: A reference is a term which is unique in an Erlang runtime
+system.
+
+Fun:: A fun is a functional object.
+
+[role="incremental"]
+_... plus a few others_
+
+== Erlang - Factorial Program
+
+The file "math.erl" contains the following program:
+
+------
+-module(math).
+-export([fac/1]).
+
+fac(N) when N > 0 -> N * fac(N-1);
+fac(0) -> 1.
+------
+
+[role="incremental"]
+This program can be compiled and run using the Erlang shell.
+
+[role="incremental"]
+------
+$ erl
+Erlang R14B01 (erts-5.8.2) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
+
+Eshell V5.8.2  (abort with ^G)
+1> c(math).
+{ok,math}
+2> math:fac(25).
+15511210043330985984000000
+------
+
+[role="incremental"]
+Let it crash ...
+
+[role="incremental"]
+------
+3> math:fac(-1).
+** exception error: no function clause matching math:fac(-1)
+------
+
+== Erlang - Sequential Programs
+
+Append::
++
+------
+append([],      L) -> L;
+append([H | T], L) -> [H | append(T, L)].
+------
+
+[role="incremental"]
+QuickSort::
++
+------
+qsort([]) -> [];
+qsort([H | T]) ->
+  qsort([ X || X <- T, X < H ]) ++
+        [H] ++
+        qsort([ X || X <- T, X >= H ]).
+------
+
+[role="incremental"]
+Adder::
++
+------
+> Adder = fun(N) -> fun(X) -> X + N end end.
+#Fun<erl_eval.6.13229925>
+> G = Adder(10).
+#Fun<erl_eval.6.13229925>
+> G(5).
+15
+------
+
+== Native Client - Single Ops
+// == Client API: Native Erlang
+
+brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout):: => ok.
+brick_simple:replace(Tab, Key, Value, ExpTime, Flags, Timeout):: => ok.
+brick_simple:set(Tab, Key, Value, ExpTime, Flags, Timeout):: => ok.
+brick_simple:get(Tab, Key, Flags, Timeout):: => `{'ok', timestamp(), val()}`.
+brick_simple:get_many(Tab, Key, MaxNum, Flags, Timeout):: => `{ok, {[{key(), timestamp(), val()}], boolean()}}`.
+brick_simple:delete(Tab, Key, Flags, Timeout):: => ok.
+
+== Native Client - Multiple Ops
+// == Client API: Native Erlang
+
+brick_simple:do(Tab, OpList, OpFlags, Timeout):: => [OpRes()].
+
+Two flavors::
+- normal - OpList
+- micro-transaction - [`'txn'`|OpList]
+
+[role="incremental"]
+TIP: "single" operations are implemented (under the hood) using the
+do/4 function.
+
+== Native Client - Common Args
+// == Client API: Native Erlang
+
+ ::
+*Tab*
+
+- Name of the table.
+- Type:
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Key*
+
+- Key for the table, in association with a paired value.
+- Type:
+  * `Key = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
+
+NOTE: `Key` internally always converted to binary.
+
+== Native Client - Common Args (cont.)
+// == Client API: Native Erlang
+
+ ::
+*Value*
+
+- Value to associate with the key.
+- Type:
+  * `Value = val()`
+  * `val() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
+
+ ::
+*ExpTime*
+
+- Time at which the key will expire, expressed as a Unix time_t().
+- Optional; defaults to 0 (no expiration).
+- Type:
+  * `ExpTime = exp_time()`
+  * `exp_time() = time_t()`
+  * `time_t() = integer()`
+
+== Native Client - Common Args (cont.)
+// == Client API: Native Erlang
+
+ ::
+*Flags*
+
+- List of operational flags and/or custom property flags to associate
+  with the key-value pair in the database. Heavy use of custom
+  property flags is discouraged due to RAM-based storage.
+- Type:
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag() | property()]`
+  * `do_op_flag() = {'testset', timestamp()}`
+  * `timestamp() = integer()`
+  * `property() = atom() | {term(), term()}`
+- Operational flag usage
+  * `{'testset', timestamp()}`
+    ** Fail the operation if the existing key's timestamp is not
+       exactly equal to `timestamp()`.  If used inside a
+       micro-transaction, abort the transaction if the key's timestamp
+       is not exactly equal to `timestamp()`.
+
+ ::
+*Timeout*
+
+- Operation timeout in milliseconds.
+- Optional; defaults to 15000.
+- Type:
+  * `Timeout = timeout()`
+  * `timeout() = integer()`
+
+== Native Client - Common Errs
+// == Client API: Native Erlang
+
+ ::
+Error returns
+
+- `'key_not_exist'`
+  * The operation failed because the key does not exist.
+- `{'key_exists',timestamp()}`
+  * The operation failed because the key already exists.
+  * `timestamp() = integer()`
+- `{'ts_error', timestamp()}`
+  * The operation failed because the `{'testset', timestamp()}` flag
+    was used and there was a timestamp mismatch. The `timestamp()` in
+    the return is the current value of the existing key's timestamp.
+  * `timestamp() = integer()`
+- `'invalid_flag_present'`
+  * The operation failed because an invalid `do_op_flag()` was found
+    in the `Flags` argument.
+- `'brick_not_available'`
+  * The operation failed because the chain that is responsible for
+    this key is currently length zero and therefore unavailable.
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * The operation failed because the server brick handling the request
+    has crashed or else a network partition has occurred between the
+    client and server. The client should resend the query after a
+    short delay, on the assumption that the Admin Server will have
+    detected the failure and taken steps to repair the chain.
+  * `node() = atom()`
+- Exit by timeout.
+
+== Native Client - Get Flags
+// == Client API: Native Erlang
+
+- Operational flag usage
+  * `'get_all_attribs'`
+    ** Return all attributes of the key. May be used in combination
+       with the `witness` flag.
+  * `'witness'`
+    ** Do not return the value blob in the result. This flag will
+       guarantee that the brick does not require disk access to
+       satisfy this request.
+
+== Native Client - Get Rets
+// == Client API: Native Erlang
+
+ ::
+Success returns
+
+- `{'ok', timestamp(), val()}`
+  * Default behavior.
+- `{'ok', timestamp()}`
+  * Success return when the get uses `'witness'` but not `'get_all_attribs'`.
+- `{'ok', timestamp(), proplist()}`
+  * Success return when the get uses both `'witness'` and `'get_all_attribs'`.
+- `{'ok', timestamp(), val(), exp_time(), proplist()}`
+  * Success return when the get uses `'get_all_attribs'` but not `'witness'`.
+
+NOTE: For proplists, `{val_len,Size::integer()}` always returned.
+
+== Native Client - GetMany Flags
+// == Client API: Native Erlang
+
+- Operational flag usage
+  * `'get_all_attribs'`
+    ** Return all attributes of each key. May be used in combination
+       with the `witness` flag.
+  * `'witness'`
+    ** Do not return the value blobs in the result. This flag will
+       guarantee that the brick does not require disk access to
+       satisfy this request.
+  * `{'binary_prefix', binary()}`
+    ** Return only keys that have a binary prefix that is exactly
+       equal to `binary()`.
+  * `{'max_bytes', integer()}`
+    ** Return only as many keys as the sum of the sizes of their
+       corresponding value blobs does not exceed `integer()` bytes.
+       If this flag is not explicity specified in a client request,
+       the value defaults to 2GB.
+  * `{'max_num', integer()}`
+    ** Maxinum number of keys to return. Defaults to 10. Note: This
+       flag is duplicative of the MaxNum argument in purpose.
+
+== Native Client - GetMany Rets
+// == Client API: Native Erlang
+
+ ::
+Success returns
+
+- `{ok, {[{key(), timestamp(), val()}], boolean()}}`
+  * Default behavior.
+- `{ok, {[{key(), timestamp()}], boolean()}}`
+  * Success return when the `get_many` uses `'witness'` but not
+    `'get_all_attribs'`.
+- `{ok, {[{key(), timestamp(), proplist()}], boolean()}}`
+  * Success return when the `get_many` uses both `'witness'` and
+    `'get_all_attribs'`.
+- `{ok, {[{key(), timestamp(), val(), exp_time(), proplist()}],
+  boolean()}}`
+  * Success return when the `get_many` uses `'get_all_attribs'` but
+    not `'witness'`.
+
+NOTE: `boolean()` indicates if the chain has more keys or not.
+
+NOTE: For proplists, `{val_len,Size::integer()}` always returned.
+
+== Native Client - Do Rets
+
+ ::
+Error returns
+
+- `{txn_fail, [{integer(), do1_res_fail()}]}`
+  * Operation failed because transaction semantics were used in the
+    `do` request and one or more primitive operations within the
+    transaction failed. The `integer()` identifies the failed
+    primitive operation by its position within the request's
+    `OpList`. For example, a 2 indicates that the second primitive
+    listed in the request's `OpList` failed. Note that this position
+    identifier does not count the `txn()` specifier at the start of
+    the `OpList`.
+
+== Part 3
+
+- Intermission #2
+  * 10 minute break
+
+- Hibari Basics
+- Hands On Exercises
+
+== Hibari Basics
+
+TODO:: This section is in progress.
+
+== Hands On Exercises
+
+TODO:: This section is in progress.
+
+== Thank You
+
+Please check Hibari's GitHub repositories and webpages for updates.
+
+[horizontal]
+Hibari Open Source project:: https://github.com/hibari
+Hibari Twitter:: @hibaridb Hashtag: #hibaridb
+Gemini Twitter:: @geminimobile
+Big Data blog:: http://hibari-gemini.blogspot.com/
+Slideshare:: http://www.slideshare.net/geminimobile
