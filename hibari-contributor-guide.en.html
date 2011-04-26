@@ -1058,7 +1058,7 @@ proplist that can contain additional information about the event.  At
 this time, there is no requirement of mandatory properties in that
 proplist.  Though mandatory properties may be introduced later, the
 main purpose is merely to provide a human developer/systems
-administrator with some extra information about the event.</p><div class="figure"><a id="id36113728"></a><p class="title"><strong>Figure 1. Scoreboard and it’s surrounding (partial) supervision tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-stree.svg" target="_top">
+administrator with some extra information about the event.</p><div class="figure"><a id="id36113725"></a><p class="title"><strong>Figure 1. Scoreboard and it’s surrounding (partial) supervision tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-stree.svg" target="_top">
   <div class="mediaobject" align="center"><img src="images/brick-sb-stree.png" align="middle" alt="images/brick-sb-stree.svg" /></div>
 </a></div></div><br class="figure-break" /><p>The scoreboard and it’s surrounding (partial) supervision tree is
 depicted above by "dotted" lines.  The chainmon_XXX and pinger_YYY
@@ -1066,7 +1066,7 @@ processes manually establish a link with the brick_sb process.  If a
 "down event" for the brick_sb processed is received, the chainmon_XXX
 and pinger_YYY processes sleep for 1 second before exiting abnormally.
 The brick_mon_sup supervisor will then automatically restart the
-chainmon_XXX and pinger_YYY processes.</p><div class="figure"><a id="id36113773"></a><p class="title"><strong>Figure 2. Scoreboard and it’s surrounding (partial) call tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-ctree.svg" target="_top">
+chainmon_XXX and pinger_YYY processes.</p><div class="figure"><a id="id36113770"></a><p class="title"><strong>Figure 2. Scoreboard and it’s surrounding (partial) call tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-ctree.svg" target="_top">
   <div class="mediaobject" align="center"><img src="images/brick-sb-ctree.png" align="middle" alt="images/brick-sb-ctree.svg" /></div>
 </a></div></div><br class="figure-break" /><p>During initialization of the scoreboard, the brick_sb loads the
 “scoreboard” operational history into RAM from the bootstrap bricks

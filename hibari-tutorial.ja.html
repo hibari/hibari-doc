@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2011Q2 Tutorial - Hibari Hands On DRAFT</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="ja" class="article" title="2011Q2 Tutorial - Hibari Hands On DRAFT" lang="ja"><div class="titlepage"><div><div><h2 class="title"><a id="id36108574"></a>2011Q2 Tutorial - Hibari Hands On <span class="strong"><strong>DRAFT</strong></span></h2></div><div><div class="author"><h3 class="author"><span class="surname">Norton</span> <span class="firstname">Joseph</span> [FAMILY Given]</h3><div class="affiliation"><div class="address"><p><code class="email">&lt;<a class="email" href="mailto:norton@geminimobile.com">norton@geminimobile.com</a>&gt;</code></p></div></div></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><strong>改訂履歴</strong></th></tr><tr><td align="left">改訂 0.1</td><td align="left">2011/04/24</td><td align="left">JWN</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>目次</strong></p><dl><dt><span class="section"><a href="#_overview">1. Overview</a></span></dt><dt><span class="section"><a href="#_part_1">2. Part 1</a></span></dt><dt><span class="section"><a href="#_hibari_overview">3. Hibari Overview</a></span></dt><dt><span class="section"><a href="#_hibari_&#x7279;&#x5FB4;">4. Hibari - 特徴</a></span></dt><dt><span class="section"><a href="#_hibari_erlang&#x306B;&#x3088;&#x308B;&#x958B;&#x767A;">5. Hibari - Erlangによる開発</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30C1;&#x30A7;&#x30A4;&#x30F3;_&#x30EC;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;">6. Hibari - チェイン・レプリケーション</a></span></dt><dt><span class="section"><a href="#_hibari_&#x81EA;&#x52D5;&#x5FA9;&#x65E7;">7. Hibari - 自動復旧</a></span></dt><dt><span class="section"><a href="#_hibari_&#x8CA0;&#x8377;&#x5206;&#x6563;">8. Hibari - 負荷分散</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30CE;&#x30FC;&#x30C9;&#x969C;&#x5BB3;">9. Hibari - ノード障害</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x30FC;">10. Hibari - クラスター</a></span></dt><dt><span class="section"><a href="#_hibari_&#x8CA0;&#x8377;&#x5206;&#x6563;_&#x518D;">11. Hibari - 負荷分散 (再)</a></span></dt><dt><span class="section"><a href="#_hibari_&#x7BA1;&#x7406;&#x30B5;&#x30FC;&#x30D0;&#x30FC;">12. Hibari - 管理サーバー</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30C1;&#x30A7;&#x30A4;&#x30F3;">13. Hibari - チェイン</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;">14. Hibari - クライアント</a></span></dt><dt><span class="section"><a href="#_hibari_3_&#x30EC;&#x30A4;&#x30E4;&#x30FC;">15. Hibari - 3 レイヤー</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30B3;&#x30F3;&#x30B7;&#x30B9;&#x30C6;&#x30F3;&#x30C8;_&#x30CF;&#x30C3;&#x30B7;&#x30F3;&#x30B0;">16. Hibari - コンシステント・ハッシング</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30C1;&#x30A7;&#x30A4;&#x30F3;_&#x30DE;&#x30A4;&#x30B0;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;">17. Hibari - チェイン・マイグレーション</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30C1;&#x30A7;&#x30A4;&#x30F3;_&#x30DE;&#x30A4;&#x30B0;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;_&#x7D9A;">18. Hibari - チェイン・マイグレーション (続)</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30ED;&#x30B0;&#x5148;&#x884C;&#x66F8;&#x304D;&#x8FBC;&#x307F;">19. Hibari - ログ先行書き込み</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;_api">20. Hibari - クライアント API</a></span></dt><dt><span class="section"><a href="#_hibari_client_api_cont">21. Hibari - Client API (cont.)</a></span></dt><dt><span class="section"><a href="#_part_2">22. Part 2</a></span></dt><dt><span class="section"><a href="#_erlang_basic_types">23. Erlang - Basic Types</a></span></dt><dt><span class="section"><a href="#_erlang_compound_types">24. Erlang - Compound Types</a></span></dt><dt><span class="section"><a href="#_erlang_miscellaneous">25. Erlang - Miscellaneous</a></span></dt><dt><span class="section"><a href="#_erlang_factorial_program">26. Erlang - Factorial Program</a></span></dt><dt><span class="section"><a href="#_erlang_sequential_programs">27. Erlang - Sequential Programs</a></span></dt><dt><span class="section"><a href="#_native_client_single_ops">28. Native Client - Single Ops</a></span></dt><dt><span class="section"><a href="#_native_client_multiple_ops">29. Native Client - Multiple Ops</a></span></dt><dt><span class="section"><a href="#_native_client_common_args">30. Native Client - Common Args</a></span></dt><dt><span class="section"><a href="#_native_client_common_args_cont">31. Native Client - Common Args (cont.)</a></span></dt><dt><span class="section"><a href="#_native_client_common_args_cont_2">32. Native Client - Common Args (cont.)</a></span></dt><dt><span class="section"><a href="#_native_client_common_errs">33. Native Client - Common Errs</a></span></dt><dt><span class="section"><a href="#_native_client_get_flags">34. Native Client - Get Flags</a></span></dt><dt><span class="section"><a href="#_native_client_get_rets">35. Native Client - Get Rets</a></span></dt><dt><span class="section"><a href="#_native_client_getmany_flags">36. Native Client - GetMany Flags</a></span></dt><dt><span class="section"><a href="#_native_client_getmany_rets">37. Native Client - GetMany Rets</a></span></dt><dt><span class="section"><a href="#_native_client_do_rets">38. Native Client - Do Rets</a></span></dt><dt><span class="section"><a href="#_part_3">39. Part 3</a></span></dt><dt><span class="section"><a href="#_hibari_single_node_install">40. Hibari - Single Node Install</a></span></dt><dt><span class="section"><a href="#_hibari_single_node_start_bootstrap_and_stop">41. Hibari - Single Node Start, Bootstrap, and Stop</a></span></dt><dt><span class="section"><a href="#_hibari_verifying_status">42. Hibari - Verifying Status</a></span></dt><dt><span class="section"><a href="#_hibari_remote_shell">43. Hibari - Remote Shell</a></span></dt><dt><span class="section"><a href="#_hibari_creating_new_tables">44. Hibari - Creating New Tables</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises">45. Hands On Exercises</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_a">46. Hands On Exercises #1-A</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_b">47. Hands On Exercises #1-B</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_c">48. Hands On Exercises #1-C</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_2">49. Hands On Exercises #2</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_2_hints">50. Hands On Exercises #2 - Hints</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_3">51. Hands On Exercises #3</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_3_hints">52. Hands On Exercises #3 - Hints</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_4_advanced">53. Hands On Exercises #4 - Advanced</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_4_hints">54. Hands On Exercises #4 - Hints</a></span></dt><dt><span class="section"><a href="#_thank_you">55. Thank You</a></span></dt></dl></div><div class="section" title="1. Overview"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_overview"></a>1. Overview</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2011Q2 Tutorial - Hibari Hands On DRAFT</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="ja" class="article" title="2011Q2 Tutorial - Hibari Hands On DRAFT" lang="ja"><div class="titlepage"><div><div><h2 class="title"><a id="id36108574"></a>2011Q2 Tutorial - Hibari Hands On <span class="strong"><strong>DRAFT</strong></span></h2></div><div><div class="author"><h3 class="author"><span class="surname">Norton</span> <span class="firstname">Joseph</span> [FAMILY Given]</h3><div class="affiliation"><div class="address"><p><code class="email">&lt;<a class="email" href="mailto:norton@geminimobile.com">norton@geminimobile.com</a>&gt;</code></p></div></div></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><strong>改訂履歴</strong></th></tr><tr><td align="left">改訂 0.1</td><td align="left">2011/04/24</td><td align="left">JWN</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>目次</strong></p><dl><dt><span class="section"><a href="#_overview">1. Overview</a></span></dt><dt><span class="section"><a href="#_part_1">2. Part 1</a></span></dt><dt><span class="section"><a href="#_hibari_overview">3. Hibari Overview</a></span></dt><dt><span class="section"><a href="#_hibari_&#x7279;&#x5FB4;">4. Hibari - 特徴</a></span></dt><dt><span class="section"><a href="#_hibari_erlang&#x306B;&#x3088;&#x308B;&#x958B;&#x767A;">5. Hibari - Erlangによる開発</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30C1;&#x30A7;&#x30A4;&#x30F3;_&#x30EC;&#x30D7;&#x30EA;&#x30B1;&#x30FC;&#x30B7;&#x30E7;&#x30F3;">6. Hibari - チェイン・レプリケーション</a></span></dt><dt><span class="section"><a href="#_hibari_&#x81EA;&#x52D5;&#x5FA9;&#x65E7;">7. Hibari - 自動復旧</a></span></dt><dt><span class="section"><a href="#_hibari_&#x8CA0;&#x8377;&#x5206;&#x6563;">8. Hibari - 負荷分散</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30CE;&#x30FC;&#x30C9;&#x969C;&#x5BB3;">9. Hibari - ノード障害</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30AF;&#x30E9;&#x30B9;&#x30BF;&#x30FC;">10. Hibari - クラスター</a></span></dt><dt><span class="section"><a href="#_hibari_&#x8CA0;&#x8377;&#x5206;&#x6563;_&#x518D;">11. Hibari - 負荷分散 (再)</a></span></dt><dt><span class="section"><a href="#_hibari_&#x7BA1;&#x7406;&#x30B5;&#x30FC;&#x30D0;&#x30FC;">12. Hibari - 管理サーバー</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30C1;&#x30A7;&#x30A4;&#x30F3;">13. Hibari - チェイン</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;">14. Hibari - クライアント</a></span></dt><dt><span class="section"><a href="#_hibari_3_&#x30EC;&#x30A4;&#x30E4;&#x30FC;">15. Hibari - 3 レイヤー</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30B3;&#x30F3;&#x30B7;&#x30B9;&#x30C6;&#x30F3;&#x30C8;_&#x30CF;&#x30C3;&#x30B7;&#x30F3;&#x30B0;">16. Hibari - コンシステント・ハッシング</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30C1;&#x30A7;&#x30A4;&#x30F3;_&#x30DE;&#x30A4;&#x30B0;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;">17. Hibari - チェイン・マイグレーション</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30C1;&#x30A7;&#x30A4;&#x30F3;_&#x30DE;&#x30A4;&#x30B0;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;_&#x7D9A;">18. Hibari - チェイン・マイグレーション (続)</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30ED;&#x30B0;&#x5148;&#x884C;&#x66F8;&#x304D;&#x8FBC;&#x307F;">19. Hibari - ログ先行書き込み</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;_api">20. Hibari - クライアント API</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;_api_&#x7D9A;">21. Hibari - クライアント API (続)</a></span></dt><dt><span class="section"><a href="#_part_2">22. Part 2</a></span></dt><dt><span class="section"><a href="#_erlang_&#x57FA;&#x672C;&#x578B;">23. Erlang - 基本型</a></span></dt><dt><span class="section"><a href="#_erlang_&#x8907;&#x5408;&#x578B;">24. Erlang - 複合型</a></span></dt><dt><span class="section"><a href="#_erlang_&#x305D;&#x306E;&#x4ED6;">25. Erlang - その他</a></span></dt><dt><span class="section"><a href="#_erlang_&#x968E;&#x4E57;&#x30D7;&#x30ED;&#x30B0;&#x30E9;&#x30E0;">26. Erlang - 階乗プログラム</a></span></dt><dt><span class="section"><a href="#_erlang_&#x30B7;&#x30FC;&#x30B1;&#x30F3;&#x30B7;&#x30E3;&#x30EB;_&#x30D7;&#x30ED;&#x30B0;&#x30E9;&#x30E0;">27. Erlang - シーケンシャル・プログラム</a></span></dt><dt><span class="section"><a href="#_native_client_&#x30B7;&#x30F3;&#x30B0;&#x30EB;_&#x30AA;&#x30DA;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;">28. Native Client - シングル・オペレーション</a></span></dt><dt><span class="section"><a href="#_native_client_&#x8907;&#x6570;&#x30AA;&#x30DA;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;">29. Native Client - 複数オペレーション</a></span></dt><dt><span class="section"><a href="#_native_client_&#x5171;&#x901A;&#x5F15;&#x6570;">30. Native Client - 共通引数</a></span></dt><dt><span class="section"><a href="#_native_client_&#x5171;&#x901A;&#x5F15;&#x6570;_&#x7D9A;">31. Native Client - 共通引数 (続)</a></span></dt><dt><span class="section"><a href="#_native_client_common_args_cont">32. Native Client - Common Args (cont.)</a></span></dt><dt><span class="section"><a href="#_native_client_common_errs">33. Native Client - Common Errs</a></span></dt><dt><span class="section"><a href="#_native_client_get_flags">34. Native Client - Get Flags</a></span></dt><dt><span class="section"><a href="#_native_client_get_rets">35. Native Client - Get Rets</a></span></dt><dt><span class="section"><a href="#_native_client_getmany_flags">36. Native Client - GetMany Flags</a></span></dt><dt><span class="section"><a href="#_native_client_getmany_rets">37. Native Client - GetMany Rets</a></span></dt><dt><span class="section"><a href="#_native_client_do_rets">38. Native Client - Do Rets</a></span></dt><dt><span class="section"><a href="#_part_3">39. Part 3</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30B7;&#x30F3;&#x30B0;&#x30EB;_&#x30CE;&#x30FC;&#x30C9;_&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;">40. Hibari - シングル・ノード・インストール</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30B7;&#x30F3;&#x30B0;&#x30EB;_&#x30CE;&#x30FC;&#x30C9;_&#x30B9;&#x30BF;&#x30FC;&#x30C8;_&#x30D6;&#x30FC;&#x30C8;&#x30B9;&#x30C8;&#x30E9;&#x30C3;&#x30D7;_&#x505C;&#x6B62;">41. Hibari - シングル・ノード・スタート、ブートストラップ、停止</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30B9;&#x30C6;&#x30A4;&#x30BF;&#x30B9;&#x78BA;&#x8A8D;">42. Hibari - ステイタス確認</a></span></dt><dt><span class="section"><a href="#_hibari_&#x30EA;&#x30E2;&#x30FC;&#x30C8;_&#x30B7;&#x30A7;&#x30EB;">43. Hibari - リモート・シェル</a></span></dt><dt><span class="section"><a href="#_hibari_&#x65B0;&#x898F;&#x30C6;&#x30FC;&#x30D6;&#x30EB;&#x3092;&#x4F5C;&#x6210;">44. Hibari - 新規テーブルを作成</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises">45. Hands On Exercises</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_a">46. Hands On Exercises #1-A</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_b">47. Hands On Exercises #1-B</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_c">48. Hands On Exercises #1-C</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_2">49. Hands On Exercises #2</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_2_&#x30D2;&#x30F3;&#x30C8;">50. Hands On Exercises #2 - ヒント</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_3">51. Hands On Exercises #3</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_3_&#x30D2;&#x30F3;&#x30C8;">52. Hands On Exercises #3 - ヒント</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_4_&#x4E0A;&#x7D1A;">53. Hands On Exercises #4 - 上級</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_4_hints">54. Hands On Exercises #4 - Hints</a></span></dt><dt><span class="section"><a href="#_&#x3042;&#x308A;&#x304C;&#x3068;&#x3046;&#x3054;&#x3056;&#x3044;&#x307E;&#x3057;&#x305F;">55. ありがとうございました。</a></span></dt></dl></div><div class="section" title="1. Overview"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_overview"></a>1. Overview</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
 Part 1
 </span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Hibari Overview
@@ -153,9 +153,8 @@ blobベースのキー・バリュー・ペア
 </li></ul></div></li><li class="listitem">
 辞書配列ソートテーブル
 </li><li class="listitem">
-キーkey prefixes (often) used for implementing atomic
-  "micro-transactions" with individual chains
-</li></ul></div></div><div class="section" title="21. Hibari - Client API (cont.)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_client_api_cont"></a>21. Hibari - Client API (cont.)</h2></div></div></div><p>Hibari supports multiple client API implementations:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+個別のチェインにアトミックな "micro-transactions" の実装に（しばしば）利用されるキー・プレフィックス
+</li></ul></div></div><div class="section" title="21. Hibari - &#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8; API (&#x7D9A;)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_&#x30AF;&#x30E9;&#x30A4;&#x30A2;&#x30F3;&#x30C8;_api_&#x7D9A;"></a>21. Hibari - クライアント API (続)</h2></div></div></div><p>Hibariは、複数のクライアント API実装をサポート:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Native Erlang
 </li><li class="listitem">
 Universal Binary Format (UBF/EBF)
@@ -165,31 +164,26 @@ Thrift
 Amazon S3
 </li><li class="listitem">
 JSON-RPC
-</li></ul></div><p class="incremental">You can develop Hibari client applications in a variety of languages
-including Java, C/C++, Python, Ruby, and Erlang.</p></div><div class="section" title="22. Part 2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_part_2"></a>22. Part 2</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Intermission #1
+</li></ul></div><p class="incremental">Java, C/C++, Python, Ruby, Erlangを含む様々な言語におけるHibariクライアント・アプリケーション開発が可能</p></div><div class="section" title="22. Part 2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_part_2"></a>22. Part 2</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+休憩 #1
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-10 minute break
+10 分休憩
 </li></ul></div></li><li class="listitem">
-Erlang Basics
+Erlang 基礎
 </li><li class="listitem">
-Native Client
+ネイティブ・クライアント
 </li><li class="listitem">
-<span class="emphasis"><em>UBF Basics (extra)</em></span>
+<span class="emphasis"><em>UBF 基礎 (追加)</em></span>
 </li><li class="listitem">
-<span class="emphasis"><em>UBF Client (extra)</em></span>
-</li></ul></div></div><div class="section" title="23. Erlang - Basic Types"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_basic_types"></a>23. Erlang - Basic Types</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
-Number
+<span class="emphasis"><em>UBF クライアント (追加)</em></span>
+</li></ul></div></div><div class="section" title="23. Erlang - &#x57FA;&#x672C;&#x578B;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_&#x57FA;&#x672C;&#x578B;"></a>23. Erlang - 基本型</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+数
 </span></dt><dd>
-There are two types of numeric literals, <span class="strong"><strong>integers</strong></span> and
-<span class="strong"><strong>floats</strong></span>.
+2種類の数値リテラル, <span class="strong"><strong>integers</strong></span> と <span class="strong"><strong>floats</strong></span>.
 </dd><dt><span class="term">
 Atom
 </span></dt><dd><p class="simpara">
-An <span class="strong"><strong>atom</strong></span> is a literal, a constant with name. An atom should be
-enclosed in single quotes (') if it does not begin with a lower-case
-letter or if it contains other characters than alphanumeric
-characters, underscore (_), or @.
+<span class="strong"><strong>atom</strong></span> はリテラルで、名前を持つ定数。atomは、小文字で開始する場合や、アルファベット、数値、アンダースコア (_),　や @以外の文字を含む場合には、シングル・クォート  (') で囲まれるべき
 </p><pre class="screen">hello
 phone_number
 'Monday'
@@ -198,66 +192,60 @@ phone_number
 'phone_number'</pre></dd><dt><span class="term">
 Bit String and Binary
 </span></dt><dd><p class="simpara">
-A <span class="strong"><strong>bit string</strong></span> is used to store an area of
-untyped memory.  A bit string that consists of a number of bits that
-is evenly divisible by eight is called a <span class="strong"><strong>binary</strong></span>.
+<span class="strong"><strong>bit string</strong></span> は、非型式メモリーの領域を格納するために使われます。8で割り切れるビットからなるbit string は、 <span class="strong"><strong>binary</strong></span> と呼ばれます。
 </p><pre class="screen">&lt;&lt;10,20&gt;&gt;
-&lt;&lt;"ABC"&gt;&gt;</pre></dd></dl></div></div><div class="section" title="24. Erlang - Compound Types"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_compound_types"></a>24. Erlang - Compound Types</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+&lt;&lt;"ABC"&gt;&gt;</pre></dd></dl></div></div><div class="section" title="24. Erlang - &#x8907;&#x5408;&#x578B;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_&#x8907;&#x5408;&#x578B;"></a>24. Erlang - 複合型</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
 Term
 </span></dt><dd>
-A piece of data of any data type is called a <span class="strong"><strong>term</strong></span>.
+あらゆるデータ型式のひとつのデータは、 <span class="strong"><strong>term</strong></span> と呼ばれます。
 </dd><dt><span class="term">
 Tuple
 </span></dt><dd><p class="simpara">
-A <span class="strong"><strong>tuple</strong></span> is a compound data type with a fixed number of
-terms, enclosed by braces:
+<span class="strong"><strong>tuple</strong></span> は、中括弧で囲まれる固定数をもつ複合データ型式です。:
 </p><pre class="screen">{Term1,...,TermN}</pre></dd><dt><span class="term">
 List
 </span></dt><dd><p class="simpara">
-A <span class="strong"><strong>list</strong></span> is a compound data type with a variable number of
-terms, enclosed by square brackets:
+<span class="strong"><strong>list</strong></span> は、鍵括弧で囲まれる変数をもつ複合データ型式です。:
 </p><pre class="screen">[Term1,...,TermN]</pre></dd><dt><span class="term">
 String
 </span></dt><dd>
-Strings are enclosed in double quotes ("), but are not a true
-data type in Erlang. Instead a string "hello" is shorthand for the
-list [$h,$e,$l,$l,$o], that is [104,101,108,108,111].
-</dd></dl></div></div><div class="section" title="25. Erlang - Miscellaneous"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_miscellaneous"></a>25. Erlang - Miscellaneous</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+Stringsは、2重括弧 (") で囲まれますが、Erlangにおいては真のデータ型式ではありません。代わりに、string の"hello" は、
+list [$h,$e,$l,$l,$o] に短縮されます。すなわち、 [104,101,108,108,111] です。
+</dd></dl></div></div><div class="section" title="25. Erlang - &#x305D;&#x306E;&#x4ED6;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_&#x305D;&#x306E;&#x4ED6;"></a>25. Erlang - その他</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
 Boolean
 </span></dt><dd>
-There is no Boolean data type in Erlang. Instead the atoms
-<code class="literal">true</code> and <code class="literal">false</code> are used to denote Boolean values.
+Erlangには、Boolean データ型式はありません。代わりに、atomsの
+<code class="literal">true</code> と<code class="literal">false</code> がBoolean values を表示するために使われます。
 </dd><dt><span class="term">
 None or Null
 </span></dt><dd>
-There is no such type in Erlang.  However, the atom
-<span class="emphasis"><em>undefined</em></span> is often (by convention) used for this purpose.
+Erlangには、このような型式はありません。 しかし、atomの
+<span class="emphasis"><em>undefined</em></span> は、しばしば（慣習として）　この目的のために使われます。
 </dd><dt><span class="term">
 Pid
 </span></dt><dd>
-A process identifier, pid, identifies an Erlang process.
+プロセス識別である pid　は、Erlangプロセスを識別します。
 </dd><dt><span class="term">
 Reference
 </span></dt><dd>
-A reference is a term which is unique in an Erlang runtime
-system.
+reference は、Erlang ランタイムシステム独自の表現です。
 </dd><dt><span class="term">
 Fun
 </span></dt><dd>
-A fun is a functional object.
-</dd></dl></div><p class="incremental"><span class="emphasis"><em>… plus a few others</em></span></p></div><div class="section" title="26. Erlang - Factorial Program"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_factorial_program"></a>26. Erlang - Factorial Program</h2></div></div></div><p>The file "math.erl" contains the following program:</p><pre class="screen">-module(math).
+fun は、関数オブジェクトです。
+</dd></dl></div><p class="incremental">_… 数点追加_</p></div><div class="section" title="26. Erlang - &#x968E;&#x4E57;&#x30D7;&#x30ED;&#x30B0;&#x30E9;&#x30E0;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_&#x968E;&#x4E57;&#x30D7;&#x30ED;&#x30B0;&#x30E9;&#x30E0;"></a>26. Erlang - 階乗プログラム</h2></div></div></div><p>ファイル "math.erl" は次のプログラムを含みます。:</p><pre class="screen">-module(math).
 -export([fac/1]).
 
 fac(N) when N &gt; 0 -&gt; N * fac(N-1);
-fac(0) -&gt; 1.</pre><p class="incremental">This program can be compiled and run using the Erlang shell.</p><pre class="screen">$ erl
+fac(0) -&gt; 1.</pre><p class="incremental">このプログラムは、Erlang shellを使いながらコンパイルされ動作します。</p><pre class="screen">$ erl
 Erlang R14B01 (erts-5.8.2) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
 
 Eshell V5.8.2  (abort with ^G)
 1&gt; c(math).
 {ok,math}
 2&gt; math:fac(25).
-15511210043330985984000000</pre><p class="incremental">Let it crash …</p><pre class="screen">3&gt; math:fac(-1).
-** exception error: no function clause matching math:fac(-1)</pre></div><div class="section" title="27. Erlang - Sequential Programs"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_sequential_programs"></a>27. Erlang - Sequential Programs</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+15511210043330985984000000</pre><p class="incremental">強制終了させる …</p><pre class="screen">3&gt; math:fac(-1).
+** exception error: no function clause matching math:fac(-1)</pre></div><div class="section" title="27. Erlang - &#x30B7;&#x30FC;&#x30B1;&#x30F3;&#x30B7;&#x30E3;&#x30EB;&#x30FB;&#x30D7;&#x30ED;&#x30B0;&#x30E9;&#x30E0;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_erlang_&#x30B7;&#x30FC;&#x30B1;&#x30F3;&#x30B7;&#x30E3;&#x30EB;_&#x30D7;&#x30ED;&#x30B0;&#x30E9;&#x30E0;"></a>27. Erlang - シーケンシャル・プログラム</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
 Append
 </span></dt><dd><pre class="screen">append([],      L) -&gt; L;
 append([H | T], L) -&gt; [H | append(T, L)].</pre></dd><dt><span class="term">
@@ -273,7 +261,7 @@ Adder
 &gt; G = Adder(10).
 #Fun&lt;erl_eval.6.13229925&gt;
 &gt; G(5).
-15</pre></dd></dl></div></div><div class="section" title="28. Native Client - Single Ops"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_single_ops"></a>28. Native Client - Single Ops</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+15</pre></dd></dl></div></div><div class="section" title="28. Native Client - &#x30B7;&#x30F3;&#x30B0;&#x30EB;&#x30FB;&#x30AA;&#x30DA;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_&#x30B7;&#x30F3;&#x30B0;&#x30EB;_&#x30AA;&#x30DA;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;"></a>28. Native Client - シングル・オペレーション</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
 brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout)
 </span></dt><dd>
 ⇒ ok.
@@ -297,7 +285,7 @@ brick_simple:get_many(Tab, Key, MaxNum, Flags, Timeout)
 brick_simple:delete(Tab, Key, Flags, Timeout)
 </span></dt><dd>
 ⇒ ok.
-</dd></dl></div></div><div class="section" title="29. Native Client - Multiple Ops"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_multiple_ops"></a>29. Native Client - Multiple Ops</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+</dd></dl></div></div><div class="section" title="29. Native Client - &#x8907;&#x6570;&#x30AA;&#x30DA;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_&#x8907;&#x6570;&#x30AA;&#x30DA;&#x30EC;&#x30FC;&#x30B7;&#x30E7;&#x30F3;"></a>29. Native Client - 複数オペレーション</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
 brick_simple:do(Tab, OpList, OpFlags, Timeout)
 </span></dt><dd>
 ⇒ [OpRes()].
@@ -307,15 +295,14 @@ Two flavors
 normal - OpList
 </li><li class="listitem">
 micro-transaction - [<code class="literal">'txn'</code>|OpList]
-</li></ul></div></dd></dl></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>"single" operations are implemented (under the hood) using the
-do/4 function.</p></td></tr></table></div></div><div class="section" title="30. Native Client - Common Args"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_common_args"></a>30. Native Client - Common Args</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+</li></ul></div></dd></dl></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>"シングル" オペレーションは、 do/4 機能を利用しながら実装されています(フードの下で）.</p></td></tr></table></div></div><div class="section" title="30. Native Client - &#x5171;&#x901A;&#x5F15;&#x6570;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_&#x5171;&#x901A;&#x5F15;&#x6570;"></a>30. Native Client - 共通引数</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Tab</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-Name of the table.
+ノードの名前.
 </li><li class="listitem"><p class="simpara">
-Type:
+型式:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">Tab = table()</code>
 </li><li class="listitem">
@@ -325,7 +312,7 @@ Type:
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Key</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-Key for the table, in association with a paired value.
+ペアのバリューに関連している、テーブルのキー
 </li><li class="listitem"><p class="simpara">
 Type:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
@@ -336,14 +323,14 @@ Type:
 <code class="literal">iodata() = iolist() | binary()</code>
 </li><li class="listitem">
 <code class="literal">iolist()  = [char() | binary() | iolist()]</code>
-</li></ul></div></li></ul></div></dd></dl></div><div class="note" title="&#x6CE8;&#x8A18;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x6CE8;&#x8A18;]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">Key</code> internally always converted to binary.</p></td></tr></table></div></div><div class="section" title="31. Native Client - Common Args (cont.)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_common_args_cont"></a>31. Native Client - Common Args (cont.)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+</li></ul></div></li></ul></div></dd></dl></div><div class="note" title="&#x6CE8;&#x8A18;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x6CE8;&#x8A18;]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">Key</code> は、内部的に常にbinaryに変換されます。</p></td></tr></table></div></div><div class="section" title="31. Native Client - &#x5171;&#x901A;&#x5F15;&#x6570; (&#x7D9A;)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_&#x5171;&#x901A;&#x5F15;&#x6570;_&#x7D9A;"></a>31. Native Client - 共通引数 (続)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Value</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-Value to associate with the key.
+keyに紐づくValue.
 </li><li class="listitem"><p class="simpara">
-Type:
+型式:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">Value = val()</code>
 </li><li class="listitem">
@@ -357,27 +344,25 @@ Type:
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>ExpTime</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-Time at which the key will expire, expressed as a Unix time_t().
+TUnix time_t() として表現される、keyが期限切れとなる時間
 </li><li class="listitem">
-Optional; defaults to 0 (no expiration).
+オプション; defaults to 0 (no expiration).
 </li><li class="listitem"><p class="simpara">
-Type:
+型式:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">ExpTime = exp_time()</code>
 </li><li class="listitem">
 <code class="literal">exp_time() = time_t()</code>
 </li><li class="listitem">
 <code class="literal">time_t() = integer()</code>
-</li></ul></div></li></ul></div></dd></dl></div></div><div class="section" title="32. Native Client - Common Args (cont.)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_common_args_cont_2"></a>32. Native Client - Common Args (cont.)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+</li></ul></div></li></ul></div></dd></dl></div></div><div class="section" title="32. Native Client - Common Args (cont.)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_common_args_cont"></a>32. Native Client - Common Args (cont.)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Flags</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-List of operational flags and/or custom property flags to associate
-  with the key-value pair in the database. Heavy use of custom
-  property flags is discouraged due to RAM-based storage.
+データベースのkey-value ペアに関連するオペレーショナル・フラグとプロパティ・フラグのリスト。 カスタム・プロパティ・フラグの多用はRAMベースのストレージに起因し、抑制される。
 </li><li class="listitem"><p class="simpara">
-Type:
+型式:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">Flags = flags_list()</code>
 </li><li class="listitem">
@@ -389,24 +374,21 @@ Type:
 </li><li class="listitem">
 <code class="literal">property() = atom() | {term(), term()}</code>
 </li></ul></div></li><li class="listitem"><p class="simpara">
-Operational flag usage
+オペれーショナル・フラグ利用
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
 <code class="literal">{'testset', timestamp()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-Fail the operation if the existing key’s timestamp is not
-       exactly equal to <code class="literal">timestamp()</code>.  If used inside a
-       micro-transaction, abort the transaction if the key’s timestamp
-       is not exactly equal to <code class="literal">timestamp()</code>.
+既存の key’s timestamp が<code class="literal">timestamp()`と正確に等しくない場合には、オペレーションは失敗する。マイクロ・トランザクション内で利用される場合には、keyのtimestampが、`timestamp()</code> と正確に等しくない場合には、トランザクションを停止
 </li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Timeout</strong></span>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-Operation timeout in milliseconds.
+ミリ秒でオペレーション・タイムアウト
 </li><li class="listitem">
-Optional; defaults to 15000.
+オプション; defaults to 15000.
 </li><li class="listitem"><p class="simpara">
-Type:
+型式:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">Timeout = timeout()</code>
 </li><li class="listitem">
@@ -414,159 +396,132 @@ Type:
 </li></ul></div></li></ul></div></dd></dl></div></div><div class="section" title="33. Native Client - Common Errs"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_common_errs"></a>33. Native Client - Common Errs</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
-Error returns
+エラー・リターン
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 <code class="literal">'key_not_exist'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-The operation failed because the key does not exist.
+keyが存在しないため、オペレーションは失敗した。
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{'key_exists',timestamp()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-The operation failed because the key already exists.
+keyがすでに存在しているため、オペレーションは失敗した。
 </li><li class="listitem">
 <code class="literal">timestamp() = integer()</code>
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{'ts_error', timestamp()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-The operation failed because the <code class="literal">{'testset', timestamp()}</code> flag
-    was used and there was a timestamp mismatch. The <code class="literal">timestamp()</code> in
-    the return is the current value of the existing key’s timestamp.
+<code class="literal">{'testset', timestamp()}</code> フラグは使われており、timestampのミスマッチがあったため、オペレーションは失敗した。 リターンにおける<code class="literal">timestamp()</code> は、 既存の keyのtimestampの現在のバリュー。
 </li><li class="listitem">
 <code class="literal">timestamp() = integer()</code>
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">'invalid_flag_present'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-The operation failed because an invalid <code class="literal">do_op_flag()</code> was found
-    in the <code class="literal">Flags</code> argument.
+<code class="literal">Flags</code> 印数に無効な <code class="literal">do_op_flag()</code> が見つかったため、オペレーションは失敗した。
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">'brick_not_available'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-The operation failed because the chain that is responsible for
-    this key is currently length zero and therefore unavailable.
+このkey を受け持つチェインの長さが現在ゼロで利用できないためにオペレーションは失敗した。
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{{'nodedown',node()},{'gen_server','call',term()}}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-The operation failed because the server brick handling the request
-    has crashed or else a network partition has occurred between the
-    client and server. The client should resend the query after a
-    short delay, on the assumption that the Admin Server will have
-    detected the failure and taken steps to repair the chain.
+リクエストを処理するサーバー・ブリックが停止したか、クライアントとサーバー間でネットワーク分断が起きたため、オペレーションは失敗した。管理サーバーが障害を検知し、チェイン修理を行うステップをとるという前提で、クライアントは短い遅延後にクエリを再送する。
 </li><li class="listitem">
 <code class="literal">node() = atom()</code>
 </li></ul></div></li><li class="listitem">
 Exit by timeout.
 </li></ul></div></dd></dl></div></div><div class="section" title="34. Native Client - Get Flags"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_get_flags"></a>34. Native Client - Get Flags</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Operational flag usage
+オペれーショナル・フラグ利用
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
 <code class="literal">'get_all_attribs'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-Return all attributes of the key. May be used in combination
-       with the <code class="literal">witness</code> flag.
+keyの全ての属性をリターン。<code class="literal">witness</code> flagとの組み合わせで利用され得る。
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">'witness'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-Do not return the value blob in the result. This flag will
-       guarantee that the brick does not require disk access to
-       satisfy this request.
+結果として、バリューの blob をリターンさせない。このフラグは、ブリックがこのリクエストを満たすディスクアクセスを要求していないことを保証する。
 </li></ul></div></li></ul></div></li></ul></div></div><div class="section" title="35. Native Client - Get Rets"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_get_rets"></a>35. Native Client - Get Rets</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
-Success returns
+サクセス・リターン
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 <code class="literal">{'ok', timestamp(), val()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Default behavior.
+デフォルトの反応
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{'ok', timestamp()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Success return when the get uses <code class="literal">'witness'</code> but not <code class="literal">'get_all_attribs'</code>.
+get が<code class="literal">'witness'</code> を使うが、`<span class="emphasis"><em>get_all_attribs</em></span>`を使わない場合のサクセス・リターン
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{'ok', timestamp(), proplist()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Success return when the get uses both <code class="literal">'witness'</code> and <code class="literal">'get_all_attribs'</code>.
+get が <code class="literal">'witness'</code> と `<span class="emphasis"><em>get_all_attribs</em></span>`の両方を使う場合のサクセス・リターン
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{'ok', timestamp(), val(), exp_time(), proplist()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Success return when the get uses <code class="literal">'get_all_attribs'</code> but not <code class="literal">'witness'</code>.
-</li></ul></div></li></ul></div></dd></dl></div><div class="note" title="&#x6CE8;&#x8A18;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x6CE8;&#x8A18;]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>For proplists, <code class="literal">{val_len,Size::integer()}</code> always returned.</p></td></tr></table></div></div><div class="section" title="36. Native Client - GetMany Flags"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_getmany_flags"></a>36. Native Client - GetMany Flags</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Operational flag usage
+get が <code class="literal">'get_all_attribs'</code> だが `<span class="emphasis"><em>witness</em></span>`でない場合のサクセス・リターン
+</li></ul></div></li></ul></div></dd></dl></div><div class="note" title="&#x6CE8;&#x8A18;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x6CE8;&#x8A18;]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>For proplists, <code class="literal">{val_len,Size::integer()}</code> は、つねにリターンされる。</p></td></tr></table></div></div><div class="section" title="36. Native Client - GetMany Flags"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_getmany_flags"></a>36. Native Client - GetMany Flags</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+オペレーショナル・フラグ利用
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem"><p class="simpara">
 <code class="literal">'get_all_attribs'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-Return all attributes of each key. May be used in combination
-       with the <code class="literal">witness</code> flag.
+それぞれのkeyの全属性をリターン。<code class="literal">witness</code> flagと組み合わせて使われ得る。
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">'witness'</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-Do not return the value blobs in the result. This flag will
-       guarantee that the brick does not require disk access to
-       satisfy this request.
+結果として、バリューのDo not return the value blobsをリターンさせない。このflagは、ブリックがこのリクエストを満たすディスク・アクセスを要求しないことを保証する。
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{'binary_prefix', binary()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-Return only keys that have a binary prefix that is exactly
-       equal to <code class="literal">binary()</code>.
+binary prefixをもつkeysが正確に `binary()`に等しいkeyの場合だけリターンする。
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{'max_bytes', integer()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-Return only as many keys as the sum of the sizes of their
-       corresponding value blobs does not exceed <code class="literal">integer()</code> bytes.
-       If this flag is not explicity specified in a client request,
-       the value defaults to 2GB.
+対応するバリューのblobsのサイズの合計が <code class="literal">integer()</code> バイトを超えない程度までの多さのkeyだけにリターンする。
+      仮に、この flag がクライアント・リクエストにおいて明示されない場合、バリューのデフォルトは2GBまで。
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{'max_num', integer()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
-Maxinum number of keys to return. Defaults to 10. Note: This
-       flag is duplicative of the MaxNum argument in purpose.
+リターンするkeysの最大値。デフォルトは10．
+Note: このflagは、意図的に MaxNum 引数に重複
 </li></ul></div></li></ul></div></li></ul></div></div><div class="section" title="37. Native Client - GetMany Rets"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_getmany_rets"></a>37. Native Client - GetMany Rets</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
-Success returns
+サクセス・リターン
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 <code class="literal">{ok, {[{key(), timestamp(), val()}], boolean()}}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Default behavior.
+デフォルトの反応
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{ok, {[{key(), timestamp()}], boolean()}}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Success return when the <code class="literal">get_many</code> uses <code class="literal">'witness'</code> but not
-    <code class="literal">'get_all_attribs'</code>.
+<code class="literal">get_many</code> が<code class="literal">'witness'</code> を利用するが、`<span class="emphasis"><em>get_all_attribs</em></span>`を利用しない場合のサクセス・リターン
 </li></ul></div></li><li class="listitem"><p class="simpara">
-<code class="literal">{ok, {[{key(), timestamp(), proplist()}], boolean()}}</code>
+`{ok, {[{key(), timestamp(), proplist()}], boolean()}}
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Success return when the <code class="literal">get_many</code> uses both <code class="literal">'witness'</code> and
-    <code class="literal">'get_all_attribs'</code>.
+<code class="literal">get_many</code> が<code class="literal">'witness'</code> と `<span class="emphasis"><em>get_all_attribs</em></span>`の両方を利用する場合のサクセス・リターン
 </li></ul></div></li><li class="listitem"><p class="simpara">
 <code class="literal">{ok, {[{key(), timestamp(), val(), exp_time(), proplist()}],
   boolean()}}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Success return when the <code class="literal">get_many</code> uses <code class="literal">'get_all_attribs'</code> but
-    not <code class="literal">'witness'</code>.
-</li></ul></div></li></ul></div></dd></dl></div><div class="note" title="&#x6CE8;&#x8A18;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x6CE8;&#x8A18;]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">boolean()</code> indicates if the chain has more keys or not.</p></td></tr></table></div><div class="note" title="&#x6CE8;&#x8A18;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x6CE8;&#x8A18;]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>For proplists, <code class="literal">{val_len,Size::integer()}</code> always returned.</p></td></tr></table></div></div><div class="section" title="38. Native Client - Do Rets"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_do_rets"></a>38. Native Client - Do Rets</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+<code class="literal">get_many</code> が <code class="literal">'get_all_attribs'`だが</code><span class="emphasis"><em>witness</em></span>`でない場合のサクセス・リターン
+</li></ul></div></li></ul></div></dd></dl></div><div class="note" title="&#x6CE8;&#x8A18;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x6CE8;&#x8A18;]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><code class="literal">boolean()</code> はチェインがさらに多くのkeyを有しているかどうかを示す。</p></td></tr></table></div><div class="note" title="&#x6CE8;&#x8A18;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x6CE8;&#x8A18;]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>For proplists, <code class="literal">{val_len,Size::integer()}</code> は、つねにリターンされる。</p></td></tr></table></div></div><div class="section" title="38. Native Client - Do Rets"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_native_client_do_rets"></a>38. Native Client - Do Rets</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
-Error returns
+エラー・リターン
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 <code class="literal">{txn_fail, [{integer(), do1_res_fail()}]}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-Operation failed because transaction semantics were used in the
-    <code class="literal">do</code> request and one or more primitive operations within the
-    transaction failed. The <code class="literal">integer()</code> identifies the failed
-    primitive operation by its position within the request’s
-    <code class="literal">OpList</code>. For example, a 2 indicates that the second primitive
-    listed in the request’s <code class="literal">OpList</code> failed. Note that this position
-    identifier does not count the <code class="literal">txn()</code> specifier at the start of
-    the <code class="literal">OpList</code>.
+トランザクション・セマンティックが、失敗したトランザクション内の<code class="literal">do</code> request と、ひとつ、若しくはそれ以上の初期オペレーションで利用されたために、オペレーションは失敗した。<code class="literal">integer()</code> は、リクエストの<code class="literal">OpList`内の位置により失敗した初期オペレーションを示す。例としては、 a 2 は、失敗したリクエストの`OpList</code> に2番目のリストであることを示す。この位置識別子は、 <code class="literal">OpList`のスタートにおいて`txn()</code> 指示子を数えてはいないことに注意。
 </li></ul></div></li></ul></div></dd></dl></div></div><div class="section" title="39. Part 3"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_part_3"></a>39. Part 3</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Intermission #2
+休憩 #2
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
-10 minute break
+10 分間休憩
 </li></ul></div></li><li class="listitem">
-Hibari Basics
+Hibari 基礎
 </li><li class="listitem">
 Hands On Exercises
-</li></ul></div></div><div class="section" title="40. Hibari - Single Node Install"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_single_node_install"></a>40. Hibari - Single Node Install</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Create a directory
+</li></ul></div></div><div class="section" title="40. Hibari - &#x30B7;&#x30F3;&#x30B0;&#x30EB;&#x30FB;&#x30CE;&#x30FC;&#x30C9;&#x30FB;&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_&#x30B7;&#x30F3;&#x30B0;&#x30EB;_&#x30CE;&#x30FC;&#x30C9;_&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;"></a>40. Hibari - シングル・ノード・インストール</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+ディレクトリを作成
 </p><pre class="screen">$ mkdir running-directory</pre></li><li class="listitem"><p class="simpara">
 untar Hibari tarball package - "hibari-<span class="emphasis"><em>X.Y.Z-DIST-ARCH-WORDSIZE</em></span>.tgz"
 </p><pre class="screen">$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz</pre></li><li class="listitem">
@@ -577,47 +532,39 @@ untar Hibari tarball package - "hibari-<span class="emphasis"><em>X.Y.Z-DIST-ARC
 <span class="emphasis"><em>ARCH</em></span> is the release architecture ⇒ "x86_64-unknown-linux-gnu"
 </li><li class="listitem">
 <span class="emphasis"><em>WORDSIZE</em></span> is the release wordsize ⇒ "64"
-</li></ul></div></div><div class="section" title="41. Hibari - Single Node Start, Bootstrap, and Stop"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_single_node_start_bootstrap_and_stop"></a>41. Hibari - Single Node Start, Bootstrap, and Stop</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Start Hibari:
+</li></ul></div></div><div class="section" title="41. Hibari - &#x30B7;&#x30F3;&#x30B0;&#x30EB;&#x30FB;&#x30CE;&#x30FC;&#x30C9;&#x30FB;&#x30B9;&#x30BF;&#x30FC;&#x30C8;&#x3001;&#x30D6;&#x30FC;&#x30C8;&#x30B9;&#x30C8;&#x30E9;&#x30C3;&#x30D7;&#x3001;&#x505C;&#x6B62;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_&#x30B7;&#x30F3;&#x30B0;&#x30EB;_&#x30CE;&#x30FC;&#x30C9;_&#x30B9;&#x30BF;&#x30FC;&#x30C8;_&#x30D6;&#x30FC;&#x30C8;&#x30B9;&#x30C8;&#x30E9;&#x30C3;&#x30D7;_&#x505C;&#x6B62;"></a>41. Hibari - シングル・ノード・スタート、ブートストラップ、停止</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Hibariをスタート:
 </p><pre class="screen">$ running-directory/hibari/bin/hibari start</pre></li><li class="listitem"><p class="simpara">
-Bootstrap the system:
+システムをブートストラップ:
 </p><pre class="screen">$ running-directory/hibari/bin/hibari-admin bootstrap
 ok</pre></li><li class="listitem"><p class="simpara">
-Stop Hibari (later when needed):
-</p><pre class="screen">$ running-directory/hibari/bin/hibari stop</pre></li></ul></div></div><div class="section" title="42. Hibari - Verifying Status"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_verifying_status"></a>42. Hibari - Verifying Status</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Confirm that you can open the "Hibari Web Administration" page:
+Hibari を停止　(必要であれば後ほど):
+</p><pre class="screen">$ running-directory/hibari/bin/hibari stop</pre></li></ul></div></div><div class="section" title="42. Hibari - &#x30B9;&#x30C6;&#x30A4;&#x30BF;&#x30B9;&#x78BA;&#x8A8D;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_&#x30B9;&#x30C6;&#x30A4;&#x30BF;&#x30B9;&#x78BA;&#x8A8D;"></a>42. Hibari - ステイタス確認</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+"Hibari Web Administration" ページを開くことができるかを確認:
 </p><pre class="screen">$ firefox http://127.0.0.1:23080 &amp;</pre></li><li class="listitem"><p class="simpara">
-Confirm that you can successfully ping the Hibari node:
+Hibari ノードにpingを成功できるかを確認:
 </p><pre class="screen">$ running-directory/hibari/bin/hibari ping
-pong</pre></li></ul></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>A single-node Hibari system is hard-coded to listen on the
-localhost address 127.0.0.1. Consequently the Hibari node is reachable
-only from the node itself.</p></td></tr></table></div></div><div class="section" title="43. Hibari - Remote Shell"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_remote_shell"></a>43. Hibari - Remote Shell</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Connect to Hibari using Erlang’s remote shell
+pong</pre></li></ul></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>シングル・ノードのHibariシステムは、ローカルホスト・アドレス 127.0.0.1. に対してハードコードされている。結果として、Hibari ノードは、ノード自身からだけ連絡可能。</p></td></tr></table></div></div><div class="section" title="43. Hibari - &#x30EA;&#x30E2;&#x30FC;&#x30C8;&#x30FB;&#x30B7;&#x30A7;&#x30EB;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_&#x30EA;&#x30E2;&#x30FC;&#x30C8;_&#x30B7;&#x30A7;&#x30EB;"></a>43. Hibari - リモート・シェル</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+Erlang’s remote shellを利用してHibariに接続
 </p><pre class="screen">$ running-directory/hibari/erts-5.8.2/bin/erl -name hogehoge@127.0.0.1 -setcookie hibari -kernel net_ticktime 20 -remsh hibari@127.0.0.1
 Erlang R14B01 (erts-5.8.2) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
 
 Eshell V5.8.2  (abort with ^G)
 (hibari@127.0.0.1)1&gt;</pre></li><li class="listitem"><p class="simpara">
-Check your node name and the set of connected Erlang nodes.
+ノードネームと一連の接続されたErlang ノードを確認
 </p><pre class="screen">(hibari@127.0.0.1)1&gt; node().
 'hibari@127.0.0.1'
 (hibari@127.0.0.1)2&gt; nodes().
 ['hogehoge@127.0.0.1']
-(hibari@127.0.0.1)3&gt;</pre></li></ul></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Hibari’s name, cookie, and kernel net_ticktime are configurable
-and located in the running-directory/hibari/etc/vm.args file.</p></td></tr></table></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The "rlwrap -a running-directory/hibari/erts-5.8.2/bin/erl" tool
-is helpful for keeping track of your Erlang shell history (e.g. yum
-install rlwrap).</p></td></tr></table></div></div><div class="section" title="44. Hibari - Creating New Tables"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_creating_new_tables"></a>44. Hibari - Creating New Tables</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
-Create a new table having a hash prefix of 2 and having 3 bricks per
-  chain.
+(hibari@127.0.0.1)3&gt;</pre></li></ul></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Hibariの名前、クッキー、カーネルnet_ticktime は設定可能であり、running-directory/hibari/etc/vm.args fileのなかに置かれている。</p></td></tr></table></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>"rlwrap -a running-directory/hibari/erts-5.8.2/bin/erl" ツールは、Erlang shell履歴をトラッキングし続けるために有用 (例 yum
+install rlwrap).</p></td></tr></table></div></div><div class="section" title="44. Hibari - &#x65B0;&#x898F;&#x30C6;&#x30FC;&#x30D6;&#x30EB;&#x3092;&#x4F5C;&#x6210;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_&#x65B0;&#x898F;&#x30C6;&#x30FC;&#x30D6;&#x30EB;&#x3092;&#x4F5C;&#x6210;"></a>44. Hibari - 新規テーブルを作成</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+2 のハッシュ・プレフィックスとチェイン毎に3 のブリックを持つ新規テーブルを作成
 </p><pre class="screen">$ running-directory/hibari/bin/hibari-admin create-table tab2 \
     -bigdata -disklogging -syncwrites \
     -varprefix -varprefixsep 47 -varprefixnum 2 \
     -bricksperchain 3 \
     hibari@127.0.0.1 hibari@127.0.0.1 hibari@127.0.0.1</pre></li><li class="listitem"><p class="simpara">
-For example, let’s assume the first part of a key represent’s a
-  user’s id.  A hash prefix of 2 makes the keys of each individual
-  user to be stored on the same chain … but not necessarily on the
-  same chain as other user’s keys.
+例として、キーが表す最初の部分を user’s idとしましょう。2のハッシュ・プレフィックスは、同じチェインに格納される個々のユーザーのkeysを作成します…しかし他のユーザーのキーと同じチェインとは限りません。
 </p><pre class="screen">  :
 /user1/adir/
 /user1/adir/file1
@@ -630,56 +577,50 @@ For example, let’s assume the first part of a key represent’s a
 /user2/file1
   :
 /user3/file4
-  :</pre></li></ul></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Tables can also be created using Hibari’s Admin Server
-Webpage. Open <code class="literal">http://localhost:23080/</code> and click the "Add a table"
-link.</p></td></tr></table></div></div><div class="section" title="45. Hands On Exercises"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises"></a>45. Hands On Exercises</h2></div></div></div><p>The goal of these exercises is to learn more about Hibari and to
-implement and to test your own Hibari mini-applications using Hibari’s
-Native Erlang Client.</p></div><div class="section" title="46. Hands On Exercises #1-A"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_1_a"></a>46. Hands On Exercises #1-A</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-Install Hibari
+  :</pre></li></ul></div><div class="tip" title="&#x30D2;&#x30F3;&#x30C8;" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[&#x30D2;&#x30F3;&#x30C8;]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>テーブルは、Hibariの管理サーバー・ウェブページを利用して作成することもできます。<code class="literal">http://localhost:23080/</code> を開き、"Add a table"
+リンクをクリックしてください。</p></td></tr></table></div></div><div class="section" title="45. Hands On Exercises"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises"></a>45. Hands On Exercises</h2></div></div></div><p>このエクササイズの目的は、Hibariについて学び、実装し、HibariのネイティブErlangクライアントを利用しながら、ご自身のHibariのミニ・アプリケーションをテストすることです。</p></div><div class="section" title="46. Hands On Exercises #1-A"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_1_a"></a>46. Hands On Exercises #1-A</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Hibariをインストール
 </li><li class="listitem">
-Start and Bootstrap Hibari
+Hibariをスタートし、ブートストラップ
 </li><li class="listitem"><p class="simpara">
-Wait 15 seconds (or so) and then make a backup of Hibari’s
-   Schema.local file and data files:
+15 秒程度待ち、HibariのSchema.local file とdata filesをバックアップ:
 </p><pre class="screen">$ tar -cvzf backup.tgz running-directory/hibari/Schema.local running-directory/hibari/data/brick</pre></li><li class="listitem">
-Verify the status of Hibari
+Hibariの状態を確認
 </li><li class="listitem">
-Connect to Hibari using the Erlang shell
+Erlang shellを使いHibariに接続
 </li><li class="listitem">
-Create tab2 as described above
+上記で述べたtab2 を作成
 </li><li class="listitem">
-Open Hibari’s Admin Server Webpage
+Hibariの管理サーバー・ウェブページを開く
 </li><li class="listitem">
-Make a list of what is the same and what is different between tab1
-   and tab2.
+tab1とtab2の間に同じものと違うもののリストを作成
 </li><li class="listitem">
-What other things can be learned from the Admin Server Webpage?
+管理サーバー・ウェブページから他に学ぶことができることは何でしょうか？
 </li></ol></div></div><div class="section" title="47. Hands On Exercises #1-B"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_1_b"></a>47. Hands On Exercises #1-B</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-Stop Hibari
+Hibariを停止
 </li><li class="listitem"><p class="simpara">
-Delete Hibari’s Schema.local and data files:
+HibariのSchema.local and data filesを削除:
 </p><pre class="screen">$ rm -r running-directory/hibari/Schema.local running-directory/hibari/data/brick/*</pre></li><li class="listitem"><p class="simpara">
-Restore Hibari’s Schema.local and data files:
+HibariのSchema.local and data filesを修復:
 </p><pre class="screen">$ tar -xvzf backup.tgz</pre></li><li class="listitem">
-Start Hibari
+Hibariをスタート
 </li><li class="listitem">
-Verify the status of Hibari
+Hibariの状態を確認
 </li><li class="listitem">
-Open Hibari’s Admin Server Webpage
+Hibariの管理サーバー・ウェブページを開く
 </li><li class="listitem">
-What tables exist now?
+いま、どのテーブルが存在しているか？
 </li><li class="listitem">
-Create tab2 (again) as described above.
+上記で述べたtab2 (再び) を作成
 </li><li class="listitem">
-Stop and Start Hibari
+Hibariを停止し、スタート
 </li><li class="listitem">
-Follow the status of the Chains and Bricks
+チェインとブリックスの状況をフォロー
 </li><li class="listitem">
-What’s happening?
+何が起きているのか?
 </li><li class="listitem">
-What about the history of each Chain and/or Brick?
-</li></ol></div></div><div class="section" title="48. Hands On Exercises #1-C"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_1_c"></a>48. Hands On Exercises #1-C</h2></div></div></div><p>Using the Erlang Shell, repeat the examples listed in Hibari’s
-Application Developer Guide.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+チェインとブリックそれぞれの履歴はどうなっているか?
+</li></ol></div></div><div class="section" title="48. Hands On Exercises #1-C"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_1_c"></a>48. Hands On Exercises #1-C</h2></div></div></div><p>Erlang Shellを使い、 HibariのApplication Developer Guideにリストされている例を再現する</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-add" target="_top">brick_simple:add/6</a>
 </li><li class="listitem">
 <a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-replace" target="_top">brick_simple:replace/6</a>
@@ -691,78 +632,55 @@ Application Developer Guide.</p><div class="orderedlist"><ol class="orderedlist"
 <a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get_many" target="_top">brick_simple:get_many/5</a>
 </li><li class="listitem">
 <a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete" target="_top">brick_simple:delete/4</a>
-</li></ol></div><p class="incremental">What changes can be seen on Hibari’s Admin Server Webpages during and
-after doing these example exercises?</p></div><div class="section" title="49. Hands On Exercises #2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_2"></a>49. Hands On Exercises #2</h2></div></div></div><p>Implement a new API for Hibari but doing so on the client (and not
-server) side.</p><div class="variablelist"><dl><dt><span class="term">
+</li></ol></div><p class="incremental">この例を実行している間、またその後にHibariの管理サーバー・ウェブページでどんな変化を見ることができるか？</p></div><div class="section" title="49. Hands On Exercises #2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_2"></a>49. Hands On Exercises #2</h2></div></div></div><p>Hibariの新しいAPIを実装するが、クライアント側で行う（サーバー側では無く）</p><div class="variablelist"><dl><dt><span class="term">
 rename(Tab, OldKey, Key, ExpTime, Flags, Timeout)
 </span></dt><dd><p class="simpara">
 ⇒ <code class="literal">'ok'</code> |
 <code class="literal">'key_not_exist'</code> | <code class="literal">{'ts_error', timestamp()}</code> | <code class="literal">{'key_exists',timestamp()}</code>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-This function renames an existing value corresponding to OldKey to
-  new Key and deletes the OldKey.  Flags of the OldKey are ignored and
-  replaced with the Flags argument (except for <code class="literal">'testset'</code> flag).
+この関数は、OldKeyに関連した既存のバリューを新しいkeyに名前変更し、OldKeyを削除します。.  Flags of the OldKeyのFlagsは無視され、Flags引数に置換されます (<code class="literal">'testset'</code> flagを除く)。
 </li><li class="listitem">
-If OldKey doesn’t exist, return <code class="literal">'key_not_exist'</code>.
+OldKeyが存在しなければ、 `<span class="emphasis"><em>key_not_exist</em></span>`がリターン
 </li><li class="listitem">
-If OldKey exists, Flags contains <code class="literal">{'testset', timestamp()}</code>, and
-  there is a timestamp mismatch with the OldKey, return <code class="literal">{'ts_error',
-  timestamp()}</code>.
+OldKeyが存在すれば、 Flagsは <code class="literal">{'testset', timestamp()}</code> を含み、OldKeyにtimestampのミスマッチがあり、 `{<span class="emphasis"><em>ts_error</em></span>,
+  timestamp()}`をリターン。
 </li><li class="listitem">
-If Key exists, return <code class="literal">{'key_exists',timestamp()}</code>.
-</li></ul></div></dd></dl></div></div><div class="section" title="50. Hands On Exercises #2 - Hints"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_2_hints"></a>50. Hands On Exercises #2 - Hints</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-For your first implementation, don’t worry about a transactional do/4
-  operation.
+Keyが存在すれば、`{<span class="emphasis"><em>key_exists</em></span>,timestamp()}`をリターン。
+</li></ul></div></dd></dl></div></div><div class="section" title="50. Hands On Exercises #2 - &#x30D2;&#x30F3;&#x30C8;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_2_&#x30D2;&#x30F3;&#x30C8;"></a>50. Hands On Exercises #2 - ヒント</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+最初の実装において、トランザクショナル do/4 オペレーションは気にしないでください。
 </li><li class="listitem">
-The Erlang/OTP <code class="literal">proplists:delete/2</code> and <code class="literal">proplists:get_value/3</code> can
-  be used for Flags filtering.
+Erlang/OTP <code class="literal">proplists:delete/2</code> と <code class="literal">proplists:get_value/3</code> は、Flags フィルタリングのために使われます。
 </li><li class="listitem">
-The <code class="literal">{'testset', timestamp()}</code> flag is your friend.
+<code class="literal">{'testset', timestamp()}</code> flag は、あなたの友達です。
 </li><li class="listitem">
-If you are feeling adventurous, try implementing with a
-  transactional do/4 operation.  What restrictions must then be placed
-  on OldKey and Key?
-</li></ol></div></div><div class="section" title="51. Hands On Exercises #3"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_3"></a>51. Hands On Exercises #3</h2></div></div></div><p>Mnesia is a distributed Database Management System distributed with
-Erlang/OTP. Mnesia supports a
-<a class="ulink" href="http://www.erlang.org/doc/man/mnesia.html#dirty_update_counter-2" target="_top">dirty_update_counter/3</a>
-operation.  Implement a similiar API for Hibari but doing so on the
-client (and not server) side.</p><div class="variablelist"><dl><dt><span class="term">
+冒険的と感じる場合には、  トランザクショナル do/4 オペレーションで実装してみてください。OldKey とKeyに設置しなければならないのはどんな制約でしょうか?
+</li></ol></div></div><div class="section" title="51. Hands On Exercises #3"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_3"></a>51. Hands On Exercises #3</h2></div></div></div><p>Mnesia は、Erlang/OTPによる分散型データベース管理システムです。. Mnesiaは、 <a class="ulink" href="http://www.erlang.org/doc/man/mnesia.html#dirty_update_counter-2" target="_top">dirty_update_counter/3</a>　オペレーションをサポートします。Hibariと同様のAPIを実装し、それをクライアント側（サーバー側では無く）で行います。</p><div class="variablelist"><dl><dt><span class="term">
 update_counter(Tab, Key, Incr, Timeout)
 </span></dt><dd><p class="simpara">
 ⇒ <code class="literal">{'ok', NewVal}</code> | <code class="literal">'invalid_arg_present'</code> | <code class="literal">{non_integer,timestamp()}</code> | exit by Timeout.
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-This function updates a counter with a positive or negative
-  integer. However, counters can never become less than zero.
+この関数は、正か負のintegerのカウンターを更新します。しかし、カウンターはゼロ以下にはなりません。
 </li><li class="listitem">
-If Incr is not an integer, return <code class="literal">'invalid_arg_present'</code>.
+Incrが、integerで無い場合には, `<span class="emphasis"><em>invalid_arg_present</em></span>`をリターンします。
 </li><li class="listitem">
-If two (or more) callers perform update_counter/3 simultaneously,
-  both updates will take effect without the risk of losing one of the
-  updates. The new value <code class="literal">{'ok', NewVal}</code> of the counter is returned.
+2人（それ以上）が同時にupdate_counter/3 を実行する場合、
+  両方の更新はどちらかひとつを失うというリスク無しに有効になります。カウンターの新しいバリュー <code class="literal">{'ok', NewVal}</code> がリターンされます。
 </li><li class="listitem">
-If Key doesn’t exist, a new counter is created with the value Incr
-  if it is larger than 0, otherwise it is set to 0.
+Keyが存在しない場合には、0よりお大きければ新しいカウンターはバリュー Incrを作成し、そうでない場合は0に設定されます。
 </li><li class="listitem">
-If Key exists but it’s value is not an integer greater than or equal
-  to zero, return {non_integer, timestamp()}.
+Keyが存在するけれども、 integerがゼロより大きいか等しくなければ、 {non_integer, timestamp()}をリターンします。
 </li><li class="listitem">
-If updating of the counter exceeds the specified timeout, exit by
-  Timeout.
-</li></ul></div></dd></dl></div></div><div class="section" title="52. Hands On Exercises #3 - Hints"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_3_hints"></a>52. Hands On Exercises #3 - Hints</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-The <code class="literal">{'testset', timestamp()}</code> flag is your friend.
+カウンターの更新が特定のtimeoutを超えた場合には, Timeoutにより終了します。
+</li></ul></div></dd></dl></div></div><div class="section" title="52. Hands On Exercises #3 - &#x30D2;&#x30F3;&#x30C8;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_3_&#x30D2;&#x30F3;&#x30C8;"></a>52. Hands On Exercises #3 - ヒント</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<code class="literal">{'testset', timestamp()}</code> flagは、あなたの友達です。
 </li><li class="listitem">
-Use <code class="literal">if is_integer(X) -&gt; ...; true -&gt; ... end.</code> to check if a term is an
-  integer or not.
+termが integer か否かを確かめるためには、<code class="literal">if is_integer(X) -&gt; ...; true -&gt; ... end.</code> を利用してください。
 </li><li class="listitem">
-The erlang primitives <code class="literal">erlang:integer_to_binary/1</code> and
-  <code class="literal">erlang:binary_to_integer/1</code> are very helpful (and necessary).
+Erlang primitivesの<code class="literal">erlang:integer_to_binary/1</code> と
+  <code class="literal">erlang:binary_to_integer/1</code> は、たいへんに有用です (そして、必要です)。
 </li><li class="listitem">
-The erlang primitive <code class="literal">erlang:now/0</code> and <code class="literal">timer:now_diff/2</code> can be
-  used to create an absolute now time and to compare with a new
-  abosolute now time, respectively.  Timeout is in milliseconds.  Now
-  is in microseconds.
-</li></ol></div></div><div class="section" title="53. Hands On Exercises #4 - Advanced"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_4_advanced"></a>53. Hands On Exercises #4 - Advanced</h2></div></div></div><p>Implement a filesystem-like Client API using Hibari’s Key-Value Data
-Model.</p><div class="variablelist"><dl><dt><span class="term">
+Erlang primitive の<code class="literal">erlang:now/0</code> and <code class="literal">timer:now_diff/2</code> は、絶対Now timeを設定し、新しい絶対Now timeとそれぞれ比較するために使われます。Timeoutは、ミリ秒です。Nowはマイクロ秒です。
+</li></ol></div></div><div class="section" title="53. Hands On Exercises #4 - &#x4E0A;&#x7D1A;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_4_&#x4E0A;&#x7D1A;"></a>53. Hands On Exercises #4 - 上級</h2></div></div></div><p>HibariのKey-Value Data Modelを使って、ファイルシステムのようなクライアントAPIを実装してください。</p><div class="variablelist"><dl><dt><span class="term">
 mkdir(Tab, Path, Timeout)
 </span></dt><dd>
 ⇒ <code class="literal">'ok'</code> | <code class="literal">{'dir_exists', timestamp()}</code>.
@@ -791,17 +709,16 @@ readfile(Tab, Path, Timeout)
 </span></dt><dd>
 ⇒ <code class="literal">{'ok', Data}</code> | <code class="literal">'file_not_exist'</code>.
 </dd></dl></div></div><div class="section" title="54. Hands On Exercises #4 - Hints"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_4_hints"></a>54. Hands On Exercises #4 - Hints</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-How can you represent a file?
+どのように、ファイルを表現しますか？
 </li><li class="listitem">
-How can you represent a directory?
+どのようにディレクトリーを表現しますか？
 </li><li class="listitem">
-How can you find files within a certain directory? … below a
-  directory tree?
+どのように、あるディレクトリー内のファイルを探しますか？..ディレクトリーツリーの下は？
 </li><li class="listitem">
-How can you efficiently check if a directory is empty or not?
+どのように、ディレクトリーが空かどうかを効果的に確認しますか？
 </li><li class="listitem">
-How can test-n-set of timestamps be used?
-</li></ul></div></div><div class="section" title="55. Thank You"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_thank_you"></a>55. Thank You</h2></div></div></div><p>Please check Hibari’s GitHub repositories and webpages for updates.</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+どのように、timestamps のtest-n-set を利用しますか？
+</li></ul></div></div><div class="section" title="55. &#x3042;&#x308A;&#x304C;&#x3068;&#x3046;&#x3054;&#x3056;&#x3044;&#x307E;&#x3057;&#x305F;&#x3002;"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_&#x3042;&#x308A;&#x304C;&#x3068;&#x3046;&#x3054;&#x3056;&#x3044;&#x307E;&#x3057;&#x305F;"></a>55. ありがとうございました。</h2></div></div></div><p>Hibari’s GitHub repositories とwebpagesの更新を常に確認してください。</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
 <p>
 Hibari Open Source project
 </p>
