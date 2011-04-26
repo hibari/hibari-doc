@@ -20,7 +20,7 @@ slidy: html ./public_html/hibari-tutorial.en.html ./public_html/hibari-tutorial.
 	cp -f hibari-tutorial.en.txt ./public_html/hibari-tutorial.en.txt
 	(cd public_html && asciidoc --backend slidy hibari-tutorial.en.txt)
 
-./public_html/hibari-tutorial.en.html: public-html-hack hibari-tutorial.ja.txt
+./public_html/hibari-tutorial.ja.html: public-html-hack hibari-tutorial.ja.txt
 	cp -f hibari-tutorial.ja.txt ./public_html/hibari-tutorial.ja.txt
 	(cd public_html && asciidoc --backend slidy hibari-tutorial.ja.txt)
 
