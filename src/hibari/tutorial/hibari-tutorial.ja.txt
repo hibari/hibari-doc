@@ -154,14 +154,13 @@ image:images/chain-migration-3to4.png[]
 
 image:images/migration-3to4.png[]
 
-Key Points::
+キー・ポイント::
 
-- Minimize the moving of data from one place to another.
-- Support rate control features to minimize service impact.
-- Ability to "test" and to "customize" key distribution before
-  migration.
+- 一つの場所から他にデータを動かすことを最小限にする。
+- サービスインパクトを最小限にするためのレート管理機能をサポートする。
+- マイグレーションの前に、 "テスト" し、キー分散を"カスタマイズ" できること。
 
-== Hibari - Write-Ahead-Logs
+== Hibari - ログ先行書き込み
 
 image:images/private-and-common-logs.png[]
 
