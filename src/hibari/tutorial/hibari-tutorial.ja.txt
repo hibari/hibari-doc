@@ -176,11 +176,11 @@ image:images/private-and-common-logs.png[]
   * キー: 典型的に、 "/'　によってセパレートされるパスのような名前
   * バリュー: バイナリー　blobs (しばしば、 Erlang 用語によりシリアライズされる)
 - オペレーション
-  * 挿入 (add, set, replace)
+ * 挿入 (add, set, replace)
   * 削除 (delete)
-  * retrieval (get, get_many)
-- lexicographically sorted tables
-- key prefixes (often) used for implementing atomic
+  * 検索 (get, get_many)
+- 辞書配列ソートテーブル
+- キーkey prefixes (often) used for implementing atomic
   "micro-transactions" with individual chains
 
 == Hibari - Client API (cont.)
