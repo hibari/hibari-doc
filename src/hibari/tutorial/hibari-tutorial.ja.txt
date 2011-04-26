@@ -26,66 +26,52 @@ Part 3::
 - Hibari Overview
 
 == Hibari Overview
-// == Introduction
+// == はじめに
 
-- Hibari is a production-ready, distributed, key-value, big data
-  store.
-- Hibari combines Chain Replication and Erlang to build a robust,
-  high-performance distributed storage solution.
-- Hibari delivers high throughput and availability without scarificing
-  data consistency.
-- Hibari is open source and built for the carrier-class telecom sector
-  and proven in multi-million user telecom production environments.
+- Hibariは、商用に活用できる分散型のキー・バリュー・ビック・データ・ストアです。
+- Hibariは、チェイン・レプリケーションとErlangにより、堅固で、高性能の分散型ストレージソリューションを提供します。
+- Hibariは、データの一貫性を犠牲にすることなく、高いスループットと可用性を提供します。
+- Hibariは、オープンソースであり、通信事業者向けに開発され、通信事業者の商用環境にて数百万のユーザーに利用されています。
 
-== Hibari - Distinctive Features
-// == Introduction
+== Hibari - 特徴
+// ==はじめに
 
-- High Performance, Especially for Reads and Large Values
-- Per-table options for RAM+disk-based or disk-only value storage (#)
-- Support for per-key expiration times and per-key custom meta-data
-- Support for multi-key atomic transactions, within range limits
-- A key timestamping mechanism that facilitates "test-and-set" type
-  operations
-- Automatic data rebalancing as the system scales
-- Support for live code upgrades
-- Multiple client API implementations
+- 高いパフォーマンス。特に読み出しと大きなバリュー
+- テーブル毎のオプションとして、RAM+diskベース か　disk-onlyバリューストレージ (#)
+- キー毎の有効期限とキー毎のカスタム・メタデータをサポート
+- 複数キーのレンジリミット内でのアトミック処理をサポート
+- "test-and-set" タイプの運用を容易にするキー・タイムスタンプの仕組み
+- システムを拡張する際の自動データ・リバランス
+- ライブ・コード・アップグレードをサポート
+- 複数クライアントAPIを実装
 
 [role="incremental"]
-_# per-key options have been implemented but not yet deployed in a
-production setting._
+_# per-key　オプションjが実装されているが、商用設定には未展開。_
 
-==  Hibari - Engineered in Erlang
-// ==== Engineered in Erlang
+==  Hibari - Erlangによる開発
+// ====Erlangによる開発
 
-- Hibari's server is written entirely in Erlang.  Hibari clients may
-  be written in Erlang and/or other programming languages.
-- Erlang is a general purpose programming language and runtime
-  environment designed specifically to support reliable,
-  high-performance distributed systems.
-- Erlang's Key Benefits are
-  * Concurrency
-  * Distribution
-  * Robustness
-  * Portability
-  * Hot code upgrades
-  * Predictable Garbage collection behavior
+- Hibariのサーバーは、完全にErlangで開発。HibariのクライアントはErlangでも、他のプログラミング言語でも開発可能。
+- Erlangは、多目的プログラミング言語であり、信頼性ある高いパフォーマンスの分散システムをサポートするために特別に設計されたランタイム環境。
+- Erlangの主な利点は、
+  * Concurrency (同時並行性)
+  * Distribution (分散)
+  * Robustness (堅牢)
+  * Portability (移植性)
+  * ホット・コード・アップグレード
+  * 予測可能なガベージコレクション
 
-== Hibari - Chain Replication
-// ==== Chain Replication for High Availability and Strong Consistency
+== Hibari - チェイン・レプリケーション
+// ==== 高可用性と強い一貫性のためのチェイン・レプリケーション
 
 image:images/chain_replication.png[]
 
-- Chain Replication is a technique that achieves redundancy and high
-  availability without sacrificing data consistency.
-- Write requests are directed to "head", to "middle", and to "tail"
-  bricks.
-- Read requests are directed to the "tail" brick.
-- The length of a chain is configurable and decides the degree of
-  replication.
-- Through consistent hashing, the key space is divided across multiple
-  storage "chains".
-- The entire key or a prefix of the key can be the subject of
-  consistent hashing.
+- チェイン・レプリケーションは、データの一貫性を損なうことなく、冗長性と高可用性を提供する技術。
+- 書き込みリクエストは、"head"　から "middle"、そして "tail" ブリックに。
+- 読み出しリクエストは、"tail" ブリックに。
+- チェインの長さは設定可能で、レプリケーションの度合を決める。
+- コンシステント・ハッシングにより、キー・スペースは複数のストレージ "chains" 全体に分割される。
+- 全てのキーやキーのプレフィックスはコンシステント・ハッシングに依存する。
 
 == Hibari - Automatic Failover
 // ==== Chain Replication for High Availability and Strong Consistency
