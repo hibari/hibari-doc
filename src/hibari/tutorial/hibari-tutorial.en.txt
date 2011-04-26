@@ -607,13 +607,206 @@ Error returns
 - Hibari Basics
 - Hands On Exercises
 
-== Hibari Basics
+== Hibari - Single Node Install
+// === Installing a Single-Node Hibari System
 
-TODO:: This section is in progress.
+- Create a directory
++
+-----
+$ mkdir running-directory
+-----
++
+- untar Hibari tarball package - "hibari-_X.Y.Z-DIST-ARCH-WORDSIZE_.tgz"
++
+-----
+$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
+-----
+
+- _X.Y.Z_ is the release version => "0.1.4"
+- _DIST_ is the release distribution => "fedora14"
+- _ARCH_ is the release architecture => "x86_64-unknown-linux-gnu"
+- _WORDSIZE_ is the release wordsize => "64"
+
+== Hibari - Single Node Start, Bootstrap, and Stop
+// ==== Starting and Bootstrapping Hibari
+
+- Start Hibari:
++
+------
+$ running-directory/hibari/bin/hibari start
+------
++
+- Bootstrap the system:
++
+------
+$ running-directory/hibari/bin/hibari-admin bootstrap
+ok
+------
++
+- Stop Hibari (later when needed):
++
+------
+$ running-directory/hibari/bin/hibari stop
+------
+
+== Hibari - Verifying Status
+// ==== Verifying Hibari
+
+- Confirm that you can open the "Hibari Web Administration" page:
++
+------
+$ firefox http://127.0.0.1:23080 &
+------
++
+- Confirm that you can successfully ping the Hibari node:
++
+------
+$ running-directory/hibari/bin/hibari ping
+pong
+------
+
+[role="incremental"]
+TIP: A single-node Hibari system is hard-coded to listen on the
+localhost address 127.0.0.1. Consequently the Hibari node is reachable
+only from the node itself.
+
+== Hibari - Remote Shell
+
+- Connect to Hibari using Erlang's remote shell
++
+------
+$ running-directory/hibari/erts-5.8.2/bin/erl -name hogehoge@127.0.0.1 -setcookie hibari -kernel net_ticktime 20 -remsh hibari@127.0.0.1
+Erlang R14B01 (erts-5.8.2) [source] [64-bit] [smp:2:2] [rq:2] [async-threads:0] [hipe] [kernel-poll:false]
+
+Eshell V5.8.2  (abort with ^G)
+(hibari@127.0.0.1)1>
+------
++
+- Check your node name and the set of connected Erlang nodes.
++
+------
+(hibari@127.0.0.1)1> node().
+'hibari@127.0.0.1'
+(hibari@127.0.0.1)2> nodes().
+['hogehoge@127.0.0.1']
+(hibari@127.0.0.1)3>
+------
+
+[role="incremental"]
+TIP: Hibari's name, cookie, and kernel net_ticktime are configurable
+and located in the running-directory/hibari/etc/vm.args file.
+
+[role="incremental"]
+TIP: The "rlwrap -a running-directory/hibari/erts-5.8.2/bin/erl" tool
+is helpful for keeping track of your Erlang shell history (e.g. yum
+install rlwrap).
+
+== Hibari - Creating New Tables
+// === Creating New Tables
+
+- Create a new table having a hash prefix of 2 and having 3 bricks per
+  chain.
++
+------
+$ running-directory/hibari/bin/hibari-admin create-table tab2 \
+    -bigdata -disklogging -syncwrites \
+    -varprefix -varprefixsep 47 -varprefixnum 2 \
+    -bricksperchain 3 \
+    hibari@127.0.0.1 hibari@127.0.0.1 hibari@127.0.0.1
+------
++
+- For example, let's assume the first part of a key represent's a
+  user's id.  A hash prefix of 2 makes the keys of each individual
+  user to be stored on the same chain ... but not necessarily on the
+  same chain as other user's keys.
++
+------
+  :
+/user1/adir/
+/user1/adir/file1
+/user1/adir/file3
+/user1/file1
+/user1/file4
+/user1/xdir/
+/user1/xdir/fileY
+  :
+/user2/file1
+  :
+/user3/file4
+  :
+------
+
+[role="incremental"]
+TIP: Tables can also be created using Hibari's Admin Server
+Webpage. Open `http://localhost:23080/` and click the "Add a table"
+link.
 
 == Hands On Exercises
 
-TODO:: This section is in progress.
+== Hands On Exercises #1-A
+
+. Install Hibari
+. Start and Bootstrap Hibari
+. Wait 15 seconds (or so) and then make a backup of Hibari's
+   Schema.local file and data files:
++
+------
+$ tar -cvzf backup.tgz running-directory/hibari/Schema.local running-directory/hibari/data/brick
+------
++
+. Verify the status of Hibari
+. Connect to Hibari using the Erlang shell
+. Create tab2 as described above
+. Open Hibari's Admin Server Webpage
+. Make a list of what is the same and what is different between tab1
+   and tab2.
+. What other things can be learned from the Admin Server Webpage?
+
+== Hands On Exercises #1-B
+
+. Stop Hibari
+. Delete Hibari's Schema.local and data files:
++
+------
+$ rm -r running-directory/hibari/Schema.local running-directory/hibari/data/brick/*
+------
++
+. Restore Hibari's Schema.local and data files:
++
+------
+$ tar -xvzf backup.tgz
+------
++
+. Start Hibari
+. Verify the status of Hibari
+. Open Hibari's Admin Server Webpage
+. What tables exist now?
+. Create tab2 (again) as described above.
+. Stop and Start Hibari
+  . Follow the status of the Chains and Bricks
+  . What's happening?
+  . What about the history of each Chain and/or Brick?
+
+== Hands On Exercises #1-C
+
+Using the Erlang Shell, repeat the examples listed in Hibari's
+Application Developer Guide.
+
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-add[brick_simple:add/6]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-replace[brick_simple:replace/6]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-set[brick_simple:set/6]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get[brick_simple:get/4]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get_many[brick_simple:get_many/5]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete[brick_simple:delete/4]
+
+== Hands On Exercises #2
+_to be added_
+
+== Hands On Exercises #3
+_to be added_
+
+== Hands On Exercises #4
+_to be added_
 
 == Thank You
 
