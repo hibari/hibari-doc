@@ -40,7 +40,7 @@ reasons:
   of the carrier-class telecom sector*, and proven in multi-million
   user telecom production environments.
 - Hibari delivers a *distinctive feature matrix* that includes:
-  * Per-table options for disk-based or RAM-only value storage
+  * Per-table options for RAM+disk-based or disk-only value storage
   * Support for per-key expiration times and per-key custom meta-data
   * Support for multi-key atomic transactions, within range limits
   * A key timestamping mechanism that facilitates "test-and-set" type operations
@@ -375,7 +375,7 @@ Hibari storage cluster, even at Big Data scale:
 - Hibari supports a number of performance-tuning options on a
   per-table basis. For example, while some distributed KVDBs support
   only disk-based storage or only RAM-based storage of value blobs,
-  Hibari lets you choose disk-based or RAM-based storage on a
+  Hibari lets you choose RAM+disk-based or disk-only storage on a
   per-table basis, depending on your application needs. Whichever
   storage option you choose, all data changes are logged to disk to
   ensure data durability in the event of power failures. A batch
