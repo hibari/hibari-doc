@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2011Q2 Tutorial - Hibari Hands On DRAFT</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="2011Q2 Tutorial - Hibari Hands On DRAFT" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36108574"></a>2011Q2 Tutorial - Hibari Hands On <span class="strong"><strong>DRAFT</strong></span></h2></div><div><div class="author"><h3 class="author"><span class="firstname">Joseph</span> <span class="othername">Wayne</span> <span class="surname">Norton</span></h3><div class="affiliation"><div class="address"><p><code class="email">&lt;<a class="email" href="mailto:norton@geminimobile.com">norton@geminimobile.com</a>&gt;</code></p></div></div></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.1</td><td align="left">2011/04/24</td><td align="left">JWN</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_overview">1. Overview</a></span></dt><dt><span class="section"><a href="#_part_1">2. Part 1</a></span></dt><dt><span class="section"><a href="#_hibari_overview">3. Hibari Overview</a></span></dt><dt><span class="section"><a href="#_hibari_distinctive_features">4. Hibari - Distinctive Features</a></span></dt><dt><span class="section"><a href="#_hibari_engineered_in_erlang">5. Hibari - Engineered in Erlang</a></span></dt><dt><span class="section"><a href="#_hibari_chain_replication">6. Hibari - Chain Replication</a></span></dt><dt><span class="section"><a href="#_hibari_automatic_failover">7. Hibari - Automatic Failover</a></span></dt><dt><span class="section"><a href="#_hibari_load_balancing">8. Hibari - Load Balancing</a></span></dt><dt><span class="section"><a href="#_hibari_node_failure">9. Hibari - Node Failure</a></span></dt><dt><span class="section"><a href="#_hibari_cluster">10. Hibari - Cluster</a></span></dt><dt><span class="section"><a href="#_hibari_load_balancing_again">11. Hibari - Load Balancing (again)</a></span></dt><dt><span class="section"><a href="#_hibari_admin_server_s">12. Hibari - Admin Server(s)</a></span></dt><dt><span class="section"><a href="#_hibari_chains">13. Hibari - Chains</a></span></dt><dt><span class="section"><a href="#_hibari_clients">14. Hibari - Clients</a></span></dt><dt><span class="section"><a href="#_hibari_3_layers">15. Hibari - 3 Layers</a></span></dt><dt><span class="section"><a href="#_hibari_consistent_hashing">16. Hibari - Consistent Hashing</a></span></dt><dt><span class="section"><a href="#_hibari_chain_migration">17. Hibari - Chain Migration</a></span></dt><dt><span class="section"><a href="#_hibari_chain_migration_cont">18. Hibari - Chain Migration (cont.)</a></span></dt><dt><span class="section"><a href="#_hibari_write_ahead_logs">19. Hibari - Write-Ahead-Logs</a></span></dt><dt><span class="section"><a href="#_hibari_client_api">20. Hibari - Client API</a></span></dt><dt><span class="section"><a href="#_hibari_client_api_cont">21. Hibari - Client API (cont.)</a></span></dt><dt><span class="section"><a href="#_part_2">22. Part 2</a></span></dt><dt><span class="section"><a href="#_erlang_basic_types">23. Erlang - Basic Types</a></span></dt><dt><span class="section"><a href="#_erlang_compound_types">24. Erlang - Compound Types</a></span></dt><dt><span class="section"><a href="#_erlang_miscellaneous">25. Erlang - Miscellaneous</a></span></dt><dt><span class="section"><a href="#_erlang_factorial_program">26. Erlang - Factorial Program</a></span></dt><dt><span class="section"><a href="#_erlang_sequential_programs">27. Erlang - Sequential Programs</a></span></dt><dt><span class="section"><a href="#_native_client_single_ops">28. Native Client - Single Ops</a></span></dt><dt><span class="section"><a href="#_native_client_multiple_ops">29. Native Client - Multiple Ops</a></span></dt><dt><span class="section"><a href="#_native_client_common_args">30. Native Client - Common Args</a></span></dt><dt><span class="section"><a href="#_native_client_common_args_cont">31. Native Client - Common Args (cont.)</a></span></dt><dt><span class="section"><a href="#_native_client_common_args_cont_2">32. Native Client - Common Args (cont.)</a></span></dt><dt><span class="section"><a href="#_native_client_common_errs">33. Native Client - Common Errs</a></span></dt><dt><span class="section"><a href="#_native_client_get_flags">34. Native Client - Get Flags</a></span></dt><dt><span class="section"><a href="#_native_client_get_rets">35. Native Client - Get Rets</a></span></dt><dt><span class="section"><a href="#_native_client_getmany_flags">36. Native Client - GetMany Flags</a></span></dt><dt><span class="section"><a href="#_native_client_getmany_rets">37. Native Client - GetMany Rets</a></span></dt><dt><span class="section"><a href="#_native_client_do_rets">38. Native Client - Do Rets</a></span></dt><dt><span class="section"><a href="#_part_3">39. Part 3</a></span></dt><dt><span class="section"><a href="#_hibari_single_node_install">40. Hibari - Single Node Install</a></span></dt><dt><span class="section"><a href="#_hibari_single_node_start_bootstrap_and_stop">41. Hibari - Single Node Start, Bootstrap, and Stop</a></span></dt><dt><span class="section"><a href="#_hibari_verifying_status">42. Hibari - Verifying Status</a></span></dt><dt><span class="section"><a href="#_hibari_remote_shell">43. Hibari - Remote Shell</a></span></dt><dt><span class="section"><a href="#_hibari_creating_new_tables">44. Hibari - Creating New Tables</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises">45. Hands On Exercises</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_a">46. Hands On Exercises #1-A</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_b">47. Hands On Exercises #1-B</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_c">48. Hands On Exercises #1-C</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_2">49. Hands On Exercises #2</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_3">50. Hands On Exercises #3</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_4">51. Hands On Exercises #4</a></span></dt><dt><span class="section"><a href="#_thank_you">52. Thank You</a></span></dt></dl></div><div class="section" title="1.&#xA0;Overview"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_overview"></a>1. Overview</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>2011Q2 Tutorial - Hibari Hands On DRAFT</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="2011Q2 Tutorial - Hibari Hands On DRAFT" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36108574"></a>2011Q2 Tutorial - Hibari Hands On <span class="strong"><strong>DRAFT</strong></span></h2></div><div><div class="author"><h3 class="author"><span class="firstname">Joseph</span> <span class="othername">Wayne</span> <span class="surname">Norton</span></h3><div class="affiliation"><div class="address"><p><code class="email">&lt;<a class="email" href="mailto:norton@geminimobile.com">norton@geminimobile.com</a>&gt;</code></p></div></div></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.1</td><td align="left">2011/04/24</td><td align="left">JWN</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_overview">1. Overview</a></span></dt><dt><span class="section"><a href="#_part_1">2. Part 1</a></span></dt><dt><span class="section"><a href="#_hibari_overview">3. Hibari Overview</a></span></dt><dt><span class="section"><a href="#_hibari_distinctive_features">4. Hibari - Distinctive Features</a></span></dt><dt><span class="section"><a href="#_hibari_engineered_in_erlang">5. Hibari - Engineered in Erlang</a></span></dt><dt><span class="section"><a href="#_hibari_chain_replication">6. Hibari - Chain Replication</a></span></dt><dt><span class="section"><a href="#_hibari_automatic_failover">7. Hibari - Automatic Failover</a></span></dt><dt><span class="section"><a href="#_hibari_load_balancing">8. Hibari - Load Balancing</a></span></dt><dt><span class="section"><a href="#_hibari_node_failure">9. Hibari - Node Failure</a></span></dt><dt><span class="section"><a href="#_hibari_cluster">10. Hibari - Cluster</a></span></dt><dt><span class="section"><a href="#_hibari_load_balancing_again">11. Hibari - Load Balancing (again)</a></span></dt><dt><span class="section"><a href="#_hibari_admin_server_s">12. Hibari - Admin Server(s)</a></span></dt><dt><span class="section"><a href="#_hibari_chains">13. Hibari - Chains</a></span></dt><dt><span class="section"><a href="#_hibari_clients">14. Hibari - Clients</a></span></dt><dt><span class="section"><a href="#_hibari_3_layers">15. Hibari - 3 Layers</a></span></dt><dt><span class="section"><a href="#_hibari_consistent_hashing">16. Hibari - Consistent Hashing</a></span></dt><dt><span class="section"><a href="#_hibari_chain_migration">17. Hibari - Chain Migration</a></span></dt><dt><span class="section"><a href="#_hibari_chain_migration_cont">18. Hibari - Chain Migration (cont.)</a></span></dt><dt><span class="section"><a href="#_hibari_write_ahead_logs">19. Hibari - Write-Ahead-Logs</a></span></dt><dt><span class="section"><a href="#_hibari_client_api">20. Hibari - Client API</a></span></dt><dt><span class="section"><a href="#_hibari_client_api_cont">21. Hibari - Client API (cont.)</a></span></dt><dt><span class="section"><a href="#_part_2">22. Part 2</a></span></dt><dt><span class="section"><a href="#_erlang_basic_types">23. Erlang - Basic Types</a></span></dt><dt><span class="section"><a href="#_erlang_compound_types">24. Erlang - Compound Types</a></span></dt><dt><span class="section"><a href="#_erlang_miscellaneous">25. Erlang - Miscellaneous</a></span></dt><dt><span class="section"><a href="#_erlang_factorial_program">26. Erlang - Factorial Program</a></span></dt><dt><span class="section"><a href="#_erlang_sequential_programs">27. Erlang - Sequential Programs</a></span></dt><dt><span class="section"><a href="#_native_client_single_ops">28. Native Client - Single Ops</a></span></dt><dt><span class="section"><a href="#_native_client_multiple_ops">29. Native Client - Multiple Ops</a></span></dt><dt><span class="section"><a href="#_native_client_common_args">30. Native Client - Common Args</a></span></dt><dt><span class="section"><a href="#_native_client_common_args_cont">31. Native Client - Common Args (cont.)</a></span></dt><dt><span class="section"><a href="#_native_client_common_args_cont_2">32. Native Client - Common Args (cont.)</a></span></dt><dt><span class="section"><a href="#_native_client_common_errs">33. Native Client - Common Errs</a></span></dt><dt><span class="section"><a href="#_native_client_get_flags">34. Native Client - Get Flags</a></span></dt><dt><span class="section"><a href="#_native_client_get_rets">35. Native Client - Get Rets</a></span></dt><dt><span class="section"><a href="#_native_client_getmany_flags">36. Native Client - GetMany Flags</a></span></dt><dt><span class="section"><a href="#_native_client_getmany_rets">37. Native Client - GetMany Rets</a></span></dt><dt><span class="section"><a href="#_native_client_do_rets">38. Native Client - Do Rets</a></span></dt><dt><span class="section"><a href="#_part_3">39. Part 3</a></span></dt><dt><span class="section"><a href="#_hibari_single_node_install">40. Hibari - Single Node Install</a></span></dt><dt><span class="section"><a href="#_hibari_single_node_start_bootstrap_and_stop">41. Hibari - Single Node Start, Bootstrap, and Stop</a></span></dt><dt><span class="section"><a href="#_hibari_verifying_status">42. Hibari - Verifying Status</a></span></dt><dt><span class="section"><a href="#_hibari_remote_shell">43. Hibari - Remote Shell</a></span></dt><dt><span class="section"><a href="#_hibari_creating_new_tables">44. Hibari - Creating New Tables</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises">45. Hands On Exercises</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_a">46. Hands On Exercises #1-A</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_b">47. Hands On Exercises #1-B</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_1_c">48. Hands On Exercises #1-C</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_2">49. Hands On Exercises #2</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_2_hints">50. Hands On Exercises #2 - Hints</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_3">51. Hands On Exercises #3</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_3_hints">52. Hands On Exercises #3 - Hints</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_4_advanced">53. Hands On Exercises #4 - Advanced</a></span></dt><dt><span class="section"><a href="#_hands_on_exercises_4_hints">54. Hands On Exercises #4 - Hints</a></span></dt><dt><span class="section"><a href="#_thank_you">55. Thank You</a></span></dt></dl></div><div class="section" title="1.&#xA0;Overview"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_overview"></a>1. Overview</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
 Part 1
 </span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Hibari Overview
@@ -664,7 +664,9 @@ For example, let’s assume the first part of a key represent’s a
 /user3/file4
   :</pre></li></ul></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Tables can also be created using Hibari’s Admin Server
 Webpage. Open <code class="literal">http://localhost:23080/</code> and click the "Add a table"
-link.</p></td></tr></table></div></div><div class="section" title="45.&#xA0;Hands On Exercises"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises"></a>45. Hands On Exercises</h2></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="46.&#xA0;Hands On Exercises #1-A"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_1_a"></a>46. Hands On Exercises #1-A</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+link.</p></td></tr></table></div></div><div class="section" title="45.&#xA0;Hands On Exercises"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises"></a>45. Hands On Exercises</h2></div></div></div><p>The goal of these exercises is to learn more about Hibari and to
+implement and to test your own Hibari mini-applications using Hibari’s
+Native Erlang Client.</p></div><div class="section" title="46.&#xA0;Hands On Exercises #1-A"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_1_a"></a>46. Hands On Exercises #1-A</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 Install Hibari
 </li><li class="listitem">
 Start and Bootstrap Hibari
@@ -721,8 +723,117 @@ Application Developer Guide.</p><div class="orderedlist"><ol class="orderedlist"
 <a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get_many" target="_top">brick_simple:get_many/5</a>
 </li><li class="listitem">
 <a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete" target="_top">brick_simple:delete/4</a>
-</li></ol></div><p>What changes can be seen on Hibari’s Admin Server Webpages during and
-after doing these example exercises?</p></div><div class="section" title="49.&#xA0;Hands On Exercises #2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_2"></a>49. Hands On Exercises #2</h2></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="50.&#xA0;Hands On Exercises #3"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_3"></a>50. Hands On Exercises #3</h2></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="51.&#xA0;Hands On Exercises #4"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_4"></a>51. Hands On Exercises #4</h2></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="52.&#xA0;Thank You"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_thank_you"></a>52. Thank You</h2></div></div></div><p>Please check Hibari’s GitHub repositories and webpages for updates.</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+</li></ol></div><p class="incremental">What changes can be seen on Hibari’s Admin Server Webpages during and
+after doing these example exercises?</p></div><div class="section" title="49.&#xA0;Hands On Exercises #2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_2"></a>49. Hands On Exercises #2</h2></div></div></div><p>Implement a new API for Hibari but doing so on the client (and not
+server) side.</p><div class="variablelist"><dl><dt><span class="term">
+rename(Tab, OldKey, Key, ExpTime, Flags, Timeout)
+</span></dt><dd><p class="simpara">
+⇒ <code class="literal">'ok'</code> |
+<code class="literal">'key_not_exist'</code> | <code class="literal">{'ts_error', timestamp()}</code> | <code class="literal">{'key_exists',timestamp()}</code>
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+This function renames an existing value corresponding to OldKey to
+  new Key and deletes the OldKey.  Flags of the OldKey are ignored and
+  replaced with the Flags argument (except for <code class="literal">'testset'</code> flag).
+</li><li class="listitem">
+If OldKey doesn’t exist, return <code class="literal">'key_not_exist'</code>.
+</li><li class="listitem">
+If OldKey exists, Flags contains <code class="literal">{'testset', timestamp()}</code>, and
+  there is a timestamp mismatch with the OldKey, return <code class="literal">{'ts_error',
+  timestamp()}</code>.
+</li><li class="listitem">
+If Key exists, return <code class="literal">{'key_exists',timestamp()}</code>.
+</li></ul></div></dd></dl></div></div><div class="section" title="50.&#xA0;Hands On Exercises #2 - Hints"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_2_hints"></a>50. Hands On Exercises #2 - Hints</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+For your first implementation, don’t worry about a transactional do/4
+  operation.
+</li><li class="listitem">
+The Erlang/OTP <code class="literal">proplists:delete/2</code> and <code class="literal">proplists:get_value/3</code> can
+  be used for Flags filtering.
+</li><li class="listitem">
+The <code class="literal">{'testset', timestamp()}</code> flag is your friend.
+</li><li class="listitem">
+If you are feeling adventurous, try implementing with a
+  transactional do/4 operation.  What restrictions must then be placed
+  on OldKey and Key?
+</li></ol></div></div><div class="section" title="51.&#xA0;Hands On Exercises #3"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_3"></a>51. Hands On Exercises #3</h2></div></div></div><p>Mnesia is a distributed Database Management System distributed with
+Erlang/OTP. Mnesia supports a
+<a class="ulink" href="http://www.erlang.org/doc/man/mnesia.html#dirty_update_counter-2" target="_top">dirty_update_counter/3</a>
+operation.  Implement a similiar API for Hibari but doing so on the
+client (and not server) side.</p><div class="variablelist"><dl><dt><span class="term">
+update_counter(Tab, Key, Incr, Timeout)
+</span></dt><dd><p class="simpara">
+⇒ <code class="literal">{'ok', NewVal}</code> | <code class="literal">'invalid_arg_present'</code> | <code class="literal">{non_integer,timestamp()}</code> | exit by Timeout.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+This function updates a counter with a positive or negative
+  integer. However, counters can never become less than zero.
+</li><li class="listitem">
+If Incr is not an integer, return <code class="literal">'invalid_arg_present'</code>.
+</li><li class="listitem">
+If two (or more) callers perform update_counter/3 simultaneously,
+  both updates will take effect without the risk of losing one of the
+  updates. The new value <code class="literal">{'ok', NewVal}</code> of the counter is returned.
+</li><li class="listitem">
+If Key doesn’t exist, a new counter is created with the value Incr
+  if it is larger than 0, otherwise it is set to 0.
+</li><li class="listitem">
+If Key exists but it’s value is not an integer greater than or equal
+  to zero, return {non_integer, timestamp()}.
+</li><li class="listitem">
+If updating of the counter exceeds the specified timeout, exit by
+  Timeout.
+</li></ul></div></dd></dl></div></div><div class="section" title="52.&#xA0;Hands On Exercises #3 - Hints"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_3_hints"></a>52. Hands On Exercises #3 - Hints</h2></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+The <code class="literal">{'testset', timestamp()}</code> flag is your friend.
+</li><li class="listitem">
+Use <code class="literal">if is_integer(X) -&gt; ...; true -&gt; ... end.</code> to check if a term is an
+  integer or not.
+</li><li class="listitem">
+The erlang primitives <code class="literal">erlang:integer_to_binary/1</code> and
+  <code class="literal">erlang:binary_to_integer/1</code> are very helpful (and necessary).
+</li><li class="listitem">
+The erlang primitive <code class="literal">erlang:now/0</code> and <code class="literal">timer:now_diff/2</code> can be
+  used to create an absolute now time and to compare with a new
+  abosolute now time, respectively.  Timeout is in milliseconds.  Now
+  is in microseconds.
+</li></ol></div></div><div class="section" title="53.&#xA0;Hands On Exercises #4 - Advanced"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_4_advanced"></a>53. Hands On Exercises #4 - Advanced</h2></div></div></div><p>Implement a filesystem-like Client API using Hibari’s Key-Value Data
+Model.</p><div class="variablelist"><dl><dt><span class="term">
+mkdir(Tab, Path, Timeout)
+</span></dt><dd>
+⇒ <code class="literal">'ok'</code> | <code class="literal">{'dir_exists', timestamp()}</code>.
+</dd><dt><span class="term">
+listdir(Tab, Path, Timeout)
+</span></dt><dd>
+⇒ <code class="literal">{'ok', Names}</code> | <code class="literal">'dir_not_exist'</code>.
+</dd><dt><span class="term">
+rmdir(Tab, Path, Timeout)
+</span></dt><dd>
+⇒ <code class="literal">'ok'</code> | <code class="literal">'dir_not_exist'</code> | <code class="literal">'dir_not_empty'</code>.
+</dd><dt><span class="term">
+create(Tab, Path, Timeout)
+</span></dt><dd>
+⇒ <code class="literal">'ok'</code> | <code class="literal">'dir_not_exist'</code> | <code class="literal">{'file_exists', timestamp()}</code>.
+</dd><dt><span class="term">
+rmfile(Tab, Path, Timeout)
+</span></dt><dd>
+⇒ <code class="literal">'ok'</code> | <code class="literal">'file_not_exist'</code>.
+</dd><dt><span class="term">
+writefile(Tab, Path, Data, Timeout)
+</span></dt><dd>
+⇒ <code class="literal">'ok'</code> | <code class="literal">'file_not_exist'</code>.
+</dd><dt><span class="term">
+readfile(Tab, Path, Timeout)
+</span></dt><dd>
+⇒ <code class="literal">{'ok', Data}</code> | <code class="literal">'file_not_exist'</code>.
+</dd></dl></div></div><div class="section" title="54.&#xA0;Hands On Exercises #4 - Hints"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_exercises_4_hints"></a>54. Hands On Exercises #4 - Hints</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+How can you represent a file?
+</li><li class="listitem">
+How can you represent a directory?
+</li><li class="listitem">
+How can you find files within a certain directory? … below a
+  directory tree?
+</li><li class="listitem">
+How can you efficiently check if a directory is empty or not?
+</li><li class="listitem">
+How can test-n-set of timestamps be used?
+</li></ul></div></div><div class="section" title="55.&#xA0;Thank You"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_thank_you"></a>55. Thank You</h2></div></div></div><p>Please check Hibari’s GitHub repositories and webpages for updates.</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
 <p>
 Hibari Open Source project
 </p>
