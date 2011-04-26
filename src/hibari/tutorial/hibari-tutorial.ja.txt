@@ -181,13 +181,12 @@ image:images/private-and-common-logs.png[]
   * 削除 (delete)
   * 検索 (get, get_many)
 - 辞書配列ソートテーブル
-- キーkey prefixes (often) used for implementing atomic
-  "micro-transactions" with individual chains
+- 個別のチェインにアトミックな "micro-transactions" の実装に（しばしば）利用されるキー・プレフィックス
 
-== Hibari - Client API (cont.)
-// Simple But Powerful Client API
+== Hibari - クライアント API (続)
+// シンプルだが強力なクライアント API
 
-Hibari supports multiple client API implementations:
+Hibariは、複数のクライアント API実装をサポート:
 
 - Native Erlang
 - Universal Binary Format (UBF/EBF)
@@ -196,29 +195,24 @@ Hibari supports multiple client API implementations:
 - JSON-RPC
 
 [role="incremental"]
-You can develop Hibari client applications in a variety of languages
-including Java, C/C++, Python, Ruby, and Erlang.
+Java, C/C++, Python, Ruby, Erlangを含む様々な言語におけるHibariクライアント・アプリケーション開発が可能
 
 == Part 2
 
-- Intermission #1
-  * 10 minute break
+- 休憩 #1
+  * 10 分休憩
 
-- Erlang Basics
-- Native Client
-- _UBF Basics (extra)_
-- _UBF Client (extra)_
+- Erlang 基礎
+- ネイティブ・クライアント
+- _UBF 基礎 (追加)_
+- _UBF クライアント (追加)_
 
-== Erlang - Basic Types
-// ==== Erlang Basic Data Types
+== Erlang - 基本型
+// ==== Erlang 基本データ型式
 
-Number:: There are two types of numeric literals, *integers* and
-*floats*.
+数:: 2種類の数値リテラル, *integers* と *floats*.
 
-Atom:: An *atom* is a literal, a constant with name. An atom should be
-enclosed in single quotes (') if it does not begin with a lower-case
-letter or if it contains other characters than alphanumeric
-characters, underscore (_), or @.
+Atom::  *atom* はリテラルで、名前を持つ定数。atomは、小文字で開始する場合や、アルファベット、数値、アンダースコア (_),　や @以外の文字を含む場合には、シングル・クォート  (') で囲まれるべき
 +
 -----
 hello
@@ -229,58 +223,52 @@ phone_number
 'phone_number'
 -----
 
-Bit String and Binary:: A *bit string* is used to store an area of
-untyped memory.  A bit string that consists of a number of bits that
-is evenly divisible by eight is called a *binary*.
+Bit String and Binary:: *bit string* は、非型式メモリーの領域を格納するために使われます。8で割り切れるビットからなるbit string は、 *binary* と呼ばれます。
 +
 -----
 <<10,20>>
 <<"ABC">>
 -----
 
-== Erlang - Compound Types
+== Erlang - 複合型
 
-Term:: A piece of data of any data type is called a *term*.
+Term:: あらゆるデータ型式のひとつのデータは、 *term* と呼ばれます。
 
-Tuple:: A *tuple* is a compound data type with a fixed number of
-terms, enclosed by braces:
+Tuple:: *tuple* は、中括弧で囲まれる固定数をもつ複合データ型式です。:
 +
 -----
 {Term1,...,TermN}
 -----
 
-List:: A *list* is a compound data type with a variable number of
-terms, enclosed by square brackets:
+List:: *list* は、鍵括弧で囲まれる変数をもつ複合データ型式です。:
 +
 -----
 [Term1,...,TermN]
 -----
 
-String:: Strings are enclosed in double quotes ("), but are not a true
-data type in Erlang. Instead a string "hello" is shorthand for the
-list [$h,$e,$l,$l,$o], that is [104,101,108,108,111].
+String:: Stringsは、2重括弧 (") で囲まれますが、Erlangにおいては真のデータ型式ではありません。代わりに、string の"hello" は、
+list [$h,$e,$l,$l,$o] に短縮されます。すなわち、 [104,101,108,108,111] です。
 
-== Erlang - Miscellaneous
+== Erlang - その他
 
-Boolean:: There is no Boolean data type in Erlang. Instead the atoms
-`true` and `false` are used to denote Boolean values.
+Boolean:: Erlangには、Boolean データ型式はありません。代わりに、atomsの
+`true` と`false` がBoolean values を表示するために使われます。
 
-None or Null:: There is no such type in Erlang.  However, the atom
-'undefined' is often (by convention) used for this purpose.
+None or Null:: Erlangには、このような型式はありません。 しかし、atomの
+'undefined' は、しばしば（慣習として）　この目的のために使われます。
 
-Pid:: A process identifier, pid, identifies an Erlang process.
+Pid:: プロセス識別である pid　は、Erlangプロセスを識別します。
 
-Reference:: A reference is a term which is unique in an Erlang runtime
-system.
+Reference:: reference は、Erlang ランタイムシステム独自の表現です。
 
-Fun:: A fun is a functional object.
+Fun:: fun は、関数オブジェクトです。
 
 [role="incremental"]
-_... plus a few others_
+_... 数点追加_
 
-== Erlang - Factorial Program
+== Erlang - 階乗プログラム
 
-The file "math.erl" contains the following program:
+ファイル "math.erl" は次のプログラムを含みます。:
 
 ------
 -module(math).
@@ -291,7 +279,7 @@ fac(0) -> 1.
 ------
 
 [role="incremental"]
-This program can be compiled and run using the Erlang shell.
+このプログラムは、Erlang shellを使いながらコンパイルされ動作します。
 
 [role="incremental"]
 ------
@@ -306,7 +294,7 @@ Eshell V5.8.2  (abort with ^G)
 ------
 
 [role="incremental"]
-Let it crash ...
+強制終了させる ...
 
 [role="incremental"]
 ------
@@ -314,7 +302,7 @@ Let it crash ...
 ** exception error: no function clause matching math:fac(-1)
 ------
 
-== Erlang - Sequential Programs
+== Erlang - シーケンシャル・プログラム
 
 Append::
 +
@@ -346,8 +334,8 @@ Adder::
 15
 ------
 
-== Native Client - Single Ops
-// == Client API: Native Erlang
+== Native Client - シングル・オペレーション
+// == クライアント API: Native Erlang
 
 brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout):: => ok.
 brick_simple:replace(Tab, Key, Value, ExpTime, Flags, Timeout):: => ok.
@@ -356,8 +344,8 @@ brick_simple:get(Tab, Key, Flags, Timeout):: => `{'ok', timestamp(), val()}`.
 brick_simple:get_many(Tab, Key, MaxNum, Flags, Timeout):: => `{ok, {[{key(), timestamp(), val()}], boolean()}}`.
 brick_simple:delete(Tab, Key, Flags, Timeout):: => ok.
 
-== Native Client - Multiple Ops
-// == Client API: Native Erlang
+== Native Client - 複数オペレーション
+// == クライアント API: Native Erlang
 
 brick_simple:do(Tab, OpList, OpFlags, Timeout):: => [OpRes()].
 
@@ -366,40 +354,39 @@ Two flavors::
 - micro-transaction - [`'txn'`|OpList]
 
 [role="incremental"]
-TIP: "single" operations are implemented (under the hood) using the
-do/4 function.
+TIP: "シングル" オペレーションは、 do/4 機能を利用しながら実装されています(フードの下で）.
 
-== Native Client - Common Args
-// == Client API: Native Erlang
+== Native Client - 共通引数
+// == クライアント API: Native Erlang
 
  ::
 *Tab*
 
-- Name of the table.
-- Type:
+- ノードの名前.
+- 型式:
   * `Tab = table()`
   * `table() = atom()`
 
  ::
 *Key*
 
-- Key for the table, in association with a paired value.
+- ペアのバリューに関連している、テーブルのキー
 - Type:
   * `Key = key()`
   * `key() = iodata()`
   * `iodata() = iolist() | binary()`
   * `iolist()  = [char() | binary() | iolist()]`
 
-NOTE: `Key` internally always converted to binary.
+NOTE: `Key` は、内部的に常にbinaryに変換されます。
 
-== Native Client - Common Args (cont.)
-// == Client API: Native Erlang
+== Native Client - 共通引数 (続)
+// == クライアント API: Native Erlang
 
  ::
 *Value*
 
-- Value to associate with the key.
-- Type:
+- keyに紐づくValue.
+- 型式:
   * `Value = val()`
   * `val() = iodata()`
   * `iodata() = iolist() | binary()`
@@ -408,101 +395,86 @@ NOTE: `Key` internally always converted to binary.
  ::
 *ExpTime*
 
-- Time at which the key will expire, expressed as a Unix time_t().
-- Optional; defaults to 0 (no expiration).
-- Type:
+- TUnix time_t() として表現される、keyが期限切れとなる時間
+- オプション; defaults to 0 (no expiration).
+- 型式:
   * `ExpTime = exp_time()`
   * `exp_time() = time_t()`
   * `time_t() = integer()`
 
 == Native Client - Common Args (cont.)
-// == Client API: Native Erlang
+// == クライアント API: Native Erlang
 
  ::
 *Flags*
 
-- List of operational flags and/or custom property flags to associate
-  with the key-value pair in the database. Heavy use of custom
-  property flags is discouraged due to RAM-based storage.
-- Type:
+- データベースのkey-value ペアに関連するオペレーショナル・フラグとプロパティ・フラグのリスト。 カスタム・プロパティ・フラグの多用はRAMベースのストレージに起因し、抑制される。
+- 型式:
   * `Flags = flags_list()`
   * `flags_list() = [do_op_flag() | property()]`
   * `do_op_flag() = {'testset', timestamp()}`
   * `timestamp() = integer()`
   * `property() = atom() | {term(), term()}`
-- Operational flag usage
+- オペれーショナル・フラグ利用
   * `{'testset', timestamp()}`
-    ** Fail the operation if the existing key's timestamp is not
-       exactly equal to `timestamp()`.  If used inside a
-       micro-transaction, abort the transaction if the key's timestamp
-       is not exactly equal to `timestamp()`.
+    ** 既存の key's timestamp が`timestamp()`と正確に等しくない場合には、オペレーションは失敗する。マイクロ・トランザクション内で利用される場合には、keyのtimestampが、`timestamp()` と正確に等しくない場合には、トランザクションを停止
 
  ::
 *Timeout*
 
-- Operation timeout in milliseconds.
-- Optional; defaults to 15000.
-- Type:
+- ミリ秒でオペレーション・タイムアウト
+- オプション; defaults to 15000.
+- 型式:
   * `Timeout = timeout()`
   * `timeout() = integer()`
 
 == Native Client - Common Errs
-// == Client API: Native Erlang
+// == クライアント API: Native Erlang
 
  ::
-Error returns
+エラー・リターン
 
 - `'key_not_exist'`
-  * The operation failed because the key does not exist.
+  * keyが存在しないため、オペレーションは失敗した。
 - `{'key_exists',timestamp()}`
-  * The operation failed because the key already exists.
+  * keyがすでに存在しているため、オペレーションは失敗した。
   * `timestamp() = integer()`
 - `{'ts_error', timestamp()}`
-  * The operation failed because the `{'testset', timestamp()}` flag
-    was used and there was a timestamp mismatch. The `timestamp()` in
-    the return is the current value of the existing key's timestamp.
+  *  `{'testset', timestamp()}` フラグは使われており、timestampのミスマッチがあったため、オペレーションは失敗した。 リターンにおける`timestamp()` は、 既存の keyのtimestampの現在のバリュー。
   * `timestamp() = integer()`
 - `'invalid_flag_present'`
-  * The operation failed because an invalid `do_op_flag()` was found
-    in the `Flags` argument.
+  * `Flags` 印数に無効な `do_op_flag()` が見つかったため、オペレーションは失敗した。
+    
 - `'brick_not_available'`
-  * The operation failed because the chain that is responsible for
-    this key is currently length zero and therefore unavailable.
+  * このkey を受け持つチェインの長さが現在ゼロで利用できないためにオペレーションは失敗した。
 - `{{'nodedown',node()},{'gen_server','call',term()}}`
-  * The operation failed because the server brick handling the request
-    has crashed or else a network partition has occurred between the
-    client and server. The client should resend the query after a
-    short delay, on the assumption that the Admin Server will have
-    detected the failure and taken steps to repair the chain.
+  * リクエストを処理するサーバー・ブリックが停止したか、クライアントとサーバー間でネットワーク分断が起きたため、オペレーションは失敗した。管理サーバーが障害を検知し、チェイン修理を行うステップをとるという前提で、クライアントは短い遅延後にクエリを再送する。
   * `node() = atom()`
 - Exit by timeout.
 
 == Native Client - Get Flags
-// == Client API: Native Erlang
+// == クライアント API: Native Erlang
 
-- Operational flag usage
+- オペれーショナル・フラグ利用
   * `'get_all_attribs'`
-    ** Return all attributes of the key. May be used in combination
-       with the `witness` flag.
+    ** keyの全ての属性をリターン。`witness` flagとの組み合わせで利用され得る。
   * `'witness'`
-    ** Do not return the value blob in the result. This flag will
-       guarantee that the brick does not require disk access to
-       satisfy this request.
+    ** 結果として、バリューの blob をリターンさせない。このフラグは、ブリックがこのリクエストを満たすディスクアクセスを要求していないことを保証する。
 
 == Native Client - Get Rets
-// == Client API: Native Erlang
+// == クライアント API: Native Erlang
 
  ::
-Success returns
+サクセス・リターン
 
 - `{'ok', timestamp(), val()}`
-  * Default behavior.
+  * デフォルトの反応
 - `{'ok', timestamp()}`
-  * Success return when the get uses `'witness'` but not `'get_all_attribs'`.
+  * get が`'witness'` を使うが、`'get_all_attribs'`を使わない場合のサクセス・リターン
 - `{'ok', timestamp(), proplist()}`
-  * Success return when the get uses both `'witness'` and `'get_all_attribs'`.
+  * get が `'witness'` と `'get_all_attribs'`の両方を使う場合のサクセス・リターン
 - `{'ok', timestamp(), val(), exp_time(), proplist()}`
-  * Success return when the get uses `'get_all_attribs'` but not `'witness'`.
+  * get が `'get_all_attribs'` だが `'witness'`でない場合のサクセス・リターン
 
 NOTE: For proplists, `{val_len,Size::integer()}` always returned.
 
