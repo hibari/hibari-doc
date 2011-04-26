@@ -164,24 +164,20 @@ image:images/migration-3to4.png[]
 
 image:images/private-and-common-logs.png[]
 
-- The shared "common log" per server. Provides durability guarantees
-  to all logical bricks within the server node via the fsync() system
-  call.
-- Individual "private logs" per brick. All metadata regarding keys in
-  the logical brick are stored in the logical brick's private log.
+- サーバー毎の共有 "common log"。  fsync() システムコール経由でサーバーノード内の全ての論理ブリックに永続的保証を提供する。
+- ブリック毎の個別 "private logs"。  論理ブリックにおいてキーを認識する全てのメタデータは論理ブリックのprivate logに格納される。
 
-== Hibari - Client API
-// Simple But Powerful Client API
+== Hibari - クライアント API
+// シンプルだが強力なクライアントAPI
 
-As a key-value store, Hibari's core data model and client API model
-are simple by design:
+キー・バリュー・ストアとして、HibariのコアデータモデルとクライアントAPIモデルは設計に際しシンプル。:
 
-- blob-based key-value pairs
-  * keys: typically path-like names separated by "/'
-  * values: binary blobs (often serialized Erlang terms)
-- operations
-  * insertion (add, set, replace)
-  * deletion (delete)
+- blobベースのキー・バリュー・ペア
+  * キー: 典型的に、 "/'　によってセパレートされるパスのような名前
+  * バリュー: バイナリー　blobs (しばしば、 Erlang 用語によりシリアライズされる)
+- オペレーション
+  * 挿入 (add, set, replace)
+  * 削除 (delete)
   * retrieval (get, get_many)
 - lexicographically sorted tables
 - key prefixes (often) used for implementing atomic
