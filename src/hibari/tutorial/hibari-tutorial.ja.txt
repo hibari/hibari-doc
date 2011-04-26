@@ -700,7 +700,7 @@ $ tar -xvzf backup.tgz
 . Hibariを停止し、スタート
   . チェインとブリックスの状況をフォロー
   . 何が起きているのでしょうか?
-  . チェインとブリックそれぞれの履歴はどうなっているのでしょうかか?
+  . チェインとブリックそれぞれの履歴はどうなっているのでしょうか?
 
 == Hands On エクササイズ #1-C
 
@@ -725,7 +725,7 @@ rename(Tab, OldKey, Key, ExpTime, Flags, Timeout):: => `'ok'` |
 
 
 - この関数は、OldKeyに関連した既存のバリューを新しいkeyに名前変更し、OldKeyを削除。.  Flags of the OldKeyのFlagsは無視され、Flags引数に置換される (`'testset'` flagを除く)。
-- OldKeyが存在しなければ、 `'key_not_exist'`がリターン
+- OldKeyが存在しなければ、 `'key_not_exist'` がリターン
 - OldKeyが存在すれば、 Flagsは `{'testset', timestamp()}` を含み、OldKeyにtimestampのミスマッチがあり、 `{'ts_error',
   timestamp()}`をリターン。
 - Keyが存在すれば、`{'key_exists',timestamp()}`をリターン。
@@ -745,7 +745,7 @@ update_counter(Tab, Key, Incr, Timeout):: => `{'ok', NewVal}` | `'invalid_arg_pr
 
 
 - この関数は、正か負のintegerのカウンターを更新する。しかし、カウンターはゼロ以下にはならない。
-- Incrが、integerで無い場合には, `'invalid_arg_present'`をリターン。
+- Incrが、integerで無い場合には, `'invalid_arg_present'` をリターン。
 - 2人（それ以上）が同時にupdate_counter/3 を実行する場合、
   両方の更新はどちらかひとつを失うというリスク無しに有効になります。カウンターの新しいバリュー `{'ok', NewVal}` がリターンされる。
 - Keyが存在しない場合には、0よりお大きければ新しいカウンターはバリュー Incrを作成し、そうでない場合は0に設定される。
