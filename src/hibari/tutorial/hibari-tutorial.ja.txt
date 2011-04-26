@@ -73,17 +73,14 @@ image:images/chain_replication.png[]
 - コンシステント・ハッシングにより、キー・スペースは複数のストレージ "chains" 全体に分割される。
 - 全てのキーやキーのプレフィックスはコンシステント・ハッシングに依存する。
 
-== Hibari - Automatic Failover
-// ==== Chain Replication for High Availability and Strong Consistency
+== Hibari - 自動復旧
+// ==== 高可用性と強い一貫性のためのチェイン・レプリケーション
 
 image:images/automatic_failover.png[]
 
-- Hibari detects failures within a chain and automatically adjusts
-  member brick roles.
-- If the head brick goes down, the middle brick automatically takes
-  over the head brick role.
-- If the new head brick failed also, the long remaining brick would
-  play both the head and the tail role.
+- Hibariは、チェインのなかの障害を検知し、自動的にメンバーブリックの役割を調整します。
+- 仮に、ヘッド・ブリックがダウンした場合には、ミドル・ブリックが自動的にヘッド・ブリックの役割を引き受けます。
+- 仮に、新しいヘッド・ブリックにも障害があった場合、残るブリックがヘッドとテイル両方の役割を行います。
 - By following the properties of chain replication, Hibari can
   guarantee strong consistency even in the event of brick failures.
 
