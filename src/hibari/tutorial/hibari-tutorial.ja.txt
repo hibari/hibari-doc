@@ -476,81 +476,65 @@ NOTE: `Key` は、内部的に常にbinaryに変換されます。
 - `{'ok', timestamp(), val(), exp_time(), proplist()}`
   * get が `'get_all_attribs'` だが `'witness'`でない場合のサクセス・リターン
 
-NOTE: For proplists, `{val_len,Size::integer()}` always returned.
+NOTE: For proplists, `{val_len,Size::integer()}` は、つねにリターンされる。
 
 == Native Client - GetMany Flags
-// == Client API: Native Erlang
+// == クライアント API: Native Erlang
 
-- Operational flag usage
+- オペレーショナル・フラグ利用
   * `'get_all_attribs'`
-    ** Return all attributes of each key. May be used in combination
-       with the `witness` flag.
+    ** それぞれのkeyの全属性をリターン。`witness` flagと組み合わせて使われ得る。
   * `'witness'`
-    ** Do not return the value blobs in the result. This flag will
-       guarantee that the brick does not require disk access to
-       satisfy this request.
+    ** 結果として、バリューのDo not return the value blobsをリターンさせない。このflagは、ブリックがこのリクエストを満たすディスク・アクセスを要求しないことを保証する。 
   * `{'binary_prefix', binary()}`
-    ** Return only keys that have a binary prefix that is exactly
-       equal to `binary()`.
+    ** binary prefixをもつkeysが正確に `binary()`に等しいkeyの場合だけリターンする。
   * `{'max_bytes', integer()}`
-    ** Return only as many keys as the sum of the sizes of their
-       corresponding value blobs does not exceed `integer()` bytes.
-       If this flag is not explicity specified in a client request,
-       the value defaults to 2GB.
+    ** 対応するバリューのblobsのサイズの合計が `integer()` バイトを超えない程度までの多さのkeyだけにリターンする。
+      仮に、この flag がクライアント・リクエストにおいて明示されない場合、バリューのデフォルトは2GBまで。
   * `{'max_num', integer()}`
-    ** Maxinum number of keys to return. Defaults to 10. Note: This
-       flag is duplicative of the MaxNum argument in purpose.
+    ** リターンするkeysの最大値。デフォルトは10．
+Note: このflagは、意図的に MaxNum 引数に重複
 
 == Native Client - GetMany Rets
-// == Client API: Native Erlang
+// == クライアント API: Native Erlang
 
  ::
-Success returns
+サクセス・リターン
 
 - `{ok, {[{key(), timestamp(), val()}], boolean()}}`
-  * Default behavior.
+  * デフォルトの反応
 - `{ok, {[{key(), timestamp()}], boolean()}}`
-  * Success return when the `get_many` uses `'witness'` but not
-    `'get_all_attribs'`.
-- `{ok, {[{key(), timestamp(), proplist()}], boolean()}}`
-  * Success return when the `get_many` uses both `'witness'` and
-    `'get_all_attribs'`.
+  * `get_many` が`'witness'` を利用するが、`'get_all_attribs'`を利用しない場合のサクセス・リターン
+- `{ok, {[{key(), timestamp(), proplist()}], boolean()}}
+  * `get_many` が`'witness'` と `'get_all_attribs'`の両方を利用する場合のサクセス・リターン
 - `{ok, {[{key(), timestamp(), val(), exp_time(), proplist()}],
   boolean()}}`
-  * Success return when the `get_many` uses `'get_all_attribs'` but
-    not `'witness'`.
+  *  `get_many` が `'get_all_attribs'`だが`'witness'`でない場合のサクセス・リターン
 
-NOTE: `boolean()` indicates if the chain has more keys or not.
+NOTE: `boolean()` はチェインがさらに多くのkeyを有しているかどうかを示す。
 
-NOTE: For proplists, `{val_len,Size::integer()}` always returned.
+NOTE: For proplists, `{val_len,Size::integer()}` は、つねにリターンされる。
 
 == Native Client - Do Rets
 
  ::
-Error returns
+エラー・リターン
 
 - `{txn_fail, [{integer(), do1_res_fail()}]}`
-  * Operation failed because transaction semantics were used in the
-    `do` request and one or more primitive operations within the
-    transaction failed. The `integer()` identifies the failed
-    primitive operation by its position within the request's
-    `OpList`. For example, a 2 indicates that the second primitive
-    listed in the request's `OpList` failed. Note that this position
-    identifier does not count the `txn()` specifier at the start of
-    the `OpList`.
+  * トランザクション・セマンティックが、失敗したトランザクション内の`do` request と、ひとつ、若しくはそれ以上の初期オペレーションで利用されたために、オペレーションは失敗した。`integer()` は、リクエストの`OpList`内の位置により失敗した初期オペレーションを示す。例としては、 a 2 は、失敗したリクエストの`OpList` に2番目のリストであることを示す。この位置識別子は、 `OpList`のスタートにおいて`txn()` 指示子を数えてはいないことに注意。
 
 == Part 3
 
-- Intermission #2
-  * 10 minute break
+- 休憩 #2
+  * 10 分間休憩
 
-- Hibari Basics
+- Hibari 基礎
 - Hands On Exercises
 
-== Hibari - Single Node Install
-// === Installing a Single-Node Hibari System
+== Hibari - シングル・ノード・インストール
+// === シングル・ノード Hibariシステムのインストール
 
-- Create a directory
+- ディレクトリを作成
 +
 -----
 $ mkdir running-directory
@@ -567,38 +551,38 @@ $ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
 - _ARCH_ is the release architecture => "x86_64-unknown-linux-gnu"
 - _WORDSIZE_ is the release wordsize => "64"
 
-== Hibari - Single Node Start, Bootstrap, and Stop
-// ==== Starting and Bootstrapping Hibari
+== Hibari - シングル・ノード・スタート、ブートストラップ、停止
+// ==== Hibariをスタートして、ブートストラップを行う
 
-- Start Hibari:
+- Hibariをスタート:
 +
 ------
 $ running-directory/hibari/bin/hibari start
 ------
 +
-- Bootstrap the system:
+- システムをブートストラップ:
 +
 ------
 $ running-directory/hibari/bin/hibari-admin bootstrap
 ok
 ------
 +
-- Stop Hibari (later when needed):
+- Hibari を停止　(必要であれば後ほど):
 +
 ------
 $ running-directory/hibari/bin/hibari stop
 ------
 
-== Hibari - Verifying Status
-// ==== Verifying Hibari
+== Hibari - ステイタス確認
+// ==== Hibariを確認する
 
-- Confirm that you can open the "Hibari Web Administration" page:
+- "Hibari Web Administration" ページを開くことができるかを確認:
 +
 ------
 $ firefox http://127.0.0.1:23080 &
 ------
 +
-- Confirm that you can successfully ping the Hibari node:
+- Hibari ノードにpingを成功できるかを確認:
 +
 ------
 $ running-directory/hibari/bin/hibari ping
@@ -606,13 +590,11 @@ pong
 ------
 
 [role="incremental"]
-TIP: A single-node Hibari system is hard-coded to listen on the
-localhost address 127.0.0.1. Consequently the Hibari node is reachable
-only from the node itself.
+TIP: シングル・ノードのHibariシステムは、ローカルホスト・アドレス 127.0.0.1. に対してハードコードされている。結果として、Hibari ノードは、ノード自身からだけ連絡可能。
 
-== Hibari - Remote Shell
+== Hibari - リモート・シェル
 
-- Connect to Hibari using Erlang's remote shell
+- Erlang's remote shellを利用してHibariに接続
 +
 ------
 $ running-directory/hibari/erts-5.8.2/bin/erl -name hogehoge@127.0.0.1 -setcookie hibari -kernel net_ticktime 20 -remsh hibari@127.0.0.1
@@ -622,7 +604,7 @@ Eshell V5.8.2  (abort with ^G)
 (hibari@127.0.0.1)1>
 ------
 +
-- Check your node name and the set of connected Erlang nodes.
+- ノードネームと一連の接続されたErlang ノードを確認
 +
 ------
 (hibari@127.0.0.1)1> node().
@@ -633,19 +615,16 @@ Eshell V5.8.2  (abort with ^G)
 ------
 
 [role="incremental"]
-TIP: Hibari's name, cookie, and kernel net_ticktime are configurable
-and located in the running-directory/hibari/etc/vm.args file.
+TIP: Hibariの名前、クッキー、カーネルnet_ticktime は設定可能であり、running-directory/hibari/etc/vm.args fileのなかに置かれている。
 
 [role="incremental"]
-TIP: The "rlwrap -a running-directory/hibari/erts-5.8.2/bin/erl" tool
-is helpful for keeping track of your Erlang shell history (e.g. yum
+TIP: "rlwrap -a running-directory/hibari/erts-5.8.2/bin/erl" ツールは、Erlang shell履歴をトラッキングし続けるために有用 (例 yum
 install rlwrap).
 
-== Hibari - Creating New Tables
-// === Creating New Tables
+== Hibari - 新規テーブルを作成
+// === 新規テーブルを作成
 
-- Create a new table having a hash prefix of 2 and having 3 bricks per
-  chain.
+- 2 のハッシュ・プレフィックスとチェイン毎に3 のブリックを持つ新規テーブルを作成
 +
 ------
 $ running-directory/hibari/bin/hibari-admin create-table tab2 \
@@ -655,10 +634,7 @@ $ running-directory/hibari/bin/hibari-admin create-table tab2 \
     hibari@127.0.0.1 hibari@127.0.0.1 hibari@127.0.0.1
 ------
 +
-- For example, let's assume the first part of a key represent's a
-  user's id.  A hash prefix of 2 makes the keys of each individual
-  user to be stored on the same chain ... but not necessarily on the
-  same chain as other user's keys.
+- 例として、キーが表す最初の部分を user's idとしましょう。2のハッシュ・プレフィックスは、同じチェインに格納される個々のユーザーのkeysを作成します...しかし他のユーザーのキーと同じチェインとは限りません。
 +
 ------
   :
@@ -677,64 +653,58 @@ $ running-directory/hibari/bin/hibari-admin create-table tab2 \
 ------
 
 [role="incremental"]
-TIP: Tables can also be created using Hibari's Admin Server
-Webpage. Open `http://localhost:23080/` and click the "Add a table"
-link.
+TIP: テーブルは、Hibariの管理サーバー・ウェブページを利用して作成することもできます。`http://localhost:23080/` を開き、"Add a table"
+リンクをクリックしてください。
 
 == Hands On Exercises
 
-The goal of these exercises is to learn more about Hibari and to
-implement and to test your own Hibari mini-applications using Hibari's
-Native Erlang Client.
+このエクササイズの目的は、Hibariについて学び、実装し、HibariのネイティブErlangクライアントを利用しながら、ご自身のHibariのミニ・アプリケーションをテストすることです。
 
 == Hands On Exercises #1-A
 
-. Install Hibari
-. Start and Bootstrap Hibari
-. Wait 15 seconds (or so) and then make a backup of Hibari's
-   Schema.local file and data files:
+. Hibariをインストール
+. Hibariをスタートし、ブートストラップ
+. 15 秒程度待ち、HibariのSchema.local file とdata filesをバックアップ:
 +
 ------
 $ tar -cvzf backup.tgz running-directory/hibari/Schema.local running-directory/hibari/data/brick
 ------
 +
-. Verify the status of Hibari
-. Connect to Hibari using the Erlang shell
-. Create tab2 as described above
-. Open Hibari's Admin Server Webpage
-. Make a list of what is the same and what is different between tab1
-   and tab2.
-. What other things can be learned from the Admin Server Webpage?
+. Hibariの状態を確認
+. Erlang shellを使いHibariに接続
+. 上記で述べたtab2 を作成
+. Hibariの管理サーバー・ウェブページを開く
+. tab1とtab2の間に同じものと違うもののリストを作成
+. 管理サーバー・ウェブページから他に学ぶことができることは何でしょうか？
 
 == Hands On Exercises #1-B
 
-. Stop Hibari
-. Delete Hibari's Schema.local and data files:
+. Hibariを停止
+. HibariのSchema.local and data filesを削除:
 +
 ------
 $ rm -r running-directory/hibari/Schema.local running-directory/hibari/data/brick/*
 ------
 +
-. Restore Hibari's Schema.local and data files:
+. HibariのSchema.local and data filesを修復:
 +
 ------
 $ tar -xvzf backup.tgz
 ------
 +
-. Start Hibari
-. Verify the status of Hibari
-. Open Hibari's Admin Server Webpage
-. What tables exist now?
-. Create tab2 (again) as described above.
-. Stop and Start Hibari
-  . Follow the status of the Chains and Bricks
-  . What's happening?
-  . What about the history of each Chain and/or Brick?
+. Hibariをスタート
+. Hibariの状態を確認
+. Hibariの管理サーバー・ウェブページを開く
+. いま、どのテーブルが存在しているか？
+. 上記で述べたtab2 (再び) を作成
+. Hibariを停止し、スタート
+  . チェインとブリックスの状況をフォロー
+  . 何が起きているのか?
+  . チェインとブリックそれぞれの履歴はどうなっているか?
 
 == Hands On Exercises #1-C
 
-Using the Erlang Shell, repeat the examples listed in Hibari's
-Application Developer Guide.
+Erlang Shellを使い、 HibariのApplication Developer Guideにリストされている例を再現する
 
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-add[brick_simple:add/6]
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-replace[brick_simple:replace/6]
@@ -744,78 +714,55 @@ Application Developer Guide.
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete[brick_simple:delete/4]
 
 [role="incremental"]
-What changes can be seen on Hibari's Admin Server Webpages during and
-after doing these example exercises?
+この例を実行している間、またその後にHibariの管理サーバー・ウェブページでどんな変化を見ることができるか？
 
 == Hands On Exercises #2
 
-Implement a new API for Hibari but doing so on the client (and not
-server) side.
+Hibariの新しいAPIを実装するが、クライアント側で行う（サーバー側では無く）
 
 rename(Tab, OldKey, Key, ExpTime, Flags, Timeout):: => `'ok'` |
 `'key_not_exist'` | `{'ts_error', timestamp()}` | `{'key_exists',timestamp()}`
 
 
-- This function renames an existing value corresponding to OldKey to
-  new Key and deletes the OldKey.  Flags of the OldKey are ignored and
-  replaced with the Flags argument (except for `'testset'` flag).
-- If OldKey doesn't exist, return `'key_not_exist'`.
-- If OldKey exists, Flags contains `{'testset', timestamp()}`, and
-  there is a timestamp mismatch with the OldKey, return `{'ts_error',
-  timestamp()}`.
-- If Key exists, return `{'key_exists',timestamp()}`.
+- この関数は、OldKeyに関連した既存のバリューを新しいkeyに名前変更し、OldKeyを削除します。.  Flags of the OldKeyのFlagsは無視され、Flags引数に置換されます (`'testset'` flagを除く)。
+- OldKeyが存在しなければ、 `'key_not_exist'`がリターン
+- OldKeyが存在すれば、 Flagsは `{'testset', timestamp()}` を含み、OldKeyにtimestampのミスマッチがあり、 `{'ts_error',
+  timestamp()}`をリターン。
+- Keyが存在すれば、`{'key_exists',timestamp()}`をリターン。
 
-== Hands On Exercises #2 - Hints
+== Hands On Exercises #2 - ヒント
 
-. For your first implementation, don't worry about a transactional do/4
-  operation.
-. The Erlang/OTP `proplists:delete/2` and `proplists:get_value/3` can
-  be used for Flags filtering.
-. The `{'testset', timestamp()}` flag is your friend.
-. If you are feeling adventurous, try implementing with a
-  transactional do/4 operation.  What restrictions must then be placed
-  on OldKey and Key?
+. 最初の実装において、トランザクショナル do/4 オペレーションは気にしないでください。
+. Erlang/OTP `proplists:delete/2` と `proplists:get_value/3` は、Flags フィルタリングのために使われます。
+.  `{'testset', timestamp()}` flag は、あなたの友達です。
+. 冒険的と感じる場合には、  トランザクショナル do/4 オペレーションで実装してみてください。OldKey とKeyに設置しなければならないのはどんな制約でしょうか?
 
 == Hands On Exercises #3
 
-Mnesia is a distributed Database Management System distributed with
-Erlang/OTP. Mnesia supports a
-http://www.erlang.org/doc/man/mnesia.html#dirty_update_counter-2[dirty_update_counter/3]
-operation.  Implement a similiar API for Hibari but doing so on the
-client (and not server) side.
+Mnesia は、Erlang/OTPによる分散型データベース管理システムです。. Mnesiaは、 http://www.erlang.org/doc/man/mnesia.html#dirty_update_counter-2[dirty_update_counter/3]　オペレーションをサポートします。Hibariと同様のAPIを実装し、それをクライアント側（サーバー側では無く）で行います。
 
 update_counter(Tab, Key, Incr, Timeout):: => `{'ok', NewVal}` | `'invalid_arg_present'` | `{non_integer,timestamp()}` | exit by Timeout.
 
 
-- This function updates a counter with a positive or negative
-  integer. However, counters can never become less than zero.
-- If Incr is not an integer, return `'invalid_arg_present'`.
-- If two (or more) callers perform update_counter/3 simultaneously,
-  both updates will take effect without the risk of losing one of the
-  updates. The new value `{'ok', NewVal}` of the counter is returned.
-- If Key doesn't exist, a new counter is created with the value Incr
-  if it is larger than 0, otherwise it is set to 0.
-- If Key exists but it's value is not an integer greater than or equal
-  to zero, return {non_integer, timestamp()}.
-- If updating of the counter exceeds the specified timeout, exit by
-  Timeout.
+- この関数は、正か負のintegerのカウンターを更新します。しかし、カウンターはゼロ以下にはなりません。
+- Incrが、integerで無い場合には, `'invalid_arg_present'`をリターンします。
+- 2人（それ以上）が同時にupdate_counter/3 を実行する場合、
+  両方の更新はどちらかひとつを失うというリスク無しに有効になります。カウンターの新しいバリュー `{'ok', NewVal}` がリターンされます。
+- Keyが存在しない場合には、0よりお大きければ新しいカウンターはバリュー Incrを作成し、そうでない場合は0に設定されます。
+- Keyが存在するけれども、 integerがゼロより大きいか等しくなければ、 {non_integer, timestamp()}をリターンします。
+- カウンターの更新が特定のtimeoutを超えた場合には, Timeoutにより終了します。
 
-== Hands On Exercises #3 - Hints
+== Hands On Exercises #3 - ヒント
 
-. The `{'testset', timestamp()}` flag is your friend.
-. Use `if is_integer(X) -> ...; true -> ... end.` to check if a term is an
-  integer or not.
-. The erlang primitives `erlang:integer_to_binary/1` and
-  `erlang:binary_to_integer/1` are very helpful (and necessary).
-. The erlang primitive `erlang:now/0` and `timer:now_diff/2` can be
-  used to create an absolute now time and to compare with a new
-  abosolute now time, respectively.  Timeout is in milliseconds.  Now
-  is in microseconds.
+. `{'testset', timestamp()}` flagは、あなたの友達です。
+. termが integer か否かを確かめるためには、`if is_integer(X) -> ...; true -> ... end.` を利用してください。
+. Erlang primitivesの`erlang:integer_to_binary/1` と
+  `erlang:binary_to_integer/1` は、たいへんに有用です (そして、必要です)。
+. Erlang primitive の`erlang:now/0` and `timer:now_diff/2` は、絶対Now timeを設定し、新しい絶対Now timeとそれぞれ比較するために使われます。Timeoutは、ミリ秒です。Nowはマイクロ秒です。
 
-== Hands On Exercises #4 - Advanced
+== Hands On Exercises #4 - 上級
 
-Implement a filesystem-like Client API using Hibari's Key-Value Data
-Model.
+HibariのKey-Value Data Modelを使って、ファイルシステムのようなクライアントAPIを実装してください。
 
 mkdir(Tab, Path, Timeout):: => `'ok'` | `{'dir_exists', timestamp()}`.
 
@@ -833,16 +780,15 @@ readfile(Tab, Path, Timeout):: => `{'ok', Data}` | `'file_not_exist'`.
 
 == Hands On Exercises #4 - Hints
 
-- How can you represent a file?
-- How can you represent a directory?
-- How can you find files within a certain directory? ... below a
-  directory tree?
-- How can you efficiently check if a directory is empty or not?
-- How can test-n-set of timestamps be used?
+- どのように、ファイルを表現しますか？
+- どのようにディレクトリーを表現しますか？
+- どのように、あるディレクトリー内のファイルを探しますか？..ディレクトリーツリーの下は？
+- どのように、ディレクトリーが空かどうかを効果的に確認しますか？
+- どのように、timestamps のtest-n-set を利用しますか？
 
-== Thank You
+== ありがとうございました。
 
-Please check Hibari's GitHub repositories and webpages for updates.
+Hibari's GitHub repositories とwebpagesの更新を常に確認してください。
 
 [horizontal]
 Hibari Open Source project:: https://github.com/hibari
