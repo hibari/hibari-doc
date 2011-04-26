@@ -672,7 +672,7 @@ $ your-favorite-browser http://127.0.0.1:23080
 . Confirm that you can successfully ping the Hibari node:
 +
 ------
-$ running-directory-name/hibari/bin/hibari ping
+$ running-directory/hibari/bin/hibari ping
 ------
 
 IMPORTANT: A single-node Hibari system is hard-coded to listen on the
