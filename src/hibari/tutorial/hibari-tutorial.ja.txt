@@ -9,28 +9,28 @@
 :Copyright: 2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 :incremental:
 
-== Overview
+== 概要
 
-Part 1::
-- Hibari Overview
-Part 2::
-- Erlang Basics
-- Native Client
-- _UBF Basics (extra)_
-- _UBF Client (extra)_
-Part 3::
-- Hibari Basics
-- Hands On Exercises
+第1部::
+- Hibari 概要
+ 第2部::
+- Erlang 基礎
+- ネイティブ・クライアント
+- _UBF 基礎 (追加)_
+- _UBF クライアント (追加)_
+第３部::
+- Hibari 基礎
+- Hands On エクササイズ
 
-== Part 1
+== 第1部
 
-- Hibari Overview
+- Hibari 概要
 
-== Hibari Overview
+== Hibari 概要
 // == はじめに
 
-- Hibariは、商用に活用できる分散型のキー・バリュー・ビック・データ・ストアです。
-- Hibariは、チェイン・レプリケーションとErlangにより、堅固で、高性能の分散型ストレージソリューションを提供します。
+- Hibariは、商用済みの分散型のキー・バリュー・ビック・データ・ストアです。
+- Hibariは、チェイン・レプリケーションとErlangにより、堅固で、高性能の分散型ストレージ・ソリューションを提供します。
 - Hibariは、データの一貫性を犠牲にすることなく、高いスループットと可用性を提供します。
 - Hibariは、オープンソースであり、通信事業者向けに開発され、通信事業者の商用環境にて数百万のユーザーに利用されています。
 
@@ -38,7 +38,7 @@ Part 3::
 // ==はじめに
 
 - 高いパフォーマンス。特に読み出しと大きなバリュー
-- テーブル毎のオプションとして、RAM+diskベース か　disk-onlyバリューストレージ (#)
+- テーブル毎のオプションとして、RAM+diskベース か　disk-onlyのバリュー・ストレージ (#)
 - キー毎の有効期限とキー毎のカスタム・メタデータをサポート
 - 複数キーのレンジリミット内でのアトミック処理をサポート
 - "test-and-set" タイプの運用を容易にするキー・タイムスタンプの仕組み
@@ -47,12 +47,12 @@ Part 3::
 - 複数クライアントAPIを実装
 
 [role="incremental"]
-_# per-key　オプションjが実装されているが、商用設定には未展開。_
+_# キー単位　オプション実装されているが、商用設定には未展開。_
 
 ==  Hibari - Erlangによる開発
 // ====Erlangによる開発
 
-- Hibariのサーバーは、完全にErlangで開発。HibariのクライアントはErlangでも、他のプログラミング言語でも開発可能。
+- Hibariのサーバーは、すべてErlangで開発。HibariのクライアントはErlangでも、他のプログラミング言語でも開発可能。
 - Erlangは、多目的プログラミング言語であり、信頼性ある高いパフォーマンスの分散システムをサポートするために特別に設計されたランタイム環境。
 - Erlangの主な利点は、
   * Concurrency (同時並行性)
@@ -68,10 +68,10 @@ _# per-key　オプションjが実装されているが、商用設定には未
 image:images/chain_replication.png[]
 
 - チェイン・レプリケーションは、データの一貫性を損なうことなく、冗長性と高可用性を提供する技術。
-- 書き込みリクエストは、"head"　から "middle"、そして "tail" ブリックに。
-- 読み出しリクエストは、"tail" ブリックに。
+- 書き込みリクエストは、"ヘッド"　から "ミドル"、そして "テイル" ブリックの順で行われる。
+- 読み出しリクエストは、"テイル" ブリックに行う。
 - チェインの長さは設定可能で、レプリケーションの度合を決める。
-- コンシステント・ハッシングにより、キー・スペースは複数のストレージ "chains" 全体に分割される。
+- コンシステント・ハッシングにより、キー・スペースは複数のストレージ "チェイン" 全体に分割される。
 - 全てのキーやキーのプレフィックスはコンシステント・ハッシングに依存する。
 
 == Hibari - 自動復旧
@@ -79,25 +79,25 @@ image:images/chain_replication.png[]
 
 image:images/automatic_failover.png[]
 
-- Hibariは、チェインのなかの障害を検知し、自動的にメンバーブリックの役割を調整します。
-- 仮に、ヘッド・ブリックがダウンした場合には、ミドル・ブリックが自動的にヘッド・ブリックの役割を引き受けます。
-- 仮に、新しいヘッド・ブリックにも障害があった場合、残るブリックがヘッドとテイル両方の役割を行います。
-- チェイン・レプリケーションの特性により、Hibariはブリック障害の際にも強い一貫性を提供できます。
+- Hibariは、チェインの中での障害を検知し、自動的にメンバーブリックの役割を調整する。
+- 仮に、ヘッド・ブリックがダウンした場合には、ミドル・ブリックが自動的にヘッド・ブリックの役割を引き受ける。
+- 仮に、新しいヘッド・ブリックにも障害があった場合、残るブリックがヘッドとテイル両方の役割を行う。
+- チェイン・レプリケーションの特性により、Hibariはブリック障害の際にも強い一貫性を提供できる。
 
 == Hibari - 負荷分散
 // ==== 高い可用性と強い一貫性のためのチェイン・レプリケーション
 image:images/load_balanced_chains.png[]
 
-- ヘッド・ブリックとテイル・ブリックはミドル・ブリックよりも大きな負荷がかかります。
+- ヘッド・ブリックとテイル・ブリックはミドル・ブリックよりも大きな負荷がかかる。
 
-- 物理的なマシン全体での役割とチェインの負荷分散は、ハードウェアリソースを有効に活用させます。
+- 物理マシン全体としての役割とチェインの負荷分散は、ハードウェア・リソースを有効に活用できる。
 
 == Hibari - ノード障害
 // ==== 高可用性と強い一貫性のためのチェイン・レプリケーション
 
 image:images/automatic_failover_2.png[]
 
-物理的なノード障害の場合、ブリックは自動的に役割をシフトし、それぞれのチェインはクライアントにサービスを提供し続けます。
+物理的なノード障害の場合、ブリックは自動的に役割をシフトし、それぞれのチェインはクライアントにサービスを提供し続ける。
 
 チェイン・リペアのプロセス::
   1. 障害ノードが再開される。
@@ -125,11 +125,11 @@ image:images/cap-02-chain.png[]
 
 image:images/cap-02-client.png[]
 
-== Hibari - 3 レイヤー
+== Hibari - 3層
 
-トップ・レイヤー:: コンシステント・ハッシング
-ミドル・レイヤー:: チェイン・レプリケーション
-ボトム・レイヤー:: ストレージ・ブリック
+トップ層:: コンシステント・ハッシング
+ミドル層:: チェイン・レプリケーション
+ボトム層:: ストレージ・ブリック
 
 [role="incremental"]
 image:images/logical-architecture1.png[]
@@ -137,8 +137,8 @@ image:images/logical-architecture1.png[]
 == Hibari - コンシステント・ハッシング
 
 - Hibari クライアントは、どのチェインがキーのオペレーションを取り扱うべきかを計算するアルゴリズムを利用します。
-- クライアントは、Hibari管理サーバーからの更新を経由し、この情報を得ます。
-- これらの更新は、大部分のユーズケースにおいて、クライアントにそのリクエストを正しいサーバーに直接送らせます。サーバーはクライアントの計算が正しいかを証明するアルゴリズムを利用します。
+- クライアントは、Hibari管理サーバーの更新を経て、この情報を得ます。
+- これらの更新は、大部分のユースケースにおいて、クライアントにそのリクエストを正しいサーバーに直接送らせます。サーバーはクライアントの計算が正しいかを証明するアルゴリズムを利用します。
 - 仮に、クライアントが誤ったブリックにオペレーションを送る場合、ブリックは正しいブリックにオペレーションを転送します。
 
 == Hibari - チェイン・マイグレーション
@@ -148,8 +148,8 @@ image:images/chain-migration-3to4.png[]
 データを再配置するきっかけ:
 
 - チェインはクラスターから追加されるか、削除されます。
-- ブリック・ハードウェアは変更されます。(例）ディスクかRAM容量の追加。
-- テーブルのコンシステント・ハッシング・アルゴリズム設定における変更は、データ（定義により）を他のチェインに押し出します。
+- ブリック・ハードウェアが変更されます。(例）ディスクやRAM容量の追加。
+- テーブルのコンシステント・ハッシング・アルゴリズム設定における変更は、データ（定義により）を他のチェインに移します。
 
 == Hibari - チェイン・マイグレーション (続)
 
@@ -159,29 +159,29 @@ image:images/migration-3to4.png[]
 
 - 一つの場所から他にデータを動かすことを最小限にする。
 - サービスインパクトを最小限にするためのレート管理機能をサポートする。
-- マイグレーションの前に、 "テスト" し、キー分散を"カスタマイズ" できること。
+- マイグレーションの前に、 "テスト" し、キー分散を"カスタマイズ" できる。
 
 == Hibari - ログ先行書き込み
 
 image:images/private-and-common-logs.png[]
 
-- サーバー毎の共有 "common log"。  fsync() システムコール経由でサーバーノード内の全ての論理ブリックに永続的保証を提供する。
+- サーバー毎の共有 "common log"。  fsync() システムコール経由でサーバー・ノード内全ての論理ブリックに永続的保証を提供する。
 - ブリック毎の個別 "private logs"。  論理ブリックにおいてキーを認識する全てのメタデータは論理ブリックのprivate logに格納される。
 
 == Hibari - クライアント API
 // シンプルだが強力なクライアントAPI
 
-キー・バリュー・ストアとして、HibariのコアデータモデルとクライアントAPIモデルは設計に際しシンプル。:
+キー・バリュー・ストアであることから、HibariのコアデータモデルとクライアントAPIモデルは、設計においてシンプル。:
 
 - blobベースのキー・バリュー・ペア
   * キー: 典型的に、 "/'　によってセパレートされるパスのような名前
-  * バリュー: バイナリー　blobs (しばしば、 Erlang 用語によりシリアライズされる)
+  * バリュー: バイナリー　blobs (しばしば、 Erlang  termによりシリアライズされる)
 - オペレーション
  * 挿入 (add, set, replace)
   * 削除 (delete)
   * 検索 (get, get_many)
 - 辞書配列ソートテーブル
-- 個別のチェインにアトミックな "micro-transactions" の実装に（しばしば）利用されるキー・プレフィックス
+- 個別のチェインにアトミックな "マイクロ・トランザクション" の実装に（しばしば）利用されるキー・プレフィックス
 
 == Hibari - クライアント API (続)
 // シンプルだが強力なクライアント API
@@ -197,7 +197,7 @@ Hibariは、複数のクライアント API実装をサポート:
 [role="incremental"]
 Java, C/C++, Python, Ruby, Erlangを含む様々な言語におけるHibariクライアント・アプリケーション開発が可能
 
-== Part 2
+== 第2部
 
 - 休憩 #1
   * 10 分休憩
@@ -212,7 +212,7 @@ Java, C/C++, Python, Ruby, Erlangを含む様々な言語におけるHibariク�
 
 数:: 2種類の数値リテラル, *integers* と *floats*.
 
-Atom::  *atom* はリテラルで、名前を持つ定数。atomは、小文字で開始する場合や、アルファベット、数値、アンダースコア (_),　や @以外の文字を含む場合には、シングル・クォート  (') で囲まれるべき
+Atom::  *atom* はリテラルで、名前を持つ定数。atomは、小文字で開始する場合や、アルファベット、数値、アンダースコア (_),　や @以外の文字を含む場合には、シングル・クォート  (') で囲まれるべき。
 +
 -----
 hello
@@ -223,7 +223,7 @@ phone_number
 'phone_number'
 -----
 
-Bit String and Binary:: *bit string* は、非型式メモリーの領域を格納するために使われます。8で割り切れるビットからなるbit string は、 *binary* と呼ばれます。
+Bit StringとBinary:: *bit string* は、非型式メモリーの領域を格納するために使われる。8で割り切れるビットからなるbit string は、 *binary* と呼ばれる。
 +
 -----
 <<10,20>>
@@ -232,43 +232,43 @@ Bit String and Binary:: *bit string* は、非型式メモリーの領域を格�
 
 == Erlang - 複合型
 
-Term:: あらゆるデータ型式のひとつのデータは、 *term* と呼ばれます。
+Term:: あらゆるデータ型式のなかのひとつのデータは、 *term* と呼ばれる。
 
-Tuple:: *tuple* は、中括弧で囲まれる固定数をもつ複合データ型式です。:
+Tuple:: *tuple* は、中括弧で囲まれる固定数をもつ複合データ型式。:
 +
 -----
 {Term1,...,TermN}
 -----
 
-List:: *list* は、鍵括弧で囲まれる変数をもつ複合データ型式です。:
+List:: *list* は、鍵括弧で囲まれる変数をもつ複合データ型式。:
 +
 -----
 [Term1,...,TermN]
 -----
 
-String:: Stringsは、2重括弧 (") で囲まれますが、Erlangにおいては真のデータ型式ではありません。代わりに、string の"hello" は、
-list [$h,$e,$l,$l,$o] に短縮されます。すなわち、 [104,101,108,108,111] です。
+String:: Stringsは、2重括弧 (") で囲まれるが、Erlangにおいては真のデータ型式ではない。代わりに、string の"hello" は、
+list [$h,$e,$l,$l,$o] に短縮される。すなわち、 [104,101,108,108,111] 。
 
 == Erlang - その他
 
-Boolean:: Erlangには、Boolean データ型式はありません。代わりに、atomsの
-`true` と`false` がBoolean values を表示するために使われます。
+Boolean:: Erlangには、Boolean データ型式がない。代わりに、atomsの
+`true` と`false` がBoolean values を表示するために使われる。
 
-None or Null:: Erlangには、このような型式はありません。 しかし、atomの
-'undefined' は、しばしば（慣習として）　この目的のために使われます。
+None or Null:: Erlangには、このような型式はない。 しかし、atomの
+'undefined' は、しばしば（慣習として）この目的のために使われる。
 
-Pid:: プロセス識別である pid　は、Erlangプロセスを識別します。
+Pid:: プロセス識別である pid　は、Erlangプロセスを識別する。
 
-Reference:: reference は、Erlang ランタイムシステム独自の表現です。
+Reference:: reference は、Erlang ランタイム・システム独自の表現。
 
-Fun:: fun は、関数オブジェクトです。
+Fun:: fun は、関数オブジェクト。
 
 [role="incremental"]
 _... 数点追加_
 
 == Erlang - 階乗プログラム
 
-ファイル "math.erl" は次のプログラムを含みます。:
+ファイル "math.erl" は次のプログラムを含む。:
 
 ------
 -module(math).
@@ -279,7 +279,7 @@ fac(0) -> 1.
 ------
 
 [role="incremental"]
-このプログラムは、Erlang shellを使いながらコンパイルされ動作します。
+このプログラムは、Erlang shellを使いながらコンパイルされ動作する。
 
 [role="incremental"]
 ------
@@ -334,7 +334,7 @@ Adder::
 15
 ------
 
-== Native Client - シングル・オペレーション
+== ネイティブ・クライアント - シングル・オペレーション
 // == クライアント API: Native Erlang
 
 brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout):: => ok.
@@ -344,19 +344,19 @@ brick_simple:get(Tab, Key, Flags, Timeout):: => `{'ok', timestamp(), val()}`.
 brick_simple:get_many(Tab, Key, MaxNum, Flags, Timeout):: => `{ok, {[{key(), timestamp(), val()}], boolean()}}`.
 brick_simple:delete(Tab, Key, Flags, Timeout):: => ok.
 
-== Native Client - 複数オペレーション
+== ネイティブ・クライアント - 複数オペレーション
 // == クライアント API: Native Erlang
 
 brick_simple:do(Tab, OpList, OpFlags, Timeout):: => [OpRes()].
 
-Two flavors::
-- normal - OpList
-- micro-transaction - [`'txn'`|OpList]
+2つの特色::
+- ノーマル - OpList
+- マイクロ・トランザクション - [`'txn'`|OpList]
 
 [role="incremental"]
-TIP: "シングル" オペレーションは、 do/4 機能を利用しながら実装されています(フードの下で）.
+TIP: "シングル" オペレーションは、 do/4 機能を利用しながら実装されています(hoodの下で）.
 
-== Native Client - 共通引数
+== ネイティブ・クライアント - 共通引数
 // == クライアント API: Native Erlang
 
  ::
@@ -371,7 +371,7 @@ TIP: "シングル" オペレーションは、 do/4 機能を利用しながら
 *Key*
 
 - ペアのバリューに関連している、テーブルのキー
-- Type:
+- 型式:
   * `Key = key()`
   * `key() = iodata()`
   * `iodata() = iolist() | binary()`
@@ -379,7 +379,7 @@ TIP: "シングル" オペレーションは、 do/4 機能を利用しながら
 
 NOTE: `Key` は、内部的に常にbinaryに変換されます。
 
-== Native Client - 共通引数 (続)
+== ネイティブ・クライアント - 共通引数 (続)
 // == クライアント API: Native Erlang
 
  ::
@@ -395,40 +395,40 @@ NOTE: `Key` は、内部的に常にbinaryに変換されます。
  ::
 *ExpTime*
 
-- TUnix time_t() として表現される、keyが期限切れとなる時間
-- オプション; defaults to 0 (no expiration).
+- Unix time_t() として表現される、keyが期限切れとなる時間
+- オプション; 0 までをデフォルト (例外無し).
 - 型式:
   * `ExpTime = exp_time()`
   * `exp_time() = time_t()`
   * `time_t() = integer()`
 
-== Native Client - Common Args (cont.)
+== ネイティブ・クライアント - 共通引数 (続)
 // == クライアント API: Native Erlang
 
  ::
 *Flags*
 
-- データベースのkey-value ペアに関連するオペレーショナル・フラグとプロパティ・フラグのリスト。 カスタム・プロパティ・フラグの多用はRAMベースのストレージに起因し、抑制される。
+- データベースのkey-value ペアに関連するオペレーショナル・フラグとプロパティ・フラグのリスト。 カスタム・プロパティ・フラグの多用はRAMベースのストレージによって、抑制される。
 - 型式:
   * `Flags = flags_list()`
   * `flags_list() = [do_op_flag() | property()]`
   * `do_op_flag() = {'testset', timestamp()}`
   * `timestamp() = integer()`
   * `property() = atom() | {term(), term()}`
-- オペれーショナル・フラグ利用
+- オペレーショナル・フラグ利用
   * `{'testset', timestamp()}`
-    ** 既存の key's timestamp が`timestamp()`と正確に等しくない場合には、オペレーションは失敗する。マイクロ・トランザクション内で利用される場合には、keyのtimestampが、`timestamp()` と正確に等しくない場合には、トランザクションを停止
+    ** 既存の keyのtimestamp が `timestamp()` と正確に等しくない場合には、オペレーションは失敗する。マイクロ・トランザクション内で利用される場合には、keyのtimestampが、`timestamp()` と正確に等しくない場合には、トランザクションを停止
 
  ::
 *Timeout*
 
 - ミリ秒でオペレーション・タイムアウト
-- オプション; defaults to 15000.
+- オプション; 15000までをデフォルト
 - 型式:
   * `Timeout = timeout()`
   * `timeout() = integer()`
 
-== Native Client - Common Errs
+== ネイティブ・クライアント - 共通エラー
 // == クライアント API: Native Erlang
 
  ::
@@ -443,25 +443,25 @@ NOTE: `Key` は、内部的に常にbinaryに変換されます。
   *  `{'testset', timestamp()}` フラグは使われており、timestampのミスマッチがあったため、オペレーションは失敗した。 リターンにおける`timestamp()` は、 既存の keyのtimestampの現在のバリュー。
   * `timestamp() = integer()`
 - `'invalid_flag_present'`
-  * `Flags` 印数に無効な `do_op_flag()` が見つかったため、オペレーションは失敗した。
+  * `Flags` 引数に無効な `do_op_flag()` が見つかったため、オペレーションは失敗した。
     
 - `'brick_not_available'`
   * このkey を受け持つチェインの長さが現在ゼロで利用できないためにオペレーションは失敗した。
 - `{{'nodedown',node()},{'gen_server','call',term()}}`
   * リクエストを処理するサーバー・ブリックが停止したか、クライアントとサーバー間でネットワーク分断が起きたため、オペレーションは失敗した。管理サーバーが障害を検知し、チェイン修理を行うステップをとるという前提で、クライアントは短い遅延後にクエリを再送する。
   * `node() = atom()`
-- Exit by timeout.
+- timeoutにより終了。
 
-== Native Client - Get Flags
+== ネイティブ・クライアント - Get Flags
 // == クライアント API: Native Erlang
 
-- オペれーショナル・フラグ利用
+- オペレーショナル・フラグ利用
   * `'get_all_attribs'`
     ** keyの全ての属性をリターン。`witness` flagとの組み合わせで利用され得る。
   * `'witness'`
     ** 結果として、バリューの blob をリターンさせない。このフラグは、ブリックがこのリクエストを満たすディスクアクセスを要求していないことを保証する。
 
-== Native Client - Get Rets
+== ネイティブ・クライアント - Get Rets
 // == クライアント API: Native Erlang
 
  ::
@@ -470,15 +470,15 @@ NOTE: `Key` は、内部的に常にbinaryに変換されます。
 - `{'ok', timestamp(), val()}`
   * デフォルトの反応
 - `{'ok', timestamp()}`
-  * get が`'witness'` を使うが、`'get_all_attribs'`を使わない場合のサクセス・リターン
+  * get が`'witness'` を使うが、`'get_all_attribs'` を使わない場合のサクセス・リターン
 - `{'ok', timestamp(), proplist()}`
-  * get が `'witness'` と `'get_all_attribs'`の両方を使う場合のサクセス・リターン
+  * get が `'witness'` と `'get_all_attribs'` の両方を使う場合のサクセス・リターン
 - `{'ok', timestamp(), val(), exp_time(), proplist()}`
-  * get が `'get_all_attribs'` だが `'witness'`でない場合のサクセス・リターン
+  * get が `'get_all_attribs'` だが `'witness'` でない場合のサクセス・リターン
 
 NOTE: For proplists, `{val_len,Size::integer()}` は、つねにリターンされる。
 
-== Native Client - GetMany Flags
+== ネイティブ・クライアント - GetMany Flags
 // == クライアント API: Native Erlang
 
 - オペレーショナル・フラグ利用
@@ -487,7 +487,7 @@ NOTE: For proplists, `{val_len,Size::integer()}` は、つねにリターンさ�
   * `'witness'`
     ** 結果として、バリューのDo not return the value blobsをリターンさせない。このflagは、ブリックがこのリクエストを満たすディスク・アクセスを要求しないことを保証する。 
   * `{'binary_prefix', binary()}`
-    ** binary prefixをもつkeysが正確に `binary()`に等しいkeyの場合だけリターンする。
+    ** binary prefixをもつkeysが正確に `binary()` に等しいkeyの場合だけリターンする。
   * `{'max_bytes', integer()}`
     ** 対応するバリューのblobsのサイズの合計が `integer()` バイトを超えない程度までの多さのkeyだけにリターンする。
       仮に、この flag がクライアント・リクエストにおいて明示されない場合、バリューのデフォルトは2GBまで。
@@ -495,7 +495,7 @@ NOTE: For proplists, `{val_len,Size::integer()}` は、つねにリターンさ�
     ** リターンするkeysの最大値。デフォルトは10．
 Note: このflagは、意図的に MaxNum 引数に重複
 
-== Native Client - GetMany Rets
+== ネイティブ・クライアント - GetMany Rets
 // == クライアント API: Native Erlang
 
  ::
@@ -504,32 +504,32 @@ Note: このflagは、意図的に MaxNum 引数に重複
 - `{ok, {[{key(), timestamp(), val()}], boolean()}}`
   * デフォルトの反応
 - `{ok, {[{key(), timestamp()}], boolean()}}`
-  * `get_many` が`'witness'` を利用するが、`'get_all_attribs'`を利用しない場合のサクセス・リターン
+  * `get_many` が`'witness'` を利用するが、`'get_all_attribs'` を利用しない場合のサクセス・リターン
 - `{ok, {[{key(), timestamp(), proplist()}], boolean()}}
-  * `get_many` が`'witness'` と `'get_all_attribs'`の両方を利用する場合のサクセス・リターン
+  * `get_many` が`'witness'` と `'get_all_attribs'` の両方を利用する場合のサクセス・リターン
 - `{ok, {[{key(), timestamp(), val(), exp_time(), proplist()}],
   boolean()}}`
-  *  `get_many` が `'get_all_attribs'`だが`'witness'`でない場合のサクセス・リターン
+  *  `get_many` が `'get_all_attribs'` だが `'witness'` でない場合のサクセス・リターン
 
 NOTE: `boolean()` はチェインがさらに多くのkeyを有しているかどうかを示す。
 
 NOTE: For proplists, `{val_len,Size::integer()}` は、つねにリターンされる。
 
-== Native Client - Do Rets
+== ネイティブ・クライアント - Do Rets
 
  ::
 エラー・リターン
 
 - `{txn_fail, [{integer(), do1_res_fail()}]}`
-  * トランザクション・セマンティックが、失敗したトランザクション内の`do` request と、ひとつ、若しくはそれ以上の初期オペレーションで利用されたために、オペレーションは失敗した。`integer()` は、リクエストの`OpList`内の位置により失敗した初期オペレーションを示す。例としては、 a 2 は、失敗したリクエストの`OpList` に2番目のリストであることを示す。この位置識別子は、 `OpList`のスタートにおいて`txn()` 指示子を数えてはいないことに注意。
+  * トランザクション・セマンティックが、失敗したトランザクション内の`do` request と、ひとつ、若しくはそれ以上の初期オペレーションで利用されたために、オペレーションは失敗した。`integer()` は、リクエストの `OpList` 内の位置により失敗した初期オペレーションを示す。例としては、 a 2 は、失敗したリクエストの `OpList` 2番目のリストであることを示す。この位置識別子は、 `OpList` のスタートにおいて `txn()` 指示子を数えてはいないことに注意。
 
-== Part 3
+== 第３部
 
 - 休憩 #2
   * 10 分間休憩
 
 - Hibari 基礎
-- Hands On Exercises
+- Hands On エクササイズ
 
 == Hibari - シングル・ノード・インストール
 // === シングル・ノード Hibariシステムのインストール
@@ -540,16 +540,16 @@ NOTE: For proplists, `{val_len,Size::integer()}` は、つねにリターンさ�
 $ mkdir running-directory
 -----
 +
-- untar Hibari tarball package - "hibari-_X.Y.Z-DIST-ARCH-WORDSIZE_.tgz"
+- Hibari tarball package を解凍- "hibari-_X.Y.Z-DIST-ARCH-WORDSIZE_.tgz"
 +
 -----
 $ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz
 -----
 
-- _X.Y.Z_ is the release version => "0.1.4"
-- _DIST_ is the release distribution => "fedora14"
-- _ARCH_ is the release architecture => "x86_64-unknown-linux-gnu"
-- _WORDSIZE_ is the release wordsize => "64"
+- _X.Y.Z_ はリリースバージョン => "0.1.4"
+- _DIST_ は、リリース・ディストリビューション => "fedora14"
+- _ARCH_ はリリース・アーキテクチュア => "x86_64-unknown-linux-gnu"
+- _WORDSIZE_ は、リリース・ワードサイズ => "64"
 
 == Hibari - シングル・ノード・スタート、ブートストラップ、停止
 // ==== Hibariをスタートして、ブートストラップを行う
@@ -567,7 +567,7 @@ $ running-directory/hibari/bin/hibari-admin bootstrap
 ok
 ------
 +
-- Hibari を停止　(必要であれば後ほど):
+- Hibari を停止　(必要があれば後で):
 +
 ------
 $ running-directory/hibari/bin/hibari stop
@@ -594,7 +594,7 @@ TIP: シングル・ノードのHibariシステムは、ローカルホスト・
 
 == Hibari - リモート・シェル
 
-- Erlang's remote shellを利用してHibariに接続
+- Erlangのリモート／シェルを利用してHibariに接続
 +
 ------
 $ running-directory/hibari/erts-5.8.2/bin/erl -name hogehoge@127.0.0.1 -setcookie hibari -kernel net_ticktime 20 -remsh hibari@127.0.0.1
@@ -621,10 +621,10 @@ TIP: Hibariの名前、クッキー、カーネルnet_ticktime は設定可能�
 TIP: "rlwrap -a running-directory/hibari/erts-5.8.2/bin/erl" ツールは、Erlang shell履歴をトラッキングし続けるために有用 (例 yum
 install rlwrap).
 
-== Hibari - 新規テーブルを作成
-// === 新規テーブルを作成
+== Hibari - 新規テーブル作成
+// === 新規テーブル作成
 
-- 2 のハッシュ・プレフィックスとチェイン毎に3 のブリックを持つ新規テーブルを作成
+- 2 つのハッシュ・プレフィックスとチェイン毎に3 つのブリックを持つ新規テーブルを作成
 +
 ------
 $ running-directory/hibari/bin/hibari-admin create-table tab2 \
@@ -634,7 +634,7 @@ $ running-directory/hibari/bin/hibari-admin create-table tab2 \
     hibari@127.0.0.1 hibari@127.0.0.1 hibari@127.0.0.1
 ------
 +
-- 例として、キーが表す最初の部分を user's idとしましょう。2のハッシュ・プレフィックスは、同じチェインに格納される個々のユーザーのkeysを作成します...しかし他のユーザーのキーと同じチェインとは限りません。
+- 例として、キーが表す最初の部分を user's idとする。2のハッシュ・プレフィックスは、同じチェインに格納される個々のユーザーのkeysを作成する。...しかし他のユーザーのキーと同じチェインとは限らない。
 +
 ------
   :
@@ -656,11 +656,11 @@ $ running-directory/hibari/bin/hibari-admin create-table tab2 \
 TIP: テーブルは、Hibariの管理サーバー・ウェブページを利用して作成することもできます。`http://localhost:23080/` を開き、"Add a table"
 リンクをクリックしてください。
 
-== Hands On Exercises
+== Hands On エクササイズ
 
 このエクササイズの目的は、Hibariについて学び、実装し、HibariのネイティブErlangクライアントを利用しながら、ご自身のHibariのミニ・アプリケーションをテストすることです。
 
-== Hands On Exercises #1-A
+== Hands On エクササイズ #1-A
 
 . Hibariをインストール
 . Hibariをスタートし、ブートストラップ
@@ -677,7 +677,7 @@ $ tar -cvzf backup.tgz running-directory/hibari/Schema.local running-directory/h
 . tab1とtab2の間に同じものと違うもののリストを作成
 . 管理サーバー・ウェブページから他に学ぶことができることは何でしょうか？
 
-== Hands On Exercises #1-B
+== Hands On エクササイズ #1-B
 
 . Hibariを停止
 . HibariのSchema.local and data filesを削除:
@@ -695,16 +695,16 @@ $ tar -xvzf backup.tgz
 . Hibariをスタート
 . Hibariの状態を確認
 . Hibariの管理サーバー・ウェブページを開く
-. いま、どのテーブルが存在しているか？
+. いま、どのテーブルが存在しているでしょうか？
 . 上記で述べたtab2 (再び) を作成
 . Hibariを停止し、スタート
   . チェインとブリックスの状況をフォロー
-  . 何が起きているのか?
-  . チェインとブリックそれぞれの履歴はどうなっているか?
+  . 何が起きているのでしょうか?
+  . チェインとブリックそれぞれの履歴はどうなっているのでしょうかか?
 
-== Hands On Exercises #1-C
+== Hands On エクササイズ #1-C
 
-Erlang Shellを使い、 HibariのApplication Developer Guideにリストされている例を再現する
+Erlang Shellを使い、 Hibariのアプリケーション開発者ガイドにリストされている例を再現する
 
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-add[brick_simple:add/6]
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-replace[brick_simple:replace/6]
@@ -714,9 +714,9 @@ Erlang Shellを使い、 HibariのApplication Developer Guideにリストされ�
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete[brick_simple:delete/4]
 
 [role="incremental"]
-この例を実行している間、またその後にHibariの管理サーバー・ウェブページでどんな変化を見ることができるか？
+この例を実行している間、またその後にHibariの管理サーバー・ウェブページでどんな変化を見ることができますか？
 
-== Hands On Exercises #2
+== Hands On エクササイズ #2
 
 Hibariの新しいAPIを実装するが、クライアント側で行う（サーバー側では無く）
 
@@ -724,45 +724,45 @@ rename(Tab, OldKey, Key, ExpTime, Flags, Timeout):: => `'ok'` |
 `'key_not_exist'` | `{'ts_error', timestamp()}` | `{'key_exists',timestamp()}`
 
 
-- この関数は、OldKeyに関連した既存のバリューを新しいkeyに名前変更し、OldKeyを削除します。.  Flags of the OldKeyのFlagsは無視され、Flags引数に置換されます (`'testset'` flagを除く)。
+- この関数は、OldKeyに関連した既存のバリューを新しいkeyに名前変更し、OldKeyを削除。.  Flags of the OldKeyのFlagsは無視され、Flags引数に置換される (`'testset'` flagを除く)。
 - OldKeyが存在しなければ、 `'key_not_exist'`がリターン
 - OldKeyが存在すれば、 Flagsは `{'testset', timestamp()}` を含み、OldKeyにtimestampのミスマッチがあり、 `{'ts_error',
   timestamp()}`をリターン。
 - Keyが存在すれば、`{'key_exists',timestamp()}`をリターン。
 
-== Hands On Exercises #2 - ヒント
+== Hands On エクササイズ #2 - ヒント
 
 . 最初の実装において、トランザクショナル do/4 オペレーションは気にしないでください。
 . Erlang/OTP `proplists:delete/2` と `proplists:get_value/3` は、Flags フィルタリングのために使われます。
 .  `{'testset', timestamp()}` flag は、あなたの友達です。
 . 冒険的と感じる場合には、  トランザクショナル do/4 オペレーションで実装してみてください。OldKey とKeyに設置しなければならないのはどんな制約でしょうか?
 
-== Hands On Exercises #3
+== Hands On エクササイズ #3
 
-Mnesia は、Erlang/OTPによる分散型データベース管理システムです。. Mnesiaは、 http://www.erlang.org/doc/man/mnesia.html#dirty_update_counter-2[dirty_update_counter/3]　オペレーションをサポートします。Hibariと同様のAPIを実装し、それをクライアント側（サーバー側では無く）で行います。
+Mnesia は、Erlang/OTPによる分散型データベース管理システム。Mnesiaは、 http://www.erlang.org/doc/man/mnesia.html#dirty_update_counter-2[dirty_update_counter/3]　オペレーションをサポートする。Hibariと同様のAPIを実装し、それをクライアント側（サーバー側では無く）で行う。
 
 update_counter(Tab, Key, Incr, Timeout):: => `{'ok', NewVal}` | `'invalid_arg_present'` | `{non_integer,timestamp()}` | exit by Timeout.
 
 
-- この関数は、正か負のintegerのカウンターを更新します。しかし、カウンターはゼロ以下にはなりません。
-- Incrが、integerで無い場合には, `'invalid_arg_present'`をリターンします。
+- この関数は、正か負のintegerのカウンターを更新する。しかし、カウンターはゼロ以下にはならない。
+- Incrが、integerで無い場合には, `'invalid_arg_present'`をリターン。
 - 2人（それ以上）が同時にupdate_counter/3 を実行する場合、
-  両方の更新はどちらかひとつを失うというリスク無しに有効になります。カウンターの新しいバリュー `{'ok', NewVal}` がリターンされます。
-- Keyが存在しない場合には、0よりお大きければ新しいカウンターはバリュー Incrを作成し、そうでない場合は0に設定されます。
-- Keyが存在するけれども、 integerがゼロより大きいか等しくなければ、 {non_integer, timestamp()}をリターンします。
-- カウンターの更新が特定のtimeoutを超えた場合には, Timeoutにより終了します。
+  両方の更新はどちらかひとつを失うというリスク無しに有効になります。カウンターの新しいバリュー `{'ok', NewVal}` がリターンされる。
+- Keyが存在しない場合には、0よりお大きければ新しいカウンターはバリュー Incrを作成し、そうでない場合は0に設定される。
+- Keyが存在するけれども、 integerがゼロより大きいか等しくなければ、 {non_integer, timestamp()}をリターンする。
+- カウンターの更新が特定のtimeoutを超えた場合には, Timeoutにより終了する。
 
-== Hands On Exercises #3 - ヒント
+== Hands On エクササイズ #3 - ヒント
 
 . `{'testset', timestamp()}` flagは、あなたの友達です。
 . termが integer か否かを確かめるためには、`if is_integer(X) -> ...; true -> ... end.` を利用してください。
 . Erlang primitivesの`erlang:integer_to_binary/1` と
-  `erlang:binary_to_integer/1` は、たいへんに有用です (そして、必要です)。
-. Erlang primitive の`erlang:now/0` and `timer:now_diff/2` は、絶対Now timeを設定し、新しい絶対Now timeとそれぞれ比較するために使われます。Timeoutは、ミリ秒です。Nowはマイクロ秒です。
+  `erlang:binary_to_integer/1` は、たいへんに有用 (そして、必要)。
+. Erlang primitive の`erlang:now/0` and `timer:now_diff/2` は、絶対Now timeを設定し、新しい絶対Now timeとそれぞれ比較するために使われる。Timeoutは、ミリ秒です。Nowはマイクロ秒です。
 
-== Hands On Exercises #4 - 上級
+== Hands On エクササイズ #4 - 上級
 
-HibariのKey-Value Data Modelを使って、ファイルシステムのようなクライアントAPIを実装してください。
+Hibariのキー・バリュー・データモデルを使って、ファイルシステムのようなクライアントAPIを実装してください。
 
 mkdir(Tab, Path, Timeout):: => `'ok'` | `{'dir_exists', timestamp()}`.
 
@@ -778,17 +778,17 @@ writefile(Tab, Path, Data, Timeout):: => `'ok'` | `'file_not_exist'`.
 
 readfile(Tab, Path, Timeout):: => `{'ok', Data}` | `'file_not_exist'`.
 
-== Hands On Exercises #4 - Hints
+== Hands On エクササイズ #4 - ヒント
 
 - どのように、ファイルを表現しますか？
-- どのようにディレクトリーを表現しますか？
-- どのように、あるディレクトリー内のファイルを探しますか？..ディレクトリーツリーの下は？
+- どのように、ディレクトリーを表現しますか？
+- どのように、あるディレクトリー内のファイルを探しますか？...ディレクトリーツリーの下は？
 - どのように、ディレクトリーが空かどうかを効果的に確認しますか？
 - どのように、timestamps のtest-n-set を利用しますか？
 
-== ありがとうございました。
+== 感謝
 
-Hibari's GitHub repositories とwebpagesの更新を常に確認してください。
+HibariのGitHub レポジトリとウェブページの更新を常に確認してください。
 
 [horizontal]
 Hibari Open Source project:: https://github.com/hibari
