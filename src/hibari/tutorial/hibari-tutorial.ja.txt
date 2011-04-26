@@ -7,6 +7,7 @@
 :Date: 2011/04/24
 :Revision: 0.1
 :Copyright: 2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+:incremental:
 
 == Overview
 
@@ -709,7 +710,10 @@ Webpage. Open `http://localhost:23080/` and click the "Add a table"
 link.
 
 == Hands On Exercises
-_to be added_
+
+The goal of these exercises is to learn more about Hibari and to
+implement and to test your own Hibari mini-applications using Hibari's
+Native Erlang Client.
 
 == Hands On Exercises #1-A
 
@@ -767,17 +771,102 @@ Application Developer Guide.
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get_many[brick_simple:get_many/5]
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete[brick_simple:delete/4]
 
+[role="incremental"]
 What changes can be seen on Hibari's Admin Server Webpages during and
 after doing these example exercises?
 
 == Hands On Exercises #2
-_to be added_
+
+Implement a new API for Hibari but doing so on the client (and not
+server) side.
+
+rename(Tab, OldKey, Key, ExpTime, Flags, Timeout):: => `'ok'` |
+`'key_not_exist'` | `{'ts_error', timestamp()}` | `{'key_exists',timestamp()}`
+
+
+- This function renames an existing value corresponding to OldKey to
+  new Key and deletes the OldKey.  Flags of the OldKey are ignored and
+  replaced with the Flags argument (except for `'testset'` flag).
+- If OldKey doesn't exist, return `'key_not_exist'`.
+- If OldKey exists, Flags contains `{'testset', timestamp()}`, and
+  there is a timestamp mismatch with the OldKey, return `{'ts_error',
+  timestamp()}`.
+- If Key exists, return `{'key_exists',timestamp()}`.
+
+== Hands On Exercises #2 - Hints
+
+. For your first implementation, don't worry about a transactional do/4
+  operation.
+. The Erlang/OTP `proplists:delete/2` and `proplists:get_value/3` can
+  be used for Flags filtering.
+. The `{'testset', timestamp()}` flag is your friend.
+. If you are feeling adventurous, try implementing with a
+  transactional do/4 operation.  What restrictions must then be placed
+  on OldKey and Key?
 
 == Hands On Exercises #3
-_to be added_
 
-== Hands On Exercises #4
-_to be added_
+Mnesia is a distributed Database Management System distributed with
+Erlang/OTP. Mnesia supports a
+http://www.erlang.org/doc/man/mnesia.html#dirty_update_counter-2[dirty_update_counter/3]
+operation.  Implement a similiar API for Hibari but doing so on the
+client (and not server) side.
+
+update_counter(Tab, Key, Incr, Timeout):: => `{'ok', NewVal}` | `'invalid_arg_present'` | `{non_integer,timestamp()}` | exit by Timeout.
+
+
+- This function updates a counter with a positive or negative
+  integer. However, counters can never become less than zero.
+- If Incr is not an integer, return `'invalid_arg_present'`.
+- If two (or more) callers perform update_counter/3 simultaneously,
+  both updates will take effect without the risk of losing one of the
+  updates. The new value `{'ok', NewVal}` of the counter is returned.
+- If Key doesn't exist, a new counter is created with the value Incr
+  if it is larger than 0, otherwise it is set to 0.
+- If Key exists but it's value is not an integer greater than or equal
+  to zero, return {non_integer, timestamp()}.
+- If updating of the counter exceeds the specified timeout, exit by
+  Timeout.
+
+== Hands On Exercises #3 - Hints
+
+. The `{'testset', timestamp()}` flag is your friend.
+. Use `if is_integer(X) -> ...; true -> ... end.` to check if a term is an
+  integer or not.
+. The erlang primitives `erlang:integer_to_binary/1` and
+  `erlang:binary_to_integer/1` are very helpful (and necessary).
+. The erlang primitive `erlang:now/0` and `timer:now_diff/2` can be
+  used to create an absolute now time and to compare with a new
+  abosolute now time, respectively.  Timeout is in milliseconds.  Now
+  is in microseconds.
+
+== Hands On Exercises #4 - Advanced
+
+Implement a filesystem-like Client API using Hibari's Key-Value Data
+Model.
+
+mkdir(Tab, Path, Timeout):: => `'ok'` | `{'dir_exists', timestamp()}`.
+
+listdir(Tab, Path, Timeout):: => `{'ok', Names}` | `'dir_not_exist'`.
+
+rmdir(Tab, Path, Timeout):: => `'ok'` | `'dir_not_exist'` | `'dir_not_empty'`.
+
+create(Tab, Path, Timeout):: => `'ok'` | `'dir_not_exist'` | `{'file_exists', timestamp()}`.
+
+rmfile(Tab, Path, Timeout):: => `'ok'` | `'file_not_exist'`.
+
+writefile(Tab, Path, Data, Timeout):: => `'ok'` | `'file_not_exist'`.
+
+readfile(Tab, Path, Timeout):: => `{'ok', Data}` | `'file_not_exist'`.
+
+== Hands On Exercises #4 - Hints
+
+- How can you represent a file?
+- How can you represent a directory?
+- How can you find files within a certain directory? ... below a
+  directory tree?
+- How can you efficiently check if a directory is empty or not?
+- How can test-n-set of timestamps be used?
 
 == Thank You
 
