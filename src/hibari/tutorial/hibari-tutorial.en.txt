@@ -742,6 +742,7 @@ Webpage. Open `http://localhost:23080/` and click the "Add a table"
 link.
 
 == Hands On Exercises
+_to be added_
 
 == Hands On Exercises #1-A
 
