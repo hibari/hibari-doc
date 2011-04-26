@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Erlang Users Conference 2010 Tutorial / UBF Basics and Hands ON</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="Erlang Users Conference 2010 Tutorial / UBF Basics and Hands ON" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="id36108574"></a>Erlang Users Conference 2010 Tutorial / UBF Basics and Hands ON</h2></div><div><div class="author"><h3 class="author"><span class="firstname">Joseph</span> <span class="othername">Wayne</span> <span class="surname">Norton</span></h3><div class="affiliation"><div class="address"><p><code class="email">&lt;<a class="email" href="mailto:norton@geminimobile.com">norton@geminimobile.com</a>&gt;</code></p></div></div></div></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="3"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.1</td><td align="left">2010/11/15</td><td align="left">JWN</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_ubf_basics">1. UBF Basics</a></span></dt><dt><span class="section"><a href="#_specifications_ubf_a">2. Specifications: UBF(a)</a></span></dt><dt><span class="section"><a href="#_specifications_ubf_a_example">3. Specifications: UBF(a) Example</a></span></dt><dt><span class="section"><a href="#_specifications_ubf_b">4. Specifications: UBF(b)</a></span></dt><dt><span class="section"><a href="#_specifications_ubf_a_types">5. Specifications: UBF(a) Types</a></span></dt><dt><span class="section"><a href="#_specifications_ubf_a_predefined_types">6. Specifications: UBF(a) Predefined Types</a></span></dt><dt><span class="section"><a href="#_specifications_ubf_b_example">7. Specifications: UBF(b) Example</a></span></dt><dt><span class="section"><a href="#_specifications_ubf_c">8. Specifications: UBF(c)</a></span></dt><dt><span class="section"><a href="#_specifications_ubf_c_errors">9. Specifications: UBF(c) errors</a></span></dt><dt><span class="section"><a href="#_contracts_and_plugins">10. Contracts and Plugins</a></span></dt><dt><span class="section"><a href="#_contracts_types_only">11. Contracts: +TYPES only</a></span></dt><dt><span class="section"><a href="#_contracts_state_and_or_anystate_only">12. Contracts: +STATE and/or +ANYSTATE only</a></span></dt><dt><span class="section"><a href="#_plugins">13. Plugins</a></span></dt><dt><span class="section"><a href="#_plugins_importing_types">14. Plugins - Importing Types</a></span></dt><dt><span class="section"><a href="#_transports_tcp_ip_ubf_ebf_jsf_tbf">15. Transports: TCP/IP - UBF/EBF/JSF/TBF</a></span></dt><dt><span class="section"><a href="#_transports_http_json_rpc">16. Transports: HTTP - JSON-RPC</a></span></dt><dt><span class="section"><a href="#_transports_etf_and_lpc">17. Transports: ETF and LPC</a></span></dt><dt><span class="section"><a href="#_servers">18. Servers</a></span></dt><dt><span class="section"><a href="#_servers_start_emphasis_or_emphasis_start_link">19. Servers: start <span class="emphasis"><em>or</em></span> start_link</a></span></dt><dt><span class="section"><a href="#_servers_stateless">20. Servers: Stateless</a></span></dt><dt><span class="section"><a href="#_servers_stateful">21. Servers: Stateful</a></span></dt><dt><span class="section"><a href="#_clients_erlang_rpc">22. Clients: Erlang RPC</a></span></dt><dt><span class="section"><a href="#_ubf_hands_on">23. UBF Hands On</a></span></dt><dt><span class="section"><a href="#_setup">24. Setup</a></span></dt><dt><span class="section"><a href="#_bertrpc_types">25. BERTRPC Types</a></span></dt><dt><span class="section"><a href="#_berp">26. BERP</a></span></dt><dt><span class="section"><a href="#_bert_rpc">27. BERT-RPC</a></span></dt><dt><span class="section"><a href="#_ubf_bertrpc_application_1_of_2">28. UBF-BERTRPC: Application (1 of 2)</a></span></dt><dt><span class="section"><a href="#_ubf_bertrpc_application_2_of_2">29. UBF-BERTRPC: Application (2 of 2)</a></span></dt><dt><span class="section"><a href="#_basic_exercises_1_of_3">30. Basic Exercises (1 of 3)</a></span></dt><dt><span class="section"><a href="#_basic_exercises_2_of_3">31. Basic Exercises (2 of 3)</a></span></dt><dt><span class="section"><a href="#_basic_exercises_3_of_3">32. Basic Exercises (3 of 3)</a></span></dt><dt><span class="section"><a href="#_advanced_exercises_1_of_4">33. Advanced Exercises (1 of 4)</a></span></dt><dt><span class="section"><a href="#_advanced_exercises_2_of_4">34. Advanced Exercises (2 of 4)</a></span></dt><dt><span class="section"><a href="#_advanced_exercises_3_of_4">35. Advanced Exercises (3 of 4)</a></span></dt><dt><span class="section"><a href="#_advanced_exercises_4_of_4">36. Advanced Exercises (4 of 4)</a></span></dt><dt><span class="section"><a href="#_thank_you">37. Thank You</a></span></dt></dl></div><div class="section" title="1.&#xA0;UBF Basics"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_ubf_basics"></a>1. UBF Basics</h2></div></div></div><p>UBF is a language for transporting and describing complex data
+structures across a network.  It has three components:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+UBF(a) is a "language neutral" data transport format, roughly
+  equivalent to well-formed XML.
+</li><li class="listitem">
+UBF(b) is a programming language for describing types in UBF(a) and
+  protocols between clients and servers.  This layer is typically
+  called the "protocol contract".  UBF(b) is roughly equivalent to
+  Verified XML, XML-schemas, SOAP and WDSL.
+</li><li class="listitem">
+UBF(c) is a meta-level protocol used between a UBF client and a UBF
+  server.
+</li></ul></div><div class="figure"><a id="id36108658"></a><p class="title"><strong>Figure 1. Programming By Contract</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/ubf-flow-01.png" alt="Programming By Contract" /></div></div></div><br class="figure-break" /></div><div class="section" title="2.&#xA0;Specifications: UBF(a)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_specifications_ubf_a"></a>2. Specifications: UBF(a)</h2></div></div></div><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+Integer
+</p>
+</td><td style="" valign="top">
+<p>
+[-][0-9]+
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+String
+</p>
+</td><td style="" valign="top">
+<p>
+"…"
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Binary
+</p>
+</td><td style="" valign="top">
+<p>
+[0-9]+ ~…~
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Atom
+</p>
+</td><td style="" valign="top">
+<p>
+'…'
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Tuple
+</p>
+</td><td style="" valign="top">
+<p>
+{ Obj1 Obj2 … ObjN-1 ObjN }
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+List
+</p>
+</td><td style="" valign="top">
+<p>
+# ObjN &amp; ObjN-1 &amp; … &amp; Obj2 &amp; Obj1
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Term
+</p>
+</td><td style="" valign="top">
+<p>
+represent primitive types and compound types
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+White space
+</p>
+</td><td style="" valign="top">
+<p>
+\s \n \r \t , %…%
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Register
+</p>
+</td><td style="" valign="top">
+<p>
+&gt;C C
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Object
+</p>
+</td><td style="" valign="top">
+<p>
+Term or Register Push or Register Pop
+</p>
+</td></tr></tbody></table></div><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The operator <span class="emphasis"><em>$</em></span> (i.e. "end of object") signifies when objects
+are finished.</p></td></tr></table></div></div><div class="section" title="3.&#xA0;Specifications: UBF(a) Example"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_specifications_ubf_a_example"></a>3. Specifications: UBF(a) Example</h2></div></div></div><p>For example, the following UBF(a) object:</p><pre class="screen">'person'&gt;p # {p "Joe" 123} &amp; {p 'fred' 3~abc~} &amp; $</pre><p>Represents the following UBF(b) term, a list that contains two
+3-tuples:</p><pre class="screen">[{'person', 'fred', &lt;&lt;"abc"&gt;&gt;}, {'person', "Joe", 123}].</pre></div><div class="section" title="4.&#xA0;Specifications: UBF(b)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_specifications_ubf_b"></a>4. Specifications: UBF(b)</h2></div></div></div><p>UBF(b) is a language independent type system and protocol description
+language to specify a "contract".</p><p>All data sent by both the client and the server is verified by the
+"Contract Manager" (an Erlang process on the "server" side of the
+protocol).  Any data that violates the contract is rejected.</p><p>A contract is defined by 2 mandatory sections and 3 optional sections.</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+Name
+</p>
+</td><td style="" valign="top">
+<p>
++NAME("…"). <span class="emphasis"><em>mandatory</em></span>
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Version
+</p>
+</td><td style="" valign="top">
+<p>
++VSN("…"). <span class="emphasis"><em>mandatory</em></span>
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Types
+</p>
+</td><td style="" valign="top">
+<p>
++TYPES.
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+State
+</p>
+</td><td style="" valign="top">
+<p>
++STATE.
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Defines a finite state machine (FSM) to model the interaction
+    between the client and server.
+</li><li class="listitem">
+Symbolic names expressed as "atoms" are the states of the FSM.
+</li><li class="listitem">
+Transitions expressed as request, response, and next state
+    triplets are the edges of the FSM (a.k.a. synchronous calls).
+</li><li class="listitem">
+States may also be annotated with events (a.k.a. asynchronous
+    casts).
+</li></ul></div>
+</td></tr><tr><td style="" valign="top">
+<p>
+Anystate
+</p>
+</td><td style="" valign="top">
+<p>
++ANYSTATE.
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Defines request and response pairs and define events that are
+    valid in <span class="emphasis"><em>all</em></span> states of the FSM.
+</li></ul></div>
+</td></tr></tbody></table></div></div><div class="section" title="5.&#xA0;Specifications: UBF(a) Types"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_specifications_ubf_a_types"></a>5. Specifications: UBF(a) Types</h2></div></div></div><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+Definition
+</p>
+</td><td style="" valign="top">
+<p>
+X() = T
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Integer
+</p>
+</td><td style="" valign="top">
+<p>
+[-][0-9]+ <span class="emphasis"><em>or</em></span> [0-9]+#[0-9a-f]+
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Range
+</p>
+</td><td style="" valign="top">
+<p>
+[-][0-9]+..[-][0-9]+ <span class="emphasis"><em>or</em></span> [-][0-9]+.. <span class="emphasis"><em>or</em></span> ..[-][0-9]+
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Float
+</p>
+</td><td style="" valign="top">
+<p>
+[-][0-9]+.[0-9]+
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Binary
+</p>
+</td><td style="" valign="top">
+<p>
+&lt;&lt;"…"&gt;&gt;
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+String
+</p>
+</td><td style="" valign="top">
+<p>
+"…"
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Atom
+</p>
+</td><td style="" valign="top">
+<p>
+'…' <span class="emphasis"><em>or</em></span> [a-z][a-zA-Z0-9_]*
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Reference
+</p>
+</td><td style="" valign="top">
+<p>
+R()
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Alternative
+</p>
+</td><td style="" valign="top">
+<p>
+T1 | T2
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Tuple
+</p>
+</td><td style="" valign="top">
+<p>
+{T1, T2, …, Tn}
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Record
+</p>
+</td><td style="" valign="top">
+<p>
+name#T1, y=T2, …, z=Tn
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Extended Record
+</p>
+</td><td style="" valign="top">
+<p>
+name##T1, y=T2, …, z=Tn
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+List
+</p>
+</td><td style="" valign="top">
+<p>
+[T]
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Predefined
+</p>
+</td><td style="" valign="top">
+<p>
+P() <span class="emphasis"><em>or</em></span> P(A1, A2, …, An)
+</p>
+</td></tr></tbody></table></div></div><div class="section" title="6.&#xA0;Specifications: UBF(a) Predefined Types"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_specifications_ubf_a_predefined_types"></a>6. Specifications: UBF(a) Predefined Types</h2></div></div></div><div class="informaltable"><table cellpadding="4px" style="border-collapse: collapse;border-top: 3px solid #527bbd; border-bottom: 3px solid #527bbd; border-left: 3px solid #527bbd; border-right: 3px solid #527bbd; "><colgroup><col class="col_1" /><col class="col_2" /><col class="col_3" /><col class="col_4" /><col class="col_5" /></colgroup><tbody><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p></p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>ascii</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>asciiprintable</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>nonempty</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>nonundefined</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>integer</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>float</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>binary</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>string</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>atom</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>tuple</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>list</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>proplist</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td></tr><tr><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>term</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td><td style="border-bottom: 1px solid #527bbd; " align="left" valign="top"><p>O</p></td></tr><tr><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>void</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="border-right: 1px solid #527bbd; " align="left" valign="top"><p>X</p></td><td style="" align="left" valign="top"><p>X</p></td></tr></tbody></table></div><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p><span class="emphasis"><em>nonempty</em></span> does not match: &lt;&lt;""&gt;&gt;, "", '', {}, and [].
+<span class="emphasis"><em>nonundefined</em></span> does not match: 'undefined'.</p></td></tr></table></div></div><div class="section" title="7.&#xA0;Specifications: UBF(b) Example"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_specifications_ubf_b_example"></a>7. Specifications: UBF(b) Example</h2></div></div></div><pre class="programlisting">+NAME("irc").
+
++VSN("ubf1.0").
+
++TYPES
+info()            = info;
+description()     = description;
+contract()        = contract;
+
+ok()              = ok;
+bool()            = true | false;
+nick()            = string();
+oldnick()         = nick();
+newnick()         = nick();
+group()           = string();
+groups()          = [group()];
+
+logon()           = logon;
+proceed()         = {ok, nick()};
+listGroups()      = groups;
+joinGroup()       = {join, group()};
+leaveGroup()      = {leave, group()};
+changeNick()      = {nick, nick()};
+msg()             = {msg, group(), string()};
+
+msgEvent()        = {msg, nick(), group(), string()};
+joinEvent()       = {joins, nick(), group()};
+leaveEvent()      = {leaves, nick(), group()};
+changeNameEvent() = {changesName, oldnick(), newnick(), group()}.
+
++STATE start
+   logon()       =&gt; proceed() &amp; active. %% Nick randomly assigned
+
++STATE active
+   listGroups()  =&gt; groups() &amp; active;
+   joinGroup()   =&gt; ok() &amp; active;
+   leaveGroup()  =&gt; ok() &amp; active;
+   changeNick()  =&gt; bool() &amp; active;
+   msg()         =&gt; bool() &amp; active;    %% False if you have not joined a group
+
+   EVENT         =&gt; msgEvent();         %% Group sends me a message
+   EVENT         =&gt; joinEvent();        %% Nick joins group
+   EVENT         =&gt; leaveEvent();       %% Nick leaves group
+   EVENT         =&gt; changeNameEvent().  %% Nick changes name
+
++ANYSTATE
+   info()        =&gt; string();
+   description() =&gt; string();
+   contract()    =&gt; term().</pre></div><div class="section" title="8.&#xA0;Specifications: UBF(c)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_specifications_ubf_c"></a>8. Specifications: UBF(c)</h2></div></div></div><p>UBF(c) is a meta-level protocol used between a UBF client and a UBF
+server.</p><p>UBF(c) has two primitives: synchronous "calls" and asynchronous
+"casts".</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+Calls
+</p>
+</td><td style="" valign="top">
+<p>
+Request $ ⇒ {Response, NextState} $
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+"Request" is an UBF(a) type sent by the client
+</li><li class="listitem">
+"Response" is an UBF(a) type and "NextState" is an UBF(a) atom
+     sent by the server
+</li></ul></div>
+</td></tr><tr><td style="" valign="top">
+<p>
+Casts
+</p>
+</td><td style="" valign="top">
+<p>
+{'event_in', Event} $
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+"Event" is an UBF(a) type sent by the client
+</li></ul></div>
+</td></tr><tr><td style="" valign="top">
+<p>
+Casts
+</p>
+</td><td style="" valign="top">
+<p>
+{'event_out', Event} $
+</p>
+<div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+"Event" is an UBF(a) type sent by the server
+</li></ul></div>
+</td></tr></tbody></table></div></div><div class="section" title="9.&#xA0;Specifications: UBF(c) errors"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_specifications_ubf_c_errors"></a>9. Specifications: UBF(c) errors</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+Calls - Request
+</span></dt><dd><p class="simpara">
+If clients sends an invalid request, server responds with "client
+broke contract":
+</p><pre class="screen">{{'clientBrokeContract', Request, ExpectsIn}, State} $</pre></dd><dt><span class="term">
+Calls - Responses
+</span></dt><dd><p class="simpara">
+If server sends an invalid response, server responds with "server
+broke contract":
+</p><pre class="screen">{{'serverBrokeContract', Response, ExpectsOut}, State} $</pre></dd><dt><span class="term">
+Casts
+</span></dt><dd>
+If client or server send an invalid event, the event is ignored and
+dropped by the server.
+</dd></dl></div></div><div class="section" title="10.&#xA0;Contracts and Plugins"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_contracts_and_plugins"></a>10. Contracts and Plugins</h2></div></div></div><p>"Contracts" and "Plugins" are the basic building blocks of an Erlang
+UBF server.
+- Contracts are a server’s specifications.
+- Plugins are a server’s implementations.</p><p>A contract is a UBF(b) specification stored to a file.  By convention,
+a contract’s filename has ".con" as the suffix part.</p></div><div class="section" title="11.&#xA0;Contracts: +TYPES only"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_contracts_types_only"></a>11. Contracts: +TYPES only</h2></div></div></div><p>For example, a "+TYPES" only contract having the filename
+"irc_types_plugin.con" is as follows:</p><pre class="programlisting">+NAME("irc_types").
+
++VSN("ubf1.0").
+
++TYPES
+info()            = info;
+description()     = description;
+contract()        = contract;
+
+ok()              = ok;
+bool()            = true | false;
+nick()            = string();
+oldnick()         = nick();
+newnick()         = nick();
+group()           = string();
+groups()          = [group()];
+
+logon()           = logon;
+proceed()         = {ok, nick()};
+listGroups()      = groups;
+joinGroup()       = {join, group()};
+leaveGroup()      = {leave, group()};
+changeNick()      = {nick, nick()};
+msg()             = {msg, group(), string()};
+
+msgEvent()        = {msg, nick(), group(), string()};
+joinEvent()       = {joins, nick(), group()};
+leaveEvent()      = {leaves, nick(), group()};
+changeNameEvent() = {changesName, oldnick(), newnick(), group()}.</pre></div><div class="section" title="12.&#xA0;Contracts: +STATE and/or +ANYSTATE only"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_contracts_state_and_or_anystate_only"></a>12. Contracts: +STATE and/or +ANYSTATE only</h2></div></div></div><p>For example, a "+STATE" and "+ANYSTATE" contract having the filename
+"irc_fsm_plugin.con" is as follows:</p><pre class="programlisting">+NAME("irc").
+
++VSN("ubf1.0").
+
++STATE start
+   logon()       =&gt; proceed() &amp; active. %% Nick randomly assigned
+
++STATE active
+   listGroups()  =&gt; groups() &amp; active;
+   joinGroup()   =&gt; ok() &amp; active;
+   leaveGroup()  =&gt; ok() &amp; active;
+   changeNick()  =&gt; bool() &amp; active;
+   msg()         =&gt; bool() &amp; active;    %% False if you have not joined a group
+
+   EVENT         =&gt; msgEvent();         %% Group sends me a message
+   EVENT         =&gt; joinEvent();        %% Nick joins group
+   EVENT         =&gt; leaveEvent();       %% Nick leaves group
+   EVENT         =&gt; changeNameEvent().  %% Nick changes name
+
++ANYSTATE
+   info()        =&gt; string();
+   description() =&gt; string();
+   contract()    =&gt; term().</pre></div><div class="section" title="13.&#xA0;Plugins"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_plugins"></a>13. Plugins</h2></div></div></div><p>A plugin is just a "normal" Erlang module that follows a few simple
+rules.  For a "+TYPES" only contract, the plugin contains just the
+name of it’s contract.</p><p>The plugin for the "+TYPES" only contract having the filename
+"irc_types_plugin.erl" is as follows:</p><pre class="screen">-module(irc_types_plugin).
+
+-compile({parse_transform,contract_parser}).
+-add_contract("irc_types_plugin").</pre><p>Otherwise, the plugin contains the name of it’s contract plus the
+necessary Erlang "glue code" needed to bind the UBF server to the
+server’s application.</p><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Check the UBF User’s Guide for possible ways that a plugin’s
+contract may fail to compile.</p></td></tr></table></div></div><div class="section" title="14.&#xA0;Plugins - Importing Types"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_plugins_importing_types"></a>14. Plugins - Importing Types</h2></div></div></div><p>A plugin can also import all or a subset of "+TYPES" from other
+plugins.  This simple yet powerful import mechanism permits sharing
+and re-use of types between plugins and servers.</p><p>The plugin for the "+STATE" and "+ANYSTATE" contract having the
+filename "irc_fsm_plugin.erl" is as follows:</p><pre class="screen">-module(irc_fsm_plugin).
+
+-compile({parse_transform,contract_parser}).
+-add_types(irc_types_plugin).
+-add_contract("irc_fsm_plugin").</pre><p>The "-add_types('there')" directive imports all "+TYPES" from the
+plugin named 'there' into the containing plugin.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>An alternative syntax "-add_types({'elsewhere', ['t1',
+'t2', …, 'tn']})."  for this directive imports a subset of
+"+TYPEs" from the plugin named 'elsewhere' into the containing
+plugin.</p></td></tr></table></div></div><div class="section" title="15.&#xA0;Transports: TCP/IP - UBF/EBF/JSF/TBF"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_transports_tcp_ip_ubf_ebf_jsf_tbf"></a>15. Transports: TCP/IP - UBF/EBF/JSF/TBF</h2></div></div></div><p>The following TCP/IP based transports are supported:</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+UBF
+</p>
+</td><td style="" valign="top">
+<p>
+Universal Binary Format
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+EBF
+</p>
+</td><td style="" valign="top">
+<p>
+Erlang Binary Format
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+JSF
+</p>
+</td><td style="" valign="top">
+<p>
+JavaScript Format
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+TBF
+</p>
+</td><td style="" valign="top">
+<p>
+Thrift Binary Format
+</p>
+</td></tr></tbody></table></div></div><div class="section" title="16.&#xA0;Transports: HTTP - JSON-RPC"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_transports_http_json_rpc"></a>16. Transports: HTTP - JSON-RPC</h2></div></div></div><p>JSON-RPC is a lightweight remote procedure call protocol similar to
+XML-RPC.</p><p>The UBF framework implementation of JSON-RPC brings together JSF’s
+encoder/decoder, UBF(b)'s contract checking, and an HTTP transport.</p><div class="figure"><a id="id36110320"></a><p class="title"><strong>Figure 2. Programming By Contract w/ Multiple Transports</strong></p><div class="figure-contents"><div class="mediaobject"><img src="images/ubf-flow-02.png" alt="Programming By Contract w/ Multiple Transports" /></div></div></div><br class="figure-break" /><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Any data that violates the <span class="emphasis"><em>same</em></span> contract(s) is rejected
+regardless of the transport.</p></td></tr></table></div></div><div class="section" title="17.&#xA0;Transports: ETF and LPC"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_transports_etf_and_lpc"></a>17. Transports: ETF and LPC</h2></div></div></div><p>Several transports that do not require an explicit network socket have
+been added to the UBF framework.</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+ETF
+</p>
+</td><td style="" valign="top">
+<p>
+Erlang Term Format <span class="emphasis"><em>(Erlang’s Native Distribution)</em></span>
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+LPC
+</p>
+</td><td style="" valign="top">
+<p>
+Local Procedure Call <span class="emphasis"><em>(Calls made directly to a Plugin)</em></span>
+</p>
+</td></tr></tbody></table></div><p>These transports permit an application to call a plugin directly
+without the need for TCP/IP or HTTP.</p></div><div class="section" title="18.&#xA0;Servers"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_servers"></a>18. Servers</h2></div></div></div><p>The UBF framework provides two types of Erlang servers: "stateless"
+and "stateful".  The stateless server is an extension of Joe
+Armstrong’s original UBF server implementation.  The "stateful" server
+is Joe Armstrong’s original UBF server implementation.</p><p>UBF servers are introspective - which means the servers can describe
+themselves.  The following commands (described in UBF(a) format) are
+always available:</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+'help' $
+</p>
+</td><td style="" valign="top">
+<p>
+  Help information
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+'info' $
+</p>
+</td><td style="" valign="top">
+<p>
+  Short information about the current service
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+'description' $
+</p>
+</td><td style="" valign="top">
+<p>
+  Long information about the current service
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+'services' $
+</p>
+</td><td style="" valign="top">
+<p>
+  A list of available services
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+'contract' $
+</p>
+</td><td style="" valign="top">
+<p>
+  Return the service contract
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+{'startSession', "Name", Args} $
+</p>
+</td><td style="" valign="top">
+<p>
+  To start a new session for the Name service.  Args are initial
+  arguments for the Name service and is specific to that service.
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+{'restartService', "Name", Args} $
+</p>
+</td><td style="" valign="top">
+<p>
+  To restart the Name service.  Args are restart arguments for the
+  Name service and is specific to that service.
+</p>
+</td></tr></tbody></table></div></div><div class="section" title="19.&#xA0;Servers: start or start_link"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_servers_start_emphasis_or_emphasis_start_link"></a>19. Servers: start <span class="emphasis"><em>or</em></span> start_link</h2></div></div></div><p>The "ubf_server" Erlang module implements most of the commonly-used
+server-side functions and provides several ways to start a server.</p><pre class="screen">-module(ubf_server).
+
+-type name() :: atom().
+-type plugins() :: [module()].
+-type ipport() :: pos_integer().
+-type options() :: [{atom(), term()}].
+
+-spec start(plugins(), ipport()) -&gt; true.
+-spec start(name(), plugins(), ipport()) -&gt; true.
+-spec start(name(), plugins(), ipport(), options()) -&gt; true.
+
+-spec start_link(plugins(), ipport()) -&gt; true.
+-spec start_link(name(), plugins(), ipport()) -&gt; true.
+-spec start_link(name(), plugins(), ipport(), options()) -&gt; true.</pre><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Check the UBF User’s Guide for supported configuration options.</p></td></tr></table></div></div><div class="section" title="20.&#xA0;Servers: Stateless"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_servers_stateless"></a>20. Servers: Stateless</h2></div></div></div><p>The plugin callback API for the stateless server.</p><pre class="screen">%% common callback API
+-spec info() -&gt; string().
+-spec description() -&gt; string().
+-spec handlerStop(Handler::pid(), Reason::term(), StateData::term()) -&gt;
+                  NewStateData::term().
+
+%% stateless callback API
+-spec handlerStart(Args::term()) -&gt;
+                  {accept, Reply::term(), StateName::atom(), StateDate::term()} |
+                  {reject, Reply::term()}.
+-spec handlerRpc(Call::term()) -&gt; Reply::term().</pre></div><div class="section" title="21.&#xA0;Servers: Stateful"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_servers_stateful"></a>21. Servers: Stateful</h2></div></div></div><p>The plugin callback API for the stateful server.</p><pre class="screen">%% common callback API
+-spec info() -&gt; string().
+-spec description() -&gt; string().
+-spec handlerStop(Handler::pid(), Reason::term(), StateData::term()) -&gt;
+                  NewStateData::term().
+
+%% stateful callback API
+-spec handlerStart(Args::term(), Manager::pid()) -&gt;
+                  {accept, Reply::term(), StateName::atom(), StateDate::term()} |
+                  {reject, Reply::term()}.
+-spec handlerRpc(StateName::atom(), Call::term(), StateDate::term(), Manager::pid()) -&gt;
+                {Reply::term(), NewStateName::atom(), NewStateData::term()}.
+
+-spec managerStart(Args::term()) -&gt;
+                   {ok, ManagerData::term()}.
+-spec managerRestart(Args::term(), Manager::pid()) -&gt;
+                     ok | {error, Reason::term()}.
+-spec managerRpc(Args::term(), ManagerData::term()) -&gt;
+                 {ok, NewManagerData::term()} | {error, Reason::term()}.</pre></div><div class="section" title="22.&#xA0;Clients: Erlang RPC"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_clients_erlang_rpc"></a>22. Clients: Erlang RPC</h2></div></div></div><p>The "default" Erlang client is the "rpc" client and it supports TCP/IP
+and ETF transports.</p><p>The "ubf_client" Erlang module implements most of the commonly-used
+client-side functions and contains the implementation for all types of
+Erlang clients.</p><pre class="screen">-module(ubf_client).
+
+-type host() :: nonempty_string().
+-type ipport() :: pos_integer().
+-type name() :: atom().
+-type server() :: name() | pid().
+-type plugin() :: module().
+-type plugins() :: [plugin()].
+-type options() :: [{atom(), term()}].
+-type service() :: {'#S', nonempty_string()} | undefined.
+-type statename() :: atom().
+-type tlogger() :: module().
+
+-spec connect(host() | plugins(), ipport() | server()) -&gt;
+              {ok, Client::pid(), service()} | {error, term()}.
+-spec connect(host() | plugins(), ipport() | server(), timeout()) -&gt;
+              {ok, Client::pid(), service()} | {error, term()}.
+-spec connect(host() | plugins(), ipport() | server(), options(), timeout()) -&gt;
+              {ok, Client::pid(), service()} | {error, term()}.
+
+-spec stop(Client::pid()) -&gt; ok.
+
+-spec rpc(Client::pid(), Call::term()) -&gt; timeout | term() | no_return().
+-spec rpc(Client::pid(), Call::term(), timeout()) -&gt; timeout | term() | no_return().</pre><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Check the UBF User’s Guide for the "lpc" client.</p></td></tr></table></div></div><div class="section" title="23.&#xA0;UBF Hands On"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_ubf_hands_on"></a>23. UBF Hands On</h2></div></div></div><p>Provide an opportunity for hands-on experience to download, to build,
+to develop, and to test a <span class="strong"><strong>real</strong></span> UBF contract, <span class="strong"><strong>real</strong></span> UBF client, and
+<span class="strong"><strong>real</strong></span> UBF server.</p><p>The goal of this exercise is to learn more about UBF and to implement
+and to test your own Bert-RPC server using the UBF framework.</p><p>First, let’s briefly review the
+<a class="ulink" href="./BERTandBERT-RPC1.0Specification.mht" target="_top">Bert-RPC</a> specification.</p></div><div class="section" title="24.&#xA0;Setup"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_setup"></a>24. Setup</h2></div></div></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>UBF requires Erlang/OTP R13B01 or newer.  UBF has been tested
+most recently with Erlang/OTP R13B04.</p></td></tr></table></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+Copy the <span class="emphasis"><em>ubf-bertrpc.tgz</em></span> tarball, <span class="emphasis"><em>ubf-tutorial.tgz</em></span> tarball, and
+   <span class="emphasis"><em>ubf-user-guide.tgz</em></span> tarball from the USB stick to your home
+   directory.
+</li><li class="listitem"><p class="simpara">
+Make work directory and untar each of the tarballs:
+</p><pre class="screen">$ mkdir -p ~/work/
+$ cd ~/work/
+$ tar -xvzf ~/ubf-bertrpc.tgz
+$ tar -xvzf ~/ubf-tutorial.tgz
+$ tar -xvzf ~/ubf-user-guide.tgz</pre></li><li class="listitem"><p class="simpara">
+Build
+</p><pre class="screen">$ cd ~/work/ubf-bertrpc
+$ env BOM_FAKE=1 ./bom.sh co src/erl-tools/ubf-bertrpc
+$ env BOM_FAKE=1 ./bom.sh make
+$ make ERL=/usr/local/hibari/ert/R13B04/bin/erl</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Please specify the path to your erlang system’s erl executable.</p></td></tr></table></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Adding DEBUG="+debug_info" will produce DEBUG enabled beam files.</p></td></tr></table></div></li><li class="listitem"><p class="simpara">
+Unit Test
+</p><pre class="screen">$ make ERL=/usr/local/hibari/ert/R13B04/bin/erl test</pre></li></ol></div></div><div class="section" title="25.&#xA0;BERTRPC Types"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_bertrpc_types"></a>25. BERTRPC Types</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+Simple Data Types
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+integer
+</li><li class="listitem">
+float
+</li><li class="listitem">
+atom
+</li><li class="listitem">
+tuple
+</li><li class="listitem">
+bytelist
+</li><li class="listitem">
+list
+</li><li class="listitem">
+binary
+</li></ul></div></dd><dt><span class="term">
+Complex Data Types
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+nil
+</li><li class="listitem">
+boolean
+</li><li class="listitem">
+dictionary
+</li><li class="listitem">
+time
+</li><li class="listitem">
+regex
+</li></ul></div></dd></dl></div></div><div class="section" title="26.&#xA0;BERP"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_berp"></a>26. BERP</h2></div></div></div><p>BERP is same as EBF.</p><p>EBF is an implementation of UBF(b) but it does not use UBF(a) for the
+client and server communication.  Instead, Erlang-style conventions
+are used instead:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Structured terms are serialized via the Erlang BIFs term_to_binary()
+  and binary_to_term().
+</li><li class="listitem"><p class="simpara">
+Terms are framed using the <span class="emphasis"><em>gen_tcp</em></span> {packet, 4} format: a 32-bit
+  unsigned integer (big-endian?) specifies packet length.
+</p><pre class="screen">+-------------------------+-------------------------------+
+| Packet length (32 bits) | Packet data (variable length) |
++-------------------------+-------------------------------+</pre></li></ul></div><p>The name "EBF" is short for "Erlang Binary Format".</p></div><div class="section" title="27.&#xA0;BERT-RPC"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_bert_rpc"></a>27. BERT-RPC</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+Synchronous RPC
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+{call, Module, Function, Arguments}
+</li><li class="listitem">
+{reply, Result}
+</li></ul></div></dd><dt><span class="term">
+"Asynchronous" RPC
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+{cast, Module, Function, Arguments}
+</li><li class="listitem">
+{noreply}
+</li></ul></div></dd><dt><span class="term">
+Errors
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+{error, {Type, Code, Class, Detail, Backtrace}}
+</li><li class="listitem">
+Protocol Error Codes
+</li><li class="listitem">
+Server Error Codes
+</li></ul></div></dd><dt><span class="term">
+Info Directives
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+{info, Command, Options}
+</li><li class="listitem">
+{info, callback, [{service, Service}, {mfa, Mod, Fun, Args}]}
+</li></ul></div></dd><dt><span class="term">
+Caching Features
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Expiration Caching
+</li><li class="listitem">
+Validation Caching
+</li></ul></div></dd><dt><span class="term">
+Streaming Features
+</span></dt><dd><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Streaming Binary Request
+</li><li class="listitem">
+Streaming Binary Response
+</li></ul></div></dd></dl></div></div><div class="section" title="28.&#xA0;UBF-BERTRPC: Application (1 of 2)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_ubf_bertrpc_application_1_of_2"></a>28. UBF-BERTRPC: Application (1 of 2)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+1.
+</span></dt><dd><p class="simpara">
+Change directory to the ubf-bertrpc application.
+</p><pre class="screen">$ cd ~/work/ubf-bertrpc/src/erl-tools/ubf-bertrpc__HEAD</pre></dd><dt><span class="term">
+2.
+</span></dt><dd><p class="simpara">
+List directory of the ubf-bertrpc application.
+</p><pre class="screen">$ ls -R
+.:
+ BOM.mk
+ ChangeLog
+ ebin
+ GMBOM
+ include
+ LICENSE
+ priv
+ README
+ src
+
+./ebin:
+
+./include:
+ bertrpc.hrl
+ bertrpc_impl.hrl
+
+./priv:
+ sys.config
+
+./src:
+ Makefile
+ bert.erl
+ bert_driver.erl
+ ubf_bertrpc_plugin.con
+ ubf_bertrpc_plugin.erl
+ Unit-EUnit-Files
+
+./src/Unit-EUnit-Files:
+ bertrpc_plugin.app
+ bertrpc_plugin_app.erl
+ bertrpc_plugin_sup.erl
+ bertrpc_plugin_test.erl</pre></dd></dl></div></div><div class="section" title="29.&#xA0;UBF-BERTRPC: Application (2 of 2)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_ubf_bertrpc_application_2_of_2"></a>29. UBF-BERTRPC: Application (2 of 2)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+3.
+</span></dt><dd><p class="simpara">
+Review key files of the ubf-bertrpc application.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+src/ubf_bertrpc_plugin.con
+</li><li class="listitem">
+src/ubf_bertrpc_plugin.erl
+</li></ul></div></dd><dt><span class="term">
+4.
+</span></dt><dd><p class="simpara">
+Review key files of the ubf-bertrpc application’s eunit tests.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+./src/Unit-EUnit-Files/bertrpc_plugin.app
+</li><li class="listitem">
+./src/Unit-EUnit-Files/bertrpc_plugin_app.erl
+</li><li class="listitem">
+./src/Unit-EUnit-Files/bertrpc_plugin_sup.erl
+</li><li class="listitem">
+./src/Unit-EUnit-Files/bertrpc_plugin_test.erl
+</li></ul></div></dd><dt><span class="term">
+5.
+</span></dt><dd><p class="simpara">
+Review ubf-bertrpc application’s Makefile.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+src/Makefile
+</li></ul></div></dd></dl></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The command make target "run-erl1" starts an erlang shell that
+can be used for interactive development, debugging, and testing.</p></td></tr></table></div></div><div class="section" title="30.&#xA0;Basic Exercises (1 of 3)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_basic_exercises_1_of_3"></a>30. Basic Exercises (1 of 3)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+1.
+</span></dt><dd><p class="simpara">
+Implement and test BERT-RPC’s call/3 and reply/1 primitives:
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+Modify ubf_bertrpc_plugin.con
+</li><li class="listitem">
+Modify ubf_bertrpc_plugin.erl
+</li><li class="listitem">
+Add new unit test to bertrpc_plugin_test.erl that uses
+      erlang:now()
+</li></ol></div></dd></dl></div></div><div class="section" title="31.&#xA0;Basic Exercises (2 of 3)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_basic_exercises_2_of_3"></a>31. Basic Exercises (2 of 3)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+2.
+</span></dt><dd><p class="simpara">
+Implement and test BERT-RPC’s error/1 primitive for Server Error
+   Codes:
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+Modify ubf_bertrpc_plugin.con
+</li><li class="listitem">
+Modify ubf_bertrpc_plugin.erl
+</li><li class="listitem">
+Add new unit test to bertrpc_plugin_test.erl that tests calling
+      an unknown module "foobar".
+</li><li class="listitem">
+Add new unit test bertrpc_plugin_test.erl that tests calling an
+      unknown function "erlang:foobar".
+</li></ol></div></dd></dl></div></div><div class="section" title="32.&#xA0;Basic Exercises (3 of 3)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_basic_exercises_3_of_3"></a>32. Basic Exercises (3 of 3)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+3.
+</span></dt><dd><p class="simpara">
+Implement and test BERT-RPC’s cast/1 primitive:
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+Modify ubf_bertrpc_plugin.con
+</li><li class="listitem">
+Modify ubf_bertrpc_plugin.erl
+</li><li class="listitem">
+Add new unit test to bertrpc_plugin_test.erl that uses
+      error_logger:error_report/1.  Manually check if your test
+      triggers a message to stderr.
+</li></ol></div></dd></dl></div></div><div class="section" title="33.&#xA0;Advanced Exercises (1 of 4)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_advanced_exercises_1_of_4"></a>33. Advanced Exercises (1 of 4)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+1.
+</span></dt><dd><p class="simpara">
+Implement and test BERT-RPC’s info callback/2 primitive:
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+modify ubf_bertrpc_plugin.con
+</li><li class="listitem">
+modify ubf_bertrpc_plugin.erl
+</li><li class="listitem">
+add new unit test to bertrpc_plugin_test.erl that tests using
+      erlang:now().
+</li></ol></div></dd></dl></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Re-use the ubf_client.erl client inside the
+ubf_bertrpc_plugin.erl implementation.  Re-use the same test server as
+target service.</p></td></tr></table></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>To implement the "{info,…}" construct, changes are required
+for the bert.erl and bert_driver.erl modules.  The module must
+maintain state and should convert the "{info,…}" BERP and it’s
+corresponding "{call,….}" BERP into a 2-tuple that forms a single
+UBF request.  To avoid such headaches, send such a 2-tuple directly
+from the UBF client to your server as a work-around.</p></td></tr></table></div></div><div class="section" title="34.&#xA0;Advanced Exercises (2 of 4)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_advanced_exercises_2_of_4"></a>34. Advanced Exercises (2 of 4)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+2.
+</span></dt><dd><p class="simpara">
+Implement and test BERT-RPC’s error/1 primitive for Protocol Error
+   Codes:
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+modify bert_driver.erl
+</li><li class="listitem">
+add new unit test to bertrpc_plugin_test.erl
+</li></ol></div></dd></dl></div></div><div class="section" title="35.&#xA0;Advanced Exercises (3 of 4)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_advanced_exercises_3_of_4"></a>35. Advanced Exercises (3 of 4)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+3.
+</span></dt><dd><p class="simpara">
+Implement Caching Directives
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+modify ubf_bertrpc_plugin.erl
+</li><li class="listitem">
+add new unit test to bertrpc_plugin_test.erl
+</li></ol></div></dd></dl></div></div><div class="section" title="36.&#xA0;Advanced Exercises (4 of 4)"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_advanced_exercises_4_of_4"></a>36. Advanced Exercises (4 of 4)</h2></div></div></div><div class="variablelist"><dl><dt><span class="term">
+4.
+</span></dt><dd><p class="simpara">
+Implement Streaming Binary Request and Response
+</p><div class="orderedlist"><ol class="orderedlist" type="a"><li class="listitem">
+modify bert_driver.erl
+</li><li class="listitem">
+add new unit test to bertrpc_plugin_test.erl
+</li></ol></div></dd></dl></div><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Create a new ubf_bertrpc_client.erl implementation by
+   implementing a wrapper over the standard ubf_client.erl module.</p></td></tr></table></div></div><div class="section" title="37.&#xA0;Thank You"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_thank_you"></a>37. Thank You</h2></div></div></div><p>For UBF, please check UBF’s GitHub repository and webpage for updates.</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+UBF
+</p>
+</td><td style="" valign="top">
+<p>
+<a class="ulink" href="https://github.com/norton/ubf" target="_top">https://github.com/norton/ubf</a>
+</p>
+</td></tr></tbody></table></div><p>For Hibari - an open-source key-value implemented in Erlang, please
+check one or more of the following links for updates.</p><div class="horizontal"><table cellpadding="4px" style="border: none;"><colgroup><col /><col /></colgroup><tbody valign="top"><tr><td style="" valign="top">
+<p>
+Hibari Open Source project
+</p>
+</td><td style="" valign="top">
+<p>
+<a class="ulink" href="http://sourceforge.net/projects/hibari/" target="_top">http://sourceforge.net/projects/hibari/</a>
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Hibari Twitter
+</p>
+</td><td style="" valign="top">
+<p>
+@hibaridb Hashtag: #hibaridb
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Gemini Twitter
+</p>
+</td><td style="" valign="top">
+<p>
+@geminimobile
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Big Data blog
+</p>
+</td><td style="" valign="top">
+<p>
+<a class="ulink" href="http://hibari-gemini.blogspot.com/" target="_top">http://hibari-gemini.blogspot.com/</a>
+</p>
+</td></tr><tr><td style="" valign="top">
+<p>
+Slideshare
+</p>
+</td><td style="" valign="top">
+<p>
+<a class="ulink" href="http://www.slideshare.net/geminimobile" target="_top">http://www.slideshare.net/geminimobile</a>
+</p>
+</td></tr></tbody></table></div></div></div></body></html>
