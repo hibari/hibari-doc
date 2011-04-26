@@ -1,10 +1,10 @@
 // -*- Doc -*-
 // vim: set syntax=asciidoc:
 
-= 2011Q2 Tutorial - Hibari Hands On *DRAFT*
+= 2011Q2 Tutorial - Hibari Hands On
 :Author: Joseph Wayne Norton
 :Email: norton@geminimobile.com
-:Date: 2011/04/24
+:Date: 2011/04/27
 :Revision: 0.1
 :Copyright: 2011 Gemini Mobile Technologies, Inc.  All rights reserved.
 :incremental:
