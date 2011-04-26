@@ -799,6 +799,9 @@ Application Developer Guide.
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get_many[brick_simple:get_many/5]
 . http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete[brick_simple:delete/4]
 
+What changes can be seen on Hibari's Admin Server Webpages during and
+after doing these example exercises?
+
 == Hands On Exercises #2
 _to be added_
 
