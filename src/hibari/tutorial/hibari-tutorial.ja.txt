@@ -81,86 +81,76 @@ image:images/automatic_failover.png[]
 - Hibariは、チェインのなかの障害を検知し、自動的にメンバーブリックの役割を調整します。
 - 仮に、ヘッド・ブリックがダウンした場合には、ミドル・ブリックが自動的にヘッド・ブリックの役割を引き受けます。
 - 仮に、新しいヘッド・ブリックにも障害があった場合、残るブリックがヘッドとテイル両方の役割を行います。
-- By following the properties of chain replication, Hibari can
-  guarantee strong consistency even in the event of brick failures.
+- チェイン・レプリケーションの特性により、Hibariはブリック障害の際にも強い一貫性を提供できます。
 
-== Hibari - Load Balancing
-// ==== Chain Replication for High Availability and Strong Consistency
+== Hibari - 負荷分散
+// ==== 高い可用性と強い一貫性のためのチェイン・レプリケーション
 image:images/load_balanced_chains.png[]
 
-- Head bricks and tail bricks bear more load than do middle bricks.
+- ヘッド・ブリックとテイル・ブリックはミドル・ブリックよりも大きな負荷がかかります。
 
-- Load balancing of roles and of chains across physical machines can
-  better utilize hardware resources.
+- 物理的なマシン全体での役割とチェインの負荷分散は、ハードウェアリソースを有効に活用させます。
 
-== Hibari - Node Failure
-// ==== Chain Replication for High Availability and Strong Consistency
+== Hibari - ノード障害
+// ==== 高可用性と強い一貫性のためのチェイン・レプリケーション
 
 image:images/automatic_failover_2.png[]
 
-In the event of physical node failure, bricks automatically shift
-roles and each chain continues to provide service to clients.
+物理的なノード障害の場合、ブリックは自動的に役割をシフトし、それぞれのチェインはクライアントにサービスを提供し続けます。
 
-Chain Repair Process::
-  1. Failed node is restarted.
-  2. Failed bricks are restarted and moved to the end of the chain.
-  3. Failed bricks repair themselves against the "official tail".
-  4. Repaired bricks are moved to their original position and then
-     resume normal service.
+チェイン・リペアのプロセス::
+  1. 障害ノードが再開される。
+  2. 障害ブリックが再開され、チェインのエンドに移される。
+  3. 障害ブリックは、"公式テイル"に自身を修復する。
+  4. 修復ブリックは元のポジションに戻され、通常サービスを再開する。
 
-== Hibari - Cluster
+== Hibari - クラスター
 
 image:images/cap-01.png[]
 
-== Hibari - Load Balancing (again)
+== Hibari - 負荷分散 (再)
 
 image:images/chain-01.png[]
 
-== Hibari - Admin Server(s)
+== Hibari - 管理サーバー
 
 image:images/cap-02-admin.png[]
 
-== Hibari - Chains
+== Hibari - チェイン
 
 image:images/cap-02-chain.png[]
 
-== Hibari - Clients
+== Hibari - クライアント
 
 image:images/cap-02-client.png[]
 
-== Hibari - 3 Layers
+== Hibari - 3 レイヤー
 
-Top layer:: consistent hashing
-Middle layer:: chain replication
-Bottom layer:: the storage brick
+トップ・レイヤー:: コンシステント・ハッシング
+ミドル・レイヤー:: チェイン・レプリケーション
+ボトム・レイヤー:: ストレージ・ブリック
 
 [role="incremental"]
 image:images/logical-architecture1.png[]
 
-== Hibari - Consistent Hashing
+== Hibari - コンシステント・ハッシング
 
-- Hibari clients use the algorithm to calculate which chain must
-  handle operations for a key.
-- Clients obtain this information via updates from the Hibari Admin
-  Server.
-- These updates allow the client to send its request directly to the
-  correct server in most use cases.  Servers use the algorithm to
-  verify that the client's calculation was correct.
-- If a client sends an operation to the wrong brick, the brick will
-  forward the operation to the correct brick.
+- Hibari クライアントは、どのチェインがキーのオペレーションを取り扱うべきかを計算するアルゴリズムを利用します。
+- クライアントは、Hibari管理サーバーからの更新を経由し、この情報を得ます。
+- これらの更新は、大部分のユーズケースにおいて、クライアントにそのリクエストを正しいサーバーに直接送らせます。サーバーはクライアントの計算が正しいかを証明するアルゴリズムを利用します。
+- 仮に、クライアントが誤ったブリックにオペレーションを送る場合、ブリックは正しいブリックにオペレーションを転送します。
 
-== Hibari - Chain Migration
+== Hibari - チェイン・マイグレーション
 
 image:images/chain-migration-3to4.png[]
 
-Motivations for rebalancing of data:
+データを再配置するきっかけ:
 
-- Chains are added or removed from the cluster.
-- Brick hardware is changed, e.g. adding extra disk or RAM capacity.
-- A change in a table's consistent hashing algorithm configuration
-  forces data (by definition) to another chain.
+- チェインはクラスターから追加されるか、削除されます。
+- ブリック・ハードウェアは変更されます。(例）ディスクかRAM容量の追加。
+- テーブルのコンシステント・ハッシング・アルゴリズム設定における変更は、データ（定義により）を他のチェインに押し出します。
 
-== Hibari - Chain Migration (cont.)
+== Hibari - チェイン・マイグレーション (続)
 
 image:images/migration-3to4.png[]
 
