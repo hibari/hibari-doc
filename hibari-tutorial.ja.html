@@ -346,7 +346,7 @@ keyに紐づくValue.
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Unix time_t() として表現される、keyが期限切れとなる時間
 </li><li class="listitem">
-オプション; 0 までをデフォルト (例外無し).
+オプション; 0 までをデフォルト (有効期限無し).
 </li><li class="listitem"><p class="simpara">
 型式:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
@@ -621,17 +621,17 @@ Hibariを停止し、スタート
 </li><li class="listitem">
 チェインとブリックそれぞれの履歴はどうなっているのでしょうか?
 </li></ol></div></div><div class="section" title="48. Hands On &#x30A8;&#x30AF;&#x30B5;&#x30B5;&#x30A4;&#x30BA; #1-C"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_&#x30A8;&#x30AF;&#x30B5;&#x30B5;&#x30A4;&#x30BA;_1_c"></a>48. Hands On エクササイズ #1-C</h2></div></div></div><p>Erlang Shellを使い、 Hibariのアプリケーション開発者ガイドにリストされている例を再現する</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
-<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-add" target="_top">brick_simple:add/6</a>
+<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-add" target="_top">brick_simple:add/6</a>
 </li><li class="listitem">
-<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-replace" target="_top">brick_simple:replace/6</a>
+<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-replace" target="_top">brick_simple:replace/6</a>
 </li><li class="listitem">
-<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-set" target="_top">brick_simple:set/6</a>
+<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-set" target="_top">brick_simple:set/6</a>
 </li><li class="listitem">
-<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get" target="_top">brick_simple:get/4</a>
+<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-get" target="_top">brick_simple:get/4</a>
 </li><li class="listitem">
-<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get_many" target="_top">brick_simple:get_many/5</a>
+<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-get_many" target="_top">brick_simple:get_many/5</a>
 </li><li class="listitem">
-<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete" target="_top">brick_simple:delete/4</a>
+<a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-delete" target="_top">brick_simple:delete/4</a>
 </li></ol></div><p class="incremental">この例を実行している間、またその後にHibariの管理サーバー・ウェブページでどんな変化を見ることができますか？</p></div><div class="section" title="49. Hands On &#x30A8;&#x30AF;&#x30B5;&#x30B5;&#x30A4;&#x30BA; #2"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_&#x30A8;&#x30AF;&#x30B5;&#x30B5;&#x30A4;&#x30BA;_2"></a>49. Hands On エクササイズ #2</h2></div></div></div><p>Hibariの新しいAPIを実装するが、クライアント側で行う（サーバー側では無く）</p><div class="variablelist"><dl><dt><span class="term">
 rename(Tab, OldKey, Key, ExpTime, Flags, Timeout)
 </span></dt><dd><p class="simpara">
