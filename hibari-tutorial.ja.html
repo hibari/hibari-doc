@@ -619,7 +619,7 @@ Hibariを停止し、スタート
 </li><li class="listitem">
 何が起きているのでしょうか?
 </li><li class="listitem">
-チェインとブリックそれぞれの履歴はどうなっているのでしょうかか?
+チェインとブリックそれぞれの履歴はどうなっているのでしょうか?
 </li></ol></div></div><div class="section" title="48. Hands On &#x30A8;&#x30AF;&#x30B5;&#x30B5;&#x30A4;&#x30BA; #1-C"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hands_on_&#x30A8;&#x30AF;&#x30B5;&#x30B5;&#x30A4;&#x30BA;_1_c"></a>48. Hands On エクササイズ #1-C</h2></div></div></div><p>Erlang Shellを使い、 Hibariのアプリケーション開発者ガイドにリストされている例を再現する</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 <a class="ulink" href="http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-add" target="_top">brick_simple:add/6</a>
 </li><li class="listitem">
@@ -640,7 +640,7 @@ rename(Tab, OldKey, Key, ExpTime, Flags, Timeout)
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 この関数は、OldKeyに関連した既存のバリューを新しいkeyに名前変更し、OldKeyを削除。.  Flags of the OldKeyのFlagsは無視され、Flags引数に置換される (<code class="literal">'testset'</code> flagを除く)。
 </li><li class="listitem">
-OldKeyが存在しなければ、 `<span class="emphasis"><em>key_not_exist</em></span>`がリターン
+OldKeyが存在しなければ、 <code class="literal">'key_not_exist'</code> がリターン
 </li><li class="listitem">
 OldKeyが存在すれば、 Flagsは <code class="literal">{'testset', timestamp()}</code> を含み、OldKeyにtimestampのミスマッチがあり、 `{<span class="emphasis"><em>ts_error</em></span>,
   timestamp()}`をリターン。
@@ -661,7 +661,7 @@ update_counter(Tab, Key, Incr, Timeout)
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 この関数は、正か負のintegerのカウンターを更新する。しかし、カウンターはゼロ以下にはならない。
 </li><li class="listitem">
-Incrが、integerで無い場合には, `<span class="emphasis"><em>invalid_arg_present</em></span>`をリターン。
+Incrが、integerで無い場合には, <code class="literal">'invalid_arg_present'</code> をリターン。
 </li><li class="listitem">
 2人（それ以上）が同時にupdate_counter/3 を実行する場合、
   両方の更新はどちらかひとつを失うというリスク無しに有効になります。カウンターの新しいバリュー <code class="literal">{'ok', NewVal}</code> がリターンされる。
