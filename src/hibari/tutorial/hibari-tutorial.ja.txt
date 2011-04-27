@@ -706,12 +706,12 @@ $ tar -xvzf backup.tgz
 
 Erlang Shellを使い、 Hibariのアプリケーション開発者ガイドにリストされている例を再現する
 
-. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-add[brick_simple:add/6]
-. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-replace[brick_simple:replace/6]
-. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-set[brick_simple:set/6]
-. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get[brick_simple:get/4]
-. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-get_many[brick_simple:get_many/5]
-. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.en.html#brick-simple-delete[brick_simple:delete/4]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-add[brick_simple:add/6]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-replace[brick_simple:replace/6]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-set[brick_simple:set/6]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-get[brick_simple:get/4]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-get_many[brick_simple:get_many/5]
+. http://hibari.github.com/hibari-doc/hibari-app-developer-guide.ja.html#brick-simple-delete[brick_simple:delete/4]
 
 [role="incremental"]
 この例を実行している間、またその後にHibariの管理サーバー・ウェブページでどんな変化を見ることができますか？
