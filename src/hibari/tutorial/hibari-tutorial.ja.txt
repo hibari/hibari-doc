@@ -396,7 +396,7 @@ NOTE: `Key` は、内部的に常にbinaryに変換されます。
 *ExpTime*
 
 - Unix time_t() として表現される、keyが期限切れとなる時間
-- オプション; 0 までをデフォルト (例外無し).
+- オプション; 0 までをデフォルト (有効期限無し).
 - 型式:
   * `ExpTime = exp_time()`
   * `exp_time() = time_t()`
