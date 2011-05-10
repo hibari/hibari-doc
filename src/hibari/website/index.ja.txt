@@ -25,6 +25,8 @@ store. Hibari uses chain replication for strong consistency,
 high-availability, and durability. Hibari has excellent performance
 especially for read and large value operations.
 
+For Hibari documentation in English, see link:index.en.html[English].
+
 *Hibari's Main Features*
 
 - A Hibari cluster is a distributed system.
@@ -49,15 +51,19 @@ progress.
 
 *Hibari's Documentation*
 
-The link:hibari-app-developer-guide.en.html[Hibari Application Developer's Guide] is a good
-first step to get started quickly.  Check the download, the build, and
-the install instructions.
+The link:hibari-app-developer-guide.ja.html[Hibari Application
+Developer's Guide] is a good first step to get started quickly.  Check
+the download, the build, and the install instructions.  The
+link:hibari-tutorial.ja.html[Hibari Tutorial] is another resource that
+highlights key sections of the
+link:hibari-app-developer-guide.ja.html[Hibari Application Developer's
+Guide].
 
-The two key documents are the
+Two additional documents are the
 link:hibari-sysadmin-guide.en.html[Hibari System Administrator's
-Guide] and the link:hibari-contributor-guide.en.html[Hibari Contributor's
-Guide].  Reading the System Administrator's Guide is _STRONGLY_
-recommended.
+Guide] and the link:hibari-contributor-guide.en.html[Hibari
+Contributor's Guide].  Reading the System Administrator's Guide is
+_STRONGLY_ recommended.
 
 Read the link:webpage-CHANGELOG.html[CHANGELOG] page for a full list
 of additions, changes, and bug fixes.
