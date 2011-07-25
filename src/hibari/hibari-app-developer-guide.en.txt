@@ -1414,12 +1414,12 @@ RETURNS
  ::
 Success return
 
-- `'ok'`
+- `{'ok', timestamp()}`
 
  ::
 Error returns
 
-- `{'key_exists',timestamp()}`
+- `{'key_exists', timestamp()}`
   * The operation failed because the key already exists.
   * `timestamp() = integer()`
 - `'invalid_flag_present'`
@@ -1452,7 +1452,7 @@ Successful adding of a new key-value pair:
 +
 ------
 > brick_simple:add(tab1, <<"foo">>, <<"Hello, world!">>).
-ok
+{ok,1271542959131192}
 ------
 +
 
@@ -1471,7 +1471,7 @@ RAM regardless of brick's default storage setting:
 +
 ------
 > brick_simple:add(tab1, "foo1", "this is value1", ['value_in_ram']).
-ok
+{ok,1271542959131192}
 ------
 +
 
@@ -1481,7 +1481,7 @@ operation timeout:
 +
 ------
 > brick_simple:add(tab1, "foo2", "this is value2", 20000).
-ok
+{ok,1271542959131192}
 ------
 
 [[brick-simple-replace]]
@@ -1588,7 +1588,7 @@ RETURNS
  ::
 Success return
 
-- `'ok'`
+- `{'ok', timestamp()}`
 
  ::
 Error returns
@@ -1630,7 +1630,7 @@ Successful replacement of a key-value pair:
 +
 ------
 > brick_simple:replace(tab1, <<"foo">>, <<"Goodbye, world!">>).
-ok
+{ok,1271543165272987}
 ------
 +
 
@@ -1649,7 +1649,7 @@ RAM regardless of brick's default storage setting:
 +
 ------
 > brick_simple:replace(tab1, "foo", "You again, world!", ['value_in_ram']).
-ok
+{ok,1271543165272987}
 ------
 +
 
@@ -1669,7 +1669,7 @@ specified its current timestamp:
 +
 ------
 > brick_simple:replace(tab1, "foo", "Whole new value", [{'testset', 1271543165272987}]).
-ok
+{ok,1271543165272988}
 ------
 +
 
@@ -1679,7 +1679,7 @@ operation timeout:
 +
 ------
 > brick_simple:replace(tab1, "foo", "Foo again?", 30000).
-ok
+{ok,1271543165272989}
 ------
 
 [[brick-simple-set]]
@@ -1788,7 +1788,7 @@ RETURNS
  ::
 Success return
 
-- `'ok'`
+- `{'ok', timestamp()}`
 
  ::
 Error returns
@@ -1831,7 +1831,7 @@ Successful setting of a key-value pair:
 +
 ------
 > brick_simple:set(tab1, <<"key4">>, <<"cool value">>).
-ok
+{ok,1271542959131192}
 ------
 +
 
@@ -1841,7 +1841,7 @@ regardless of brick's default storage setting:
 +
 ------
 > brick_simple:set(tab1, "goo", "value6", ['value_in_ram']).
-ok
+{ok,1271542959131193}
 ------
 +
 
@@ -1862,7 +1862,7 @@ matches our specified timestamp:
 +
 ------
 > brick_simple:set(tab1, "goo", "value7", [{'testset', 1271543165272432}]).
-ok
+{ok,1271543165272433}
 ------
 
 [[brick-simple-get]]
@@ -1964,8 +1964,9 @@ Success returns
   * `iolist()  = [char() | binary() | iolist()]`
 - `{'ok', timestamp()}`
   * Success return when the get uses `'witness'` but not `'get_all_attribs'`.
-- `{'ok', timestamp(), proplist()}`
+- `{'ok', timestamp(), exp_time(), proplist()}`
   * Success return when the get uses both `'witness'` and `'get_all_attribs'`.
+  * `exp_time() = time_t()`
   * `proplist() = [property()]`
   * `property() = atom() | {term(), term()}`
 - `{'ok', timestamp(), val(), exp_time(), proplist()}`
@@ -2149,9 +2150,10 @@ Success returns
 - `{ok, {[{key(), timestamp()}], boolean()}}`
   * Success return when the `get_many` uses `'witness'` but not
     `'get_all_attribs'`.
-- `{ok, {[{key(), timestamp(), proplist()}], boolean()}}`
+- `{ok, {[{key(), timestamp(), expy_time(), proplist()}], boolean()}}`
   * Success return when the `get_many` uses both `'witness'` and
     `'get_all_attribs'`.
+  * `exp_time() = time_t()`
   * `proplist() = [property()]`
   * `property() = atom() | {term(), term()}`
 - `{ok, {[{key(), timestamp(), val(), exp_time(), proplist()}],
