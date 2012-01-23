@@ -1,6 +1,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1"
+ width="600px" height="1216px"
  viewBox="0 0 600 1216"
  xmlns="http://www.w3.org/2000/svg" shape-rendering="crispEdges"
  stroke-width="1" text-rendering="geometricPrecision">
@@ -327,13 +328,13 @@ last&lt;S2&gt; !=
 <text x="269" y="621" textLength="61" font-family="Helvetica" font-size="12" fill="black">
 up&lt;S1&gt; &amp;&amp;
 </text>
-<polygon fill="white" points="249,623 350,623 350,632 249,632"/>
-<text x="250" y="632" textLength="99" font-family="Helvetica" font-size="12" fill="black">
-got_down==TRUE
+<polygon fill="white" points="255,623 343,623 343,632 255,632"/>
+<text x="256" y="632" textLength="86" font-family="Helvetica" font-size="12" fill="black">
+got_down==TR-
 </text>
-<polygon fill="white" points="298,634 300,634 300,643 298,643"/>
-<text x="299" y="643" textLength="0" font-family="Helvetica" font-size="12" fill="black">
-
+<polygon fill="white" points="290,634 309,634 309,643 290,643"/>
+<text x="291" y="643" textLength="17" font-family="Helvetica" font-size="12" fill="black">
+UE
 </text>
 <line x1="60" y1="650" x2="60" y2="678" stroke="black"/>
 <line x1="180" y1="650" x2="180" y2="678" stroke="black"/>
@@ -416,13 +417,13 @@ replay=D1 ;
 <text x="400" y="811" textLength="38" font-family="Helvetica" font-size="12" fill="black">
 up=S1;
 </text>
-<polygon fill="white" points="370,813 469,813 469,822 370,822"/>
-<text x="371" y="822" textLength="97" font-family="Helvetica" font-size="12" fill="black">
-got_down=FALSE
+<polygon fill="white" points="376,813 463,813 463,822 376,822"/>
+<text x="377" y="822" textLength="85" font-family="Helvetica" font-size="12" fill="black">
+got_down=FAL-
 </text>
-<polygon fill="white" points="418,824 420,824 420,833 418,833"/>
-<text x="419" y="833" textLength="0" font-family="Helvetica" font-size="12" fill="black">
-
+<polygon fill="white" points="410,824 428,824 428,833 410,833"/>
+<text x="411" y="833" textLength="16" font-family="Helvetica" font-size="12" fill="black">
+SE
 </text>
 <line x1="60" y1="840" x2="60" y2="868" stroke="black"/>
 <line x1="180" y1="840" x2="180" y2="868" stroke="black"/>
