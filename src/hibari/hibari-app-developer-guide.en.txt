@@ -3712,7 +3712,7 @@ $ git config --global user.name "Your Name"
 +
 ------
 $ mkdir -p ~/bin
-$ wget -O - http://android.git.kernel.org/repo > ~/bin/repo
+$ wget -O - https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
 ------
 +
