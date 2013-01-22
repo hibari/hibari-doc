@@ -2,7 +2,8 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2012 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2012-2013 Cloudian, Inc.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +19,9 @@
 //
 
 = Hibari Application Developer's Guide
-:Date: 2011/04/24
-:Revision: 0.2.2
-:Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+:Date: 2013/01/23
+:Revision: 0.2.3(en)
+:Copyright: Copyright (C) 2006-2013 Gemini Mobile Technologies, Inc / Cloudian, Inc.  All rights reserved.
 
 <<<
 == Introduction
@@ -435,6 +436,9 @@ including Java, C/C++, Python, Ruby, and Erlang.
 For further information about Hibari's client API, see
 link:#client-api-erlang[Client API: Native Erlang] and the subsequent
 client API chapters in this guide.
+
+NOTE: The Hibari source distribution does not include Amazon S3 and
+JSON-RPC. They are separate external projects.
 
 [[production-proven]]
 ==== Production-Proven
@@ -2941,7 +2945,7 @@ Hibari servers support several of these session protocols on top
 of a TCP/IP transport protocol.  The choice of session protocol is
 a matter of convenience and/or support for the application
 developer. Hibari should be as easy for an app developer to use
-Ruby and JSON-RPC as it is to use Python and Protocol Buffers.
+Ruby and JSON-RPC as it is to use Python and Thrift or EBF.
 +
 * UBF(A), Joe Armstrong's original session layer protocol
 * EBF, the Erlang Binary Format.  The session layer protocol is a

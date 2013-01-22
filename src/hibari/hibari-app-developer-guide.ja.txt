@@ -2,7 +2,8 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2012 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2012-2013 Cloudian, Inc.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +19,9 @@
 //
 
 = Hibari (R) アプリケーション開発者ガイド
-:Date: 2011/04/26
-:Revision: 0.2.2(ja)
-:Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+:Date: 2013/01/23
+:Revision: 0.2.3(ja)
+:Copyright: Copyright (C) 2006-2013 Gemini Mobile Technologies, Inc / Cloudian, Inc.  All rights reserved.
 
 <<<
 == Hibariとは
@@ -198,6 +199,8 @@ link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration[動的なク�
 　Hibariのクライアント・アプリケーションは、Java、 C/C++、Python、Ruby、Erlangなど幅広い言語で開発できます。
 
 　HibariのクライアントAPIに関する詳細情報は、link:#client-api-erlang[Client API: Native Erlang]および当ガイドでこのあと説明するクライアントAPIの章を参照してください。
+
+NOTE: HibariのソースコードディストリビューションにはAmazon S3とJSON-RPCは含まれません。これらは別の外部プロジェクトです。
 
 [[production-proven]]
 ==== 稼働実績
@@ -2225,7 +2228,7 @@ link:http://en.wikipedia.org/wiki/IIOP[CORBA IIOP]、
 link:http://en.wikipedia.org/wiki/Protocol_buffers[Protocol Buffers]、
 link:http://en.wikipedia.org/wiki/Thrift_(protocol)[Thrift] など、ホスト間伝送にTCPを用いる他の多くのシリアライズされたデータ伝送プロトコルと同様に、基本的な役割を果たします。
 +
-Hibariサーバーは、TCP/IPトランスポート層の上に載るこれらのセッション・プロトコルをいくつかサポートします。どのセッション・プロトコルを選択するかは、使いやすいもの、あるいは、アプリケーション開発者が支持するものでよいでしょう。アプリケーション開発者にとって、HibariでRubyとJSON-RPCを使うのも、PythonとProtocol Buffersを使うのも、同じように容易なはずです。
+Hibariサーバーは、TCP/IPトランスポート層の上に載るこれらのセッション・プロトコルをいくつかサポートします。どのセッション・プロトコルを選択するかは、使いやすいもの、あるいは、アプリケーション開発者が支持するものでよいでしょう。アプリケーション開発者にとって、HibariでRubyとJSON-RPCを使うのも、PythonとThriftまたはEBFを使うのも、同じように容易なはずです。
 +
 * UBF(A)：Joe Armstrongが作ったセッション層プロトコル。
 * EBF：Erlang Binary Format。このセッション層プロトコルは軽くて効率的なプロトコルです。Erlangの組込み関数である`term_to_binary()` と `binary_to_term()` を使用してErlangのデータ項をシリアライズします。link:http://bert-rpc.org/[BERTプロトコル]と非常に密接な関連を持ちます。
