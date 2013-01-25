@@ -2,8 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2012 Gemini Mobile Technologies, Inc.  All rights reserved.
-// Copyright (c) 2012-2013 Cloudian, Inc.  All rights reserved.
+// Copyright (c) 2005-2013 Hibari developers.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -21,7 +20,7 @@
 = Hibari Application Developer's Guide
 :Date: 2013/01/23
 :Revision: 0.2.3(en)
-:Copyright: Copyright (C) 2006-2013 Gemini Mobile Technologies, Inc / Cloudian, Inc.  All rights reserved.
+:Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
 
 <<<
 == Introduction
