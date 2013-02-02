@@ -15,37 +15,49 @@ See http://www.methods.co.nz/asciidoc/ for further details.
 
 1. install brew (http://mxcl.github.com/homebrew/)
 2. install git brew package
-   `$ brew install git`
+```shell-script
+$ brew install git
+```
 3. install the following brew packages for ADOC
-   `$ brew install ImageMagick`
-   `$ brew install asciidoc`
-   `$ brew install dia`
-   `$ brew install graphviz`
-   `$ brew install mscgen`
-   `$ brew install w3m`
+```shell-script
+$ brew install ImageMagick
+$ brew install asciidoc
+$ brew install dia
+$ brew install graphviz
+$ brew install mscgen
+$ brew install w3m
+```
 
 
 ### Linux - Fedora 18
 
 1. install git rpm package
-   `$ sudo yum install git`
+```shell-script
+$ sudo yum install git
+```
 2. install wget rpm package
-   `$ sudo yum install wget`
+```shell-script
+$ sudo yum install wget
+```
 3. install the following rpm packages for ADOC
-   `$ sudo yum install ImageMagick asciidoc dia graphviz`
-   `$ wget -O /etc/yum.repos.d/mscgen.repo http://www.mcternan.co.uk/mscgen/yum/fedora/mscgen.repo`
-   `$ sudo yum install mscgen`
-   `$ sudo yum install dblatex w3m`
+```shell-script
+$ sudo yum install ImageMagick asciidoc dia graphviz
+$ wget -O /etc/yum.repos.d/mscgen.repo http://www.mcternan.co.uk/mscgen/yum/fedora/mscgen.repo
+$ sudo yum install mscgen
+$ sudo yum install dblatex w3m
+```
 
 
 ### Linux - Ubuntu 12.10
 
 1. install git deb package
-   `$ sudo apt-get install git-core`
+```shell-script
+$ sudo apt-get install git-core
+```
 2. install the following deb packages for ADOC
-   `$ sudo apt-get install imagemagick asciidoc dia graphviz mscgen
-   dblatex w3m`
-
+```shell-script
+$ sudo apt-get install imagemagick asciidoc dia graphviz mscgen dblatex w3m
+```
 
 ## Download Hibari's documentation repository
 
@@ -53,7 +65,7 @@ See http://www.methods.co.nz/asciidoc/ for further details.
 $ git clone git://github.com/hibari/hibari-doc.git
 ```
 
-== Build Hibari's documentation guides
+## Build Hibari's documentation guides
 
 ```shell-script
 $ cd hibari-doc/src/hibari
@@ -66,7 +78,7 @@ HTML documentation is written in the `./public_html` directory.
 
 ## Build Hibari's website pages
 
-```
+```shell-script
 $ cd hibari-doc/src/hibari/website
 $ make clean -OR- make realclean
 $ make
@@ -81,7 +93,7 @@ The above recipe was tested on Mac OS X 10.6.7 using asciidoc 8.6.4
 and the following patch. A fake `lang-ja.conf` file can easily be
 created by making a symlink to the `lang-en.conf` file.
 
-```
+```python
 diff -r -u 8.6.4-orig/bin/a2x.py 8.6.4/bin/a2x.py
 --- 8.6.4-orig/bin/a2x.py	2011-04-24 00:50:26.000000000 +0900
 +++ 8.6.4/bin/a2x.py	2011-04-24 00:35:55.000000000 +0900
