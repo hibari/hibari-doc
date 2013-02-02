@@ -143,18 +143,20 @@ engine.
 
 === Why Hibari?
 
-Hibari was developed internally by Gemini Mobile Technologies, a
-leading producer of mass-scale messaging and transaction systems for
-Tier 1 mobile operators in Asia, Europe, and the Americas. Gemini had
-need for a data store that was efficient, fast, flexible, and
-scalable, as well as robust enough to withstand the rigors of
-deployment in Tier 1 telecom production environments. Dissatisfied
-with the then-available options, Gemini in 2005 began work on what
+Hibari was developed internally by Cloudian, Inc. (formerly Gemini
+Mobile Technologies), a leading producer of mass-scale messaging and
+transaction systems for Tier 1 mobile operators in Asia, Europe, and
+the Americas. Cloudian had need for a data store that was efficient,
+fast, flexible, and scalable, as well as robust enough to withstand
+the rigors of deployment in Tier 1 telecom production
+environments. Dissatisfied with the then-available options, Cloudian
+in 2005 began work on what
+
 came to be Hibari (the name is Japanese for skylark; the kanji
 characters stand for "cloud bird"). With the system having in recent
-years matured and been proven in production, Gemini released Hibari to
+years matured and been proven in production, Cloudian released Hibari to
 the open source community in July 2010 under the Apache 2.0
-license. Gemini regards the open source community as the best venue in
+license. Cloudian regards the open source community as the best venue in
 which Hibari can continue to perfect and grow.
 
 This section describes some of the distinctive features that make
@@ -1400,7 +1402,7 @@ execution. The same is true of `Value`.
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
 +
-NOTE: This flag has not yet been extensively tested by Gemini QA.
+NOTE: This flag did not extensively tested by Cloudian QA.
 +
 
  ::
@@ -1574,7 +1576,7 @@ execution. The same is true of `Value`.
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
 +
-NOTE: This flag has not yet been extensively tested by Gemini QA.
+NOTE: This flag did not extensively tested by Cloudian QA.
 +
 
  ::
@@ -1774,7 +1776,7 @@ execution. The same is true of `Value`.
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
 +
-NOTE: This flag has not yet been extensively tested by Gemini QA.
+NOTE: This did not extensively tested by Cloudian QA.
 +
 
  ::

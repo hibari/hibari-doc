@@ -62,9 +62,10 @@ link:hibari-contributor-guide.en.html[Hibari Contributor's Guide] for details.
 [[hibari-origins]]
 === Hibari's Origins
 
-Hibari was originally written by Gemini Mobile Technologies to support
-mobile messaging and email services.  Hibari was released outside of
-Gemini under the Apache Public License version 2.0 in July 2010.
+Hibari was originally written by Cloudian, Inc. (formerly Gemini
+Mobile Technologies) to support mobile messaging and email services.
+Hibari was released outside of Cloudian under the Apache Public
+License version 2.0 in July 2010.
 
 Hibari has been deployed by multiple telecom carriers in Asia and
 Europe.  Hibari may lack some features such as monitoring, event and
@@ -75,10 +76,10 @@ redundant in a carrier environment.  We hope that Hibari's release to
 the open source community will close those functional gaps as Hibari
 spreads outside of carrier data centers.
 
-Gemini Mobile Technologies provides full support, consulting, and
-development services for Hibari.  Please see the
-http://www.geminimobile.com/[Gemini Mobile Technologies Web page] for
-more information.
+Cloudian, Inc. provides full support, consulting, and development
+services for Hibari. Please see the
+http://www.cloudian.jp/technologies/hibari-nosql-database.html/[Hibari
+NOSQL at Cloudian web site] for more information.
 
 === Summary of Hibari's Main Features
 
@@ -1955,8 +1956,8 @@ is, "Where would you store the backup?"  Given the cluster's purpose
 physical and software infrastructures, the length of the Hibari chains
 used for physical data redundancy, the business factors influencing
 the choice not to deploy a "hot backup" data center, and other
-factors, Gemini has not developed the backup and recovery software for
-Hibari.  Gemini's smaller Hibari deployments also resemble the largest
+factors, Cloudian has not developed the backup and recovery software for
+Hibari. Cloudian's smaller Hibari deployments also resemble the largest
 deployment.
 
 However, we expect that backup and recovery software will be high
@@ -2317,7 +2318,7 @@ virtual machine can support Hibari.
 
 In practice, Hibari is supported on the following operating systems:
 
-* Linux (used in production and QA environments within Gemini Mobile)
+* Linux (used in production and QA environments within Cloudian, Inc.)
 * Mac OS X
 * FreeBSD (though not currently in a jail environment, due to some TCP
   services getting EPROTONOSUPPORT errors)
