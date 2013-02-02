@@ -32,7 +32,7 @@ $ brew install w3m
 ```
 
 
-### Linux - Fedora 18
+### Linux - Fedora 17
 
 1. install git rpm package
 
@@ -40,19 +40,10 @@ $ brew install w3m
 $ sudo yum install git
 ```
 
-2. install wget rpm package
+2. install the following rpm packages for ADOC
 
 ```shell-script
-$ sudo yum install wget
-```
-
-3. install the following rpm packages for ADOC
-
-```shell-script
-$ sudo yum install ImageMagick asciidoc dia graphviz
-$ wget -O /etc/yum.repos.d/mscgen.repo http://www.mcternan.co.uk/mscgen/yum/fedora/mscgen.repo
-$ sudo yum install mscgen
-$ sudo yum install dblatex w3m
+$ sudo yum install ImageMagick asciidoc dia graphviz mscgen dblatex w3m
 ```
 
 
@@ -100,9 +91,17 @@ HTML documentation is written in the `./public_html` directory.
 
 ## NOTES
 
-The above recipe was tested on Mac OS X 10.6.7 using asciidoc 8.6.4
-and the following patch. A fake `lang-ja.conf` file can easily be
-created by making a symlink to the `lang-en.conf` file.
+- The above recipe was tested on Fedora 17 using asciidoc 8.4.5.
+  A fake `lang-ja.conf` file will be needed to compile the
+  Japanese(ja) documents.
+
+```shell-script
+$ cd /etc/asciidoc/
+$ sudo ln -s lang-en.conf lang-ja.conf
+```
+
+- If a2x throws an exception, apply the following patch. (Tested on
+  Mac OS X 10.6.7 using asciidoc 8.6.4)
 
 ```python
 diff -r -u 8.6.4-orig/bin/a2x.py 8.6.4/bin/a2x.py
