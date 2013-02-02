@@ -11,24 +11,18 @@ See http://www.methods.co.nz/asciidoc/ for further details.
 
 ## Install ADOC environment
 
-### Mac OS X - 10.8
+### Linux - Ubuntu 12.10
 
-1. install brew (http://mxcl.github.com/homebrew/)
-2. install git brew package
+1. install git deb package
 
 ```shell-script
-$ brew install git
+$ sudo apt-get install git-core
 ```
 
-3. install the following brew packages for ADOC
+2. install the following deb packages for ADOC
 
 ```shell-script
-$ brew install ImageMagick
-$ brew install asciidoc
-$ brew install dia
-$ brew install graphviz
-$ brew install mscgen
-$ brew install w3m
+$ sudo apt-get install imagemagick asciidoc dia graphviz mscgen dblatex w3m
 ```
 
 
@@ -47,25 +41,34 @@ $ sudo yum install ImageMagick asciidoc dia graphviz mscgen dblatex w3m
 ```
 
 
-### Linux - Ubuntu 12.10
+### Mac OS X - 10.8
 
-1. install git deb package
+Note:
+As of Feb 2013, installing dia with this recipe is not likely to succeed.
 
-```shell-script
-$ sudo apt-get install git-core
-```
-
-2. install the following deb packages for ADOC
+1. install brew (http://mxcl.github.com/homebrew/)
+2. install git brew package
 
 ```shell-script
-$ sudo apt-get install imagemagick asciidoc dia graphviz mscgen dblatex w3m
+$ brew install git
 ```
+
+3. install the following brew packages for ADOC
+
+```shell-script
+$ brew install imagemagick asciidoc graphviz mscgen w3m
+$ curl -O https://raw.github.com/mxcl/homebrew/a2d4d9d832/Library/Formula/dia.rb
+$ mv dia.rb /usr/local/Library/Formula
+$ brew install dia
+```
+
 
 ## Download Hibari's documentation repository
 
 ```shell-script
 $ git clone git://github.com/hibari/hibari-doc.git
 ```
+
 
 ## Build Hibari's documentation guides
 
@@ -91,17 +94,26 @@ HTML documentation is written in the `./public_html` directory.
 
 ## NOTES
 
-- The above recipe was tested on Fedora 17 using asciidoc 8.4.5.
-  A fake `lang-ja.conf` file will be needed to compile the
-  Japanese(ja) documents.
+The above recipe was tested on the following platforms:
+
+- Ubuntu 12.10 using asciidoc 8.6.7
+- Fedora 17 using asciidoc 8.4.5
+
+
+### lang-ja.conf
+
+A fake `lang-ja.conf` file will be needed to compile the
+Japanese(ja) documents.
 
 ```shell-script
 $ cd /etc/asciidoc/
 $ sudo ln -s lang-en.conf lang-ja.conf
 ```
 
-- If a2x throws an exception, apply the following patch. (Tested on
-  Mac OS X 10.6.7 using asciidoc 8.6.4)
+### a2x throws an exception
+
+- If a2x throws an exception on `shell_copy`, apply the following
+  patch. (Tested on Mac OS X 10.6.7 using asciidoc 8.6.4)
 
 ```python
 diff -r -u 8.6.4-orig/bin/a2x.py 8.6.4/bin/a2x.py
