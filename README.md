@@ -15,10 +15,13 @@ See http://www.methods.co.nz/asciidoc/ for further details.
 
 1. install brew (http://mxcl.github.com/homebrew/)
 2. install git brew package
+
 ```shell-script
 $ brew install git
 ```
+
 3. install the following brew packages for ADOC
+
 ```shell-script
 $ brew install ImageMagick
 $ brew install asciidoc
@@ -32,14 +35,19 @@ $ brew install w3m
 ### Linux - Fedora 18
 
 1. install git rpm package
+
 ```shell-script
 $ sudo yum install git
 ```
+
 2. install wget rpm package
+
 ```shell-script
 $ sudo yum install wget
 ```
+
 3. install the following rpm packages for ADOC
+
 ```shell-script
 $ sudo yum install ImageMagick asciidoc dia graphviz
 $ wget -O /etc/yum.repos.d/mscgen.repo http://www.mcternan.co.uk/mscgen/yum/fedora/mscgen.repo
@@ -51,10 +59,13 @@ $ sudo yum install dblatex w3m
 ### Linux - Ubuntu 12.10
 
 1. install git deb package
+
 ```shell-script
 $ sudo apt-get install git-core
 ```
+
 2. install the following deb packages for ADOC
+
 ```shell-script
 $ sudo apt-get install imagemagick asciidoc dia graphviz mscgen dblatex w3m
 ```
