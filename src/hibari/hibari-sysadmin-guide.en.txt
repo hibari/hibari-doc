@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2013 Hibari developers.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 //
 
 = Hibari System Administrator's Guide  *DRAFT - IN PROGRESS*
-:Date: 2011/01/07
-:Revision: 0.5.1
-:Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+:Date: 2013/02/03
+:Revision: 0.5.3
+:Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
 
 <<<
 == Introduction
@@ -62,9 +62,10 @@ link:hibari-contributor-guide.en.html[Hibari Contributor's Guide] for details.
 [[hibari-origins]]
 === Hibari's Origins
 
-Hibari was originally written by Gemini Mobile Technologies to support
-mobile messaging and email services.  Hibari was released outside of
-Gemini under the Apache Public License version 2.0 in July 2010.
+Hibari was originally written by Cloudian, Inc. (formerly Gemini
+Mobile Technologies) to support mobile messaging and email services.
+Hibari was released outside of Cloudian under the Apache Public
+License version 2.0 in July 2010.
 
 Hibari has been deployed by multiple telecom carriers in Asia and
 Europe.  Hibari may lack some features such as monitoring, event and
@@ -75,10 +76,10 @@ redundant in a carrier environment.  We hope that Hibari's release to
 the open source community will close those functional gaps as Hibari
 spreads outside of carrier data centers.
 
-Gemini Mobile Technologies provides full support, consulting, and
-development services for Hibari.  Please see the
-http://www.geminimobile.com/[Gemini Mobile Technologies Web page] for
-more information.
+Cloudian, Inc. provides full support, consulting, and development
+services for Hibari. Please see the
+http://www.cloudian.jp/technologies/hibari-nosql-database.html/[Hibari
+NOSQL at Cloudian web site] for more information.
 
 === Summary of Hibari's Main Features
 
@@ -148,33 +149,21 @@ for a summary of the theorem, its proof, and related links.
   Wikipedia
   http://en.wikipedia.org/wiki/CAP_theorem
 
-IMPORTANT: The CAP Theorem's properties of the "Availability" and
-"Partition tolerance" are very tightly related.
 
-The line between "CA" and "CP" systems is very fine and nuanced.  From
-the viewpoint of operations/production staff, a Hibari cluster will
-behave more like "CA" database systems, such as clustered RDBMS
-systems, and less like "CP" systems such as HBase or Hypertable.  Most
-distributed databases in the "CA" or "CP" families are mixture of
-both.footnote:[The crucial detail is that such systems may not be "CA"
-and "CP" at the same time: they can shift around the spectrum in reaction
-to events such as network partition.]
+Hibari chooses the C and P of CAP. It utilizes chain replication
+technique and it always guarantees strong consistency. Hibari also
+includes an Erlang/OTP application specifically for detecting network
+partitions, so that when a network partition occurs, the brick nodes
+in the opposite side of the partition with the active master will be
+removed from the chains to keep the strong consistency guarantee.
 
-Hibari includes an Erlang/OTP application specifically for detecting
-network partitions.  See xref:admin-server-and-network-partition[] for
-details.
+See xref:admin-server-and-network-partition[] for details.
+
 
 <<<
 ===  Copyright Notices
 
-Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights
-reserved.
-
-Gemini Mobile(R) and HyperScale(R) are registered trademarks of Gemini
-Mobile Technologies, Inc. in the United States and other countries.
-
-Portions of Gemini products include third-party technology used under
-license.
+Copyright (C) 2005-2013 Hibari developers. All rights reserved.
 
 ------------
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -997,7 +986,7 @@ Server apps running simultaneously, another application is bundled
 with Hibari: the Partition Detector.  See xref:partition-detector[]
 for an overview and explanation of the 'A' and 'B' physical networks.
 
-As described briefly in xref:cap-theorem-and-hibari[], Hibari does not
+As described briefly in xref:cap-theorem-and-hibari[], Hibari does
 support the "Partition tolerance" aspect of Eric Brewer's CAP theorem.
 More specifically, if a network partition occurs, and a Hibari cluster
 is split into two or more pieces, not all clients on both/all sides of
@@ -1967,8 +1956,8 @@ is, "Where would you store the backup?"  Given the cluster's purpose
 physical and software infrastructures, the length of the Hibari chains
 used for physical data redundancy, the business factors influencing
 the choice not to deploy a "hot backup" data center, and other
-factors, Gemini has not developed the backup and recovery software for
-Hibari.  Gemini's smaller Hibari deployments also resemble the largest
+factors, Cloudian has not developed the backup and recovery software for
+Hibari. Cloudian's smaller Hibari deployments also resemble the largest
 deployment.
 
 However, we expect that backup and recovery software will be high
@@ -2329,7 +2318,7 @@ virtual machine can support Hibari.
 
 In practice, Hibari is supported on the following operating systems:
 
-* Linux (used in production and QA environments within Gemini Mobile)
+* Linux (used in production and QA environments within Cloudian, Inc.)
 * Mac OS X
 * FreeBSD (though not currently in a jail environment, due to some TCP
   services getting EPROTONOSUPPORT errors)
