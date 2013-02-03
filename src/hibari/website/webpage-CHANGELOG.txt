@@ -25,11 +25,71 @@ store. Hibari uses chain replication for strong consistency,
 high-availability, and durability. Hibari has excellent performance
 especially for read and large value operations.
 
+
+*Hibari v0.1.10 Released (2013-02-04)* -
+https://github.com/hibari/hibari/blob/master/relnotes/v0.1.10.txt[*Release Note*]
+
+- Bug fixes in Python EBF Client
+- Update for Erlang/OTP R15
+- Support for building on Ubuntu, including ARMv7 architecture
+- Remove S3 and JSON-RPC components from Hibari distribution. They
+  will become separate projects
+
+
+*Hibari v0.1.9 Released (2011-08-28)* -
+https://github.com/hibari/hibari/blob/master/relnotes/v0.1.9.txt[*Release Note*]
+
+- Bug fixes in UBF and S3 client
+
+
+*Hibari v0.1.8 Released (2011-07-05)* -
+https://github.com/hibari/hibari/blob/master/relnotes/v0.1.8.txt[*Release Note*]
+
+- Bug fixes in gdss-client
+
+
+*Hibari v0.1.7 Released (2011-06-09)* -
+https://github.com/hibari/hibari/blob/master/relnotes/v0.1.7.txt[*Release Note*]
+
+- Bug fixes in gdss-brick
+
+
+*Hibari v0.1.6 Released (2011-05-22)* -
+https://github.com/hibari/hibari/blob/master/relnotes/v0.1.6.txt[*Release Note*]
+
+- Bug fixes in gdss-admin and gdss-s3-proto
+- Update for Erlang/OTP R14B03
+
+
+*Hibari v0.1.5 Released (2011-05-10)* -
+https://github.com/hibari/hibari/blob/master/relnotes/v0.1.5.txt[*Release Note*]
+
+- Update for Erlang/OTP R13B04
+
+
+*Hibari v0.1.4 Released (2011-04-20)* -
+https://github.com/hibari/hibari/blob/master/relnotes/v0.1.4.txt[*Release Note*]
+
+- Bug fixes and enhancements in gdss-brick, gdss-client, gmt-util
+- Introduce meck
+- Introduce riak_err
+
+
+*Hibari v0.1.3 Released (2011-03-27)*
+
+
+*Hibari v0.1.2 Released (2011-02-27)*
+
+
+*Hibari v0.1.1 Released (2011-02-16)*
+
+
 *Open Source Renewal (2011-01-07)*
 
 Second public release of Hibari's Git Repositories along with Hibari's
 Project Page (https://github.com/hibari/) and Documentation Page
 (http://hibari.github.com/hibari-doc).
+
 
 *Open Source (2010-07-13)*
 
