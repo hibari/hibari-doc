@@ -18,8 +18,8 @@
 //
 
 = Hibari Contributor's Guide  *DRAFT - IN PROGRESS*
-:Date: 2011/03/14
-:Revision: 0.5.2
+:Date: 2013/02/03
+:Revision: 0.5.3
 :Copyright: Copyright (C) 2005-2013 Hibari developers.  All rights reserved.
 
 <<<
