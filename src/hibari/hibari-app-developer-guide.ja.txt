@@ -89,7 +89,7 @@ http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf[Dyn
 - link:#scalability[簡単でコストが低廉な拡張性]
 - link:#high-performance[高性能、特に読み出しと大きいサイズのバリューの処理における高性能]
 - link:#simple-powerful-api[シンプルながら強力なクライアントAPI]
-- link:#production-prove[稼働実績]
+- link:#production-prove[商用実績]
 - link:#hibari-benefits-by-user[開発者、システム管理者、そしてビジネスに対するHibariの利点]
 
 [[engineered-erlang]]
@@ -202,7 +202,7 @@ link:hibari-sysadmin-guide.en.html#dynamic-cluster-reconfiguration[動的なク�
 NOTE: HibariのソースコードディストリビューションにはAmazon S3とJSON-RPCは含まれません。これらは別の外部プロジェクトです。
 
 [[production-proven]]
-==== 稼働実績
+==== 商用実績
 
 当初、Hibariを開発したのは、主にTier 1通信事業分野におけるデータ保管の要望に応えるためでした。ところがシステムが進化すると、アジアのある大手キャリアから、GB（ギガバイト）級のWebメール・サービスを開始したいという要望が寄せられました。Hibariに対するこの顧客の要求は、次のように厳しいものでした。
 
