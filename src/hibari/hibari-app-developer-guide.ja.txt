@@ -80,11 +80,11 @@ http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf[Dyn
 
 === なぜHibariか？
 
-　Hibariは、Cloudian社(旧Gemini Mobile Technologies）が社内で開発したものです。Cloudian社は、アジア、ヨーロッパ、アメリカで、Tier 1モバイル・オペレータ向けの大規模メッセージングおよびトランザクション・システム開発分野の先頭に立つ企業です。Cloudian社が必要とするデータストアは、Tier 1通信事業分野向け製品の導入環境に必須の堅牢さに加えて、効率的で高速かつ柔軟性を備え、拡張可能なものです。ところが、当時利用できる選択肢の中には満足できるものはありませんでした。そこで2005年に、Cloudian社はのちに「Hibari」となるシステムの開発に着手しました。Hibariという名称は、日本語でヒバリ（雲雀）、漢字では「クラウド（雲）の鳥」を意味します。その後、システムが成熟して製品化できるようになったのを機に、2010年7月、Cloudian社はApache 2.0ライセンスの下でHibariをオープンソースのコミュニティにリリースしました。Hibariが成長を続けて完成度を高める場として最も適しているのはオープンソースのコミュニティであると、Cloudian社は考えています。
+　Hibariは、Cloudian社(旧Gemini Mobile Technologies）が社内で開発したものです。Cloudian社は、アジア、ヨーロッパ、アメリカで、Tier 1モバイル・オペレータ向けの大規模メッセージングおよびトランザクション・システム開発分野の先頭に立つ企業です。Cloudian社が必要とするデータストアは、Tier 1通信事業分野向け製品の導入環境に必須の堅牢さに加えて、効率的で高速かつ柔軟性を備え、拡張可能なものです。ところが、当時利用できる選択肢の中には満足できるものはありませんでした。そこで2005年に、Cloudian社はのちに「Hibari」となるシステムの開発に着手しました。Hibariという名称は漢字では「雲雀」と書き、「クラウドの鳥」を意味します。その後、システムが成熟して製品化できるようになったのを機に、2010年7月、Cloudian社はApache 2.0ライセンスの下でHibariをオープンソースのコミュニティにリリースしました。Hibariが成長を続けて完成度を高める場として最も適しているのはオープンソースのコミュニティであると、Cloudian社は考えています。
 
 　ここからは、Hibariの特長について説明します。これらの特長によって、Hibariは現代のBig Dataストレージ・システムを求めるビジネスおよび開発者にとって魅力的な選択肢となっています。
 
-- link:#engineered-erlang[Erlangによる開発]
+- link:#engineered-erlang[Erlangで構築]
 - link:#chain-replication[チェイン・レプリケーションによる高い可用性と強い一貫性]
 - link:#scalability[簡単でコストが低廉な拡張性]
 - link:#high-performance[高性能、特に読み出しと大きいサイズのバリューの処理における高性能]
@@ -93,9 +93,9 @@ http://s3.amazonaws.com/AllThingsDistributed/sosp/amazon-dynamo-sosp2007.pdf[Dyn
 - link:#hibari-benefits-by-user[開発者、システム管理者、そしてビジネスに対するHibariの利点]
 
 [[engineered-erlang]]
-==== Erlangによる開発
+==== Erlangで構築
 
-　Erlangは、高信頼性で高性能な分散型システムを構築するように設計された汎用プログラミング言語および実行環境です。Erlangは、まず1980年代に先進的通信事業のネットワーク・システム構築用にEricsson社によって開発され、その後1998年に、Erlang/OTP (Open Telecom Platform)としてオープンソース化されました。HibariはすべてErlangで記述されています。
+　Erlangは、高信頼性で高性能な分散型システムを構築するように設計された汎用プログラミング言語および実行環境です。Erlangは、1980年代に先進的通信事業のネットワーク・システム構築用にEricsson社によって開発され、その後1998年に、Erlang/OTP (Open Telecom Platform)としてオープンソース化されました。HibariはすべてErlangで記述されています。
 
 　Erlangは次のような幅広い長所を持ち、分散型でキー・バリュー方式のストレージ・ソリューションにとって理想的な基盤を提供します。
 
