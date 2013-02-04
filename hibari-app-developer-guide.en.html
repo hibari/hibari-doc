@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Application Developer’s Guide</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="Hibari Application Developer&#x2019;s Guide" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idp880"></a>Hibari Application Developer’s Guide</h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.2.2</td><td align="left">2011/04/24</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_why_nosql">1.1. Why NOSQL?</a></span></dt><dt><span class="section"><a href="#_why_hibari">1.2. Why Hibari?</a></span></dt></dl></dd><dt><span class="section"><a href="#getting-started">2. Getting Started</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. System Requirements</a></span></dt><dt><span class="section"><a href="#required-software">2.2. Required Third-Party Software</a></span></dt><dt><span class="section"><a href="#download-hibari">2.3. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. Installing a Single-Node Hibari System</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. Starting and Stopping Hibari on a Single Node</a></span></dt><dt><span class="section"><a href="#installing-multi-node">2.6. Installing a Multi-Node Hibari Cluster</a></span></dt><dt><span class="section"><a href="#starting-multi-node">2.7. Starting and Stopping a Multi-Node Hibari Cluster</a></span></dt><dt><span class="section"><a href="#creating-tables">2.8. Creating New Tables</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. Client API: Native Erlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_client_api_overview">3.1. Hibari Client API Overview</a></span></dt><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. Client API: UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. The Hibari Server’s Implementation of the UBF Protocol Stack</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBF representation of strings vs. binaries</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. Steps for Using a UBF-based Protocol in Any Language</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. The Hibari UBF Protocol Contract</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Using the UBF Client Library for Erlang</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Using the UBF Client Library for Java</a></span></dt><dt><span class="section"><a href="#using-ubf-python-client">4.7. Using the EBF Client Library for Python</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. Client API: Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_the_hibari_thrift_api">5.1. The Hibari Thrift API</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_types_to_thrift_types">5.2. Mapping UBF Contract Types to Thrift Types</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_to_thrift_service">5.3. Mapping UBF Contract to Thrift Service</a></span></dt><dt><span class="section"><a href="#_examples_of_using_a_thrift_client">5.4. Examples of using a Thrift client</a></span></dt><dt><span class="section"><a href="#_mapping_tbf_contract_responses_from_thrift_client">5.5. Mapping TBF Contract Responses From Thrift Client</a></span></dt></dl></dd><dt><span class="section"><a href="#_developer_utilities">6. Developer Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#_basho_bench">6.1. Basho Bench</a></span></dt><dt><span class="section"><a href="#_yahoo_cloud_serving_benchmark">6.2. Yahoo! Cloud Serving Benchmark</a></span></dt></dl></dd><dt><span class="section"><a href="#HibariBuildingSource">7. Building Hibari from Source</a></span></dt><dd><dl><dt><span class="section"><a href="#_required_third_party_software">7.1. Required Third Party Software</a></span></dt><dt><span class="section"><a href="#_downloading_hibari">7.2. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#_building_the_hibari_release_package">7.3. Building the Hibari Release Package</a></span></dt><dt><span class="section"><a href="#HibariAsciiDoc">7.4. Building Hibari’s Documentation</a></span></dt><dt><span class="section"><a href="#ErlangOTP">7.5. Building and Installing Erlang/OTP</a></span></dt></dl></dd><dt><span class="section"><a href="#_sample_application">8. Sample Application</a></span></dt><dt><span class="section"><a href="#_contributing_to_hibari">9. Contributing to Hibari</a></span></dt><dd><dl><dt><span class="section"><a href="#_github_git_and_repo">9.1. GitHub, Git, and Repo</a></span></dt><dt><span class="section"><a href="#_code_branch_and_version_management">9.2. Code, Branch, and Version Management</a></span></dt><dt><span class="section"><a href="#_documentation">9.3. Documentation</a></span></dt><dt><span class="section"><a href="#_submitting_patches">9.4. Submitting Patches</a></span></dt></dl></dd></dl></div><p></p><div class="section" title="1.&#xA0;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><p>Hibari is a production-ready, distributed, key-value, big data
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Application Developer’s Guide</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="Hibari Application Developer’s Guide" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idp261952"></a>Hibari Application Developer’s Guide</h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.2.4(en)</td><td align="left">2013/02/03</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_why_nosql">1.1. Why NOSQL?</a></span></dt><dt><span class="section"><a href="#_why_hibari">1.2. Why Hibari?</a></span></dt></dl></dd><dt><span class="section"><a href="#getting-started">2. Getting Started</a></span></dt><dd><dl><dt><span class="section"><a href="#system-requirements">2.1. System Requirements</a></span></dt><dt><span class="section"><a href="#required-software">2.2. Required Third-Party Software</a></span></dt><dt><span class="section"><a href="#download-hibari">2.3. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#installing-single-node">2.4. Installing a Single-Node Hibari System</a></span></dt><dt><span class="section"><a href="#starting-single-node">2.5. Starting and Stopping Hibari on a Single Node</a></span></dt><dt><span class="section"><a href="#installing-multi-node">2.6. Installing a Multi-Node Hibari Cluster</a></span></dt><dt><span class="section"><a href="#starting-multi-node">2.7. Starting and Stopping a Multi-Node Hibari Cluster</a></span></dt><dt><span class="section"><a href="#creating-tables">2.8. Creating New Tables</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-erlang">3. Client API: Native Erlang</a></span></dt><dd><dl><dt><span class="section"><a href="#_hibari_client_api_overview">3.1. Hibari Client API Overview</a></span></dt><dt><span class="section"><a href="#brick-simple-add">3.2. brick_simple:add/6</a></span></dt><dt><span class="section"><a href="#brick-simple-replace">3.3. brick_simple:replace/6</a></span></dt><dt><span class="section"><a href="#brick-simple-set">3.4. brick_simple:set/6</a></span></dt><dt><span class="section"><a href="#brick-simple-get">3.5. brick_simple:get/4</a></span></dt><dt><span class="section"><a href="#brick-simple-get-many">3.6. brick_simple:get_many/5</a></span></dt><dt><span class="section"><a href="#brick-simple-delete">3.7. brick_simple:delete/4</a></span></dt><dt><span class="section"><a href="#brick-simple-do">3.8. brick_simple:do/4</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-table">3.9. brick_simple:fold_table/7</a></span></dt><dt><span class="section"><a href="#brick-simple-fold-key">3.10. brick_simple:fold_key_prefix/9</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-ubf">4. Client API: UBF</a></span></dt><dd><dl><dt><span class="section"><a href="#hibari-server-impl-of-ubf-proto-stack">4.1. The Hibari Server’s Implementation of the UBF Protocol Stack</a></span></dt><dt><span class="section"><a href="#ubf-representation-of-strings">4.2. UBF representation of strings vs. binaries</a></span></dt><dt><span class="section"><a href="#using-ubf-in-any-language">4.3. Steps for Using a UBF-based Protocol in Any Language</a></span></dt><dt><span class="section"><a href="#the-hibari-ubf-protocol-contract">4.4. The Hibari UBF Protocol Contract</a></span></dt><dt><span class="section"><a href="#using-ubf-erlang-client">4.5. Using the UBF Client Library for Erlang</a></span></dt><dt><span class="section"><a href="#using-ubf-java-client">4.6. Using the UBF Client Library for Java</a></span></dt><dt><span class="section"><a href="#using-ubf-python-client">4.7. Using the EBF Client Library for Python</a></span></dt></dl></dd><dt><span class="section"><a href="#client-api-tbf">5. Client API: Thrift</a></span></dt><dd><dl><dt><span class="section"><a href="#_the_hibari_thrift_api">5.1. The Hibari Thrift API</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_types_to_thrift_types">5.2. Mapping UBF Contract Types to Thrift Types</a></span></dt><dt><span class="section"><a href="#_mapping_ubf_contract_to_thrift_service">5.3. Mapping UBF Contract to Thrift Service</a></span></dt><dt><span class="section"><a href="#_examples_of_using_a_thrift_client">5.4. Examples of using a Thrift client</a></span></dt><dt><span class="section"><a href="#_mapping_tbf_contract_responses_from_thrift_client">5.5. Mapping TBF Contract Responses From Thrift Client</a></span></dt></dl></dd><dt><span class="section"><a href="#_developer_utilities">6. Developer Utilities</a></span></dt><dd><dl><dt><span class="section"><a href="#_basho_bench">6.1. Basho Bench</a></span></dt><dt><span class="section"><a href="#_yahoo_cloud_serving_benchmark">6.2. Yahoo! Cloud Serving Benchmark</a></span></dt></dl></dd><dt><span class="section"><a href="#HibariBuildingSource">7. Building Hibari from Source</a></span></dt><dd><dl><dt><span class="section"><a href="#_required_third_party_software">7.1. Required Third Party Software</a></span></dt><dt><span class="section"><a href="#_downloading_hibari">7.2. Downloading Hibari</a></span></dt><dt><span class="section"><a href="#_building_the_hibari_release_package">7.3. Building the Hibari Release Package</a></span></dt><dt><span class="section"><a href="#HibariAsciiDoc">7.4. Building Hibari’s Documentation</a></span></dt><dt><span class="section"><a href="#ErlangOTP">7.5. Building and Installing Erlang/OTP</a></span></dt></dl></dd><dt><span class="section"><a href="#_sample_application">8. Sample Application</a></span></dt><dt><span class="section"><a href="#_contributing_to_hibari">9. Contributing to Hibari</a></span></dt><dd><dl><dt><span class="section"><a href="#_github_git_and_repo">9.1. GitHub, Git, and Repo</a></span></dt><dt><span class="section"><a href="#_code_branch_and_version_management">9.2. Code, Branch, and Version Management</a></span></dt><dt><span class="section"><a href="#_documentation">9.3. Documentation</a></span></dt><dt><span class="section"><a href="#_submitting_patches">9.4. Submitting Patches</a></span></dt></dl></dd></dl></div><p></p><div class="section" title="1. Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><p>Hibari is a production-ready, distributed, key-value, big data
 store. In the emerging field of "NOSQL" solutions to today’s
 mass-scale data storage challenges, Hibari stands out for several
 reasons:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
@@ -34,7 +34,7 @@ Multiple client API implementations
 NOSQL solutions to the challenges posed by the "Big Data" era before
 turning to describe more fully the distinctive benefits that Hibari
 provides to developers, administrators, and users of data-intensive
-applications.</p><div class="section" title="1.1.&#xA0;Why NOSQL?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_nosql"></a>1.1. Why NOSQL?</h3></div></div></div><p>The NOSQL "movement" is, first off, not an outright rejection of
+applications.</p><div class="section" title="1.1. Why NOSQL?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_nosql"></a>1.1. Why NOSQL?</h3></div></div></div><p>The NOSQL "movement" is, first off, not an outright rejection of
 traditional relational database management systems (RDBMS) but rather
 a growing recognition that today’s data environment requires a diverse
 storage toolset that is "Not Only SQL (NOSQL)". Relational and NOSQL
@@ -110,18 +110,18 @@ Replication of data objects across multiple nodes, to ensure high
   availability in the event of component failures.
 </li></ul></div><p>For much more on the history, merits, and design issues associated
 with NOSQL storage solutions, consult with your favorite search
-engine.</p></div><div class="section" title="1.2.&#xA0;Why Hibari?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_hibari"></a>1.2. Why Hibari?</h3></div></div></div><p>Hibari was developed internally by Gemini Mobile Technologies, a
-leading producer of mass-scale messaging and transaction systems for
-Tier 1 mobile operators in Asia, Europe, and the Americas. Gemini had
-need for a data store that was efficient, fast, flexible, and
-scalable, as well as robust enough to withstand the rigors of
-deployment in Tier 1 telecom production environments. Dissatisfied
-with the then-available options, Gemini in 2005 began work on what
-came to be Hibari (the name is Japanese for skylark; the kanji
+engine.</p></div><div class="section" title="1.2. Why Hibari?"><div class="titlepage"><div><div><h3 class="title"><a id="_why_hibari"></a>1.2. Why Hibari?</h3></div></div></div><p>Hibari was developed internally by Cloudian, Inc. (formerly Gemini
+Mobile Technologies), a leading producer of mass-scale messaging and
+transaction systems for Tier 1 mobile operators in Asia, Europe, and
+the Americas. Cloudian had need for a data store that was efficient,
+fast, flexible, and scalable, as well as robust enough to withstand
+the rigors of deployment in Tier 1 telecom production
+environments. Dissatisfied with the then-available options, Cloudian
+in 2005 began work on what</p><p>came to be Hibari (the name is Japanese for skylark; the kanji
 characters stand for "cloud bird"). With the system having in recent
-years matured and been proven in production, Gemini released Hibari to
+years matured and been proven in production, Cloudian released Hibari to
 the open source community in July 2010 under the Apache 2.0
-license. Gemini regards the open source community as the best venue in
+license. Cloudian regards the open source community as the best venue in
 which Hibari can continue to perfect and grow.</p><p>This section describes some of the distinctive features that make
 Hibari a very attractive option for businesses and developers seeking
 a modern Big Data storage system:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
@@ -357,7 +357,8 @@ JSON-RPC
 </li></ul></div><p>You can develop Hibari client applications in a variety of languages
 including Java, C/C++, Python, Ruby, and Erlang.</p><p>For further information about Hibari’s client API, see
 <a class="ulink" href="#client-api-erlang" target="_top">Client API: Native Erlang</a> and the subsequent
-client API chapters in this guide.</p></div><div class="section" title="Production-Proven"><div class="titlepage"><div><div><h4 class="title"><a id="production-proven"></a>Production-Proven</h4></div></div></div><p>While initial development work on Hibari was geared generally toward
+client API chapters in this guide.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The Hibari source distribution does not include Amazon S3 and
+JSON-RPC. They are separate external projects.</p></td></tr></table></div></div><div class="section" title="Production-Proven"><div class="titlepage"><div><div><h4 class="title"><a id="production-proven"></a>Production-Proven</h4></div></div></div><p>While initial development work on Hibari was geared generally toward
 the data storage demands of the Tier 1 telecom sector, as the system
 evolved it needed to meet the requirements of a particular major Asian
 carrier that wished to launch a GB webmail service. This customer’s
@@ -424,7 +425,7 @@ for a range of data-intensive service scenarios including but not
 limited to large-scale messaging, social media, and archiving. Hibari
 offers particular value in environments that require strong data
 consistency and/or high performance across a variety of object types
-and sizes.</p></div></div></div><div class="section" title="2.&#xA0;Getting Started"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="getting-started"></a>2. Getting Started</h2></div></div></div><p>This section covers the following topics to help you get up and
+and sizes.</p></div></div></div><div class="section" title="2. Getting Started"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="getting-started"></a>2. Getting Started</h2></div></div></div><p>This section covers the following topics to help you get up and
 running with Hibari:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 <a class="ulink" href="#system-requirements" target="_top">System Requirements</a>
 </li><li class="listitem">
@@ -441,13 +442,13 @@ running with Hibari:</p><div class="itemizedlist"><ul class="itemizedlist" type=
 <a class="ulink" href="#starting-multi-node" target="_top">Starting and Stopping a Multi-Node Hibari Cluster</a>
 </li><li class="listitem">
 <a class="ulink" href="#creating-tables" target="_top">Creating New Tables</a>
-</li></ul></div><div class="section" title="2.1.&#xA0;System Requirements"><div class="titlepage"><div><div><h3 class="title"><a id="system-requirements"></a>2.1. System Requirements</h3></div></div></div><p>Hibari will run on any OS that the Erlang VM supports, which includes
+</li></ul></div><div class="section" title="2.1. System Requirements"><div class="titlepage"><div><div><h3 class="title"><a id="system-requirements"></a>2.1. System Requirements</h3></div></div></div><p>Hibari will run on any OS that the Erlang VM supports, which includes
 most Unix and Unix-like systems, Windows, and Mac OS X. See
 <a class="ulink" href="http://www.erlang.org/faq/implementations.html" target="_top">Implementation and
 Ports of Erlang</a> from the official Erlang documentation for further
 information.</p><p>For guidance on hardware requirements in a production environment, see
 <a class="ulink" href="hibari-sysadmin-guide.en.html#brick-hardware" target="_top">Notes on Brick
-Hardware</a> in the Hibari System Administrator’s Guide.</p></div><div class="section" title="2.2.&#xA0;Required Third-Party Software"><div class="titlepage"><div><div><h3 class="title"><a id="required-software"></a>2.2. Required Third-Party Software</h3></div></div></div><p>Hibari’s requirements for third party software depend on whether
+Hardware</a> in the Hibari System Administrator’s Guide.</p></div><div class="section" title="2.2. Required Third-Party Software"><div class="titlepage"><div><div><h3 class="title"><a id="required-software"></a>2.2. Required Third-Party Software</h3></div></div></div><p>Hibari’s requirements for third party software depend on whether
 you’re doing a single-node installation or a multi-node installation.</p><div class="section" title="Required Software for a Single-Node Installation"><div class="titlepage"><div><div><h4 class="title"><a id="_required_software_for_a_single_node_installation"></a>Required Software for a Single-Node Installation</h4></div></div></div><p>The node on which you plan to install Hibari must have the following software:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
@@ -489,9 +490,9 @@ SSH (server) - <a class="ulink" href="http://www.openssh.com/" target="_top">htt
 OpenSSL - <a class="ulink" href="http://www.openssl.org/" target="_top">http://www.openssl.org/</a>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 Required for Erlang’s "crypto" module
-</li></ul></div></li></ul></div></div></div></div><div class="section" title="2.3.&#xA0;Downloading Hibari"><div class="titlepage"><div><div><h3 class="title"><a id="download-hibari"></a>2.3. Downloading Hibari</h3></div></div></div><p>Hibari is not yet available as a pre-built release. In the meanwhile,
+</li></ul></div></li></ul></div></div></div></div><div class="section" title="2.3. Downloading Hibari"><div class="titlepage"><div><div><h3 class="title"><a id="download-hibari"></a>2.3. Downloading Hibari</h3></div></div></div><p>Hibari is not yet available as a pre-built release. In the meanwhile,
 you can build Hibari from source. Follow the instructions in
-<a class="xref" href="#HibariBuildingSource" title="7.&#xA0;Building Hibari from Source">Section 7, “Building Hibari from Source”</a>, and then return to this section to continue
+<a class="xref" href="#HibariBuildingSource" title="7. Building Hibari from Source">Section 7, “Building Hibari from Source”</a>, and then return to this section to continue
 the set-up process.</p><p>When you build Hibari your output is two files that you will later use
 in the set-up process:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 A tarball package "hibari-<span class="emphasis"><em>X.Y.Z-DIST-ARCH-WORDSIZE</em></span>.tgz"
@@ -499,7 +500,7 @@ A tarball package "hibari-<span class="emphasis"><em>X.Y.Z-DIST-ARCH-WORDSIZE</e
 An md5sum file "hibari-<span class="emphasis"><em>X.Y.Z-DIST-ARCH-WORDSIZE</em></span>-md5sum.txt"
 </li></ul></div><p><span class="emphasis"><em>X.Y.Z</em></span> is the release version, <span class="emphasis"><em>DIST</em></span> is the release distribution,
 <span class="emphasis"><em>ARCH</em></span> is the release architecture, and <span class="emphasis"><em>WORDSIZE</em></span> is the release
-wordsize.</p></div><div class="section" title="2.4.&#xA0;Installing a Single-Node Hibari System"><div class="titlepage"><div><div><h3 class="title"><a id="installing-single-node"></a>2.4. Installing a Single-Node Hibari System</h3></div></div></div><p>A single-node Hibari system will not provide data replication and
+wordsize.</p></div><div class="section" title="2.4. Installing a Single-Node Hibari System"><div class="titlepage"><div><div><h3 class="title"><a id="installing-single-node"></a>2.4. Installing a Single-Node Hibari System</h3></div></div></div><p>A single-node Hibari system will not provide data replication and
 redundancy in the way that a multi-node Hibari cluster will. However,
 you may wish to deploy a simple single-node Hibari system for testing
 and development purposes.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
@@ -508,7 +509,7 @@ Create a directory for running Hibari:
 Untar the Hibari tarball package that you created when you built
   Hibari from source:
 </p><pre class="screen">$ tar -C running-directory -xvf hibari-X.Y.Z-DIST-ARCH-WORDSIZE.tgz</pre></li></ol></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>On your Hibari node, in the system’s <code class="literal">/etc/sysctl.conf</code> file,
-set <code class="literal">vm.swappiness=0</code>. Swappiness is not desirable for an Erlang VM.</p></td></tr></table></div></div><div class="section" title="2.5.&#xA0;Starting and Stopping Hibari on a Single Node"><div class="titlepage"><div><div><h3 class="title"><a id="starting-single-node"></a>2.5. Starting and Stopping Hibari on a Single Node</h3></div></div></div><div class="section" title="Starting and Bootstrapping Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_starting_and_bootstrapping_hibari"></a>Starting and Bootstrapping Hibari</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+set <code class="literal">vm.swappiness=0</code>. Swappiness is not desirable for an Erlang VM.</p></td></tr></table></div></div><div class="section" title="2.5. Starting and Stopping Hibari on a Single Node"><div class="titlepage"><div><div><h3 class="title"><a id="starting-single-node"></a>2.5. Starting and Stopping Hibari on a Single Node</h3></div></div></div><div class="section" title="Starting and Bootstrapping Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_starting_and_bootstrapping_hibari"></a>Starting and Bootstrapping Hibari</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 Start Hibari:
 </p><pre class="screen">$ running-directory/hibari/bin/hibari start</pre></li><li class="listitem"><p class="simpara">
 If this is the first time you’ve started Hibari, bootstrap the system:
@@ -522,7 +523,7 @@ Confirm that you can open the "Hibari Web Administration" page:
 Confirm that you can successfully ping the Hibari node:
 </p><pre class="screen">$ running-directory/hibari/bin/hibari ping</pre></li></ol></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>A single-node Hibari system is hard-coded to listen on the
 localhost address 127.0.0.1. Consequently the Hibari node is reachable
-only from the node itself.</p></td></tr></table></div></div><div class="section" title="Stopping Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_stopping_hibari"></a>Stopping Hibari</h4></div></div></div><p>To stop Hibari:</p><pre class="screen">$ running-directory/hibari/bin/hibari stop</pre></div></div><div class="section" title="2.6.&#xA0;Installing a Multi-Node Hibari Cluster"><div class="titlepage"><div><div><h3 class="title"><a id="installing-multi-node"></a>2.6. Installing a Multi-Node Hibari Cluster</h3></div></div></div><p>Before you install Hibari on to the target nodes you must complete
+only from the node itself.</p></td></tr></table></div></div><div class="section" title="Stopping Hibari"><div class="titlepage"><div><div><h4 class="title"><a id="_stopping_hibari"></a>Stopping Hibari</h4></div></div></div><p>To stop Hibari:</p><pre class="screen">$ running-directory/hibari/bin/hibari stop</pre></div></div><div class="section" title="2.6. Installing a Multi-Node Hibari Cluster"><div class="titlepage"><div><div><h3 class="title"><a id="installing-multi-node"></a>2.6. Installing a Multi-Node Hibari Cluster</h3></div></div></div><p>Before you install Hibari on to the target nodes you must complete
 these preparation steps:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Set up required user privileges on the installer node and on the
   target Hibari nodes.
@@ -737,7 +738,7 @@ hibari@dev3</pre><div class="note" title="Note" style="margin-left: 0; margin-ri
 <code class="literal">/usr/local/var/lib</code> on the target nodes. If you prefer a different
 location, before doing the install open the <code class="literal">clus.sh</code> script (in your
 working directory, under <code class="literal">/clus/priv/</code>) and edit the <code class="literal">CT_HOMEBASEDIR</code>
-variable.</p></td></tr></table></div></li></ol></div></div></div><div class="section" title="2.7.&#xA0;Starting and Stopping a Multi-Node Hibari Cluster"><div class="titlepage"><div><div><h3 class="title"><a id="starting-multi-node"></a>2.7. Starting and Stopping a Multi-Node Hibari Cluster</h3></div></div></div><p>You can use the Cluster installer tool to start and stop your
+variable.</p></td></tr></table></div></li></ol></div></div></div><div class="section" title="2.7. Starting and Stopping a Multi-Node Hibari Cluster"><div class="titlepage"><div><div><h3 class="title"><a id="starting-multi-node"></a>2.7. Starting and Stopping a Multi-Node Hibari Cluster</h3></div></div></div><p>You can use the Cluster installer tool to start and stop your
 multi-node Hibari cluster, working from the same node from which you
 managed the installation process. Note that in each of the Hibari
 commands in this section you’ll be referencing the name of the
@@ -775,7 +776,7 @@ ok
 ok
 hibari@dev1
 hibari@dev2
-hibari@dev3</pre></div></div><div class="section" title="2.8.&#xA0;Creating New Tables"><div class="titlepage"><div><div><h3 class="title"><a id="creating-tables"></a>2.8. Creating New Tables</h3></div></div></div><p>The simplest way to create a new table is via the Admin Server’s
+hibari@dev3</pre></div></div><div class="section" title="2.8. Creating New Tables"><div class="titlepage"><div><div><h3 class="title"><a id="creating-tables"></a>2.8. Creating New Tables</h3></div></div></div><p>The simplest way to create a new table is via the Admin Server’s
 GUI. Open <code class="literal">http://localhost:23080/</code> and click the "Add a table" link.
 In addition to the GUI, the hibari-admin tool can also be used to
 create a new table.  See the hibari-admin tool for usage details.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>For information about creating tables using the administrative
@@ -897,7 +898,7 @@ the following striping patterns would be used:</p><div class="itemizedlist"><ul 
 <code class="literal">NumNodesPerBlock=3</code> and <code class="literal">BlockMultFactor=4</code> and <code class="literal">BPC=3</code> would
        stripe 3*4=12 chains across nodes A &amp; B &amp; C and 3*4=12 chains
        across D &amp; E &amp; F, for a total of 24 chains.
-</li></ul></div></li></ul></div></li></ul></div></div></div><div class="section" title="3.&#xA0;Client API: Native Erlang"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-erlang"></a>3. Client API: Native Erlang</h2></div></div></div><div class="section" title="3.1.&#xA0;Hibari Client API Overview"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_client_api_overview"></a>3.1. Hibari Client API Overview</h3></div></div></div><p>As a key-value database, Hibari provides a simple client API with
+</li></ul></div></li></ul></div></li></ul></div></div></div><div class="section" title="3. Client API: Native Erlang"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-erlang"></a>3. Client API: Native Erlang</h2></div></div></div><div class="section" title="3.1. Hibari Client API Overview"><div class="titlepage"><div><div><h3 class="title"><a id="_hibari_client_api_overview"></a>3.1. Hibari Client API Overview</h3></div></div></div><p>As a key-value database, Hibari provides a simple client API with
 primitive operations for inserting, retrieving, and deleting
 data. Within certain restrictions, the API also supports compound
 operations that optionally can be executed as atomic transactions.</p><p>More specifically, Hibari’s client API supports the operations listed
@@ -1042,7 +1043,7 @@ workload of 100% 64MB value blobs.  The Hibari client API does not
 have a method to update or fetch less than the entire value blob, so a
 brick can be blocked for many seconds if it tried to operate on (for
 example) even a single 4GB blob.  In addition, other processes can be
-blocked by <code class="literal">'busy_dist_port'</code> events while processing big value blobs.</p></div></div><div class="section" title="3.2.&#xA0;brick_simple:add/6"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-add"></a>3.2. brick_simple:add/6</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+blocked by <code class="literal">'busy_dist_port'</code> events while processing big value blobs.</p></div></div><div class="section" title="3.2. brick_simple:add/6"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-add"></a>3.2. brick_simple:add/6</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:add(Tab, Key, Value, ExpTime, Flags, Timeout).</strong></span>
@@ -1148,7 +1149,7 @@ Operational flag usage
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem"><p class="simpara">
 Store the value blob in RAM, overriding the default storage
        location of the brick.
-</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This flag has not yet been extensively tested by Gemini QA.</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This flag did not extensively tested by Cloudian QA.</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Timeout</strong></span>
@@ -1232,7 +1233,7 @@ ok</pre></dd><dt><span class="term">
 Successful adding of a new key-value pair, using a non-default
 operation timeout:
 </p><pre class="screen">&gt; brick_simple:add(tab1, "foo2", "this is value2", 20000).
-ok</pre></dd></dl></div></div><div class="section" title="3.3.&#xA0;brick_simple:replace/6"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-replace"></a>3.3. brick_simple:replace/6</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+ok</pre></dd></dl></div></div><div class="section" title="3.3. brick_simple:replace/6"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-replace"></a>3.3. brick_simple:replace/6</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:replace(Tab, Key, Value, ExpTime, Flags, Timeout).</strong></span>
@@ -1347,7 +1348,7 @@ Fail the operation if the existing key’s timestamp is not
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem"><p class="simpara">
 Store the value blob in RAM, overriding the default storage
        location of the brick.
-</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This flag has not yet been extensively tested by Gemini QA.</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This flag did not extensively tested by Cloudian QA.</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Timeout</strong></span>
@@ -1449,7 +1450,7 @@ ok</pre></dd><dt><span class="term">
 Successful replacement of a key-value pair, using a non-default
 operation timeout:
 </p><pre class="screen">&gt; brick_simple:replace(tab1, "foo", "Foo again?", 30000).
-ok</pre></dd></dl></div></div><div class="section" title="3.4.&#xA0;brick_simple:set/6"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-set"></a>3.4. brick_simple:set/6</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+ok</pre></dd></dl></div></div><div class="section" title="3.4. brick_simple:set/6"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-set"></a>3.4. brick_simple:set/6</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:set(Tab, Key, Value, ExpTime, Flags, Timeout).</strong></span>
@@ -1566,7 +1567,7 @@ Fail the operation if the existing key’s timestamp is not
 </p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem"><p class="simpara">
 Store the value blob in RAM, overriding the default storage
        location of the brick.
-</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This flag has not yet been extensively tested by Gemini QA.</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
+</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This did not extensively tested by Cloudian QA.</p></td></tr></table></div></li></ul></div></li></ul></div></li></ul></div></dd><dt><span class="term">
  
 </span></dt><dd><p class="simpara">
 <span class="strong"><strong>Timeout</strong></span>
@@ -1659,7 +1660,7 @@ Successful setting of a key-value pair, when we have used the
 <code class="literal">testset</code> flag and the key does already exist and its timestamp
 matches our specified timestamp:
 </p><pre class="screen">&gt; brick_simple:set(tab1, "goo", "value7", [{'testset', 1271543165272432}]).
-ok</pre></dd></dl></div></div><div class="section" title="3.5.&#xA0;brick_simple:get/4"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-get"></a>3.5. brick_simple:get/4</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+ok</pre></dd></dl></div></div><div class="section" title="3.5. brick_simple:get/4"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-get"></a>3.5. brick_simple:get/4</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:get(Tab, Key, Flags, Timeout).</strong></span>
@@ -1867,7 +1868,7 @@ Successful retrieval of a key without its associated value blob:
 </span></dt><dd><p class="simpara">
 Failed attempt to retrieve a key that does not exist:
 </p><pre class="screen">&gt; brick_simple:get(tab1, "moo").
-key_not_exist</pre></dd></dl></div></div><div class="section" title="3.6.&#xA0;brick_simple:get_many/5"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-get-many"></a>3.6. brick_simple:get_many/5</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+key_not_exist</pre></dd></dl></div></div><div class="section" title="3.6. brick_simple:get_many/5"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-get-many"></a>3.6. brick_simple:get_many/5</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:get_many(Tab, Key, MaxNum, Flags, Timeout).</strong></span>
@@ -2096,7 +2097,7 @@ two keys, using the <code class="literal">get_all_attribs</code> flag in the req
 {ok,{[{&lt;&lt;"another"&gt;&gt;,1271543102911775,&lt;&lt;"yes!"&gt;&gt;,0,
        [{val_len,4}]},
       {&lt;&lt;"foo"&gt;&gt;,1271543165272987,&lt;&lt;"Foo again?"&gt;&gt;,0,[{val_len,6}]}],
-     false}}</pre></dd></dl></div></div><div class="section" title="3.7.&#xA0;brick_simple:delete/4"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-delete"></a>3.7. brick_simple:delete/4</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+     false}}</pre></dd></dl></div></div><div class="section" title="3.7. brick_simple:delete/4"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-delete"></a>3.7. brick_simple:delete/4</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:delete(Tab, Key, Flags, Timeout).</strong></span>
@@ -2275,7 +2276,7 @@ ok</pre></dd><dt><span class="term">
 </span></dt><dd><p class="simpara">
 Successful deletion of a key, using a non-default operation timeout:
 </p><pre class="screen">&gt; brick_simple:delete(tab1, "key3", 30000).
-ok</pre></dd></dl></div></div><div class="section" title="3.8.&#xA0;brick_simple:do/4"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-do"></a>3.8. brick_simple:do/4</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+ok</pre></dd></dl></div></div><div class="section" title="3.8. brick_simple:do/4"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-do"></a>3.8. brick_simple:do/4</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:do(Tab, OpList, OpFlags, Timeout).</strong></span>
@@ -2534,7 +2535,7 @@ entire operation to fail.
 &gt; Do2b = brick_server:make_get("foo2", [must_exist]).
 {get,&lt;&lt;"foo2"&gt;&gt;,[must_exist]}
 &gt; brick_simple:do(tab1, [brick_server:make_txn(), Do1b, Do2b]).
-{txn_fail,[{2,key_not_exist}]}</pre></dd></dl></div></div><div class="section" title="3.9.&#xA0;brick_simple:fold_table/7"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-table"></a>3.9. brick_simple:fold_table/7</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+{txn_fail,[{2,key_not_exist}]}</pre></dd></dl></div></div><div class="section" title="3.9. brick_simple:fold_table/7"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-table"></a>3.9. brick_simple:fold_table/7</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags, MaxParallel, Timeout).</strong></span>
@@ -2718,7 +2719,7 @@ brick_simple:fold_table/6
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">brick_simple:fold_table(Tab, Fun, Acc, NumItems, Flags,
     MaxParallel).</code>
-</li></ul></div></li></ul></div></dd></dl></div><p>EXAMPLES</p><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.10.&#xA0;brick_simple:fold_key_prefix/9"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-key"></a>3.10. brick_simple:fold_key_prefix/9</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
+</li></ul></div></li></ul></div></dd></dl></div><p>EXAMPLES</p><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="3.10. brick_simple:fold_key_prefix/9"><div class="titlepage"><div><div><h3 class="title"><a id="brick-simple-fold-key"></a>3.10. brick_simple:fold_key_prefix/9</h3></div></div></div><p>SYNOPSIS</p><div class="variablelist"><dl><dt><span class="term">
  
 </span></dt><dd>
 <span class="strong"><strong>brick_simple:fold_key_prefix(Tab, Prefix, StartKey, Fun, Acc, Flags0,
@@ -2912,19 +2913,19 @@ Error return
 brick_simple:fold_key_prefix/5
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 <code class="literal">brick_simple:fold_key_prefix(Tab, Prefix, Fun, Acc, Flags).</code>
-</li></ul></div></li></ul></div></dd></dl></div><p>EXAMPLES</p><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="4.&#xA0;Client API: UBF"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-ubf"></a>4. Client API: UBF</h2></div></div></div><p><a class="ulink" href="http://github.com/norton/ubf" target="_top">The UBF protocol</a> is a
+</li></ul></div></li></ul></div></dd></dl></div><p>EXAMPLES</p><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="4. Client API: UBF"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-ubf"></a>4. Client API: UBF</h2></div></div></div><p><a class="ulink" href="http://github.com/norton/ubf" target="_top">The UBF protocol</a> is a
 formally-specified family of protocols that are supported by a large
 number of client languages.  This section attempts to describe the
 layers of the UBF protocol stack, how to use the UBF client in Erlang
 and other languages, and how to use that client to access a Hibari
 storage cluster.</p><p>The Hibari source distribution includes UBF/EBF protocol support for the
 following languages:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-Erlang, see <a class="xref" href="#using-ubf-erlang-client" title="4.5.&#xA0;Using the UBF Client Library for Erlang">Section 4.5, “Using the UBF Client Library for Erlang”</a>
+Erlang, see <a class="xref" href="#using-ubf-erlang-client" title="4.5. Using the UBF Client Library for Erlang">Section 4.5, “Using the UBF Client Library for Erlang”</a>
 </li><li class="listitem">
-Java, see <a class="xref" href="#using-ubf-java-client" title="4.6.&#xA0;Using the UBF Client Library for Java">Section 4.6, “Using the UBF Client Library for Java”</a>
+Java, see <a class="xref" href="#using-ubf-java-client" title="4.6. Using the UBF Client Library for Java">Section 4.6, “Using the UBF Client Library for Java”</a>
 </li><li class="listitem">
-Python, see <a class="xref" href="#using-ubf-python-client" title="4.7.&#xA0;Using the EBF Client Library for Python">Section 4.7, “Using the EBF Client Library for Python”</a>
-</li></ul></div><div class="section" title="4.1.&#xA0;The Hibari Server&#x2019;s Implementation of the UBF Protocol Stack"><div class="titlepage"><div><div><h3 class="title"><a id="hibari-server-impl-of-ubf-proto-stack"></a>4.1. The Hibari Server’s Implementation of the UBF Protocol Stack</h3></div></div></div><div class="variablelist"><dl><dt><span class="term">
+Python, see <a class="xref" href="#using-ubf-python-client" title="4.7. Using the EBF Client Library for Python">Section 4.7, “Using the EBF Client Library for Python”</a>
+</li></ul></div><div class="section" title="4.1. The Hibari Server’s Implementation of the UBF Protocol Stack"><div class="titlepage"><div><div><h3 class="title"><a id="hibari-server-impl-of-ubf-proto-stack"></a>4.1. The Hibari Server’s Implementation of the UBF Protocol Stack</h3></div></div></div><div class="variablelist"><dl><dt><span class="term">
 UBF(A): Bottom Layer, transport and session protocol layer
 </span></dt><dd><p class="simpara">
 This layer plays the same basic role as many other serialized data
@@ -2937,7 +2938,7 @@ and <a class="ulink" href="http://en.wikipedia.org/wiki/Thrift_(protocol)" targe
 of a TCP/IP transport protocol.  The choice of session protocol is
 a matter of convenience and/or support for the application
 developer. Hibari should be as easy for an app developer to use
-Ruby and JSON-RPC as it is to use Python and Protocol Buffers.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Ruby and JSON-RPC as it is to use Python and Thrift or EBF.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 UBF(A), Joe Armstrong’s original session layer protocol
 </li><li class="listitem">
 EBF, the Erlang Binary Format.  The session layer protocol is a
@@ -2989,7 +2990,7 @@ The metaprotocol is used at the beginning of a UBF session to select
 one of the UBF(B) contracts that the TCP listener is capable of
 offering.  At the moment, Hibari servers support only the "gdss"
 contract, but other contracts may be added in the future.
-</dd></dl></div></div><div class="section" title="4.2.&#xA0;UBF representation of strings vs. binaries"><div class="titlepage"><div><div><h3 class="title"><a id="ubf-representation-of-strings"></a>4.2. UBF representation of strings vs. binaries</h3></div></div></div><p>The Erlang language does not have a data type specifically for
+</dd></dl></div></div><div class="section" title="4.2. UBF representation of strings vs. binaries"><div class="titlepage"><div><div><h3 class="title"><a id="ubf-representation-of-strings"></a>4.2. UBF representation of strings vs. binaries</h3></div></div></div><p>The Erlang language does not have a data type specifically for
 strings.  Instead, strings are typically represented as lists of
 integers (ASCII byte values) and/or binaries.</p><p>A UBF contract makes a distinction between a string, list, and
 binary.  In the case of a string, UBF(A) encodes a string using the
@@ -3000,7 +3001,7 @@ slightly less ugly shortcut.  When using other languages, the 2-tuple
 and the atom <code class="literal">'#S'</code>  would be created as any other 2-tuple and atom.</p><p>Fortunately, there is only one case where the string type is
 necessary: using the <code class="literal">startSession</code> metaprotocol command to start
 using the Hibari data server contract.  An example will be shown
-below.</p></div><div class="section" title="4.3.&#xA0;Steps for Using a UBF-based Protocol in Any Language"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-in-any-language"></a>4.3. Steps for Using a UBF-based Protocol in Any Language</h3></div></div></div><p>The steps to use a UBF-based protocol are the same in any language.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+below.</p></div><div class="section" title="4.3. Steps for Using a UBF-based Protocol in Any Language"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-in-any-language"></a>4.3. Steps for Using a UBF-based Protocol in Any Language</h3></div></div></div><p>The steps to use a UBF-based protocol are the same in any language.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 Create a connection to the UBF server.
 </p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 … or the EBF server, or the JSON-RPC server, or the Thrift
@@ -3013,12 +3014,12 @@ Send one or more Hibari server queries and decode the respective
    server responses.
 </li><li class="listitem">
 Close the connection to the UBF server.
-</li></ol></div></div><div class="section" title="4.4.&#xA0;The Hibari UBF Protocol Contract"><div class="titlepage"><div><div><h3 class="title"><a id="the-hibari-ubf-protocol-contract"></a>4.4. The Hibari UBF Protocol Contract</h3></div></div></div><p>The Hibari UBF Protocol contract can be found in the file
+</li></ol></div></div><div class="section" title="4.4. The Hibari UBF Protocol Contract"><div class="titlepage"><div><div><h3 class="title"><a id="the-hibari-ubf-protocol-contract"></a>4.4. The Hibari UBF Protocol Contract</h3></div></div></div><p>The Hibari UBF Protocol contract can be found in the file
 <code class="literal">ubf_gdss_plugin.con</code>.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>See the Hibari source code for the most up-to-date version of
 this file.  <a class="ulink" href="./misc-codes/ubf_gdss_plugin.con" target="_top">This documentation has a copy
 of <code class="literal">ubf_gdss_plugin.con</code></a>, though it may be slightly out-of-date.</p></td></tr></table></div><p>The names of the UBF types specified in the contract may differ
 slightly from the names of the types used in this document’s
-<a class="xref" href="#client-api-erlang" title="3.&#xA0;Client API: Native Erlang">Section 3, “Client API: Native Erlang”</a>.  For example, the UBF contract calls the key
+<a class="xref" href="#client-api-erlang" title="3. Client API: Native Erlang">Section 3, “Client API: Native Erlang”</a>.  For example, the UBF contract calls the key
 expiration time time <code class="literal">exp_time()</code>, while the type system in this
 document calls it <code class="literal">expiry()</code>.  However, in all cases of slightly
 different names, the fundamental data type that both names use is the
@@ -3034,23 +3035,23 @@ the tuple is the name of the command, and the following elements are
 arguments for that command.  The response can be any Erlang term, but
 the Hibari contract will only return the atom or tuple types.</p><p>The following is a mapping of UBF client request type to its Erlang
 API function, in alphabetical order.:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
-<code class="literal">add_req()</code> → <code class="literal">brick_simple:add()</code>, see <a class="xref" href="#brick-simple-add" title="3.2.&#xA0;brick_simple:add/6">Section 3.2, “brick_simple:add/6”</a>.
+<code class="literal">add_req()</code> → <code class="literal">brick_simple:add()</code>, see <a class="xref" href="#brick-simple-add" title="3.2. brick_simple:add/6">Section 3.2, “brick_simple:add/6”</a>.
 </li><li class="listitem">
 <code class="literal">delete_req()</code> → <code class="literal">brick_simple:delete()</code>, see
-  <a class="xref" href="#brick-simple-delete" title="3.7.&#xA0;brick_simple:delete/4">Section 3.7, “brick_simple:delete/4”</a>.
+  <a class="xref" href="#brick-simple-delete" title="3.7. brick_simple:delete/4">Section 3.7, “brick_simple:delete/4”</a>.
 </li><li class="listitem">
-<code class="literal">do_req()</code> → <code class="literal">brick_simple:do()</code>, see <a class="xref" href="#brick-simple-do" title="3.8.&#xA0;brick_simple:do/4">Section 3.8, “brick_simple:do/4”</a>.
+<code class="literal">do_req()</code> → <code class="literal">brick_simple:do()</code>, see <a class="xref" href="#brick-simple-do" title="3.8. brick_simple:do/4">Section 3.8, “brick_simple:do/4”</a>.
 </li><li class="listitem">
-<code class="literal">get_req()</code> → <code class="literal">brick_simple:get()</code>, see <a class="xref" href="#brick-simple-get" title="3.5.&#xA0;brick_simple:get/4">Section 3.5, “brick_simple:get/4”</a>.
+<code class="literal">get_req()</code> → <code class="literal">brick_simple:get()</code>, see <a class="xref" href="#brick-simple-get" title="3.5. brick_simple:get/4">Section 3.5, “brick_simple:get/4”</a>.
 </li><li class="listitem">
 <code class="literal">get_many_req()</code> → <code class="literal">brick_simple:get_many()</code>, see
-  <a class="xref" href="#brick-simple-get-many" title="3.6.&#xA0;brick_simple:get_many/5">Section 3.6, “brick_simple:get_many/5”</a>.
+  <a class="xref" href="#brick-simple-get-many" title="3.6. brick_simple:get_many/5">Section 3.6, “brick_simple:get_many/5”</a>.
 </li><li class="listitem">
 <code class="literal">replace_req()</code> → <code class="literal">brick_simple:replace()</code>, see
-  <a class="xref" href="#brick-simple-replace" title="3.3.&#xA0;brick_simple:replace/6">Section 3.3, “brick_simple:replace/6”</a>.
+  <a class="xref" href="#brick-simple-replace" title="3.3. brick_simple:replace/6">Section 3.3, “brick_simple:replace/6”</a>.
 </li><li class="listitem">
-<code class="literal">set_req()</code> → <code class="literal">brick_simple:set()</code>, see <a class="xref" href="#brick-simple-set" title="3.4.&#xA0;brick_simple:set/6">Section 3.4, “brick_simple:set/6”</a>.
-</li></ul></div></div><div class="section" title="4.5.&#xA0;Using the UBF Client Library for Erlang"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-erlang-client"></a>4.5. Using the UBF Client Library for Erlang</h3></div></div></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<code class="literal">set_req()</code> → <code class="literal">brick_simple:set()</code>, see <a class="xref" href="#brick-simple-set" title="3.4. brick_simple:set/6">Section 3.4, “brick_simple:set/6”</a>.
+</li></ul></div></div><div class="section" title="4.5. Using the UBF Client Library for Erlang"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-erlang-client"></a>4.5. Using the UBF Client Library for Erlang</h3></div></div></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 When using the Erlang shell for experimentation &amp; prototyping, that
    shell must have the path to the Erlang UBF client
    library in its search path.  The easiest way to do this is to use
@@ -3060,7 +3061,7 @@ When using the Erlang shell for experimentation &amp; prototyping, that
 When writing code, the statement <code class="literal">-include("ubf.hrl").</code> at the top
    of your source module to gain access to the <code class="literal">?S()</code> macro.  Due to
    limitations in the Erlang shell, macros cannot be used in the shell.
-</li></ol></div></td></tr></table></div><p>As outlined in <a class="xref" href="#using-ubf-in-any-language" title="4.3.&#xA0;Steps for Using a UBF-based Protocol in Any Language">Section 4.3, “Steps for Using a UBF-based Protocol in Any Language”</a>, the first step is to
+</li></ol></div></td></tr></table></div><p>As outlined in <a class="xref" href="#using-ubf-in-any-language" title="4.3. Steps for Using a UBF-based Protocol in Any Language">Section 4.3, “Steps for Using a UBF-based Protocol in Any Language”</a>, the first step is to
 create a connection to a Hibari server.  If the Hibari cluster has
 multiple nodes, then it doesn’t matter which one that you connect to:
 all nodes can handle any UBF request and will route the query to the
@@ -3081,8 +3082,8 @@ contract is stateless, the <code class="literal">UBF_StateName</code> will alway
 </p><pre class="screen">(asdf@bb3)59&gt; ubf_client:rpc(P1, {set, tab1, &lt;&lt;"foo"&gt;&gt;, &lt;&lt;"foo val"&gt;&gt;, 0, [], 5000}).
 {reply,ok,none}</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Note that the return value of both the
 <code class="literal">set_req()</code> (in the example above) and <code class="literal">get_req()</code> (in the example
-below) return the same types described in the <a class="xref" href="#brick-simple-set" title="3.4.&#xA0;brick_simple:set/6">Section 3.4, “brick_simple:set/6”</a>
-and <a class="xref" href="#brick-simple-get" title="3.5.&#xA0;brick_simple:get/4">Section 3.5, “brick_simple:get/4”</a>, respectively.</p><p>The only difference is that the <code class="literal">ubf_client:rpc/2</code> function wraps the
+below) return the same types described in the <a class="xref" href="#brick-simple-set" title="3.4. brick_simple:set/6">Section 3.4, “brick_simple:set/6”</a>
+and <a class="xref" href="#brick-simple-get" title="3.5. brick_simple:get/4">Section 3.5, “brick_simple:get/4”</a>, respectively.</p><p>The only difference is that the <code class="literal">ubf_client:rpc/2</code> function wraps the
 server’s reply in a 3-tuple: <code class="literal">{reply,ServerReply,none}</code>.</p></td></tr></table></div><p title="Get the key &quot;foo&quot; in table tab1, timeout in 5 seconds"><strong>Get the key "foo" in table <code class="literal">tab1</code>, timeout in 5 seconds. </strong>
 </p><pre class="screen">(asdf@bb3)66&gt; ubf_client:rpc(P1, {get, tab1, &lt;&lt;"foo"&gt;&gt;, [], 5000}).
 {reply,{ok,1273009092549799,&lt;&lt;"foo val"&gt;&gt;},none}</pre><p title="Get the key &quot;foo&quot; in table tab1, timeout in 5 seconds">
@@ -3095,7 +3096,7 @@ connection explicitly.  The server will quietly clean up its side of
 the connection if the client forgets to call or cannot call <code class="literal">stop/1</code>.</p><p title="Close the UBF connection"><strong>Close the UBF connection. </strong>
 </p><pre class="screen">(asdf@bb3)92&gt; ubf_client:stop(P1).
 ok</pre><p title="Close the UBF connection">
-</p></div><div class="section" title="4.6.&#xA0;Using the UBF Client Library for Java"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-java-client"></a>4.6. Using the UBF Client Library for Java</h3></div></div></div><p>The source code for the UBF client library for Java is included in
+</p></div><div class="section" title="4.6. Using the UBF Client Library for Java"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-java-client"></a>4.6. Using the UBF Client Library for Java</h3></div></div></div><p>The source code for the UBF client library for Java is included in
 the UBF source repository at
 <a class="ulink" href="http://github.com/norton/ubf" target="_top">http://github.com/norton/ubf</a>, in
 the <code class="literal">priv/java</code> subdirectory.</p><div class="section" title="Compiling the UBF client library for Java"><div class="titlepage"><div><div><h4 class="title"><a id="_compiling_the_ubf_client_library_for_java"></a>Compiling the UBF client library for Java</h4></div></div></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
@@ -3167,7 +3168,7 @@ Close the UBF session and exit.
 }</pre><p title="The ubf.HibariTest.main() method">
 </p><p>The <code class="literal">test_hibari_basics()</code> method performs the same basic UBF
 operations as the Python EBF demonstration script described in
-<a class="xref" href="#using-ubf-python-client" title="4.7.&#xA0;Using the EBF Client Library for Python">Section 4.7, “Using the EBF Client Library for Python”</a>.  Unlike the Python demo script, the
+<a class="xref" href="#using-ubf-python-client" title="4.7. Using the EBF Client Library for Python">Section 4.7, “Using the EBF Client Library for Python”</a>.  Unlike the Python demo script, the
 demo program does not use the Hibari <code class="literal">do()</code> command but rather then
 single-operation commands like <code class="literal">get()</code> and <code class="literal">set()</code>.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 Delete the key <code class="literal">foo</code> from table <code class="literal">tab1</code>.
@@ -3252,14 +3253,14 @@ want to do something much more helpful than this example does.</p><pre class="sc
             System.out.println("Hey, connection closed, ignoring it\n");
         }
     }</pre><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>See <a class="xref" href="#the-ubf-hibaritest-main-method" title="The ubf.HibariTest.main() method">The ubf.HibariTest.main() method</a> for an example that
-uses this <code class="literal">FooHandler</code> class.</p></td></tr></table></div></div></div><div class="section" title="4.7.&#xA0;Using the EBF Client Library for Python"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-python-client"></a>4.7. Using the EBF Client Library for Python</h3></div></div></div><p>The source code for the EBF client library for Python is included in
+uses this <code class="literal">FooHandler</code> class.</p></td></tr></table></div></div></div><div class="section" title="4.7. Using the EBF Client Library for Python"><div class="titlepage"><div><div><h3 class="title"><a id="using-ubf-python-client"></a>4.7. Using the EBF Client Library for Python</h3></div></div></div><p>The source code for the EBF client library for Python is included in
 the UBF source repository at
 <a class="ulink" href="http://github.com/norton/ubf" target="_top">http://github.com/norton/ubf</a>, in
 the <code class="literal">priv/python</code> subdirectory.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Recall that the EBF protocol is very closely related to UBF.  The
 only significant difference is the "layer 5" session protocol layer:
 instead of using the UBF(A) protocol, the EBF (Erlang Binary Format)
 protocol is used instead.  See
-<a class="xref" href="#hibari-server-impl-of-ubf-proto-stack" title="4.1.&#xA0;The Hibari Server&#x2019;s Implementation of the UBF Protocol Stack">Section 4.1, “The Hibari Server’s Implementation of the UBF Protocol Stack”</a> for more details.</p></td></tr></table></div><p>In addition, you will need the "py_interface" package, developed by
+<a class="xref" href="#hibari-server-impl-of-ubf-proto-stack" title="4.1. The Hibari Server’s Implementation of the UBF Protocol Stack">Section 4.1, “The Hibari Server’s Implementation of the UBF Protocol Stack”</a> for more details.</p></td></tr></table></div><p>In addition, you will need the "py_interface" package, developed by
 Tomas Abrahamsson and others.  "py-interface" is distributed under the
 <a class="ulink" href="http://www.fsf.org/licensing/education/licenses/lgpl.html" target="_top">GNU
 Library General Public License</a>.  A git repository is hosted at
@@ -3322,12 +3323,12 @@ timestamp and new value.
     res6 = ebf.rpc('gdss', req6)
     assert res6[0][0] == 'ok'
     assert res6[0][1] == 2
-    assert res6[0][2] == 'baz'</pre></li></ol></div></div></div><div class="section" title="5.&#xA0;Client API: Thrift"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-tbf"></a>5. Client API: Thrift</h2></div></div></div><p>"TBF" is a <a class="ulink" href="https://github.com/apache/thrift" target="_top">Thrift
+    assert res6[0][2] == 'baz'</pre></li></ol></div></div></div><div class="section" title="5. Client API: Thrift"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="client-api-tbf"></a>5. Client API: Thrift</h2></div></div></div><p>"TBF" is a <a class="ulink" href="https://github.com/apache/thrift" target="_top">Thrift
 protocol</a> defined by UBF contract
-<a class="xref" href="#the-hibari-ubf-protocol-contract" title="4.4.&#xA0;The Hibari UBF Protocol Contract">Section 4.4, “The Hibari UBF Protocol Contract”</a>.  This section attempts to
+<a class="xref" href="#the-hibari-ubf-protocol-contract" title="4.4. The Hibari UBF Protocol Contract">Section 4.4, “The Hibari UBF Protocol Contract”</a>.  This section attempts to
 describe the Hibari Thrift API which allows users to access Hibari with
 Thrift clients in any Thrift supported programming languages, and how
-to extend the API for application uses.</p><div class="section" title="5.1.&#xA0;The Hibari Thrift API"><div class="titlepage"><div><div><h3 class="title"><a id="_the_hibari_thrift_api"></a>5.1. The Hibari Thrift API</h3></div></div></div><p>The Hibari Thrift API is defined as Hibari Service in
+to extend the API for application uses.</p><div class="section" title="5.1. The Hibari Thrift API"><div class="titlepage"><div><div><h3 class="title"><a id="_the_hibari_thrift_api"></a>5.1. The Hibari Thrift API</h3></div></div></div><p>The Hibari Thrift API is defined as Hibari Service in
 <a class="ulink" href="./misc-codes/hibari.thrift" target="_top">hibari.thrift</a>.  At the time this API
 was developed, only Thrift 0.4.0 is available to us.  This version is
 our first attempt to adopt Thrift.  Some of the functions and options
@@ -3386,8 +3387,8 @@ are not yet supported.</p><div class="important" title="Important" style="margin
 parameter.  The parameter is an object that has a name matching its
 function. The object carries all mandatory and optional parameters to
 Hibari. This object could also be used to implement micro-transactions
-in the future.</p></div><div class="section" title="5.2.&#xA0;Mapping UBF Contract Types to Thrift Types"><div class="titlepage"><div><div><h3 class="title"><a id="_mapping_ubf_contract_types_to_thrift_types"></a>5.2. Mapping UBF Contract Types to Thrift Types</h3></div></div></div><p>You can find more details of the UBF / Thrift type conversion in
-(<a class="ulink" href="https://github.com/norton/ubf-thrift" target="_top">UBF-Thrift</a>).</p></div><div class="section" title="5.3.&#xA0;Mapping UBF Contract to Thrift Service"><div class="titlepage"><div><div><h3 class="title"><a id="_mapping_ubf_contract_to_thrift_service"></a>5.3. Mapping UBF Contract to Thrift Service</h3></div></div></div><p>Mapping UBF types to thrift primitives is different from mapping UBF
+in the future.</p></div><div class="section" title="5.2. Mapping UBF Contract Types to Thrift Types"><div class="titlepage"><div><div><h3 class="title"><a id="_mapping_ubf_contract_types_to_thrift_types"></a>5.2. Mapping UBF Contract Types to Thrift Types</h3></div></div></div><p>You can find more details of the UBF / Thrift type conversion in
+(<a class="ulink" href="https://github.com/norton/ubf-thrift" target="_top">UBF-Thrift</a>).</p></div><div class="section" title="5.3. Mapping UBF Contract to Thrift Service"><div class="titlepage"><div><div><h3 class="title"><a id="_mapping_ubf_contract_to_thrift_service"></a>5.3. Mapping UBF Contract to Thrift Service</h3></div></div></div><p>Mapping UBF types to thrift primitives is different from mapping UBF
 contracts to service. Thrift mainly uses 2 different types to compose
 a request (struct and field).</p><p>If you are using Thrift to generate client code, you probably don’t
 need to worry about how the request being constructed. Visit
@@ -3395,7 +3396,7 @@ need to worry about how the request being constructed. Visit
 the instruction to install Thrift and to generate client code.  You
 will also need <a class="ulink" href="./misc-codes/hibari.thrift" target="_top">hibari.thrift</a> to get
 started.</p><p>If you are interested in the UBF contract, the Hibari NTBF contract
-can be found in the file of <code class="literal">ntbf_gdss_plugin.con</code>.</p></div><div class="section" title="5.4.&#xA0;Examples of using a Thrift client"><div class="titlepage"><div><div><h3 class="title"><a id="_examples_of_using_a_thrift_client"></a>5.4. Examples of using a Thrift client</h3></div></div></div><p>Once you get the generated code, connecting to Hibari is easy.  For
+can be found in the file of <code class="literal">ntbf_gdss_plugin.con</code>.</p></div><div class="section" title="5.4. Examples of using a Thrift client"><div class="titlepage"><div><div><h3 class="title"><a id="_examples_of_using_a_thrift_client"></a>5.4. Examples of using a Thrift client</h3></div></div></div><p>Once you get the generated code, connecting to Hibari is easy.  For
 example, adding the key <code class="literal">'fookey'</code> to table <code class="literal">tab1</code> with a value of
 <code class="literal">'Hello, world!'</code> in the following 3 languages.</p><p>In Erlang:</p><pre class="screen">  -include("hibari_thrift.hrl").
 
@@ -3451,16 +3452,16 @@ example, adding the key <code class="literal">'fookey'</code> to table <code cla
   # send request
   response = client.Add(request)
 
-  transport.close()</pre></div><div class="section" title="5.5.&#xA0;Mapping TBF Contract Responses From Thrift Client"><div class="titlepage"><div><div><h3 class="title"><a id="_mapping_tbf_contract_responses_from_thrift_client"></a>5.5. Mapping TBF Contract Responses From Thrift Client</h3></div></div></div><p>TBF only responses one of two generic types to all functions in Hibari
+  transport.close()</pre></div><div class="section" title="5.5. Mapping TBF Contract Responses From Thrift Client"><div class="titlepage"><div><div><h3 class="title"><a id="_mapping_tbf_contract_responses_from_thrift_client"></a>5.5. Mapping TBF Contract Responses From Thrift Client</h3></div></div></div><p>TBF only responses one of two generic types to all functions in Hibari
 Thrift API, HibariResponse or HibariException.  One could expect a
 HibariResponse in an any successful cases.  Otherwise a
-HibariException should be thrown.</p></div></div><div class="section" title="6.&#xA0;Developer Utilities"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_developer_utilities"></a>6. Developer Utilities</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="6.1.&#xA0;Basho Bench"><div class="titlepage"><div><div><h3 class="title"><a id="_basho_bench"></a>6.1. Basho Bench</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="6.2.&#xA0;Yahoo! Cloud Serving Benchmark"><div class="titlepage"><div><div><h3 class="title"><a id="_yahoo_cloud_serving_benchmark"></a>6.2. Yahoo! Cloud Serving Benchmark</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="7.&#xA0;Building Hibari from Source"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="HibariBuildingSource"></a>7. Building Hibari from Source</h2></div></div></div><p>This section describes the basic recipes to build the following items:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+HibariException should be thrown.</p></div></div><div class="section" title="6. Developer Utilities"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_developer_utilities"></a>6. Developer Utilities</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p><div class="section" title="6.1. Basho Bench"><div class="titlepage"><div><div><h3 class="title"><a id="_basho_bench"></a>6.1. Basho Bench</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="6.2. Yahoo! Cloud Serving Benchmark"><div class="titlepage"><div><div><h3 class="title"><a id="_yahoo_cloud_serving_benchmark"></a>6.2. Yahoo! Cloud Serving Benchmark</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div><div class="section" title="7. Building Hibari from Source"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="HibariBuildingSource"></a>7. Building Hibari from Source</h2></div></div></div><p>This section describes the basic recipes to build the following items:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Hibari Release Package
 </li><li class="listitem">
 Hibari Documentation
 </li><li class="listitem">
 Erlang/OTP System
-</li></ul></div><div class="section" title="7.1.&#xA0;Required Third Party Software"><div class="titlepage"><div><div><h3 class="title"><a id="_required_third_party_software"></a>7.1. Required Third Party Software</h3></div></div></div><p>Before getting started, review this checklist of tools and
+</li></ul></div><div class="section" title="7.1. Required Third Party Software"><div class="titlepage"><div><div><h3 class="title"><a id="_required_third_party_software"></a>7.1. Required Third Party Software</h3></div></div></div><p>Before getting started, review this checklist of tools and
 software. Please install and set up as needed.</p><div class="section" title="Mandatory Items (Required for Building Hibari)"><div class="titlepage"><div><div><h4 class="title"><a id="_mandatory_items_required_for_building_hibari"></a>Mandatory Items (Required for Building Hibari)</h4></div></div></div><p>The following software is required in order to download Hibari and
 build a release package:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 Git - <a class="ulink" href="http://git-scm.com/" target="_top">http://git-scm.com/</a>
@@ -3512,8 +3513,8 @@ Must be version R13B04 or newer.
 R14B01 is the version most recently tested for Hibari.
 </li></ul></div></li><li class="listitem">
 For information on building Erlang/OTP from source, see
-    <a class="xref" href="#ErlangOTP" title="7.5.&#xA0;Building and Installing Erlang/OTP">Section 7.5, “Building and Installing Erlang/OTP”</a> in this document.
-</li></ul></div></li></ul></div></div><div class="section" title="Optional Items (Required for Building Hibari&#x2019;s Documentation)"><div class="titlepage"><div><div><h4 class="title"><a id="_optional_items_required_for_building_hibari_8217_s_documentation"></a>Optional Items (Required for Building Hibari’s Documentation)</h4></div></div></div><p>The following software is required only if you want to build Hibari’s
+    <a class="xref" href="#ErlangOTP" title="7.5. Building and Installing Erlang/OTP">Section 7.5, “Building and Installing Erlang/OTP”</a> in this document.
+</li></ul></div></li></ul></div></div><div class="section" title="Optional Items (Required for Building Hibari’s Documentation)"><div class="titlepage"><div><div><h4 class="title"><a id="_optional_items_required_for_building_hibari_8217_s_documentation"></a>Optional Items (Required for Building Hibari’s Documentation)</h4></div></div></div><p>The following software is required only if you want to build Hibari’s
 documentation from source. Note that an online version of the
 documentation is available at <a class="ulink" href="http://hibari.github.com/hibari-doc/" target="_top">http://hibari.github.com/hibari-doc/</a>.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 AsciiDoc - <a class="ulink" href="http://www.methods.co.nz/asciidoc/index.html" target="_top">http://www.methods.co.nz/asciidoc/index.html</a>
@@ -3539,7 +3540,7 @@ Optional for building a PDF version of Hibari’s documentation.
 w3m - <a class="ulink" href="http://w3m.sourceforge.net/" target="_top">http://w3m.sourceforge.net/</a>
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 Optional for building a text version of Hibari’s documentation.
-</li></ul></div></li></ul></div></div></div><div class="section" title="7.2.&#xA0;Downloading Hibari"><div class="titlepage"><div><div><h3 class="title"><a id="_downloading_hibari"></a>7.2. Downloading Hibari</h3></div></div></div><p>Follow these steps to download the Hibari repositories from GitHub.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+</li></ul></div></li></ul></div></div></div><div class="section" title="7.2. Downloading Hibari"><div class="titlepage"><div><div><h3 class="title"><a id="_downloading_hibari"></a>7.2. Downloading Hibari</h3></div></div></div><p>Follow these steps to download the Hibari repositories from GitHub.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 Create a working directory and retrieve the Hibari manifest files.
 </p><pre class="screen">$ mkdir working-directory
 $ cd working-directory
@@ -3614,7 +3615,7 @@ Manifests
 Patches
 </p></td></tr><tr><td width="5%" valign="top" align="left"><p><a href="#CO1-6"><img src="images/icons/callouts/6.png" alt="6" border="0" /></a> </p></td><td valign="top" align="left"><p>
 Rebar
-</p></td></tr></table></div></div><div class="section" title="7.3.&#xA0;Building the Hibari Release Package"><div class="titlepage"><div><div><h3 class="title"><a id="_building_the_hibari_release_package"></a>7.3. Building the Hibari Release Package</h3></div></div></div><p>Follow these steps to build a Hibari release package.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+</p></td></tr></table></div></div><div class="section" title="7.3. Building the Hibari Release Package"><div class="titlepage"><div><div><h3 class="title"><a id="_building_the_hibari_release_package"></a>7.3. Building the Hibari Release Package</h3></div></div></div><p>Follow these steps to build a Hibari release package.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 Building <span class="emphasis"><em>basic recipe</em></span>:
 </p><pre class="screen">$ cd working-directory/hibari
 $ make</pre><div class="tip" title="Tip" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Tip"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Tip]" src="images/icons/tip.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>If the response is "make: erl: Command not found", please make
@@ -3626,7 +3627,7 @@ $ make package</pre><div class="note" title="Note" style="margin-left: 0; margin
 and md5sum file "hibari-X.Y.Z-dev-ARCH-WORDSIZE-md5sum.txt" is written
 into your working-directory. You can then use these files to perform a
 single-node or multi-node Hibari installation as described in
-<a class="xref" href="#getting-started" title="2.&#xA0;Getting Started">Section 2, “Getting Started”</a>.</p></td></tr></table></div></li></ol></div></div><div class="section" title="7.4.&#xA0;Building Hibari&#x2019;s Documentation"><div class="titlepage"><div><div><h3 class="title"><a id="HibariAsciiDoc"></a>7.4. Building Hibari’s Documentation</h3></div></div></div><p>Follow these steps to build Hibari’s documentation.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+<a class="xref" href="#getting-started" title="2. Getting Started">Section 2, “Getting Started”</a>.</p></td></tr></table></div></li></ol></div></div><div class="section" title="7.4. Building Hibari’s Documentation"><div class="titlepage"><div><div><h3 class="title"><a id="HibariAsciiDoc"></a>7.4. Building Hibari’s Documentation</h3></div></div></div><p>Follow these steps to build Hibari’s documentation.</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
 Building Hibari’s "Guides" <span class="emphasis"><em>basic recipe</em></span>:
 </p><pre class="screen">$ cd working-directory/hibari-doc/src/hibari
 $ make clean -OR- make realclean
@@ -3664,7 +3665,7 @@ easily created by making a symlink to the lang-en.conf file.</p><pre class="scre
 
  def shell_rm(path):
      if not os.path.exists(path):
-Only in 8.6.4/etc/asciidoc: lang-ja.conf</pre></div><div class="section" title="7.5.&#xA0;Building and Installing Erlang/OTP"><div class="titlepage"><div><div><h3 class="title"><a id="ErlangOTP"></a>7.5. Building and Installing Erlang/OTP</h3></div></div></div><p>Follow these steps to download and build Erlang/OTP from source, and
+Only in 8.6.4/etc/asciidoc: lang-ja.conf</pre></div><div class="section" title="7.5. Building and Installing Erlang/OTP"><div class="titlepage"><div><div><h3 class="title"><a id="ErlangOTP"></a>7.5. Building and Installing Erlang/OTP</h3></div></div></div><p>Follow these steps to download and build Erlang/OTP from source, and
 to install the system. These steps provide a basic recipe; not all
 options are addressed.</p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Please make sure to have the <span class="emphasis"><em>openssl-devel</em></span> package installed
 on your system before configuring and building Erlang/OTP.</p></td></tr></table></div><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
@@ -3680,7 +3681,7 @@ Build Erlang/OTP:
 </p><pre class="screen">$ make</pre></li><li class="listitem"><p class="simpara">
 Install Erlang/OTP:
 </p><pre class="screen">$ sudo make install</pre></li></ol></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Please make sure "otp-installing-directory-name/bin" is added
-to your $PATH environment.</p></td></tr></table></div></div></div><div class="section" title="8.&#xA0;Sample Application"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_sample_application"></a>8. Sample Application</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p></div><div class="section" title="9.&#xA0;Contributing to Hibari"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_contributing_to_hibari"></a>9. Contributing to Hibari</h2></div></div></div><div class="section" title="9.1.&#xA0;GitHub, Git, and Repo"><div class="titlepage"><div><div><h3 class="title"><a id="_github_git_and_repo"></a>9.1. GitHub, Git, and Repo</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p><p>List the working directories for all of Hibari’s "projects":</p><pre class="screen">$ repo forall -c "pwd"</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Each project has a corresponding Git repository and (default)
+to your $PATH environment.</p></td></tr></table></div></div></div><div class="section" title="8. Sample Application"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_sample_application"></a>8. Sample Application</h2></div></div></div><p><span class="emphasis"><em>Under Construction</em></span></p></div><div class="section" title="9. Contributing to Hibari"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_contributing_to_hibari"></a>9. Contributing to Hibari</h2></div></div></div><div class="section" title="9.1. GitHub, Git, and Repo"><div class="titlepage"><div><div><h3 class="title"><a id="_github_git_and_repo"></a>9.1. GitHub, Git, and Repo</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p><p>List the working directories for all of Hibari’s "projects":</p><pre class="screen">$ repo forall -c "pwd"</pre><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>Each project has a corresponding Git repository and (default)
 revision.  Check the "manifests/hibari-default.xml" file for details.</p></td></tr></table></div><p>Start a new topic (e.g. new-topic-name) branch:</p><pre class="screen">$ repo start new-topic-name `repo forall -c "pwd" | xargs echo`</pre><p>Abandon an existing topic (e.g. topic-name) branch:</p><pre class="screen">$ repo abandon topic-name `repo forall -c "pwd" | xargs echo`</pre><p>Track and checkout the master branch:</p><pre class="screen">$ repo forall -c "git branch --track master github/master"
 $ repo forall -c "git checkout master"</pre><p>Track and checkout the dev (i.e. Development) branch:</p><pre class="screen">$ repo forall -c "git branch --track dev github/dev"
-$ repo forall -c "git checkout dev"</pre></div><div class="section" title="9.2.&#xA0;Code, Branch, and Version Management"><div class="titlepage"><div><div><h3 class="title"><a id="_code_branch_and_version_management"></a>9.2. Code, Branch, and Version Management</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="9.3.&#xA0;Documentation"><div class="titlepage"><div><div><h3 class="title"><a id="_documentation"></a>9.3. Documentation</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="9.4.&#xA0;Submitting Patches"><div class="titlepage"><div><div><h3 class="title"><a id="_submitting_patches"></a>9.4. Submitting Patches</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div></div></body></html>
+$ repo forall -c "git checkout dev"</pre></div><div class="section" title="9.2. Code, Branch, and Version Management"><div class="titlepage"><div><div><h3 class="title"><a id="_code_branch_and_version_management"></a>9.2. Code, Branch, and Version Management</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="9.3. Documentation"><div class="titlepage"><div><div><h3 class="title"><a id="_documentation"></a>9.3. Documentation</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div><div class="section" title="9.4. Submitting Patches"><div class="titlepage"><div><div><h3 class="title"><a id="_submitting_patches"></a>9.4. Submitting Patches</h3></div></div></div><p><span class="emphasis"><em>to be added</em></span></p></div></div></div></body></html>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Contributor’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="Hibari Contributor&#x2019;s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idp816"></a>Hibari Contributor’s Guide  <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.5.2</td><td align="left">2011/03/14</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_topics_covered">1.1. Topics Covered</a></span></dt><dt><span class="section"><a href="#_reading_the_systems_administrator_guide_is_strongly_recommended">1.2. Reading the Systems Administrator Guide Is Strongly Recommended</a></span></dt><dt><span class="section"><a href="#_copyright_notices">1.3. Copyright Notices</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_internals_the_source_module_by_module">2. Hibari Internals: The Source, Module by Module</a></span></dt><dd><dl><dt><span class="section"><a href="#major-subsystems">2.1. Major subsystems</a></span></dt><dt><span class="section"><a href="#admin-server-crash-recovery">2.2. Admin Server notes: crash-recovery design</a></span></dt><dt><span class="section"><a href="#module-by-module-commentary">2.3. Module-By-Module Commentary</a></span></dt><dt><span class="section"><a href="#debugging-hibari-using-tracing">2.4. Debugging Hibari (clients and servers) using tracing</a></span></dt></dl></dd><dt><span class="section"><a href="#_appendix_troubleshooting">3. Appendix: Troubleshooting</a></span></dt><dd><dl><dt><span class="section"><a href="#problem-multiple-hibari-apps">3.1. Problem: Cannot run multiple Hibari apps on the same physical machine</a></span></dt></dl></dd><dt><span class="section"><a href="#_appendix_known_warts_problems_inefficiencies_refactoring_opportunities_etc">4. Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc.</a></span></dt></dl></div><p></p><div class="section" title="1.&#xA0;Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This document is under re-construction - beware!</p></td></tr></table></div><p>This document’s goal is to describe the software architecture of the
+<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Contributor’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="Hibari Contributor’s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idp162208"></a>Hibari Contributor’s Guide  <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.5.3</td><td align="left">2013/02/03</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_topics_covered">1.1. Topics Covered</a></span></dt><dt><span class="section"><a href="#_reading_the_systems_administrator_guide_is_strongly_recommended">1.2. Reading the Systems Administrator Guide Is Strongly Recommended</a></span></dt><dt><span class="section"><a href="#_copyright_notices">1.3. Copyright Notices</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_internals_the_source_module_by_module">2. Hibari Internals: The Source, Module by Module</a></span></dt><dd><dl><dt><span class="section"><a href="#major-subsystems">2.1. Major subsystems</a></span></dt><dt><span class="section"><a href="#admin-server-crash-recovery">2.2. Admin Server notes: crash-recovery design</a></span></dt><dt><span class="section"><a href="#module-by-module-commentary">2.3. Module-By-Module Commentary</a></span></dt><dt><span class="section"><a href="#debugging-hibari-using-tracing">2.4. Debugging Hibari (clients and servers) using tracing</a></span></dt></dl></dd><dt><span class="section"><a href="#_appendix_troubleshooting">3. Appendix: Troubleshooting</a></span></dt><dd><dl><dt><span class="section"><a href="#problem-multiple-hibari-apps">3.1. Problem: Cannot run multiple Hibari apps on the same physical machine</a></span></dt></dl></dd><dt><span class="section"><a href="#_appendix_known_warts_problems_inefficiencies_refactoring_opportunities_etc">4. Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc.</a></span></dt></dl></div><p></p><div class="section" title="1. Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This document is under re-construction - beware!</p></td></tr></table></div><p>This document’s goal is to describe the software architecture of the
 Hibari key-value database, discuss parts of its implementation, and to
 document the Hibari client APIs.</p><p>At a minimum, application developers need to know how to use the
 various Hibari client APIs.  Hibari is a key-value database, which
@@ -12,21 +12,18 @@ industrial setting, Hibari grew at times quite quickly and at times
 sat on the shelf, waiting for customer demand.  Anyone who works with
 the software, including Hibari’s original developers, need
 documentation to understand not only how something works but also why
-certain choices were made … and what parts need more work.</p><div class="section" title="1.1.&#xA0;Topics Covered"><div class="titlepage"><div><div><h3 class="title"><a id="_topics_covered"></a>1.1. Topics Covered</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
+certain choices were made … and what parts need more work.</p><div class="section" title="1.1. Topics Covered"><div class="titlepage"><div><div><h3 class="title"><a id="_topics_covered"></a>1.1. Topics Covered</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem"><p class="simpara">
 Discussion of Hibari’s implementation
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 The audience for this section is developers who wish to understand
    Hibari’s implementation at a deeper level and add new features, fix
    bugs, or just generally tinker with and experiment on the system.
-</li></ul></div></li></ul></div></div><div class="section" title="1.2.&#xA0;Reading the Systems Administrator Guide Is Strongly Recommended"><div class="titlepage"><div><div><h3 class="title"><a id="_reading_the_systems_administrator_guide_is_strongly_recommended"></a>1.2. Reading the Systems Administrator Guide Is Strongly Recommended</h3></div></div></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>To avoid a lot of cut-and-paste text, many of the
+</li></ul></div></li></ul></div></div><div class="section" title="1.2. Reading the Systems Administrator Guide Is Strongly Recommended"><div class="titlepage"><div><div><h3 class="title"><a id="_reading_the_systems_administrator_guide_is_strongly_recommended"></a>1.2. Reading the Systems Administrator Guide Is Strongly Recommended</h3></div></div></div><div class="important" title="Important" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Important"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Important]" src="images/icons/important.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>To avoid a lot of cut-and-paste text, many of the
 operational details that a developer should know or must know about
 Hibari are found in the <a class="ulink" href="hibari-sysadmin-guide.en.html" target="_top">Hibari System
 Administrator’s Guide</a>.  This document assumes that a developer has
 already skimmed the System Administrator’s Guide and is willing to jump
-over to that guide when necessary.</p></td></tr></table></div><p></p></div><div class="section" title="1.3.&#xA0;Copyright Notices"><div class="titlepage"><div><div><h3 class="title"><a id="_copyright_notices"></a>1.3. Copyright Notices</h3></div></div></div><p>Copyright © 2005-2011 Gemini Mobile Technologies, Inc.  All rights
-reserved.</p><p>Gemini Mobile® and HyperScale® are registered trademarks of Gemini
-Mobile Technologies, Inc. in the United States and other countries.</p><p>Portions of Gemini products include third-party technology used under
-license.</p><pre class="screen">Licensed under the Apache License, Version 2.0 (the "License");
+over to that guide when necessary.</p></td></tr></table></div><p></p></div><div class="section" title="1.3. Copyright Notices"><div class="titlepage"><div><div><h3 class="title"><a id="_copyright_notices"></a>1.3. Copyright Notices</h3></div></div></div><p>Copyright © 2005-2013 Hibari developers.  All rights reserved.</p><pre class="screen">Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -36,28 +33,28 @@ Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
 WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
-limitations under the License.</pre><p></p></div></div><div class="section" title="2.&#xA0;Hibari Internals: The Source, Module by Module"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_internals_the_source_module_by_module"></a>2. Hibari Internals: The Source, Module by Module</h2></div></div></div><p>It would be wonderful to say that Hibari sprang from someone’s
+limitations under the License.</pre><p></p></div></div><div class="section" title="2. Hibari Internals: The Source, Module by Module"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_internals_the_source_module_by_module"></a>2. Hibari Internals: The Source, Module by Module</h2></div></div></div><p>It would be wonderful to say that Hibari sprang from someone’s
 forehead, fully formed and adult, like the goddess Athena’s birth from
 the forehead of Zeus.  Software development is usually a bit more
-organic and unplanned than that.  Hibari is no exception.</p><p>Once upon a time, in a galaxy far, far away … Hibari started as a
+organic and unplanned than that.  Hibari is no exception.</p><p>Once upon a time, in a galaxy far, far away… Hibari started as a
 small, focused replacement for Mnesia, the database bundled with
-Erlang/OTP.  Gemini Mobile was bidding on a project that required an
-extremely high throughput database, with high availability and data
-durability guarantees for a workload with a very low read/write ratio
-(i.e. very write-intensive).  The amount of money dedicated to
-hardware was fixed.  Mnesia could do the job very well, except for the
-throughput.  Gemini needed something both faster and simpler.  The
-skeleton of Hibari was written in haste, in case Gemini got the
-contract.</p><p>Fortunately, Gemini lost the bid for the contract.  Hibari sat on the
+Erlang/OTP. Cloudian, Inc. (formerly Gemini Mobile Technologies) was
+bidding on a project that required an extremely high throughput
+database, with high availability and data durability guarantees for a
+workload with a very low read/write ratio (i.e. very write-intensive).
+The amount of money dedicated to hardware was fixed.  Mnesia could do
+the job very well, except for the throughput. Cloudian needed
+something both faster and simpler. The skeleton of Hibari was written
+in haste, in case Cloudian got the contract.</p><p>Fortunately, Cloudian lost the bid for the contract. Hibari sat on the
 shelf for a while, then picked up and developed as a main memory
-database, like Mnesia.  Then requirements changed.  Then a project was
-canceled, and Hibari set aside.  Then picked up and set aside again.
-Each time, requirements changed.</p><p>Hindsight is perfect.  This section will attempt to give the reader,
+database, like Mnesia. Then requirements changed. Then a project was
+canceled, and Hibari set aside. Then picked up and set aside again.
+Each time, requirements changed.</p><p>Hindsight is perfect. This section will attempt to give the reader,
 developers who are maintaining Hibari or adding new features, some
-background for why the code is structured the way it is.  The APIs for
+background for why the code is structured the way it is. The APIs for
 some modules are straightforward to use, and others are not so clear.
 Some modules were written together in a brief period of time, and
-other evolved slowly over several years.</p><div class="section" title="2.1.&#xA0;Major subsystems"><div class="titlepage"><div><div><h3 class="title"><a id="major-subsystems"></a>2.1. Major subsystems</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+other evolved slowly over several years.</p><div class="section" title="2.1. Major subsystems"><div class="titlepage"><div><div><h3 class="title"><a id="major-subsystems"></a>2.1. Major subsystems</h3></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Server (aka the brick)
 </li><li class="listitem">
 Chain replication
@@ -149,7 +146,7 @@ application.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><
   historical data about each brick and chain state transition.
 </li></ul></div></div><div class="section" title="Miscellaneous modules"><div class="titlepage"><div><div><h4 class="title"><a id="misc-modules"></a>Miscellaneous modules</h4></div></div></div><p>These modules do a variety of things, including the Erlang/OTP
 application and supervisor behaviors that create a single, cohesive
-application.  They will be described in more detail below.</p></div></div><div class="section" title="2.2.&#xA0;Admin Server notes: crash-recovery design"><div class="titlepage"><div><div><h3 class="title"><a id="admin-server-crash-recovery"></a>2.2. Admin Server notes: crash-recovery design</h3></div></div></div><p>The <a class="xref" href="#admin-server-modules" title="Admin Server modules">the section called “Admin Server modules”</a> indirectly outlines many of the
+application.  They will be described in more detail below.</p></div></div><div class="section" title="2.2. Admin Server notes: crash-recovery design"><div class="titlepage"><div><div><h3 class="title"><a id="admin-server-crash-recovery"></a>2.2. Admin Server notes: crash-recovery design</h3></div></div></div><p>The <a class="xref" href="#admin-server-modules" title="Admin Server modules">the section called “Admin Server modules”</a> indirectly outlines many of the
 processes that, when grouped together, form the Hibari Admin Server
 application:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 The main Admin Server process.
@@ -181,9 +178,9 @@ single table, would be a good refactoring task?</p></td></tr></table></div></td>
 scoreboard process, one pinger process per brick and one health
 monitor per chain is quite intentional.  If there is only one at a
 given time performing a given task, then there cannot be race
-conditions.</p></div><div class="section" title="2.3.&#xA0;Module-By-Module Commentary"><div class="titlepage"><div><div><h3 class="title"><a id="module-by-module-commentary"></a>2.3. Module-By-Module Commentary</h3></div></div></div><p>The modules in this section appear in alphabetical order.  For an
+conditions.</p></div><div class="section" title="2.3. Module-By-Module Commentary"><div class="titlepage"><div><div><h3 class="title"><a id="module-by-module-commentary"></a>2.3. Module-By-Module Commentary</h3></div></div></div><p>The modules in this section appear in alphabetical order.  For an
 overview of their use by functional category, see
-<a class="xref" href="#major-subsystems" title="2.1.&#xA0;Major subsystems">Section 2.1, “Major subsystems”</a>.</p><div class="section" title="brick.erl"><div class="titlepage"><div><div><h4 class="title"><a id="brick-erl"></a>brick.erl</h4></div></div></div><p>This module provides the Erlang/OTP "application" behavior for the
+<a class="xref" href="#major-subsystems" title="2.1. Major subsystems">Section 2.1, “Major subsystems”</a>.</p><div class="section" title="brick.erl"><div class="titlepage"><div><div><h4 class="title"><a id="brick-erl"></a>brick.erl</h4></div></div></div><p>This module provides the Erlang/OTP "application" behavior for the
 Hibari application.  Such modules are usually quite small.  The reason
 why <code class="literal">brick.erl</code> doesn’t fit the small pattern is that it has some
 extra logic to shutdown logical bricks in a particular order when
@@ -1047,7 +1044,7 @@ scoreboard reflects the health status of each logical brick and chain.</p><p>Acc
 maintained in RAM.  To make the scoreboard resilient in case of
 crashing, each status change is synchronously written to the Admin
 Server’s private <code class="literal">bootstrap_copy</code>* bricks.  See
-<a class="xref" href="#admin-server-crash-recovery" title="2.2.&#xA0;Admin Server notes: crash-recovery design">Section 2.2, “Admin Server notes: crash-recovery design”</a> for more info on crash-recovery
+<a class="xref" href="#admin-server-crash-recovery" title="2.2. Admin Server notes: crash-recovery design">Section 2.2, “Admin Server notes: crash-recovery design”</a> for more info on crash-recovery
 design.  For more information about the Admin Server’s bootstrap
 bricks, see <a class="ulink" href="hibari-sysadmin-guide.en.html#bootstrap-bricks" target="_top">Hibari
 Sysadmin Guide, "Admin Server’s Private State: the Bootstrap Bricks"
@@ -1058,7 +1055,7 @@ proplist that can contain additional information about the event.  At
 this time, there is no requirement of mandatory properties in that
 proplist.  Though mandatory properties may be introduced later, the
 main purpose is merely to provide a human developer/systems
-administrator with some extra information about the event.</p><div class="figure"><a id="idp5066240"></a><p class="title"><strong>Figure 1. Scoreboard and it’s surrounding (partial) supervision tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-stree.svg" target="_top">
+administrator with some extra information about the event.</p><div class="figure"><a id="idp7420944"></a><p class="title"><strong>Figure 1. Scoreboard and it’s surrounding (partial) supervision tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-stree.svg" target="_top">
   <div class="mediaobject" align="center"><img src="images/brick-sb-stree.png" align="middle" alt="images/brick-sb-stree.svg" /></div>
 </a></div></div><br class="figure-break" /><p>The scoreboard and it’s surrounding (partial) supervision tree is
 depicted above by "dotted" lines.  The chainmon_XXX and pinger_YYY
@@ -1066,7 +1063,7 @@ processes manually establish a link with the brick_sb process.  If a
 "down event" for the brick_sb processed is received, the chainmon_XXX
 and pinger_YYY processes sleep for 1 second before exiting abnormally.
 The brick_mon_sup supervisor will then automatically restart the
-chainmon_XXX and pinger_YYY processes.</p><div class="figure"><a id="idp5071664"></a><p class="title"><strong>Figure 2. Scoreboard and it’s surrounding (partial) call tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-ctree.svg" target="_top">
+chainmon_XXX and pinger_YYY processes.</p><div class="figure"><a id="idp7425552"></a><p class="title"><strong>Figure 2. Scoreboard and it’s surrounding (partial) call tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-ctree.svg" target="_top">
   <div class="mediaobject" align="center"><img src="images/brick-sb-ctree.png" align="middle" alt="images/brick-sb-ctree.svg" /></div>
 </a></div></div><br class="figure-break" /><p>During initialization of the scoreboard, the brick_sb loads the
 “scoreboard” operational history into RAM from the bootstrap bricks
@@ -1423,10 +1420,10 @@ the return term, <code class="literal">{current_val, N}</code>, is included in t
 despite the error.  The client must perform sufficient pattern
 matching and/or other sanity checks to verify that the SSF and its
 <code class="literal">DoList</code> output were successful.</p><pre class="literallayout">(hibari_dev@bb3)21&gt; brick_simple:do(tab1, [Op2]).
-[{ts_error,1272654442441669},{current_val,2}]</pre></td></tr></table></div><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The API of the SSF is a work-in-progress.  It is used by one
-internal Gemini project but otherwise does not have strong
+[{ts_error,1272654442441669},{current_val,2}]</pre></td></tr></table></div><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The API of the SSF is a work-in-progress. It is used by one
+internal Cloudian project but otherwise does not have strong
 backward-compatibility requirements.</p></td></tr></table></div></div><div class="section" title="SSF: The server-side fun, server side"><div class="titlepage"><div><div><h5 class="title"><a id="_ssf_the_server_side_fun_server_side"></a>SSF: The server-side fun, server side</h5></div></div></div><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The API of the SSF is a work-in-progress.  It is used by one
-internal Gemini project but otherwise does not have strong
+internal Cloudian project but otherwise does not have strong
 backward-compatibility requirements.</p></td></tr></table></div><p>The implementation of SSFs (server-side funs) on the server side of
 the world is an experiment using a general framework for modifying
 <code class="literal">do</code> operations on the client side before they are executed.  This
@@ -1541,7 +1538,7 @@ bricks listed in <code class="literal">Schema.local</code> are consulted to try 
 <code class="literal">#schema_r</code> record.  Once a copy of that record is found, then the
 real list of bootstrap bricks in <code class="literal">#schema_r.schema_bricklist</code> is used
 for all subsequent quorum calculations.</p></div><div class="section" title="brick_sup.erl"><div class="titlepage"><div><div><h4 class="title"><a id="brick-sup-erl"></a>brick_sup.erl</h4></div></div></div><p>This is the top-level supervisor for the <code class="literal">gdss</code> Hibari application.</p></div><div class="section" title="brick_ticket.erl"><div class="titlepage"><div><div><h4 class="title"><a id="brick-ticket-erl"></a>brick_ticket.erl</h4></div></div></div><p>The <code class="literal">brick_ticket.erl</code> module implements a subset of functionality of
-another Gemini application.  It provides ticket-based workload
+another Cloudian application.  It provides ticket-based workload
 limiting services, sometimes called "admission-based rate limiting".</p><p>The goal is to limit the amount of <span class="emphasis"><em>X</em></span> things that can happen per unit
 of time, e.g. executing a function per minute or reading a maximum
 number of bytes/second.</p><p>Hibari bricks use this ticket-based system to provide shared
@@ -1702,7 +1699,7 @@ Log files in long term storage have negative log sequence numbers.
 Log files in long term storage are hashed and stored in one of many
    subdirectories, to avoid having millions of files all inside a
    single directory.
-</li></ul></div></dd></dl></div><p title="Top-level listing of the common log&#x2019;s gmt_hlog file store."><strong>Top-level listing of the common log’s <code class="literal">gmt_hlog</code> file store. </strong>
+</li></ul></div></dd></dl></div><p title="Top-level listing of the common log’s gmt_hlog file store."><strong>Top-level listing of the common log’s <code class="literal">gmt_hlog</code> file store. </strong>
 </p><pre class="screen">% ls -l hlog.commonLogServer
 total 24
 drwxrwxr-x 9 hibari root 4096 2010-06-09 13:56 1/
@@ -1735,7 +1732,7 @@ drwxrwxr-x 2 hibari root 4096 2010-06-09 13:57 7/
 
 % ls -l hlog.commonLogServer/1/7:
 total 2688
--rw-rw-r-- 1 hibari root 2745369 2010-06-09 13:56 -000000000006.HLOG</pre><p title="Top-level listing of the common log&#x2019;s gmt_hlog file store.">
+-rw-rw-r-- 1 hibari root 2745369 2010-06-09 13:56 -000000000006.HLOG</pre><p title="Top-level listing of the common log’s gmt_hlog file store.">
 </p><p>The application can request that a hunk be written into either area by
 the write-ahead log.  As examples:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 All key updates (key metadata hunks and value blob hunks) are always
@@ -1946,7 +1943,7 @@ for the Admin Server’s HTTP status server at <code class="literal">http://loca
 developer who was relatively new to Erlang and learning as he went
 along.  Also, there is a large number of administrative tasks that the
 Admin Server’s HTTP service does not yet support,
-e.g. changing chain length, adding/removing/reweighting chains.</p></td></tr></table></div></div></div><div class="section" title="2.4.&#xA0;Debugging Hibari (clients and servers) using tracing"><div class="titlepage"><div><div><h3 class="title"><a id="debugging-hibari-using-tracing"></a>2.4. Debugging Hibari (clients and servers) using tracing</h3></div></div></div><p>Sooner or later, a Hibari developer will need to do some debugging.
+e.g. changing chain length, adding/removing/reweighting chains.</p></td></tr></table></div></div></div><div class="section" title="2.4. Debugging Hibari (clients and servers) using tracing"><div class="titlepage"><div><div><h3 class="title"><a id="debugging-hibari-using-tracing"></a>2.4. Debugging Hibari (clients and servers) using tracing</h3></div></div></div><p>Sooner or later, a Hibari developer will need to do some debugging.
 It may be a learning exercise, trying to figure out what existing code
 is doing.  Or perhaps it’s new code that needs debugging.  In either
 case, there are several sets of tools available to Erlang developers.</p><p>The OTP "debugger" application is useful because it provides a GUI
@@ -1977,10 +1974,10 @@ tracing tools.  See the
 <a class="ulink" href="http://www.erlang.org/doc/" target="_top">Erlang/OTP documentation</a> in the
 "Tools" section for several applications that are built on top of
 Erlang’s tracing primitives: "dbg" (in the "runtime_tools"
-subsection), "observer", "inviso", and others.</p><p>Gemini has had very positive experience with the "redbug"
-application.  "Redbug" is bundled with the commercial packaging of
+subsection), "observer", "inviso", and others.</p><p>Cloudian has had very positive experience with the "redbug"
+application. "Redbug" is bundled with the commercial packaging of
 Hibari and is used frequently by both customer operations staff and
-Gemini field engineers to diagnose problems with both Hibari client
+Cloudian field engineers to diagnose problems with both Hibari client
 applications and the Hibari server.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 The "redbug" tool is part of the
 <a class="ulink" href="http://code.google.com/p/eper/" target="_top">"eper" tool suite at Google Code:
@@ -2020,11 +2017,11 @@ One of:
 A generic Erlang term (usually a tuple)
 </li><li class="listitem">
 <code class="literal">io_lib:format/2</code> style formatted text
-</li></ul></div></li></ul></div></li></ul></div><p title="?E_INFO/2 macro&#x2019;s definition:"><strong><code class="literal">?E_INFO/2</code> macro’s definition: </strong>
+</li></ul></div></li></ul></div></li></ul></div><p title="?E_INFO/2 macro’s definition:"><strong><code class="literal">?E_INFO/2</code> macro’s definition: </strong>
 </p><pre class="screen">-define(E_INFO(Fmt, Args),
         begin ?ELOG_INFO_C(?CAT_GENERAL, Fmt, Args),
               error_logger:info_msg(Fmt, Args)
-        end).</pre><p title="?E_INFO/2 macro&#x2019;s definition:">
+        end).</pre><p title="?E_INFO/2 macro’s definition:">
 </p><p>The <code class="literal">?DBG_</code>* macros use the following filtering categories.  The
 categories use integers with C-style bit masks to allow a single trace
 message to use multiple categories by bit-wise AND’ing the categories
@@ -2147,10 +2144,10 @@ See the
   <a class="ulink" href="http://www.erlang.org/doc/apps/erts/match_spec.html" target="_top">Erlang/OTP
   documentation "Match specifications in Erlang"</a> for a detailed
   reference of match specifications.
-</li></ul></div></div></div></div></div><div class="section" title="3.&#xA0;Appendix: Troubleshooting"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_appendix_troubleshooting"></a>3. Appendix: Troubleshooting</h2></div></div></div><p>The subsections here are an assortment of items that were inconvenient
+</li></ul></div></div></div></div></div><div class="section" title="3. Appendix: Troubleshooting"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_appendix_troubleshooting"></a>3. Appendix: Troubleshooting</h2></div></div></div><p>The subsections here are an assortment of items that were inconvenient
 to add in-line elsewhere in this guide.  Like Erlang’s "let it crash"
 philosophy, it’s a bit tidier to let something else handle
-exceptions.  This section is the "something else".</p><div class="section" title="3.1.&#xA0;Problem: Cannot run multiple Hibari apps on the same physical machine"><div class="titlepage"><div><div><h3 class="title"><a id="problem-multiple-hibari-apps"></a>3.1. Problem: Cannot run multiple Hibari apps on the same physical machine</h3></div></div></div><p>Although it is possible to run the Hibari app multiple times
+exceptions.  This section is the "something else".</p><div class="section" title="3.1. Problem: Cannot run multiple Hibari apps on the same physical machine"><div class="titlepage"><div><div><h3 class="title"><a id="problem-multiple-hibari-apps"></a>3.1. Problem: Cannot run multiple Hibari apps on the same physical machine</h3></div></div></div><p>Although it is possible to run the Hibari app multiple times
 simultaneously on the same physical machine (or guest OS instance, if
 you’re using virtualization software such as VMware or Xen), it isn’t
 always easy.  There are two reasons why Hibari might not be able to
@@ -2204,7 +2201,7 @@ In daemon mode, see <code class="literal">/path/to/hibari-top/gdss/1.0.0/etc/cen
 </li><li class="listitem">
 In either situation above, edit the appropriate attribute, e.g.
   <code class="literal">cli_port</code>, <code class="literal">brick_s3_tcp_port</code>, <code class="literal">gdss_ebf_tcp_port</code>, and so on.
-</li></ul></div></dd></dl></div></div></div></div><div class="section" title="4.&#xA0;Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc."><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_appendix_known_warts_problems_inefficiencies_refactoring_opportunities_etc"></a>4. Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc.</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+</li></ul></div></dd></dl></div></div></div></div><div class="section" title="4. Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc."><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_appendix_known_warts_problems_inefficiencies_refactoring_opportunities_etc"></a>4. Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc.</h2></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 Hibari does not yet have a comprehensive backup &amp; restore mechanism,
   in the sense of "dump all contents of the entire cluster to this
   file/files" and "load this file/files back into the cluster".
