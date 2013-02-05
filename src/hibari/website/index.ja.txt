@@ -1,8 +1,8 @@
-// -*- Doc -*-
+// -*- mode:Doc; coding:utf-8-unix -*-
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2013 Hibari developrs.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,102 +17,57 @@
 // limitations under the License.
 //
 
-Hibari Home Page
-================
+= Hibariドキュメントホーム
 
-Hibari is a production-ready, distributed, key-value, big data
-store. Hibari uses chain replication for strong consistency,
-high-availability, and durability. Hibari has excellent performance
-especially for read and large value operations.
+Hibariは商用実績のある分散キー・バリューストアです。チェイン・
+レプリケーション方式により、強い一貫性、高可用性、高信頼性を提供し、
+Read性能と大きなバリューの扱いに秀でます。
 
-For Hibari documentation in English, see link:index.en.html[English].
+英語版はこちら link:index.en.html[English].
 
-*Hibari's Main Features*
+== Hibariの主な特徴
 
-- A Hibari cluster is a distributed system.
-- A Hibari cluster is linearly scalable.
-- A Hibari cluster is highly available.
-- All updates are durable.
-- All updates are strongly consistent.
-- All client operations are lockless.
-- A Hibari cluster's performance is excellent.
-- Multiple client access protocols are available.
-- Data is repaired automatically after a server failure.
-- Cluster configuration can be changed at any time.
-- Data is automatically rebalanced.
-- Heterogeneous hardware support is easy.
-- Micro-transactions simplify creation of robust client applications.
-- Per-table configurable performance options are available.
+- 数台から百台程度のサーバー群で構成される分散データベース（NOSQL）で、
+  サーバー台数に比例して性能がスケールします
+- データをクラスター上に分散して配置し、必要な時に動的に再配置できます
+- 強い一貫性を提供します
+- マイクロトランザクションにより、堅牢なアプリケーションを実現できます
+- ハードウェア故障に対するフェイルオーバー機能により高可用性を提供します
+- ディスク書き込みの同期やデータの複製により、ハードウェアの故障による
+  データの損失を防ぎます
+- 故障から回復したサーバー上のデータは自動的に修復されます
+- サービス稼働中にクラスター構成を変更できます
+- クラスター内に性能の異なるサーバーを混在させられます
 
-Hibari is developed in the Erlang programming language.  Hibari
-requires Erlang/OTP R13B01 or newer.  Hibari has been tested most
-recently with Erlang/OTP R13B04.  Support for Erlang/OTP R14B01 in
-progress.
+HibariはErlangというプログラミング言語で開発され、Linux/UnixとMac OS X
+で動作します。Hibariの本番運用環境はLinuxを想定しています。
 
-*Hibari's Documentation*
 
-The link:hibari-app-developer-guide.ja.html[Hibari Application
-Developer's Guide] is a good first step to get started quickly.  Check
-the download, the build, and the install instructions.  The
-link:hibari-tutorial.ja.html[Hibari Tutorial] is another resource that
-highlights key sections of the
-link:hibari-app-developer-guide.ja.html[Hibari Application Developer's
-Guide].
+== Hibariドキュメント
 
-Two additional documents are the
-link:hibari-sysadmin-guide.en.html[Hibari System Administrator's
-Guide] and the link:hibari-contributor-guide.en.html[Hibari
-Contributor's Guide].  Reading the System Administrator's Guide is
-_STRONGLY_ recommended.
+*link:hibari-app-developer-guide.ja.html[Hibariアプリケーション開発者
+ガイド]*
 
-Read the link:webpage-CHANGELOG.html[CHANGELOG] page for a full list
-of additions, changes, and bug fixes.
+最初に目を通すべき文書です。Hibariの概要、インストール手順、クライアントAPIなどが解説されています。
 
-Read the link:webpage-FAQ.html[FAQ] page for common questions and
-answers.
 
-The documentation is in a state of change and improvement.
-Contributions from the wider world are welcome.  :-)
+*link:hibari-tutorial.ja.html[Hibariチュートリアル]*
 
-*Hibari's Origins*
+Hibariアプリケーション開発者ガイドの中で特に重要な部分を抜粋した、ハンズオン向け資料です。
 
-Hibari was originally written by Gemini Mobile Technologies to support
-mobile messaging and email services.  Hibari was released outside of
-Gemini under the Apache Public License version 2.0 in July 2010.
-Hibari was moved from SourceForge to GitHub in January 2011.
 
-Hibari has been deployed by multiple telecom carriers in Asia and
-Europe.  Hibari may lack some features such as monitoring, event and
-alarm management, and other "production environment" support services.
-Since telecom operator has its own data center support infrastructure,
-Hibari's development has not included many services that would be
-redundant in a carrier environment.  We hope that Hibari's release to
-the open source community will close those functional gaps as Hibari
-spreads outside of carrier data centers.
+*link:hibari-sysadmin-guide.en.html[Hibari System Administrator's
+Guide]*
 
-Gemini Mobile Technologies provides full support, consulting, and
-development services for Hibari. Please see the
-http://www.geminimobile.com/products/Hibari.html[Gemini Mobile
-Technologies Hibari page] for more information.  Please see the
-http://www.geminimobile.com/[Gemini Mobile Technologies Web page] for
-general information.
+Hibariの運用や性能に関わる重量なコンセプトと操作手順が解説されています。本格的に使用する前に必ず読んでください。
 
-Gemini Mobile(R) and HyperScale(R) are registered trademarks of Gemini
-Mobile Technologies, Inc. in the United States and other countries.
 
-------
-Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights
-reserved.
+*link:hibari-contributor-guide.en.html[Hibari Contributor's Guide]*
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Hibariの内部設計が解説されています。
 
-    http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-------
+*link:webpage-CHANGELOG.html[CHANGELOG]*
+
+Hibariのリリース情報一覧ページです。
+

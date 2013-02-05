@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2013 Hibari developers.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 //
 
 = Hibari Application Developer's Guide
-:Date: 2011/04/24
-:Revision: 0.2.2
-:Copyright: Copyright (C) 2006-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+:Date: 2013/02/03
+:Revision: 0.2.4(en)
+:Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
 
 <<<
 == Introduction
@@ -143,18 +143,20 @@ engine.
 
 === Why Hibari?
 
-Hibari was developed internally by Gemini Mobile Technologies, a
-leading producer of mass-scale messaging and transaction systems for
-Tier 1 mobile operators in Asia, Europe, and the Americas. Gemini had
-need for a data store that was efficient, fast, flexible, and
-scalable, as well as robust enough to withstand the rigors of
-deployment in Tier 1 telecom production environments. Dissatisfied
-with the then-available options, Gemini in 2005 began work on what
+Hibari was developed internally by Cloudian, Inc. (formerly Gemini
+Mobile Technologies), a leading producer of mass-scale messaging and
+transaction systems for Tier 1 mobile operators in Asia, Europe, and
+the Americas. Cloudian had need for a data store that was efficient,
+fast, flexible, and scalable, as well as robust enough to withstand
+the rigors of deployment in Tier 1 telecom production
+environments. Dissatisfied with the then-available options, Cloudian
+in 2005 began work on what
+
 came to be Hibari (the name is Japanese for skylark; the kanji
 characters stand for "cloud bird"). With the system having in recent
-years matured and been proven in production, Gemini released Hibari to
+years matured and been proven in production, Cloudian released Hibari to
 the open source community in July 2010 under the Apache 2.0
-license. Gemini regards the open source community as the best venue in
+license. Cloudian regards the open source community as the best venue in
 which Hibari can continue to perfect and grow.
 
 This section describes some of the distinctive features that make
@@ -435,6 +437,9 @@ including Java, C/C++, Python, Ruby, and Erlang.
 For further information about Hibari's client API, see
 link:#client-api-erlang[Client API: Native Erlang] and the subsequent
 client API chapters in this guide.
+
+NOTE: The Hibari source distribution does not include Amazon S3 and
+JSON-RPC. They are separate external projects.
 
 [[production-proven]]
 ==== Production-Proven
@@ -1399,7 +1404,7 @@ execution. The same is true of `Value`.
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
 +
-NOTE: This flag has not yet been extensively tested by Gemini QA.
+NOTE: This flag did not extensively tested by Cloudian QA.
 +
 
  ::
@@ -1573,7 +1578,7 @@ execution. The same is true of `Value`.
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
 +
-NOTE: This flag has not yet been extensively tested by Gemini QA.
+NOTE: This flag did not extensively tested by Cloudian QA.
 +
 
  ::
@@ -1773,7 +1778,7 @@ execution. The same is true of `Value`.
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
 +
-NOTE: This flag has not yet been extensively tested by Gemini QA.
+NOTE: This did not extensively tested by Cloudian QA.
 +
 
  ::
@@ -3155,7 +3160,7 @@ Hibari servers support several of these session protocols on top
 of a TCP/IP transport protocol.  The choice of session protocol is
 a matter of convenience and/or support for the application
 developer. Hibari should be as easy for an app developer to use
-Ruby and JSON-RPC as it is to use Python and Protocol Buffers.
+Ruby and JSON-RPC as it is to use Python and Thrift or EBF.
 +
 * UBF(A), Joe Armstrong's original session layer protocol
 * EBF, the Erlang Binary Format.  The session layer protocol is a
@@ -3933,7 +3938,7 @@ $ git config --global user.name "Your Name"
 +
 ------
 $ mkdir -p ~/bin
-$ wget -O - http://android.git.kernel.org/repo > ~/bin/repo
+$ wget -O - https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
 ------
 +

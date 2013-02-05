@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2013 Hibari developers.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -18,9 +18,9 @@
 //
 
 = Hibari Contributor's Guide  *DRAFT - IN PROGRESS*
-:Date: 2011/03/14
-:Revision: 0.5.2
-:Copyright: Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+:Date: 2013/02/03
+:Revision: 0.5.3
+:Copyright: Copyright (C) 2005-2013 Hibari developers.  All rights reserved.
 
 <<<
 == Introduction
@@ -64,14 +64,7 @@ over to that guide when necessary.
 <<<
 ===  Copyright Notices
 
-Copyright (C) 2005-2011 Gemini Mobile Technologies, Inc.  All rights
-reserved.
-
-Gemini Mobile(R) and HyperScale(R) are registered trademarks of Gemini
-Mobile Technologies, Inc. in the United States and other countries.
-
-Portions of Gemini products include third-party technology used under
-license.
+Copyright (C) 2005-2013 Hibari developers.  All rights reserved.
 
 ------------
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -95,26 +88,26 @@ forehead, fully formed and adult, like the goddess Athena's birth from
 the forehead of Zeus.  Software development is usually a bit more
 organic and unplanned than that.  Hibari is no exception.
 
-Once upon a time, in a galaxy far, far away ... Hibari started as a
+Once upon a time, in a galaxy far, far away... Hibari started as a
 small, focused replacement for Mnesia, the database bundled with
-Erlang/OTP.  Gemini Mobile was bidding on a project that required an
-extremely high throughput database, with high availability and data
-durability guarantees for a workload with a very low read/write ratio
-(i.e. very write-intensive).  The amount of money dedicated to
-hardware was fixed.  Mnesia could do the job very well, except for the
-throughput.  Gemini needed something both faster and simpler.  The
-skeleton of Hibari was written in haste, in case Gemini got the
-contract.
+Erlang/OTP. Cloudian, Inc. (formerly Gemini Mobile Technologies) was
+bidding on a project that required an extremely high throughput
+database, with high availability and data durability guarantees for a
+workload with a very low read/write ratio (i.e. very write-intensive).
+The amount of money dedicated to hardware was fixed.  Mnesia could do
+the job very well, except for the throughput. Cloudian needed
+something both faster and simpler. The skeleton of Hibari was written
+in haste, in case Cloudian got the contract.
 
-Fortunately, Gemini lost the bid for the contract.  Hibari sat on the
+Fortunately, Cloudian lost the bid for the contract. Hibari sat on the
 shelf for a while, then picked up and developed as a main memory
-database, like Mnesia.  Then requirements changed.  Then a project was
-canceled, and Hibari set aside.  Then picked up and set aside again.
+database, like Mnesia. Then requirements changed. Then a project was
+canceled, and Hibari set aside. Then picked up and set aside again.
 Each time, requirements changed.
 
-Hindsight is perfect.  This section will attempt to give the reader,
+Hindsight is perfect. This section will attempt to give the reader,
 developers who are maintaining Hibari or adding new features, some
-background for why the code is structured the way it is.  The APIs for
+background for why the code is structured the way it is. The APIs for
 some modules are straightforward to use, and others are not so clear.
 Some modules were written together in a brief period of time, and
 other evolved slowly over several years.
@@ -1946,14 +1939,14 @@ matching and/or other sanity checks to verify that the SSF and its
   [{ts_error,1272654442441669},{current_val,2}]
 ======================
 
-NOTE: The API of the SSF is a work-in-progress.  It is used by one
-internal Gemini project but otherwise does not have strong
+NOTE: The API of the SSF is a work-in-progress. It is used by one
+internal Cloudian project but otherwise does not have strong
 backward-compatibility requirements.
 
 ===== SSF: The server-side fun, server side
 
 NOTE: The API of the SSF is a work-in-progress.  It is used by one
-internal Gemini project but otherwise does not have strong
+internal Cloudian project but otherwise does not have strong
 backward-compatibility requirements.
 
 The implementation of SSFs (server-side funs) on the server side of
@@ -2146,7 +2139,7 @@ This is the top-level supervisor for the `gdss` Hibari application.
 ==== brick_ticket.erl
 
 The `brick_ticket.erl` module implements a subset of functionality of
-another Gemini application.  It provides ticket-based workload
+another Cloudian application.  It provides ticket-based workload
 limiting services, sometimes called "admission-based rate limiting".
 
 The goal is to limit the amount of _X_ things that can happen per unit
@@ -2681,10 +2674,10 @@ link:http://www.erlang.org/doc/[Erlang/OTP documentation] in the
 Erlang's tracing primitives: "dbg" (in the "runtime_tools"
 subsection), "observer", "inviso", and others.
 
-Gemini has had very positive experience with the "redbug"
-application.  "Redbug" is bundled with the commercial packaging of
+Cloudian has had very positive experience with the "redbug"
+application. "Redbug" is bundled with the commercial packaging of
 Hibari and is used frequently by both customer operations staff and
-Gemini field engineers to diagnose problems with both Hibari client
+Cloudian field engineers to diagnose problems with both Hibari client
 applications and the Hibari server.
 
 * The "redbug" tool is part of the
