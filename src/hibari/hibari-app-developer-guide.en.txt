@@ -1198,6 +1198,8 @@ the links.
   * link:#brick-simple-add[brick_simple:add/6]
  - Assign a new value and/or new flags to a key that already exists:
   * link:#brick-simple-replace[brick_simple:replace/6]
+ - Rename a key that already exists:
+  * link:#brick-simple-rename[brick_simple:rename/6]
  - Set a key-value pair and optional flags regardless of whether the
    key yet exists:
   * link:#brick-simple-set[brick_simple:set/6]
@@ -1419,12 +1421,12 @@ RETURNS
  ::
 Success return
 
-- `'ok'`
+- `{'ok', timestamp()}`
 
  ::
 Error returns
 
-- `{'key_exists',timestamp()}`
+- `{'key_exists', timestamp()}`
   * The operation failed because the key already exists.
   * `timestamp() = integer()`
 - `'invalid_flag_present'`
@@ -1457,7 +1459,7 @@ Successful adding of a new key-value pair:
 +
 ------
 > brick_simple:add(tab1, <<"foo">>, <<"Hello, world!">>).
-ok
+{ok,1271542959131192}
 ------
 +
 
@@ -1476,7 +1478,7 @@ RAM regardless of brick's default storage setting:
 +
 ------
 > brick_simple:add(tab1, "foo1", "this is value1", ['value_in_ram']).
-ok
+{ok,1271542959131192}
 ------
 +
 
@@ -1486,7 +1488,7 @@ operation timeout:
 +
 ------
 > brick_simple:add(tab1, "foo2", "this is value2", 20000).
-ok
+{ok,1271542959131192}
 ------
 
 [[brick-simple-replace]]
@@ -1593,7 +1595,7 @@ RETURNS
  ::
 Success return
 
-- `'ok'`
+- `{'ok', timestamp()}`
 
  ::
 Error returns
@@ -1635,7 +1637,7 @@ Successful replacement of a key-value pair:
 +
 ------
 > brick_simple:replace(tab1, <<"foo">>, <<"Goodbye, world!">>).
-ok
+{ok,1271543165272987}
 ------
 +
 
@@ -1654,7 +1656,7 @@ RAM regardless of brick's default storage setting:
 +
 ------
 > brick_simple:replace(tab1, "foo", "You again, world!", ['value_in_ram']).
-ok
+{ok,1271543165272987}
 ------
 +
 
@@ -1674,7 +1676,7 @@ specified its current timestamp:
 +
 ------
 > brick_simple:replace(tab1, "foo", "Whole new value", [{'testset', 1271543165272987}]).
-ok
+{ok,1271543165272988}
 ------
 +
 
@@ -1684,7 +1686,7 @@ operation timeout:
 +
 ------
 > brick_simple:replace(tab1, "foo", "Foo again?", 30000).
-ok
+{ok,1271543165272989}
 ------
 
 [[brick-simple-set]]
@@ -1793,7 +1795,7 @@ RETURNS
  ::
 Success return
 
-- `'ok'`
+- `{'ok', timestamp()}`
 
  ::
 Error returns
@@ -1836,7 +1838,7 @@ Successful setting of a key-value pair:
 +
 ------
 > brick_simple:set(tab1, <<"key4">>, <<"cool value">>).
-ok
+{ok,1271542959131192}
 ------
 +
 
@@ -1846,7 +1848,7 @@ regardless of brick's default storage setting:
 +
 ------
 > brick_simple:set(tab1, "goo", "value6", ['value_in_ram']).
-ok
+{ok,1271542959131193}
 ------
 +
 
@@ -1867,7 +1869,214 @@ matches our specified timestamp:
 +
 ------
 > brick_simple:set(tab1, "goo", "value7", [{'testset', 1271543165272432}]).
-ok
+{ok,1271543165272433}
+------
+
+
+[[brick-simple-rename]]
+=== brick_simple:rename/6
+
+SYNOPSIS
+
+ ::
+*brick_simple:rename(Tab, Key, NewKey, ExpTime, Flags, Timeout).*
+
+DESCRIPTION
+
+ ::
+Rename `Key` and `Value` pair (and optional `Flags`) to `NewKey` in
+the table `Tab` if the key already exists.  The operation will fail if
+`Key` does not already exist or if `Key` and `NewKey` are not stored
+on the same chain.
+
+PARAMETERS
+
+ ::
+*Tab*
+
+- Name of the table in which to rename the key-value pair.
+- Mandatory.
+- Type:
+  * `Tab = table()`
+  * `table() = atom()`
+
+ ::
+*Key*
+
+- Key to rename in the table, in association with an existing paired value.
+- Mandatory.
+- Type:
+  * `Key = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
++
+NOTE: While the `Key` may be specified as either `iolist()` or
+`binary()`, it will be converted into binary before operation
+execution.
++
+
+ ::
+*NewKey*
+
+- NewKey in the table, in association with an existing paired value.
+- Mandatory.
+- Type:
+  * `NewKey = key()`
+  * `key() = iodata()`
+  * `iodata() = iolist() | binary()`
+  * `iolist()  = [char() | binary() | iolist()]`
++
+NOTE: While the `NewKey` may be specified as either `iolist()` or
+`binary()`, it will be converted into binary before operation
+execution.
++
+
+ ::
+*ExpTime*
+
+- Time at which the key will expire, expressed as a Unix time_t().
+- Optional; defaults to 0 (no expiration).
+- Type:
+  * `ExpTime = exp_time()`
+  * `exp_time() = time_t()`
+  * `time_t() = integer()`
+
+ ::
+*Flags*
+
+- List of operational flags to apply to the `rename' operation,
+  and/or custom property flags to associate with the key-value pair in
+  the database. Heavy use of custom property flags is discouraged due
+  to RAM-based storage.
+- Optional; defaults to empty list.
+- Type:
+  * `Flags = flags_list()`
+  * `flags_list() = [do_op_flag() | property()]`
+  * `do_op_flag() = {'testset', timestamp()} |'value_in_ram'`
+  * `timestamp() = integer()`
+  * `property() = atom() | {term(), term()}`
+- Operational flag usage
+  * `{'testset', timestamp()}`
+    ** Fail the operation if the existing key's timestamp is not
+       exactly equal to `timestamp()`.  If used inside a
+       link:#brick-simple-do[micro-transaction], abort the transaction
+       if the key's timestamp is not exactly equal to `timestamp()`.
+  * `'value_in_ram'`
+    ** Store the value blob in RAM, overriding the default storage
+       location of the brick.
++
+NOTE: This flag has not yet been extensively tested by Gemini QA.
++
+
+ ::
+*Timeout*
+
+- Operation timeout in milliseconds.
+- Optional; defaults to 15000.
+- Type:
+  * `Timeout = timeout()`
+  * `timeout() = integer() | 'infinity'`
+
+RETURNS
+
+ ::
+Success return
+
+- `{'ok', timestamp()}`
+
+ ::
+Error returns
+
+- `'key_not_exist'`
+  * The operation failed because the key does not exist or because key
+    and the new key are equal.
+- `{'ts_error', timestamp()}`
+  * The operation failed because the `{'testset', timestamp()}` flag
+    was used and there was a timestamp mismatch. The `timestamp()` in
+    the return is the current value of the existing key's timestamp.
+  * `timestamp() = integer()`
+- `'invalid_flag_present'`
+  * The operation failed because an invalid `do_op_flag()` was found
+    in the `Flags` argument.
+- `'brick_not_available'`
+  * The operation failed because the chain that is responsible for
+    this key and the new key is currently length zero and therefore
+    unavailable.
+- `{{'nodedown',node()},{'gen_server','call',term()}}`
+  * The operation failed because the server brick handling the request
+    has crashed or else a network partition has occurred between the
+    client and server. The client should resend the query after a
+    short delay, on the assumption that the Admin Server will have
+    detected the failure and taken steps to repair the chain.
+  * `node() = atom()`
+
+ALIASES
+
+ ::
+- brick_simple:rename/3
+  * `brick_simple:rename(Tab, Key, NewKey).`
+- brick_simple:rename/4
+  * `brick_simple:rename(Tab, Key, NewKey, Flags).`
+  * `brick_simple:rename(Tab, Key, NewKey, Timeout).`
+
+EXAMPLES
+
+ ::
+Successful renaming of a key-value pair:
++
+------
+> brick_simple:rename(tab1, <<"foo">>, <<"bar">>).
+{ok,1271543165272987}
+------
++
+
+ ::
+Failed attempt to rename a key that does not yet exist:
++
+------
+> brick_simple:rename(tab1, <<"key3">>, <<"bar">>).
+key_not_exist
+------
++
+
+ ::
+Successful renaming of a key-value pair, with value to be stored in
+RAM regardless of brick's default storage setting:
++
+------
+> brick_simple:rename(tab1, "foo", "bar", ['value_in_ram']).
+{ok,1271543165272987}
+------
++
+
+ ::
+Failed attempt to rename a key for which we have incorrectly
+specified its current timestamp:
++
+------
+> brick_simple:rename(tab1, "foo", "bar", [{'testset', 12345}]).
+{ts_error,1271543165272987}
+------
++
+
+ ::
+Successful renaming of a key-value pair for which we have correctly
+specified its current timestamp:
++
+------
+> brick_simple:rename(tab1, "foo", "bar", [{'testset', 1271543165272987}]).
+{ok,1271543165272988}
+------
++
+
+ ::
+Successful renaming of a key-value pair, using a non-default
+operation timeout:
++
+------
+> brick_simple:rename(tab1, "foo", "bar", 30000).
+{ok,1271543165272989}
 ------
 
 [[brick-simple-get]]
@@ -1969,8 +2178,9 @@ Success returns
   * `iolist()  = [char() | binary() | iolist()]`
 - `{'ok', timestamp()}`
   * Success return when the get uses `'witness'` but not `'get_all_attribs'`.
-- `{'ok', timestamp(), proplist()}`
+- `{'ok', timestamp(), exp_time(), proplist()}`
   * Success return when the get uses both `'witness'` and `'get_all_attribs'`.
+  * `exp_time() = time_t()`
   * `proplist() = [property()]`
   * `property() = atom() | {term(), term()}`
 - `{'ok', timestamp(), val(), exp_time(), proplist()}`
@@ -2154,9 +2364,10 @@ Success returns
 - `{ok, {[{key(), timestamp()}], boolean()}}`
   * Success return when the `get_many` uses `'witness'` but not
     `'get_all_attribs'`.
-- `{ok, {[{key(), timestamp(), proplist()}], boolean()}}`
+- `{ok, {[{key(), timestamp(), expy_time(), proplist()}], boolean()}}`
   * Success return when the `get_many` uses both `'witness'` and
     `'get_all_attribs'`.
+  * `exp_time() = time_t()`
   * `proplist() = [property()]`
   * `property() = atom() | {term(), term()}`
 - `{ok, {[{key(), timestamp(), val(), exp_time(), proplist()}],
@@ -2454,6 +2665,7 @@ PARAMETERS
     ** `brick_server:make_add(Key, Value, ExpTime, Flags)`
     ** `brick_server:make_replace(Key, Value, ExpTime, Flags)`
     ** `brick_server:make_set(Key, Value, ExpTime, Flags)`
+    ** `brick_server:make_rename(Key, NewKey, ExpTime, Flags)`
     ** `brick_server:make_get(Key, Flags)`
     ** `brick_server:make_get_many(Key, Flags)`
     ** `brick_server:make_delete(Key, Flags)`
@@ -2474,6 +2686,7 @@ PARAMETERS
        link:#brick-simple-add[brick_simple:add/6],
        link:#brick-simple-replace[brick_simple:replace/6],
        link:#brick-simple-set[brick_simple:set/6],
+       link:#brick-simple-rename[brick_simple:rename/6],
        link:#brick-simple-get[brick_simple:get/4],
        link:#brick-simple-get-many[brick_simple:get_many/5], and
        link:#brick-simple-delete[brick_simple:delete/4].
@@ -2532,6 +2745,7 @@ Success return
     described in the
     link:#brick-simple-replace[brick_simple:replace/6] section; and
     likewise for link:#brick-simple-set[set],
+    likewise for link:#brick-simple-rename[rename],
     link:#brick-simple-get[get],
     link:#brick-simple-get-many[get_many], and
     link:#brick-simple-delete[delete].
@@ -3074,7 +3288,8 @@ API function, in alphabetical order.:
 * `replace_req()` -> `brick_simple:replace()`, see
   xref:brick-simple-replace[].
 * `set_req()` -> `brick_simple:set()`, see xref:brick-simple-set[].
-
+* `rename_req()` -> `brick_simple:rename()`, see
+  xref:brick-simple-rename[].
 
 [[using-ubf-erlang-client]]
 === Using the UBF Client Library for Erlang
@@ -3539,6 +3754,12 @@ service Hibari {
    * Set
    */
   HibariResponse Set(1: Set request)
+      throws (1:HibariException ouch)
+
+  /**
+   * Rename
+   */
+  HibariResponse Rename(1: Rename request)
       throws (1:HibariException ouch)
 
   /**
