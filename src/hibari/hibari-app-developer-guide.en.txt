@@ -18,8 +18,8 @@
 //
 
 = Hibari Application Developer's Guide
-:Date: 2013/02/03
-:Revision: 0.2.4(en)
+:Date: 2013/03/04
+:Revision: 0.2.6(en)
 :Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
 
 <<<
@@ -2364,7 +2364,7 @@ Success returns
 - `{ok, {[{key(), timestamp()}], boolean()}}`
   * Success return when the `get_many` uses `'witness'` but not
     `'get_all_attribs'`.
-- `{ok, {[{key(), timestamp(), expy_time(), proplist()}], boolean()}}`
+- `{ok, {[{key(), timestamp(), exp_time(), proplist()}], boolean()}}`
   * Success return when the `get_many` uses both `'witness'` and
     `'get_all_attribs'`.
   * `exp_time() = time_t()`
