@@ -1966,7 +1966,7 @@ execution.
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
 +
-NOTE: This flag has not yet been extensively tested by Gemini QA.
+NOTE: This flag has not yet been extensively tested by Cloudian QA.
 +
 
  ::
