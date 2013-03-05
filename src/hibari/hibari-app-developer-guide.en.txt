@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-= Hibari Application Developer's Guide
+= Hibari Application Developer's Guide (Hibari v0.3.0)
 :Date: 2013/03/04
 :Revision: 0.2.6(en)
 :Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
@@ -509,6 +509,22 @@ limited to large-scale messaging, social media, and archiving. Hibari
 offers particular value in environments that require strong data
 consistency and/or high performance across a variety of object types
 and sizes.
+
+[[whats-new]]
+== What's New in Hibari v3.0?
+
+- New Client API - Server Side Rename
+- Client API changes - Server Side Timestamp. brick_server will
+  generate the timestamp for a key-value by default instead of
+  client to provide the timestamp. In addition, return values from
+  add, replace, and set operations contain the generated timestamp.
+- Introduce Basho Lager for more traditional logging that plays nicely
+  with UNIX logging tools like logrotate and syslog
+- DTrace/SystemTap tracepoints to examine database latency in
+  production
+- Support for building and running on Joyent SmartOS (an illumos based
+  Solaris variant armed with ZFS, DTrace, Zones, and KVM)
+
 
 [[getting-started]]
 == Getting Started

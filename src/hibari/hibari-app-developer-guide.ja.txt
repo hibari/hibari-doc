@@ -17,7 +17,7 @@
 // limitations under the License.
 //
 
-= Hibari (R) アプリケーション開発者ガイド
+= Hibari (R) アプリケーション開発者ガイド（Hibari v0.3.0）
 :Date: 2013/03/04
 :Revision: 0.2.6(ja)
 :Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
@@ -240,6 +240,24 @@ NOTE: HibariのソースコードディストリビューションにはAmazon S
 - クラスターの拡張または縮小時の自動データ配置バランシング
 
 　そしてHibariはビジネス全体に対しても、サービスの高可用性と短い待ち時間に対するユーザーの要求を満たしながら、低廉なコストでBig Dataの拡張性を提供します。Hibariは、大量のデータを扱う幅広いサービスシナリオに対応できるストレージ・ソリューションです。そのシナリオは、大規模メッセージングやソーシャルメディア、アーカイブなどをはじめ、さまざまな可能性を持ちます。Hibariは、多種多様なオブジェクトすべてに対してデータの強い一貫性と高性能が求められる環境で、その真価を発揮します。
+
+[[whats-new]]
+== Hibari v3.0の変更点
+
+*TODO*
+
+- New Client API - Server Side Rename
+- Client API changes - Server Side Timestamp. brick_server will
+  generate the timestamp for a key-value by default instead of
+  client to provide the timestamp. In addition, return values from
+  add, replace, and set operations contain the generated timestamp.
+- Introduce Basho Lager for more traditional logging that plays nicely
+  with UNIX logging tools like logrotate and syslog
+- DTrace/SystemTap tracepoints to examine database latency in
+  production
+- Support for building and running on Joyent SmartOS (an illumos based
+  Solaris variant armed with ZFS, DTrace, Zones, and KVM)
+
 
 [[getting-started]]
 == はじめに
