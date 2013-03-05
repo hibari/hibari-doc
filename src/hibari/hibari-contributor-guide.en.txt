@@ -17,9 +17,9 @@
 // limitations under the License.
 //
 
-= Hibari Contributor's Guide  *DRAFT - IN PROGRESS*
-:Date: 2013/02/03
-:Revision: 0.5.3
+= Hibari Contributor's Guide (Hibari v0.3.0) *DRAFT - IN PROGRESS*
+:Date: 2013/03/05
+:Revision: 0.5.4
 :Copyright: Copyright (C) 2005-2013 Hibari developers.  All rights reserved.
 
 <<<
@@ -2691,6 +2691,34 @@ using macros based on the `gmt_elog.erl` and `gmt_elog_policy.erl`
 modules.  These tracepoints give the developer (and even field support
 staff) more options for tracing events through Hibari's code.
 
+Trace data can be collected by two methods:
+
+1. DTrace (or SystemTap), introduced at Hibari v0.3.0
+   * This is the preferred way to collect trace data. DTrace/SystemTap
+     will have lowest overhead, and also provide an unified way to
+     gather and view various information from Erlang VM and Unix/Linux
+     kernel.
+   * Requirements
+     ** Erlang/OTP R15, or newer (built with `--with-dynamic-trace`
+        option)
+     ** Unix/Linux with DTrace or SystemTap support.
+        *** DTrace will be available in Solaris variants (including
+            Joyent SmartOS), Mac OS X, and FreeBSD.
+        *** SystemTap will be available in Red Hat Enterprise Linux,
+            and CentOS.
+     ** root privilege
+   * For more details about DTrace, please read this 61-page
+     paper. It's not Erlang VM specific but will show you a practical
+     example of how we can use DTrace in a production system.
+     ** link:http://joyent.com/developers/resources/examining-file-system-latency-in-production[Examining File System Latency in Production - Joyent SmartOS]
+
+2. dbg module in Erlang/OTP
+   * This is the alternative way when DTrace method above is not
+     available. dbg module activates the Erlang VM's tracing mechanism
+     and this will have some performance impact. dbg module only
+     collects the data from those tracepoints in Hibari, but it will
+     still give us valuable information.
+
 The `gmt_elog` tracepoints are designed to be extremely lightweight.
 While they can be disabled completely at compile-time, their overhead
 is so low that they can remain in production code and be enabled only
@@ -2715,25 +2743,32 @@ file.  The underlying mechanism is provided by macros in the
   level.
 +
 These macros actually perform two functions: generate an
-application log event via `error_logger` and optionally generate a
-`gmt_elog` trace message.  When examining large traces, it proved
-_extremely inconvenient_ to try to merge application log messages into
-the flow of trace output ... so now the macros perform that merging
-task automatically.
+application log event via
+link:https://github.com/basho/lager#readme[Basho Lager]
+and optionally generate a `gmt_elog` trace message. When examining
+large traces, it proved _extremely inconvenient_ to try to merge
+application log messages into the flow of trace output ... so now the
+macros perform that merging task automatically.
 +
 * For trace events that do not merit an application log entry using
-  `error_logger`, the `?DBG_`* macros provide a convenient way to
-  specify:
+  Lager, the `?DBG_`* macros provide a convenient way to specify:
 ** A general category (for trace filtering)
 ** One of:
 *** A generic Erlang term (usually a tuple)
 *** `io_lib:format/2` style formatted text
 
-.`?E_INFO/2` macro's definition:
+.The definition of `?E_INFO/2` macro in `brick.hrl`
 ----------
 -define(E_INFO(Fmt, Args),
-        begin ?ELOG_INFO_C(?CAT_GENERAL, Fmt, Args),
-              error_logger:info_msg(Fmt, Args)
+        ?ELOG_INFO(?CAT_GENERAL, Fmt, Args)).
+----------
+
+.The definition of `?ELOG_INFO/3` macro in `gmt_elog.hrl`
+----------
+-define(ELOG_INFO(Msg),
+        begin
+            lager:info(Msg),
+            gmt_elog_policy:dtrace(info, undefined, ?MODULE, ?LINE, Msg, [])
         end).
 ----------
 
@@ -2770,23 +2805,30 @@ Here are a couple of examples of using these macros.
 ----------
 
 In the end, the result of both these macros is a call to
-`gmt_elog_policy:enabled/6`.  By default, this function does not do
-anything.  For lowest overhead, it should do nothing.  It doesn't
-*need* to do anything, because the Erlang tracing mechanism will do
-what we need if and when we need to activate the tracing.
+`gmt_elog_policy:dtrace/6`. When `dtrace_support` in `sys.config` is
+set to `false` or DTrace/SystemTap support is not available in Erlang
+VM, this function does not do anything for lowest overhead.
 
-.The `gmt_elog_policy:enabled/6` function
+When `dtrace_support` is set to `true` and DTrace/SystemTap support is
+available, this function will trigger the "user" trace probe
+`user_trace_i4s4` in the dyntrace NIF module to send the trace message
+to DTrace consumers.
+
+If we want to use dbg module instead of DTrace/SystemTap, Setting
+`dtrace_support` to `false` is recommended to avoid unnecessary calls
+on the user trace probe. The Erlang tracing mechanism will do what we
+need if and when we need to activate the tracing.
+
+.The spec of `gmt_elog_policy:dtrace/6` function
 ----------
-enabled(_Priority, _Category, _Module, _Line, _Fmt, _ArgList) ->
-    false.
+-type log_level() :: 'emergency' | 'alert' | 'critical' | 'error'
+                     | 'warning' | 'notice' | 'info' | 'debug' | 'trace'.
+
+-spec dtrace(log_level(), integer() | undefined, module(),
+             integer(), string(), [term()]) -> true | error | badarg.
 ----------
 
-When enabled, the Erlang VM's tracing mechanism will tell us the
-module name, function name, and arguments of any function call that
-meets its match specification.  When tracing is not enabled, almost no
-computation is performed.
-
-The arguments for the `enabled/6` function are usually generated by
+The arguments for the `dtrace/6` function are usually generated by
 macros for convenience.  The arguments are:
 
 Priority, `term()`::
@@ -2813,10 +2855,61 @@ ArgList, `string()`::
 An `io_lib:format/2` formatting argument list.
 +
 NOTE: The `Fmt` and `ArgList` arguments are used for the `?DBG_`*
-style macros, because arguments are used by the log trace formatting
-functions to do the actual log trace formatting.
+style macros. When we use DTrace/SystemTap method, `dtrace/6` function
+formats the log message. When we use dbg module method (and
+`dtrace_support` is set to `false` or DTrace support is not available),
+`dtrace/6` function doesn't format the log message, and the log trace
+formatting function will format the log massage after trace data
+collection.
 
-===== Trace collection and formatting
+
+===== Method 1. DTrace/SystemTap: Trace collection
+
+We use `dtrace` or `systemtap` command on the platform to collect
+trace data not only from `?DBG_`* macros but also Erlang VM and
+Unix/Linux kernel. We can perform simple tasks by directly giving
+arguments to these commands, or we can write D or SystemTap script for
+more complex tasks. Note that you'll need root privilege to run these
+commands and scripts.
+
+As of Erlang/OTP R15B, we can collect the following information about
+Erlang VM:
+
+- Processes: spawn, exit, hibernate, scheduled, ...
+- Messages: send, queued, received, exit signals
+- Memory: GC minor and major, proc heap grow and shrink
+- Data copy: within heap, across heaps
+- Function calls: function, BIF, and NIF, entry and return
+- Network distribution: monitor, port busy, output events
+- Ports: open, command, control, busy/not busy
+- Drivers: callback API 100% instrumented
+- `efile_drv.c` file I/O driver: 100% instrumented
+
+We can also collect Unix/Linux kernel information such as:
+
+- System View: observing CPUs, memory, disk and network I/O
+- Disk I/O: request types and I/O size, request queues, latency,
+  errors
+- File Systems: raw I/O (/dev/rdsk), file system I/O, cache
+  hits/misses, physical disk I/O
+- Network Lower-Level Protocols: protocol requests, socket
+  connections, transport I/O (TCP or UDP), network interface I/O
+
+Basic DTrace/SystemTap recipes will be shipped with Hibari starting
+v0.3.1 or v0.3.2. But until then, please refer to the following
+resources:
+
+- Example Erlang VM scripts in `libs/runtime_tools-x.y.z/examples/`
+  directory of your Erlang/OTP installation.
+- link:http://joyent.com/developers/resources/examining-file-system-latency-in-production[Examining File System Latency in Production - Joyent SmartOS]
+- The DTrace Book: "DTrace: Dynamic Tracing in Oracle Solaris, Mac OS
+  X, and FreeBSD" by Brendan Gregg and Jim Mauro, Prentice Hall 2011,
+  1152 pages.
+  * http://www.dtracebook.com/
+- DTrace.org Blog at: http://dtrace.org/blogs/
+
+
+===== Method 2. dbg module: Trace collection and formatting
 
 The `gmt_elog:help/0` function provides a quick reference for how to
 use the `gmt_elog` tracing functions.
@@ -2840,9 +2933,11 @@ ok
 ------------------
 
 When we enable tracing, we're actually tracing calls to the
-`gmt_elog_policy:enabled/6` function.  As with any tracing match
-specification, we can be as general (using `'_'` wildcards) or as
-specific as we wish in filtering trace events.
+`gmt_elog_policy:dtrace/6` function. The Erlang VM's tracing mechanism
+will tell us the module name, function name, and arguments of any
+function call that meets its match specification. As with any tracing
+match specification, we can be as general (using `'_'` wildcards) or
+as specific as we wish in filtering trace events.
 
 For the examples of `add_match_spec` shown above, here is an explanation
 
@@ -2872,7 +2967,7 @@ If you have a low volume of trace messages, it may be convenient to
 use `gmt_elog:start_tracing/0` to send those messages to the shell
 window instead of to a file.
 
-===== For more information about tracing
+===== For more information about dbg module tracing
 
 * See the EDoc documentation for the `gmt_elog` module for detailed
   information on how to use all the tracing functions in that module.
