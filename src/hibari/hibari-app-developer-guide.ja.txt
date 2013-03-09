@@ -259,6 +259,12 @@ NOTE: HibariのソースコードディストリビューションにはAmazon S
   Solaris variant armed with ZFS, DTrace, Zones, and KVM)
 
 
+[[upgrading-hibari]]
+== 旧バージョンからのアップグレード
+
+*TODO*
+
+
 [[getting-started]]
 == はじめに
 

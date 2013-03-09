@@ -526,6 +526,12 @@ and sizes.
   Solaris variant armed with ZFS, DTrace, Zones, and KVM)
 
 
+[[upgrading-hibari]]
+== Upgrading Hibari from an Earlier Version
+
+*TODO*
+
+
 [[getting-started]]
 == Getting Started
 
