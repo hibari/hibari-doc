@@ -18,9 +18,9 @@
 //
 
 = Hibari Application Developer's Guide (Hibari v0.3.0)
-:Date: 2013/03/04
-:Revision: 0.2.6(en)
-:Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
+:Date: 2013/03/17
+:Revision: 0.2.7(en)
+:Copyright: Copyright (C) 2006-2013 Hibari developers. All rights reserved.
 
 <<<
 == Introduction
@@ -1587,7 +1587,9 @@ execution. The same is true of `Value`.
 - Type:
   * `Flags = flags_list()`
   * `flags_list() = [do_op_flag() | property()]`
-  * `do_op_flag() = {'testset', timestamp()} |'value_in_ram'`
+  * `do_op_flag() = {'testset', timestamp()} | 'value_in_ram' |
+    {'exp_time_directive', 'keep' | 'replace'} |
+    {'attrib_directive', 'keep' | 'replace'}`
   * `timestamp() = integer()`
   * `property() = atom() | {term(), term()}`
 - Operational flag usage
@@ -1596,6 +1598,22 @@ execution. The same is true of `Value`.
        exactly equal to `timestamp()`.  If used inside a
        link:#brick-simple-do[micro-transaction], abort the transaction
        if the key's timestamp is not exactly equal to `timestamp()`.
+  * `{'exp_time_directive', 'keep' | 'replace'}`
+    ** Default to `'replace'`
+    ** Specifies whether the `ExpTime` is kept from the old key value
+       pair or replaced with the `ExpTime` provided in the replace
+       operation.
+  * `{'attrib_directive', 'keep' | 'replace'}``
+    ** Default to `'replace'`
+    ** Specifies whether the custom properties are kept from the old
+       key value pair or replaced with the custom properties provided
+       in the replace operation.
+    ** If kept, the custom properties remain unchanged. If you specify
+       custom properties explicitly in the replace operation, Hibari
+       adds them to the resulting key value pair.
+    ** If replaced, all original custom properties are deleted, and
+       then Hibari adds the custom properties in the replace operation
+       to the resulting key value pair.
   * `'value_in_ram'`
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
@@ -1784,7 +1802,9 @@ execution. The same is true of `Value`.
 - Type:
   * `Flags = flags_list()`
   * `flags_list() = [do_op_flag() | property()]`
-  * `do_op_flag() = {'testset', timestamp()} |'value_in_ram'`
+  * `do_op_flag() = {'testset', timestamp()} | 'value_in_ram' |
+    {'exp_time_directive', 'keep' | 'replace'} |
+    {'attrib_directive', 'keep' | 'replace'}`
   * `timestamp() = integer()`
   * `property() = atom() | {term(), term()}`
 - Operational flag usage
@@ -1796,6 +1816,22 @@ execution. The same is true of `Value`.
        `timestamp()`. Using this flag with `set` will result in an
        error if the key does not already exist or if the key exists
        but has a non-matching timestamp.
+  * `{'exp_time_directive', 'keep' | 'replace'}`
+    ** Default to `'replace'`
+    ** Specifies whether the ExpTime is kept from the old key value
+       pair or replaced with the ExpTime provided in the set
+       operation.
+  * `{'attrib_directive', 'keep' | 'replace'}``
+    ** Default to `'replace'`
+    ** Specifies whether the custom properties are kept from the old
+       key value pair or replaced with the custom properties provided
+       in the set operation.
+    ** If kept, the custom properties remain unchanged. If you specify
+       custom properties explicitly in the set operation, Hibari adds
+       them to the resulting key value pair.
+    ** If replaced, all original custom properties are deleted, and
+       then Hibari adds the custom properties in the set operation to
+       the resulting key value pair.
   * `'value_in_ram'`
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
@@ -1975,7 +2011,9 @@ execution.
 - Type:
   * `Flags = flags_list()`
   * `flags_list() = [do_op_flag() | property()]`
-  * `do_op_flag() = {'testset', timestamp()} |'value_in_ram'`
+  * `do_op_flag() = {'testset', timestamp()} | 'value_in_ram' |
+    {'exp_time_directive', 'keep' | 'replace'} |
+    {'attrib_directive', 'keep' | 'replace'}`
   * `timestamp() = integer()`
   * `property() = atom() | {term(), term()}`
 - Operational flag usage
@@ -1984,6 +2022,22 @@ execution.
        exactly equal to `timestamp()`.  If used inside a
        link:#brick-simple-do[micro-transaction], abort the transaction
        if the key's timestamp is not exactly equal to `timestamp()`.
+  * `{'exp_time_directive', 'keep' | 'replace'}`
+    ** Default to `'keep'`
+    ** Specifies whether the ExpTime is kept from the old key value
+       pair or replaced with the ExpTime provided in the rename
+       operation.
+  * `{'attrib_directive', 'keep' | 'replace'}``
+    ** Default to `'keep'`
+    ** Specifies whether the custom properties are kept from the old
+       key value pair or replaced with the custom properties provided
+       in the rename operation.
+    ** If kept, the custom properties remain unchanged. If you specify
+       custom properties explicitly in the rename operation, Hibari
+       adds them to the resulting key value pair.
+    ** If replaced, all original custom properties are deleted, and
+       then Hibari adds the custom properties in the rename operation
+       to the resulting key value pair.
   * `'value_in_ram'`
     ** Store the value blob in RAM, overriding the default storage
        location of the brick.
