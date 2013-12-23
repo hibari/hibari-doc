@@ -18,8 +18,8 @@
 //
 
 = Hibari Application Developer's Guide
-:Date: 2013/02/03
-:Revision: 0.2.4(en)
+:Date: 2013/12/23
+:Revision: 0.2.4b(en)
 :Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
 
 <<<
@@ -2917,7 +2917,7 @@ _to be added_
 [[client-api-ubf]]
 == Client API: UBF
 
-link:http://github.com/norton/ubf[The UBF protocol] is a
+link:http://github.com/ubf/ubf[The UBF protocol] is a
 formally-specified family of protocols that are supported by a large
 number of client languages.  This section attempts to describe the
 layers of the UBF protocol stack, how to use the UBF client in Erlang
@@ -3169,7 +3169,7 @@ ok
 
 The source code for the UBF client library for Java is included in
 the UBF source repository at
-link:http://github.com/norton/ubf[http://github.com/norton/ubf], in
+link:http://github.com/ubf/ubf[http://github.com/ubf/ubf], in
 the `priv/java` subdirectory.
 
 ==== Compiling the UBF client library for Java
@@ -3372,7 +3372,7 @@ uses this `FooHandler` class.
 
 The source code for the EBF client library for Python is included in
 the UBF source repository at
-link:http://github.com/norton/ubf[http://github.com/norton/ubf], in
+link:http://github.com/ubf/ubf[http://github.com/ubf/ubf], in
 the `priv/python` subdirectory.
 
 NOTE: Recall that the EBF protocol is very closely related to UBF.  The
@@ -3563,7 +3563,7 @@ in the future.
 
 === Mapping UBF Contract Types to Thrift Types
 You can find more details of the UBF / Thrift type conversion in
-(link:https://github.com/norton/ubf-thrift[UBF-Thrift]).
+(link:https://github.com/ubf/ubf-thrift[UBF-Thrift]).
 
 === Mapping UBF Contract to Thrift Service
 Mapping UBF types to thrift primitives is different from mapping UBF
@@ -3717,7 +3717,7 @@ $ git config --global user.name "Your Name"
 +
 ------
 $ mkdir -p ~/bin
-$ wget -O - https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ~/bin/repo
+$ curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
 ------
 +

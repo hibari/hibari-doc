@@ -18,8 +18,8 @@
 //
 
 = Hibari (R) アプリケーション開発者ガイド
-:Date: 2013/02/03
-:Revision: 0.2.4(ja)
+:Date: 2013/12/23
+:Revision: 0.2.4b(ja)
 :Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
 
 <<<
@@ -2210,7 +2210,7 @@ _（追加予定）
 == クライアントAPI：UBF
 
 
-link:http://github.com/norton/ubf[UBFプロトコル] は、正式に規定されたプロトコル群です。多数のクライアント言語がこれをサポートしています。本章では、UBFプロトコル層の各層について説明します。さらに、UBFクライアントをErlangやその他の言語で使用する方法、およびそのクライアントを使ってHibariのストレージ・クラスターにアクセスする方法について説明します。
+link:http://github.com/ubf/ubf[UBFプロトコル] は、正式に規定されたプロトコル群です。多数のクライアント言語がこれをサポートしています。本章では、UBFプロトコル層の各層について説明します。さらに、UBFクライアントをErlangやその他の言語で使用する方法、およびそのクライアントを使ってHibariのストレージ・クラスターにアクセスする方法について説明します。
 
 Hibariのソースコードのディストリビューションには、次の言語におけるUBF/EBFプロトコルのサポートが含まれています。
 
@@ -2379,7 +2379,7 @@ ok
 === Java用のUBFクライアント・ライブラリの使用法
 
 Java用UBFクライアント・ライブラリのソースコードは、
-link:http://github.com/norton/ubf[http://github.com/norton/ubf]にあるUBFソース・リポジトリの`priv/java` サブディレクトリにあります。
+link:http://github.com/ubf/ubf[http://github.com/ubf/ubf]にあるUBFソース・リポジトリの`priv/java` サブディレクトリにあります。
 
 ==== Java用UBFクライアント・ライブラリのコンパイル
 
@@ -2554,7 +2554,7 @@ TIP: この`FooHandler` クラスの使用例は、xref:the-ubf-hibaritest-main-
 [[using-ubf-python-client]]
 === Python用のEBFクライアント・ライブラリの使用法
 
-Python用のEBFクライアント・ライブラリのソースコードは、link:http://github.com/norton/ubf[http://github.com/norton/ubf]にあるUBFソース・リポジトリの`priv/python` サブディレクトリにあります。
+Python用のEBFクライアント・ライブラリのソースコードは、link:http://github.com/ubf/ubf[http://github.com/ubf/ubf]にあるUBFソース・リポジトリの`priv/python` サブディレクトリにあります。
 
 NOTE: EBFプロトコルは、UBFと非常に密接な関連があることを思い出してください。唯一の大きな違いは、「レイヤー5」のセッション・プロトコル層です。ここでは、UBF(A)を使用する代わりにEBF (Erlang Binary Format) プロトコルを使用しています。詳細はxref:hibari-server-impl-of-ubf-proto-stack[]  を参照してください。
 
@@ -2714,7 +2714,7 @@ service Hibari {
 各基本ユーティリティ関数には、インプット用の引数が1つだけあります。この引数は機能に対応する名前を持つオブジェクトです。このオブジェクトが、Hibariに対して必須の引数も任意の引数もすべて引き渡します。将来は、このオブジェクトを利用してマイクロ・トランザクションを実装する予定です。
 
 === UBFコントラクト型とThrift型とのマッピング
-UBFとThriftの型変換の詳細に関しては、link:https://github.com/norton/ubf-thrift[UBF-Thrift]を参照してください。
+UBFとThriftの型変換の詳細に関しては、link:https://github.com/ubf/ubf-thrift[UBF-Thrift]を参照してください。
 
 === UBFコントラクトとThriftサービスとのマッピング
 UBFの型をThriftの基本型にマッピングすることと、UBFのコントラクトをThriftのサービスにマッピングすることは、異なります。Thriftは主に2つの異なる型（structとfield）を用いて要求を組み立てます。
@@ -2849,7 +2849,7 @@ $ git config --global user.name "Your Name"
 +
 ------
 $ mkdir -p ~/bin
-$ wget -O - https://dl-ssl.google.com/dl/googlesource/git-repo/repo > ~/bin/repo
+$ curl http://commondatastorage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
 $ chmod a+x ~/bin/repo
 ------
 +
