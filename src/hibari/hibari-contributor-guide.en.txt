@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2013 Hibari developers.  All rights reserved.
+// Copyright (c) 2005-2014 Hibari developers.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -20,7 +20,7 @@
 = Hibari Contributor's Guide (Hibari v0.3.0) *DRAFT - IN PROGRESS*
 :Date: 2013/03/05
 :Revision: 0.5.4
-:Copyright: Copyright (C) 2005-2013 Hibari developers.  All rights reserved.
+:Copyright: Copyright (C) 2005-2014 Hibari developers.  All rights reserved.
 
 <<<
 == Introduction
@@ -64,7 +64,7 @@ over to that guide when necessary.
 <<<
 ===  Copyright Notices
 
-Copyright (C) 2005-2013 Hibari developers.  All rights reserved.
+Copyright (C) 2005-2014 Hibari developers.  All rights reserved.
 
 ------------
 Licensed under the Apache License, Version 2.0 (the "License");
