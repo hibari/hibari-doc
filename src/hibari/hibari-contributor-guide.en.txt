@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-= Hibari Contributor's Guide (Hibari v0.3.0) *DRAFT - IN PROGRESS*
-:Date: 2013/03/05
+= Hibari Contributor's Guide (Hibari v0.1.11) *DRAFT - IN PROGRESS*
+:Date: 2015/04/05
 :Revision: 0.5.4
 :Copyright: Copyright (C) 2005-2015 Hibari developers.  All rights reserved.
 

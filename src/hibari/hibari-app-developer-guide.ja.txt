@@ -17,8 +17,8 @@
 // limitations under the License.
 //
 
-= Hibari (R) アプリケーション開発者ガイド（Hibari v0.3.0）
-:Date: 2013/12/23
+= Hibari (R) アプリケーション開発者ガイド（Hibari v0.1.11）
+:Date: 2015/4/5
 :Revision: 0.2.8(ja)
 :Copyright: Copyright (C) 2006-2015 Hibari developers. All rights reserved.
 
