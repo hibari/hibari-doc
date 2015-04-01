@@ -1,6 +1,6 @@
 
 //
-// Copyright (c) 2005-2011 Gemini Mobile Technologies, Inc.  All rights reserved.
+// Copyright (c) 2005-2015 Hibari developers.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -58,7 +58,7 @@ digraph data_flow {
 	brick_admin -> brick_simple_ZZZ [label="set_gh"];
 	brick_admin -> brick_server_YYY [label="chain_hack_set_global_hash"];
 	// application
-	application -> brick_simple_ZZZ [label="! {current_gh_version, Tab, self(), Ref}"];	
+	application -> brick_simple_ZZZ [label="! {current_gh_version, Tab, self(), Ref}"];
 	application -> brick_simple_ZZZ [label="get_gh"];
 	application -> brick_server_YYY [label="gen_server:call(..{do, ...}..)"];
 }
