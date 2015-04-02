@@ -1,1 +1,79 @@
-index.en.html
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari DB</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="Hibari DB" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idp64758960"></a>Hibari DB</h2></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_a_distributed_consistent_ordered_key_value_store">1. A Distributed, Consistent, Ordered Key-Value Store</a></span></dt><dt><span class="section"><a href="#_distinct_features">2. Distinct Features</a></span></dt><dt><span class="section"><a href="#_hibari_8217_s_documentation">3. Hibari’s Documentation</a></span></dt><dt><span class="section"><a href="#_hibari_8217_s_origins">4. Hibari’s Origins</a></span></dt></dl></div><div class="section" title="1. A Distributed, Consistent, Ordered Key-Value Store"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_a_distributed_consistent_ordered_key_value_store"></a>1. A Distributed, Consistent, Ordered Key-Value Store</h2></div></div></div><p>Hibari is a distributed, ordered key-value store with strong
+consistency guarantee. Hibari is written in Erlang and designed for
+being:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong>Fast, Read Optimized:</strong></span> Hibari serves read and write requests in
+  short and predictable latency. Hibari has excellent performance
+  especially for read and large value operations
+</li><li class="listitem">
+<span class="strong"><strong>High Bandwidth:</strong></span> Batch and lock-less operations help to achieve
+  high throughput while ensuring data consistency and durability
+</li><li class="listitem">
+<span class="strong"><strong>Big Data:</strong></span> Can store Peta Bytes of data by automatically
+  distributing data across servers. The largest production Hibari
+  cluster spans across 100 of servers
+</li><li class="listitem">
+<span class="strong"><strong>Reliable:</strong></span> High fault tolerance by replicating data between
+  servers. Data is repaired automatically after a server failure
+</li></ul></div><p>Hibari is able to deliver scalable high performance that is
+competitive with leading open source NOSQL (Not Only SQL) storage
+systems, while also providing the data durability and strong
+consistency that many systems lack. Hibari’s performance relative to
+other NOSQL systems is particularly strong for reads and for large
+value (&gt; 200KB) operations.</p><p>As one example of real-world performance, in a multi-million user
+webmail deployment equipped with traditional HDDs (non SSDs), Hibari
+is processing about 2,200 transactions per second, with read latencies
+averaging between 1 and 20 milliseconds and write latencies averaging
+between 20 and 80 milliseconds.</p></div><div class="section" title="2. Distinct Features"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_distinct_features"></a>2. Distinct Features</h2></div></div></div><p>Unlike many other distributed databases, Hibari uses "<span class="strong"><strong>chain
+replication methodology</strong></span>" and delivers distinct features.</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+<span class="strong"><strong>Ordered Key-Values:</strong></span> Data is distributed across "chains" by key
+  prefixes, then keys within a chain are sorted by lexicographic order
+</li><li class="listitem"><p class="simpara">
+<span class="strong"><strong>Always Guarantees Strong Consistency</strong></span>: This simplifies creation
+  of robust client applications
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<span class="strong"><strong>Compare and Swap (CAS):</strong></span> key timestamping mechanism that
+    facilitates "test-and-set" type operations
+</li><li class="listitem">
+<span class="strong"><strong>Micro-Transaction:</strong></span> multi-key atomic transactions, within
+    range limits
+</li></ul></div></li><li class="listitem">
+<span class="strong"><strong>Custom Metadata</strong></span>: per-key custom metadata
+</li><li class="listitem">
+<span class="strong"><strong>TTL (Time To Live)</strong></span>: per-key expiration times
+</li></ul></div></div><div class="section" title="3. Hibari’s Documentation"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_8217_s_documentation"></a>3. Hibari’s Documentation</h2></div></div></div><p>The <a class="ulink" href="hibari-app-developer-guide.en.html" target="_top">Hibari Application
+Developer’s Guide</a> is a good first step to get started quickly.  Check
+the download, the build, and the install instructions.  The
+<a class="ulink" href="hibari-tutorial.en.html" target="_top">Hibari Tutorial</a> is another resource that
+highlights key sections of the
+<a class="ulink" href="hibari-app-developer-guide.en.html" target="_top">Hibari Application Developer’s
+Guide</a>.</p><p>Two additional documents are the
+<a class="ulink" href="hibari-sysadmin-guide.en.html" target="_top">Hibari System Administrator’s
+Guide</a> and the <a class="ulink" href="hibari-contributor-guide.en.html" target="_top">Hibari
+Contributor’s Guide</a>.  Reading the System Administrator’s Guide is
+<span class="emphasis"><em>STRONGLY</em></span> recommended.</p><p>Read the <a class="ulink" href="webpage-CHANGELOG.html" target="_top">CHANGELOG</a> page for a full list
+of additions, changes, and bug fixes.</p><p>Read the <a class="ulink" href="webpage-FAQ.html" target="_top">FAQ</a> page for common questions and
+answers.</p><p>The documentation is in a state of change and improvement.
+Contributions from the wider world are welcome.  :-)</p></div><div class="section" title="4. Hibari’s Origins"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_hibari_8217_s_origins"></a>4. Hibari’s Origins</h2></div></div></div><p>Hibari was originally written by Gemini Mobile Technologies to support
+mobile messaging and email services.  Hibari was released outside of
+Gemini under the Apache Public License version 2.0 in July 2010.
+Hibari was moved from SourceForge to GitHub in January 2011.</p><p>Hibari has been deployed by multiple telecom carriers in Asia and
+Europe.  Hibari may lack some features such as monitoring, event and
+alarm management, and other "production environment" support services.
+Since telecom operator has its own data center support infrastructure,
+Hibari’s development has not included many services that would be
+redundant in a carrier environment.  We hope that Hibari’s release to
+the open source community will close those functional gaps as Hibari
+spreads outside of carrier data centers.</p><pre class="screen">Copyright (C) 2005-2015 Hibari developers.  All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.</pre></div></div></body></html>
