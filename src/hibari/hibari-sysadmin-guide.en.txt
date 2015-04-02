@@ -2,7 +2,7 @@
 // vim: set syntax=asciidoc:
 
 //
-// Copyright (c) 2005-2013 Hibari developers.  All rights reserved.
+// Copyright (c) 2006-2015 Hibari developers.  All rights reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -17,10 +17,10 @@
 // limitations under the License.
 //
 
-= Hibari System Administrator's Guide  *DRAFT - IN PROGRESS*
-:Date: 2013/02/03
-:Revision: 0.5.3
-:Copyright: Copyright (C) 2006-2013 Hibari developers.  All rights reserved.
+= Hibari System Administrator's Guide (Hibari v0.1.11) *DRAFT - IN PROGRESS*
+:Date: 2015/04/05
+:Revision: 0.5.4
+:Copyright: Copyright (C) 2006-2015 Hibari developers.  All rights reserved.
 
 <<<
 == Introduction
@@ -163,7 +163,7 @@ See xref:admin-server-and-network-partition[] for details.
 <<<
 ===  Copyright Notices
 
-Copyright (C) 2005-2013 Hibari developers. All rights reserved.
+Copyright (C) 2005-2014 Hibari developers. All rights reserved.
 
 ------------
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -353,17 +353,6 @@ corresponding price to pay.
   performance, at the expense of data loss when all nodes in a
   replication chain crash.
 
-== Getting Started with Hibari (INCOMPLETE)
-_draft_
-
-NOTE: Don't forget to mention the recommendation of 2 physical network
-interfaces.
-
-=== Starting Hibari for the first time (INCOMPLETE)
-_draft_
-
-=== An Introductory Example (INCOMPLETE)
-_draft_
 
 == Building A Hibari Database
 
@@ -2033,11 +2022,16 @@ to the chain, then the same async update log maintenance and replay to
 
 == Hibari Application Logging
 
+NOTE: This chapter is outdated and will be rewritten by Hibari v0.6
+release. Hibari now uses link:https://github.com/basho/lager#readme[Basho Lager]
+for logging and the default location of the log files is:
+`<HIBARI_HOME>/logs/`
+
 The Hibari application log records application-related alerts,
 warnings, and informational messages, as well as trace messages for
 debugging. By default the application log is written to this file:
 
-  <GDSS_HOME>/var/log/gdss-app.log
+  <HIBARI_HOME>/var/log/gdss-app.log
 
 === Format of the Hibari Application Log
 
@@ -2109,6 +2103,20 @@ of the app log file is to be machine-parsable, not human-parsable.
   8955|<0.105.0>|20100412174924|DEFAULT      |INFO|2199999|do_init_second_half: bootstrap_copy1
   8955|<0.79.0>|20100412174924|SASL         |INFO|2199999|progress: [{supervisor,{local,brick_brick_sup}},{started,[{pid,<0.105.0>},{name,bootstrap_copy1},{mfa,{brick_server,start_link,[bootstrap_copy1,[{default_data_dir,"."}]]}},{restart_type,temporary},{shutdown,2000},{child_type,worker}]}]
   8955|<0.105.0>|20100412174924|DEFAULT      |INFO|2199999|do_init_second_half: bootstrap_copy1 finished
+
+== Examining Latency in Production (Internal Event Tracing)
+
+The Hibari source code has been annotated with over 400 tracepoints,
+and they give the developer and system administrator for tracing
+events through Hibari's code. Those tracepoints are designed to be
+extremely lightweight and can be enabled in production environment
+without sacrificing performance.
+
+Trace data can be collected via DTrace/SystemTap or Erlang's tracing
+mechanism. For more details, please refer
+link:http://hibari.github.com/hibari-doc/hibari-contributor-guide.en.html#_hibari_internal_tracepoints["Hibari internal tracepoints"]
+section of Hibari Contributor's Guide.
+
 
 == Hardware and Software Considerations
 
@@ -2318,15 +2326,30 @@ virtual machine can support Hibari.
 
 In practice, Hibari is supported on the following operating systems:
 
-* Linux (used in production and QA environments within Cloudian, Inc.)
+* Linux x86_64
+  ** Red Hat Enterprise Linux 5.x and 6.x (RHEL 5.3 is used in
+     production and QA environments within Cloudian, Inc.)
+  ** CentOS 5.x and 6.x
+  ** Ubuntu 12.04 LTS or newer
+* Linux ARMv7 (32 bit)
+  ** Ubuntu 12.04 LTS or newer
+  ** Hibari runs on Calxeda EnergyCore based super high-density,
+     scale-out cluster
+* Unix Solaris variants
+  ** Joyent SmartOS (64 bit)
 * Mac OS X
 * FreeBSD (though not currently in a jail environment, due to some TCP
   services getting EPROTONOSUPPORT errors)
 
-To take advantage of RAM larger than 3.0, 3.5, or 4.0 gigabytes
-(depending on the OS kernel), we recommended that you use a 64-bit
-version of your OS's kernel, 64-bit versions of the user runtime, and
-a 64-bit version of the Erlang/OTP runtime.
+The versions recently tested for Hibari by the community:
+
+- CentOS 6.3 (x86_64)
+- Ubuntu 12.04 LTS (ARMv7)
+- Joyent SmartOS 20130221 (64 bit)
+
+To take advantage of RAM larger than 4GB, we recommend that you use
+a 64-bit version of your OS's kernel, 64-bit versions of the user
+runtime, and a 64-bit version of the Erlang/OTP runtime.
 
 [[os-readahead-configuration]]
 ==== OS Readahead Configuration
