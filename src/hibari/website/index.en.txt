@@ -17,39 +17,67 @@
 // limitations under the License.
 //
 
-Hibari Home Page
-================
+Hibari DB
+=========
 
-Hibari is a production-ready, distributed, key-value, big data
-store. Hibari uses chain replication for strong consistency,
-high-availability, and durability. Hibari has excellent performance
-especially for read and large value operations.
+A Distributed, Consistent, Ordered Key-Value Store
+--------------------------------------------------
 
-For Hibari documentation in Japanese, see link:index.ja.html[日本語].
+Hibari is a distributed, ordered key-value store with strong
+consistency guarantee. Hibari is written in Erlang and designed for
+being:
 
-*Hibari's Main Features*
+- **Fast, Read Optimized:** Hibari serves read and write requests in
+  short and predictable latency. Hibari has excellent performance
+  especially for read and large value operations
 
-- A Hibari cluster is a distributed system.
-- A Hibari cluster is linearly scalable.
-- A Hibari cluster is highly available.
-- All updates are durable.
-- All updates are strongly consistent.
-- All client operations are lockless.
-- A Hibari cluster's performance is excellent.
-- Multiple client access protocols are available.
-- Data is repaired automatically after a server failure.
-- Cluster configuration can be changed at any time.
-- Data is automatically rebalanced.
-- Heterogeneous hardware support is easy.
-- Micro-transactions simplify creation of robust client applications.
-- Per-table configurable performance options are available.
+- **High Bandwidth:** Batch and lock-less operations help to achieve
+  high throughput while ensuring data consistency and durability
 
-Hibari is developed in the Erlang programming language.  Hibari
-requires Erlang/OTP R13B01 or newer.  Hibari has been tested most
-recently with Erlang/OTP R13B04.  Support for Erlang/OTP R14B01 in
-progress.
+- **Big Data:** Can store Peta Bytes of data by automatically
+  distributing data across servers. The largest production Hibari
+  cluster spans across 100 of servers
 
-*Hibari's Documentation*
+- **Reliable:** High fault tolerance by replicating data between
+  servers. Data is repaired automatically after a server failure
+
+Hibari is able to deliver scalable high performance that is
+competitive with leading open source NOSQL (Not Only SQL) storage
+systems, while also providing the data durability and strong
+consistency that many systems lack. Hibari's performance relative to
+other NOSQL systems is particularly strong for reads and for large
+value (> 200KB) operations.
+
+As one example of real-world performance, in a multi-million user
+webmail deployment equipped with traditional HDDs (non SSDs), Hibari
+is processing about 2,200 transactions per second, with read latencies
+averaging between 1 and 20 milliseconds and write latencies averaging
+between 20 and 80 milliseconds.
+
+
+Distinct Features
+-----------------
+
+Unlike many other distributed databases, Hibari uses "*chain
+replication methodology*" and delivers distinct features.
+
+- *Ordered Key-Values:* Data is distributed across "chains" by key
+  prefixes, then keys within a chain are sorted by lexicographic order
+
+- *Always Guarantees Strong Consistency*: This simplifies creation
+  of robust client applications
+
+  * *Compare and Swap (CAS):* key timestamping mechanism that
+    facilitates "test-and-set" type operations
+  * *Micro-Transaction:* multi-key atomic transactions, within
+    range limits
+
+- *Custom Metadata*: per-key custom metadata
+- *TTL (Time To Live)*: per-key expiration times
+
+
+Hibari's Documentation
+----------------------
 
 The link:hibari-app-developer-guide.en.html[Hibari Application
 Developer's Guide] is a good first step to get started quickly.  Check
@@ -74,7 +102,8 @@ answers.
 The documentation is in a state of change and improvement.
 Contributions from the wider world are welcome.  :-)
 
-*Hibari's Origins*
+Hibari's Origins
+----------------
 
 Hibari was originally written by Gemini Mobile Technologies to support
 mobile messaging and email services.  Hibari was released outside of
@@ -89,16 +118,6 @@ Hibari's development has not included many services that would be
 redundant in a carrier environment.  We hope that Hibari's release to
 the open source community will close those functional gaps as Hibari
 spreads outside of carrier data centers.
-
-Gemini Mobile Technologies provides full support, consulting, and
-development services for Hibari. Please see the
-http://www.geminimobile.com/products/Hibari.html[Gemini Mobile
-Technologies Hibari page] for more information.  Please see the
-http://www.geminimobile.com/[Gemini Mobile Technologies Web page] for
-general information.
-
-Gemini Mobile(R) and HyperScale(R) are registered trademarks of Gemini
-Mobile Technologies, Inc. in the United States and other countries.
 
 ------
 Copyright (C) 2005-2015 Hibari developers.  All rights reserved.
