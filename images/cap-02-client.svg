@@ -4,61 +4,61 @@
   <g>
     <ellipse style="fill: #ffff00" cx="253.859" cy="50.0012" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="253.859" cy="50.0012" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:13.5467;font-family:sanserif;font-style:normal;font-weight:700" x="253.859" y="54.1346">
+    <text font-size="13.5467" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="253.859" y="54.1346">
       <tspan x="253.859" y="54.1346">CLIENT</tspan>
     </text>
   </g>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="131.65" y="53.5176">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="131.65" y="53.5176">
     <tspan x="131.65" y="53.5176">Client</tspan>
     <tspan x="131.65" y="72.5676">Case #C-1</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="131.65" y="182.862">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="131.65" y="182.862">
     <tspan x="131.65" y="182.862">Client</tspan>
     <tspan x="131.65" y="201.912">Case #C-2</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="131.65" y="312.206">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="131.65" y="312.206">
     <tspan x="131.65" y="312.206">Client</tspan>
     <tspan x="131.65" y="331.256">Case #C-3</tspan>
   </text>
   <g>
     <ellipse style="fill: #c3c536" cx="253.859" cy="180.812" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="253.859" cy="180.812" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:13.5467;font-family:sanserif;font-style:normal;font-weight:700" x="253.859" y="184.945">
+    <text font-size="13.5467" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="253.859" y="184.945">
       <tspan x="253.859" y="184.945">CLIENT</tspan>
     </text>
   </g>
   <g>
     <ellipse style="fill: #7f7f7f" cx="253.859" cy="311.624" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="253.859" cy="311.624" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:13.5467;font-family:sanserif;font-style:normal;font-weight:700" x="253.859" y="315.757">
+    <text font-size="13.5467" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="253.859" y="315.757">
       <tspan x="253.859" y="315.757">CLIENT</tspan>
     </text>
   </g>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="131.65" y="441.55">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="131.65" y="441.55">
     <tspan x="131.65" y="441.55">Client</tspan>
     <tspan x="131.65" y="460.6">Case #C-4</tspan>
   </text>
   <g>
     <ellipse style="fill: #7f7f7f" cx="253.859" cy="442.434" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="253.859" cy="442.434" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:13.5467;font-family:sanserif;font-style:normal;font-weight:700" x="253.859" y="446.567">
+    <text font-size="13.5467" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="253.859" y="446.567">
       <tspan x="253.859" y="446.567">CLIENT</tspan>
     </text>
   </g>
-  <text style="fill: #000000;text-anchor:start;font-size:13.5467;font-family:sanserif;font-style:normal;font-weight:700" x="330.378" y="49.4421">
+  <text font-size="13.5467" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="330.378" y="49.4421">
     <tspan x="330.378" y="49.4421">* Same side as quorum of admin servers.</tspan>
     <tspan x="330.378" y="66.3755">* All chains accessed are active.</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:13.5467;font-family:sanserif;font-style:normal;font-weight:700" x="330.378" y="175.456">
+  <text font-size="13.5467" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="330.378" y="175.456">
     <tspan x="330.378" y="175.456">* Same side as quorum of admin servers.</tspan>
     <tspan x="330.378" y="192.389">* Subset of chains are active.</tspan>
     <tspan x="330.378" y="209.322">* Subset of chains are offline.</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:13.5467;font-family:sanserif;font-style:normal;font-weight:700" x="330.378" y="318.995">
+  <text font-size="13.5467" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="330.378" y="318.995">
     <tspan x="330.378" y="318.995">* Same side as quorum of admin servers.</tspan>
     <tspan x="330.378" y="335.929">* All chains accessed are offline.</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:13.5467;font-family:sanserif;font-style:normal;font-weight:700" x="330.378" y="445.602">
+  <text font-size="13.5467" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:700" x="330.378" y="445.602">
     <tspan x="330.378" y="445.602">* Opposite side as quorum of admin servers.</tspan>
   </text>
 </svg>

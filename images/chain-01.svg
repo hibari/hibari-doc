@@ -4,7 +4,7 @@
   <g>
     <ellipse style="fill: #add8e6" cx="185.959" cy="157.25" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="185.959" cy="157.25" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:sanserif;font-style:normal;font-weight:700" x="185.959" y="162.417">
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="185.959" y="162.417">
       <tspan x="185.959" y="162.417">HEAD</tspan>
     </text>
   </g>
@@ -12,7 +12,7 @@
   <g>
     <ellipse style="fill: #add8e6" cx="347.075" cy="157.25" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="347.075" cy="157.25" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:11.2889;font-family:sanserif;font-style:normal;font-weight:700" x="347.075" y="160.694">
+    <text font-size="11.2889" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="347.075" y="160.694">
       <tspan x="347.075" y="160.694">MIDDLE</tspan>
     </text>
   </g>
@@ -20,7 +20,7 @@
   <g>
     <ellipse style="fill: #add8e6" cx="508.193" cy="157.25" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="508.193" cy="157.25" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:sanserif;font-style:normal;font-weight:700" x="508.193" y="162.417">
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="508.193" y="162.417">
       <tspan x="508.193" y="162.417">TAIL</tspan>
     </text>
   </g>
@@ -44,7 +44,7 @@
   <g>
     <ellipse style="fill: #add8e6" cx="185.959" cy="279.322" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="185.959" cy="279.322" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:sanserif;font-style:normal;font-weight:700" x="185.959" y="284.488">
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="185.959" y="284.488">
       <tspan x="185.959" y="284.488">TAIL</tspan>
     </text>
   </g>
@@ -52,7 +52,7 @@
   <g>
     <ellipse style="fill: #add8e6" cx="347.075" cy="279.322" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="347.075" cy="279.322" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:sanserif;font-style:normal;font-weight:700" x="347.075" y="284.488">
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="347.075" y="284.488">
       <tspan x="347.075" y="284.488">HEAD</tspan>
     </text>
   </g>
@@ -60,7 +60,7 @@
   <g>
     <ellipse style="fill: #add8e6" cx="508.193" cy="279.322" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="508.193" cy="279.322" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:11.2889;font-family:sanserif;font-style:normal;font-weight:700" x="508.193" y="282.766">
+    <text font-size="11.2889" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="508.193" y="282.766">
       <tspan x="508.193" y="282.766">MIDDLE</tspan>
     </text>
   </g>
@@ -77,14 +77,14 @@
     <path style="fill: #90ee90" d="M 214.526 447.666 C 221.126,444.402 224.426,443.314 231.026,443.314 C 237.626,443.314 240.926,444.402 247.526,447.666 L 247.526,465.073 C 240.926,468.337 237.626,469.425 231.026,469.425 C 224.426,469.425 221.126,468.337 214.526,465.073 L 214.526,447.666z"/>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 214.526 447.666 C 221.126,444.402 224.426,443.314 231.026,443.314 C 237.626,443.314 240.926,444.402 247.526,447.666 L 247.526,465.073 C 240.926,468.337 237.626,469.425 231.026,469.425 C 224.426,469.425 221.126,468.337 214.526,465.073 L 214.526,447.666"/>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 214.526 447.666 C 221.126,450.93 224.426,452.018 231.026,452.018 C 237.626,452.018 240.926,450.93 247.526,447.666"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:5.64444;font-family:sanserif;font-style:normal;font-weight:normal" x="231.026" y="460.309">
+    <text font-size="5.64444" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="231.026" y="460.309">
       <tspan x="231.026" y="460.309"></tspan>
     </text>
   </g>
   <g>
     <ellipse style="fill: #add8e6" cx="185.959" cy="401.392" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="185.959" cy="401.392" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:11.2889;font-family:sanserif;font-style:normal;font-weight:700" x="185.959" y="404.836">
+    <text font-size="11.2889" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="185.959" y="404.836">
       <tspan x="185.959" y="404.836">MIDDLE</tspan>
     </text>
   </g>
@@ -93,14 +93,14 @@
     <path style="fill: #90ee90" d="M 375.644 447.666 C 382.244,444.402 385.544,443.314 392.144,443.314 C 398.744,443.314 402.044,444.402 408.644,447.666 L 408.644,465.073 C 402.044,468.337 398.744,469.425 392.144,469.425 C 385.544,469.425 382.244,468.337 375.644,465.073 L 375.644,447.666z"/>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 375.644 447.666 C 382.244,444.402 385.544,443.314 392.144,443.314 C 398.744,443.314 402.044,444.402 408.644,447.666 L 408.644,465.073 C 402.044,468.337 398.744,469.425 392.144,469.425 C 385.544,469.425 382.244,468.337 375.644,465.073 L 375.644,447.666"/>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 375.644 447.666 C 382.244,450.93 385.544,452.018 392.144,452.018 C 398.744,452.018 402.044,450.93 408.644,447.666"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:5.64444;font-family:sanserif;font-style:normal;font-weight:normal" x="392.144" y="460.309">
+    <text font-size="5.64444" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="392.144" y="460.309">
       <tspan x="392.144" y="460.309"></tspan>
     </text>
   </g>
   <g>
     <ellipse style="fill: #add8e6" cx="347.075" cy="401.392" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="347.075" cy="401.392" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:sanserif;font-style:normal;font-weight:700" x="347.075" y="406.558">
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="347.075" y="406.558">
       <tspan x="347.075" y="406.558">TAIL</tspan>
     </text>
   </g>
@@ -109,14 +109,14 @@
     <path style="fill: #90ee90" d="M 536.76 447.666 C 543.36,444.402 546.66,443.314 553.26,443.314 C 559.86,443.314 563.16,444.402 569.76,447.666 L 569.76,465.073 C 563.16,468.337 559.86,469.425 553.26,469.425 C 546.66,469.425 543.36,468.337 536.76,465.073 L 536.76,447.666z"/>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 536.76 447.666 C 543.36,444.402 546.66,443.314 553.26,443.314 C 559.86,443.314 563.16,444.402 569.76,447.666 L 569.76,465.073 C 563.16,468.337 559.86,469.425 553.26,469.425 C 546.66,469.425 543.36,468.337 536.76,465.073 L 536.76,447.666"/>
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" d="M 536.76 447.666 C 543.36,450.93 546.66,452.018 553.26,452.018 C 559.86,452.018 563.16,450.93 569.76,447.666"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:5.64444;font-family:sanserif;font-style:normal;font-weight:normal" x="553.26" y="460.309">
+    <text font-size="5.64444" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="553.26" y="460.309">
       <tspan x="553.26" y="460.309"></tspan>
     </text>
   </g>
   <g>
     <ellipse style="fill: #add8e6" cx="508.193" cy="401.392" rx="40.5673" ry="39.0336"/>
     <ellipse style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" cx="508.193" cy="401.392" rx="40.5673" ry="39.0336"/>
-    <text style="fill: #000000;text-anchor:middle;font-size:16.9333;font-family:sanserif;font-style:normal;font-weight:700" x="508.193" y="406.558">
+    <text font-size="16.9333" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="508.193" y="406.558">
       <tspan x="508.193" y="406.558">HEAD</tspan>
     </text>
   </g>
@@ -129,13 +129,13 @@
     <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 6; stroke: #000000" x1="227.91" y1="386.454" x2="309.596" y2="386.454"/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="235.674,381.454 225.674,386.454 235.674,391.454 "/>
   </g>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="71.5984" y="164.809">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="71.5984" y="164.809">
     <tspan x="71.5984" y="164.809">Chain A</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="71.5984" y="290.271">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="71.5984" y="290.271">
     <tspan x="71.5984" y="290.271">Chain B</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="71.5984" y="415.733">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="71.5984" y="415.733">
     <tspan x="71.5984" y="415.733">Chain C</tspan>
   </text>
   <g>
@@ -154,13 +154,13 @@
     <path style="fill: none; fill-opacity:0; stroke-width: 2; stroke-dasharray: 6; stroke: #000000" d="M 488.58,363.516 A 353.959,353.959 0 0 0 201.484,365.33"/>
     <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="479.458,364.854 490.63,364.41 483.572,355.74 "/>
   </g>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="182.325" y="516.951">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="182.325" y="516.951">
     <tspan x="182.325" y="516.951">Node 1</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="339.526" y="516.951">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="339.526" y="516.951">
     <tspan x="339.526" y="516.951">Node 2</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:middle;font-size:15.24;font-family:sanserif;font-style:normal;font-weight:700" x="496.7" y="516.951">
+  <text font-size="15.24" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="496.7" y="516.951">
     <tspan x="496.7" y="516.951">Node 3</tspan>
   </text>
 </svg>

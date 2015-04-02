@@ -32,13 +32,13 @@
         <polygon style="fill: #000000" points="59.2814,258.29 64.2814,268.29 69.2814,258.29 "/>
         <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="59.2814,258.29 64.2814,268.29 69.2814,258.29 "/>
       </g>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="30.2814" y="169.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="30.2814" y="169.29">
         <tspan x="30.2814" y="169.29">Chain 0</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="35.2814" y="216.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="35.2814" y="216.29">
         <tspan x="35.2814" y="216.29">Head0</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="46.2814" y="299.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="46.2814" y="299.29">
         <tspan x="46.2814" y="299.29">Tail0</tspan>
       </text>
     </g>
@@ -60,13 +60,13 @@
         <polygon style="fill: #000000" points="179.282,258.29 184.282,268.29 189.282,258.29 "/>
         <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="179.282,258.29 184.282,268.29 189.282,258.29 "/>
       </g>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="150.282" y="169.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="150.282" y="169.29">
         <tspan x="150.282" y="169.29">Chain 1</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="154.282" y="215.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="154.282" y="215.29">
         <tspan x="154.282" y="215.29">Head1</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="164.282" y="299.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="164.282" y="299.29">
         <tspan x="164.282" y="299.29">Tail1</tspan>
       </text>
     </g>
@@ -88,13 +88,13 @@
         <polygon style="fill: #000000" points="299.282,258.29 304.282,268.29 309.282,258.29 "/>
         <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="299.282,258.29 304.282,268.29 309.282,258.29 "/>
       </g>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="270.282" y="169.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="270.282" y="169.29">
         <tspan x="270.282" y="169.29">Chain 2</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="276.282" y="215.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="276.282" y="215.29">
         <tspan x="276.282" y="215.29">Head2</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="283.282" y="297.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="283.282" y="297.29">
         <tspan x="283.282" y="297.29">Tail2</tspan>
       </text>
     </g>
@@ -116,13 +116,13 @@
         <polygon style="fill: #000000" points="419.282,258.29 424.282,268.29 429.282,258.29 "/>
         <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="419.282,258.29 424.282,268.29 429.282,258.29 "/>
       </g>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="390.282" y="169.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="390.282" y="169.29">
         <tspan x="390.282" y="169.29">Chain 3</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="404.282" y="296.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="404.282" y="296.29">
         <tspan x="404.282" y="296.29">Tail3</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="394.282" y="218.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="394.282" y="218.29">
         <tspan x="394.282" y="218.29">Head3</tspan>
       </text>
     </g>
@@ -144,14 +144,14 @@
         <polygon style="fill: #000000" points="539.282,258.29 544.282,268.29 549.282,258.29 "/>
         <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="539.282,258.29 544.282,268.29 549.282,258.29 "/>
       </g>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="510.282" y="169.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="510.282" y="169.29">
         <tspan x="510.282" y="169.29">Chain 4</tspan>
         <tspan x="510.282" y="191.868"></tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="514.282" y="215.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="514.282" y="215.29">
         <tspan x="514.282" y="215.29">Head4</tspan>
       </text>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="523.282" y="298.29">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="523.282" y="298.29">
         <tspan x="523.282" y="298.29">Tail4</tspan>
       </text>
     </g>
@@ -160,7 +160,7 @@
         <rect style="fill: #ffffff" x="259.282" y="7.289" width="80" height="36"/>
         <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="259.282" y="7.289" width="80" height="36"/>
       </g>
-      <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="274.282" y="29.289">
+      <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="274.282" y="29.289">
         <tspan x="274.282" y="29.289">Client</tspan>
       </text>
     </g>
@@ -189,34 +189,34 @@
       <polygon style="fill: #000000" points="529.718,148.618 540.896,148.826 534.355,139.759 "/>
       <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="529.718,148.618 540.896,148.826 534.355,139.759 "/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="93.2814" y="104.29">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="93.2814" y="104.29">
       <tspan x="93.2814" y="104.29">Key V</tspan>
     </text>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="226.282" y="104.29">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="226.282" y="104.29">
       <tspan x="226.282" y="104.29">Key W</tspan>
     </text>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="246.282" y="125.29">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="246.282" y="125.29">
       <tspan x="246.282" y="125.29">Key X</tspan>
     </text>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="326.282" y="104.29">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="326.282" y="104.29">
       <tspan x="326.282" y="104.29">Key Y</tspan>
     </text>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="467.282" y="104.29">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="467.282" y="104.29">
       <tspan x="467.282" y="104.29">Key Z</tspan>
     </text>
   </g>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="164.96" y="353.638">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="164.96" y="353.638">
     <tspan x="164.96" y="353.638">Bottom Layer: The Storage Brick</tspan>
     <tspan x="164.96" y="376.216">           10 logical bricks</tspan>
     <tspan x="164.96" y="398.794">           5 physical bricks</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="602" y="206">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="602" y="206">
     <tspan x="602" y="206">Middle</tspan>
     <tspan x="602" y="228.578">Layer:</tspan>
     <tspan x="602" y="251.156">Chain</tspan>
     <tspan x="602" y="273.733">Replication</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="603" y="36">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="603" y="36">
     <tspan x="603" y="36">Top Layer:</tspan>
     <tspan x="603" y="58.5778">Consistent</tspan>
     <tspan x="603" y="81.1556">Hashing</tspan>
@@ -231,7 +231,7 @@
     <polygon style="fill: #0000ff" points="150.996,245.352 149.923,234.223 141.664,241.759 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #0000ff" points="150.996,245.352 149.923,234.223 141.664,241.759 "/>
   </g>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="420" y="340">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="420" y="340">
     <tspan x="420" y="340"></tspan>
   </text>
   <g>

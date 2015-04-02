@@ -50,10 +50,10 @@
     <polygon style="fill: #000000" points="10.7556,284.781 19.037,277.27 8.05924,275.151 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="10.7556,284.781 19.037,277.27 8.05924,275.151 "/>
   </g>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="33.083" y="6.0004">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="33.083" y="6.0004">
     <tspan x="33.083" y="6.0004"></tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="223" y="263">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="223" y="263">
     <tspan x="223" y="263"></tspan>
   </text>
   <g>
@@ -71,7 +71,7 @@
       <rect style="fill: #ffffff" x="20" y="20" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="20" y="20" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="31" y="41">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="31" y="41">
       <tspan x="31" y="41">Head0</tspan>
     </text>
   </g>
@@ -85,39 +85,39 @@
     <polygon style="fill: #000000" points="489,222 499,217 489,212 "/>
     <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="489,222 499,217 489,212 "/>
   </g>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="140" y="-20">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="140" y="-20">
     <tspan x="140" y="-20">Physical</tspan>
     <tspan x="140" y="2.57778">Brick 1</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="20" y="-20">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="20" y="-20">
     <tspan x="20" y="-20">Physical</tspan>
     <tspan x="20" y="2.57778">Brick 0</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="260" y="-20">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="260" y="-20">
     <tspan x="260" y="-20">Physical</tspan>
     <tspan x="260" y="2.57778">Brick 2</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="380" y="-20">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="380" y="-20">
     <tspan x="380" y="-20">Physical</tspan>
     <tspan x="380" y="2.57778">Brick 3</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="500" y="-20">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="500" y="-20">
     <tspan x="500" y="-20">Physical</tspan>
     <tspan x="500" y="2.57778">Brick 4</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="600" y="40">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="600" y="40">
     <tspan x="600" y="40">Chain 0</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="600" y="100">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="600" y="100">
     <tspan x="600" y="100">Chain 1</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="600" y="160">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="600" y="160">
     <tspan x="600" y="160">Chain 2</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="600" y="220">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="600" y="220">
     <tspan x="600" y="220">Chain 3</tspan>
   </text>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="600" y="280">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="600" y="280">
     <tspan x="600" y="280">Chain 4</tspan>
   </text>
   <g>
@@ -150,11 +150,11 @@
       <rect style="fill: #ffffff" x="18.083" y="-100" width="61.917" height="30"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="18.083" y="-100" width="61.917" height="30"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="20" y="-80">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="20" y="-80">
       <tspan x="20" y="-80">Client</tspan>
     </text>
   </g>
-  <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="89.083" y="-80">
+  <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="89.083" y="-80">
     <tspan x="89.083" y="-80">Consistent hashing by client: {Table, Key} -&gt; Chain</tspan>
   </text>
   <g>
@@ -162,7 +162,7 @@
       <rect style="fill: #ffffff" x="140" y="20" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="140" y="20" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="158" y="41">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="158" y="41">
       <tspan x="158" y="41">Tail0</tspan>
     </text>
   </g>
@@ -171,7 +171,7 @@
       <rect style="fill: #ffffff" x="140" y="80" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="140" y="80" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="154" y="102">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="154" y="102">
       <tspan x="154" y="102">Head1</tspan>
     </text>
   </g>
@@ -180,7 +180,7 @@
       <rect style="fill: #ffffff" x="260" y="80" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="260" y="80" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="279" y="103">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="279" y="103">
       <tspan x="279" y="103">Tail1</tspan>
     </text>
   </g>
@@ -189,7 +189,7 @@
       <rect style="fill: #ffffff" x="260" y="140" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="260" y="140" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="267" y="162">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="267" y="162">
       <tspan x="267" y="162">Head2</tspan>
     </text>
   </g>
@@ -198,7 +198,7 @@
       <rect style="fill: #ffffff" x="380" y="140" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="380" y="140" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="398" y="164">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="398" y="164">
       <tspan x="398" y="164">Tail2</tspan>
     </text>
   </g>
@@ -207,7 +207,7 @@
       <rect style="fill: #ffffff" x="380" y="200" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="380" y="200" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="393" y="222">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="393" y="222">
       <tspan x="393" y="222">Head3</tspan>
     </text>
   </g>
@@ -216,7 +216,7 @@
       <rect style="fill: #ffffff" x="500" y="200" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="500" y="200" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="519" y="224">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="519" y="224">
       <tspan x="519" y="224">Tail3</tspan>
     </text>
   </g>
@@ -225,7 +225,7 @@
       <rect style="fill: #ffffff" x="500" y="260" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="500" y="260" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="508" y="281">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="508" y="281">
       <tspan x="508" y="281">Head4</tspan>
     </text>
   </g>
@@ -234,7 +234,7 @@
       <rect style="fill: #ffffff" x="20" y="260" width="76" height="34"/>
       <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="20" y="260" width="76" height="34"/>
     </g>
-    <text style="fill: #000000;text-anchor:start;font-size:18.0622;font-family:sanserif;font-style:normal;font-weight:normal" x="38" y="282">
+    <text font-size="18.0622" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="38" y="282">
       <tspan x="38" y="282">Tail4</tspan>
     </text>
   </g>

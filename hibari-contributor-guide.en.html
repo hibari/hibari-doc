@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Contributor’s Guide DRAFT - IN PROGRESS</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="Hibari Contributor’s Guide DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idp162208"></a>Hibari Contributor’s Guide  <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.5.3</td><td align="left">2013/02/03</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_topics_covered">1.1. Topics Covered</a></span></dt><dt><span class="section"><a href="#_reading_the_systems_administrator_guide_is_strongly_recommended">1.2. Reading the Systems Administrator Guide Is Strongly Recommended</a></span></dt><dt><span class="section"><a href="#_copyright_notices">1.3. Copyright Notices</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_internals_the_source_module_by_module">2. Hibari Internals: The Source, Module by Module</a></span></dt><dd><dl><dt><span class="section"><a href="#major-subsystems">2.1. Major subsystems</a></span></dt><dt><span class="section"><a href="#admin-server-crash-recovery">2.2. Admin Server notes: crash-recovery design</a></span></dt><dt><span class="section"><a href="#module-by-module-commentary">2.3. Module-By-Module Commentary</a></span></dt><dt><span class="section"><a href="#debugging-hibari-using-tracing">2.4. Debugging Hibari (clients and servers) using tracing</a></span></dt></dl></dd><dt><span class="section"><a href="#_appendix_troubleshooting">3. Appendix: Troubleshooting</a></span></dt><dd><dl><dt><span class="section"><a href="#problem-multiple-hibari-apps">3.1. Problem: Cannot run multiple Hibari apps on the same physical machine</a></span></dt></dl></dd><dt><span class="section"><a href="#_appendix_known_warts_problems_inefficiencies_refactoring_opportunities_etc">4. Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc.</a></span></dt></dl></div><p></p><div class="section" title="1. Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This document is under re-construction - beware!</p></td></tr></table></div><p>This document’s goal is to describe the software architecture of the
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><title>Hibari Contributor’s Guide (Hibari v0.1.11) DRAFT - IN PROGRESS</title><link rel="stylesheet" type="text/css" href="docbook-xsl.css" /><meta name="generator" content="DocBook XSL Stylesheets V1.76.1" /></head><body><div xml:lang="en" class="article" title="Hibari Contributor’s Guide (Hibari v0.1.11) DRAFT - IN PROGRESS" lang="en"><div class="titlepage"><div><div><h2 class="title"><a id="idp64693936"></a>Hibari Contributor’s Guide (Hibari v0.1.11) <span class="strong"><strong>DRAFT - IN PROGRESS</strong></span></h2></div><div><div class="revhistory"><table border="1" width="100%" summary="Revision history"><tr><th align="left" valign="top" colspan="2"><strong>Revision History</strong></th></tr><tr><td align="left">Revision 0.5.4</td><td align="left">2015/04/05</td></tr></table></div></div></div><hr /></div><div class="toc"><p><strong>Table of Contents</strong></p><dl><dt><span class="section"><a href="#_introduction">1. Introduction</a></span></dt><dd><dl><dt><span class="section"><a href="#_topics_covered">1.1. Topics Covered</a></span></dt><dt><span class="section"><a href="#_reading_the_systems_administrator_guide_is_strongly_recommended">1.2. Reading the Systems Administrator Guide Is Strongly Recommended</a></span></dt><dt><span class="section"><a href="#_copyright_notices">1.3. Copyright Notices</a></span></dt></dl></dd><dt><span class="section"><a href="#_hibari_internals_the_source_module_by_module">2. Hibari Internals: The Source, Module by Module</a></span></dt><dd><dl><dt><span class="section"><a href="#major-subsystems">2.1. Major subsystems</a></span></dt><dt><span class="section"><a href="#admin-server-crash-recovery">2.2. Admin Server notes: crash-recovery design</a></span></dt><dt><span class="section"><a href="#module-by-module-commentary">2.3. Module-By-Module Commentary</a></span></dt><dt><span class="section"><a href="#debugging-hibari-using-tracing">2.4. Debugging Hibari (clients and servers) using tracing</a></span></dt></dl></dd><dt><span class="section"><a href="#_appendix_troubleshooting">3. Appendix: Troubleshooting</a></span></dt><dd><dl><dt><span class="section"><a href="#problem-multiple-hibari-apps">3.1. Problem: Cannot run multiple Hibari apps on the same physical machine</a></span></dt></dl></dd><dt><span class="section"><a href="#_appendix_known_warts_problems_inefficiencies_refactoring_opportunities_etc">4. Appendix: Known Warts, Problems, Inefficiencies, Refactoring Opportunities, etc.</a></span></dt></dl></div><p></p><div class="section" title="1. Introduction"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a id="_introduction"></a>1. Introduction</h2></div></div></div><div class="caution" title="Caution" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Caution"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Caution]" src="images/icons/caution.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>This document is under re-construction - beware!</p></td></tr></table></div><p>This document’s goal is to describe the software architecture of the
 Hibari key-value database, discuss parts of its implementation, and to
 document the Hibari client APIs.</p><p>At a minimum, application developers need to know how to use the
 various Hibari client APIs.  Hibari is a key-value database, which
@@ -23,7 +22,7 @@ operational details that a developer should know or must know about
 Hibari are found in the <a class="ulink" href="hibari-sysadmin-guide.en.html" target="_top">Hibari System
 Administrator’s Guide</a>.  This document assumes that a developer has
 already skimmed the System Administrator’s Guide and is willing to jump
-over to that guide when necessary.</p></td></tr></table></div><p></p></div><div class="section" title="1.3. Copyright Notices"><div class="titlepage"><div><div><h3 class="title"><a id="_copyright_notices"></a>1.3. Copyright Notices</h3></div></div></div><p>Copyright © 2005-2013 Hibari developers.  All rights reserved.</p><pre class="screen">Licensed under the Apache License, Version 2.0 (the "License");
+over to that guide when necessary.</p></td></tr></table></div><p></p></div><div class="section" title="1.3. Copyright Notices"><div class="titlepage"><div><div><h3 class="title"><a id="_copyright_notices"></a>1.3. Copyright Notices</h3></div></div></div><p>Copyright © 2005-2014 Hibari developers.  All rights reserved.</p><pre class="screen">Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
@@ -1055,7 +1054,7 @@ proplist that can contain additional information about the event.  At
 this time, there is no requirement of mandatory properties in that
 proplist.  Though mandatory properties may be introduced later, the
 main purpose is merely to provide a human developer/systems
-administrator with some extra information about the event.</p><div class="figure"><a id="idp7420944"></a><p class="title"><strong>Figure 1. Scoreboard and it’s surrounding (partial) supervision tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-stree.svg" target="_top">
+administrator with some extra information about the event.</p><div class="figure"><a id="idp58427184"></a><p class="title"><strong>Figure 1. Scoreboard and it’s surrounding (partial) supervision tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-stree.svg" target="_top">
   <div class="mediaobject" align="center"><img src="images/brick-sb-stree.png" align="middle" alt="images/brick-sb-stree.svg" /></div>
 </a></div></div><br class="figure-break" /><p>The scoreboard and it’s surrounding (partial) supervision tree is
 depicted above by "dotted" lines.  The chainmon_XXX and pinger_YYY
@@ -1063,7 +1062,7 @@ processes manually establish a link with the brick_sb process.  If a
 "down event" for the brick_sb processed is received, the chainmon_XXX
 and pinger_YYY processes sleep for 1 second before exiting abnormally.
 The brick_mon_sup supervisor will then automatically restart the
-chainmon_XXX and pinger_YYY processes.</p><div class="figure"><a id="idp7425552"></a><p class="title"><strong>Figure 2. Scoreboard and it’s surrounding (partial) call tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-ctree.svg" target="_top">
+chainmon_XXX and pinger_YYY processes.</p><div class="figure"><a id="idp58430640"></a><p class="title"><strong>Figure 2. Scoreboard and it’s surrounding (partial) call tree</strong></p><div class="figure-contents"><a class="ulink" href="images/brick-sb-ctree.svg" target="_top">
   <div class="mediaobject" align="center"><img src="images/brick-sb-ctree.png" align="middle" alt="images/brick-sb-ctree.svg" /></div>
 </a></div></div><br class="figure-break" /><p>During initialization of the scoreboard, the brick_sb loads the
 “scoreboard” operational history into RAM from the bootstrap bricks
@@ -1985,7 +1984,43 @@ The "redbug" tool is part of the
 </li></ul></div></div><div class="section" title="Hibari internal tracepoints"><div class="titlepage"><div><div><h4 class="title"><a id="_hibari_internal_tracepoints"></a>Hibari internal tracepoints</h4></div></div></div><p>The Hibari source code has been annotated with over 400 tracepoints
 using macros based on the <code class="literal">gmt_elog.erl</code> and <code class="literal">gmt_elog_policy.erl</code>
 modules.  These tracepoints give the developer (and even field support
-staff) more options for tracing events through Hibari’s code.</p><p>The <code class="literal">gmt_elog</code> tracepoints are designed to be extremely lightweight.
+staff) more options for tracing events through Hibari’s code.</p><p>Trace data can be collected by two methods:</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem"><p class="simpara">
+DTrace (or SystemTap), introduced at Hibari v0.3.0
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+This is the preferred way to collect trace data. DTrace/SystemTap
+     will have lowest overhead, and also provide an unified way to
+     gather and view various information from Erlang VM and Unix/Linux
+     kernel.
+</li><li class="listitem"><p class="simpara">
+Requirements
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+Erlang/OTP R15, or newer (built with <code class="literal">--with-dynamic-trace</code>
+        option)
+</li><li class="listitem"><p class="simpara">
+Unix/Linux with DTrace or SystemTap support.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="square"><li class="listitem">
+DTrace will be available in Solaris variants (including
+            Joyent SmartOS), Mac OS X, and FreeBSD.
+</li><li class="listitem">
+SystemTap will be available in Red Hat Enterprise Linux,
+            and CentOS.
+</li></ul></div></li><li class="listitem">
+root privilege
+</li></ul></div></li><li class="listitem"><p class="simpara">
+For more details about DTrace, please read this 61-page
+     paper. It’s not Erlang VM specific but will show you a practical
+     example of how we can use DTrace in a production system.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<a class="ulink" href="http://joyent.com/developers/resources/examining-file-system-latency-in-production" target="_top">Examining File System Latency in Production - Joyent SmartOS</a>
+</li></ul></div></li></ul></div></li><li class="listitem"><p class="simpara">
+dbg module in Erlang/OTP
+</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+This is the alternative way when DTrace method above is not
+     available. dbg module activates the Erlang VM’s tracing mechanism
+     and this will have some performance impact. dbg module only
+     collects the data from those tracepoints in Hibari, but it will
+     still give us valuable information.
+</li></ul></div></li></ol></div><p>The <code class="literal">gmt_elog</code> tracepoints are designed to be extremely lightweight.
 While they can be disabled completely at compile-time, their overhead
 is so low that they can remain in production code and be enabled only
 when needed for debugging.</p><p>For example, on an x86 laptop with the CPU frequency fixed at 1.33GHz,
@@ -2001,14 +2036,14 @@ The <code class="literal">?E_</code>* macros, e.g. <code class="literal">?E_INFO
   message text (with formatting by <code class="literal">io_lib:format/2</code>) with a severity
   level.
 </p><p class="simpara">These macros actually perform two functions: generate an
-application log event via <code class="literal">error_logger</code> and optionally generate a
-<code class="literal">gmt_elog</code> trace message.  When examining large traces, it proved
-<span class="emphasis"><em>extremely inconvenient</em></span> to try to merge application log messages into
-the flow of trace output … so now the macros perform that merging
-task automatically.</p></li><li class="listitem"><p class="simpara">
+application log event via
+<a class="ulink" href="https://github.com/basho/lager#readme" target="_top">Basho Lager</a>
+and optionally generate a <code class="literal">gmt_elog</code> trace message. When examining
+large traces, it proved <span class="emphasis"><em>extremely inconvenient</em></span> to try to merge
+application log messages into the flow of trace output … so now the
+macros perform that merging task automatically.</p></li><li class="listitem"><p class="simpara">
 For trace events that do not merit an application log entry using
-  <code class="literal">error_logger</code>, the <code class="literal">?DBG_</code>* macros provide a convenient way to
-  specify:
+  Lager, the <code class="literal">?DBG_</code>* macros provide a convenient way to specify:
 </p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
 A general category (for trace filtering)
 </li><li class="listitem"><p class="simpara">
@@ -2017,11 +2052,15 @@ One of:
 A generic Erlang term (usually a tuple)
 </li><li class="listitem">
 <code class="literal">io_lib:format/2</code> style formatted text
-</li></ul></div></li></ul></div></li></ul></div><p title="?E_INFO/2 macro’s definition:"><strong><code class="literal">?E_INFO/2</code> macro’s definition: </strong>
+</li></ul></div></li></ul></div></li></ul></div><p title="The definition of ?E_INFO/2 macro in brick.hrl"><strong>The definition of <code class="literal">?E_INFO/2</code> macro in <code class="literal">brick.hrl</code>. </strong>
 </p><pre class="screen">-define(E_INFO(Fmt, Args),
-        begin ?ELOG_INFO_C(?CAT_GENERAL, Fmt, Args),
-              error_logger:info_msg(Fmt, Args)
-        end).</pre><p title="?E_INFO/2 macro’s definition:">
+        ?ELOG_INFO(?CAT_GENERAL, Fmt, Args)).</pre><p title="The definition of ?E_INFO/2 macro in brick.hrl">
+</p><p title="The definition of ?ELOG_INFO/3 macro in gmt_elog.hrl"><strong>The definition of <code class="literal">?ELOG_INFO/3</code> macro in <code class="literal">gmt_elog.hrl</code>. </strong>
+</p><pre class="screen">-define(ELOG_INFO(Msg),
+        begin
+            lager:info(Msg),
+            gmt_elog_policy:dtrace(info, undefined, ?MODULE, ?LINE, Msg, [])
+        end).</pre><p title="The definition of ?ELOG_INFO/3 macro in gmt_elog.hrl">
 </p><p>The <code class="literal">?DBG_</code>* macros use the following filtering categories.  The
 categories use integers with C-style bit masks to allow a single trace
 message to use multiple categories by bit-wise AND’ing the categories
@@ -2045,16 +2084,22 @@ together.</p><p title="?DBG_* categories from brick.hrl"><strong><code class="li
 %% Example of ?DBG_ETSx()
 ?DBG_ETSx({inserted, S#state.tab, Key, size(Val)}).</pre><p title="Sample usage of ?E_INFO and ?DBG_ETSx/2">
 </p><p>In the end, the result of both these macros is a call to
-<code class="literal">gmt_elog_policy:enabled/6</code>.  By default, this function does not do
-anything.  For lowest overhead, it should do nothing.  It doesn’t
-<span class="strong"><strong>need</strong></span> to do anything, because the Erlang tracing mechanism will do
-what we need if and when we need to activate the tracing.</p><p title="The gmt_elog_policy:enabled/6 function"><strong>The <code class="literal">gmt_elog_policy:enabled/6</code> function. </strong>
-</p><pre class="screen">enabled(_Priority, _Category, _Module, _Line, _Fmt, _ArgList) -&gt;
-    false.</pre><p title="The gmt_elog_policy:enabled/6 function">
-</p><p>When enabled, the Erlang VM’s tracing mechanism will tell us the
-module name, function name, and arguments of any function call that
-meets its match specification.  When tracing is not enabled, almost no
-computation is performed.</p><p>The arguments for the <code class="literal">enabled/6</code> function are usually generated by
+<code class="literal">gmt_elog_policy:dtrace/6</code>. When <code class="literal">dtrace_support</code> in <code class="literal">sys.config</code> is
+set to <code class="literal">false</code> or DTrace/SystemTap support is not available in Erlang
+VM, this function does not do anything for lowest overhead.</p><p>When <code class="literal">dtrace_support</code> is set to <code class="literal">true</code> and DTrace/SystemTap support is
+available, this function will trigger the "user" trace probe
+in the dyntrace NIF module to send the trace message to DTrace
+consumers.</p><p>If you want to use dbg module instead of DTrace/SystemTap, Setting
+<code class="literal">dtrace_support</code> to <code class="literal">false</code> is recommended to avoid unnecessary calls
+on the user trace probe. The Erlang tracing mechanism does not rely on
+the probe, but will record calls on <code class="literal">gmt_elog_policy:dtrace/6</code> with
+the arguments.</p><p title="The spec of gmt_elog_policy:dtrace/6 function"><strong>The spec of <code class="literal">gmt_elog_policy:dtrace/6</code> function. </strong>
+</p><pre class="screen">-type log_level() :: 'emergency' | 'alert' | 'critical' | 'error'
+                     | 'warning' | 'notice' | 'info' | 'debug' | 'trace'.
+
+-spec dtrace(log_level(), integer() | undefined, module(),
+             integer(), string(), [term()]) -&gt; true | false | error | badarg.</pre><p title="The spec of gmt_elog_policy:dtrace/6 function">
+</p><p>The arguments for the <code class="literal">dtrace/6</code> function are usually generated by
 macros for convenience.  The arguments are:</p><div class="variablelist"><dl><dt><span class="term">
 Priority, <code class="literal">term()</code>
 </span></dt><dd>
@@ -2085,8 +2130,62 @@ ArgList, <code class="literal">string()</code>
 </span></dt><dd><p class="simpara">
 An <code class="literal">io_lib:format/2</code> formatting argument list.
 </p><div class="note" title="Note" style="margin-left: 0; margin-right: 10%;"><table border="0" summary="Note"><tr><td rowspan="2" align="center" valign="top" width="25"><img alt="[Note]" src="images/icons/note.png" /></td><th align="left"></th></tr><tr><td align="left" valign="top"><p>The <code class="literal">Fmt</code> and <code class="literal">ArgList</code> arguments are used for the <code class="literal">?DBG_</code>*
-style macros, because arguments are used by the log trace formatting
-functions to do the actual log trace formatting.</p></td></tr></table></div></dd></dl></div></div><div class="section" title="Trace collection and formatting"><div class="titlepage"><div><div><h5 class="title"><a id="_trace_collection_and_formatting"></a>Trace collection and formatting</h5></div></div></div><p>The <code class="literal">gmt_elog:help/0</code> function provides a quick reference for how to
+style macros. When we use DTrace/SystemTap method, <code class="literal">dtrace/6</code> function
+formats the log message. When we use dbg module method (and
+<code class="literal">dtrace_support</code> is set to <code class="literal">false</code> or DTrace support is not available),
+<code class="literal">dtrace/6</code> function doesn’t format the log message, and the log trace
+formatting function will format the log massage after trace data
+collection.</p></td></tr></table></div></dd></dl></div></div><div class="section" title="Method 1. DTrace/SystemTap: Trace collection"><div class="titlepage"><div><div><h5 class="title"><a id="_method_1_dtrace_systemtap_trace_collection"></a>Method 1. DTrace/SystemTap: Trace collection</h5></div></div></div><p>You will use <code class="literal">dtrace</code> or <code class="literal">systemtap</code> command to collect trace data not
+only from <code class="literal">?DBG_</code>* macros but also Erlang VM and Unix/Linux
+kernel. You can perform simple tasks by directly giving arguments to
+these commands, or write D or SystemTap script for more complex
+tasks. Note that you’ll need root privileges to run these commands and
+scripts.</p><p>As of Erlang/OTP R15B, we can collect the following information about
+Erlang VM:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Processes: spawn, exit, hibernate, scheduled, …
+</li><li class="listitem">
+Messages: send, queued, received, exit signals
+</li><li class="listitem">
+Memory: GC minor and major, proc heap grow and shrink
+</li><li class="listitem">
+Data copy: within heap, across heaps
+</li><li class="listitem">
+Function calls: function, BIF, and NIF, entry and return
+</li><li class="listitem">
+Network distribution: monitor, port busy, output events
+</li><li class="listitem">
+Ports: open, command, control, busy/not busy
+</li><li class="listitem">
+Drivers: callback API 100% instrumented
+</li><li class="listitem">
+<code class="literal">efile_drv.c</code> file I/O driver: 100% instrumented
+</li></ul></div><p>You can also collect Unix/Linux kernel information such as:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+System View: observing CPUs, memory, disk and network I/O
+</li><li class="listitem">
+Disk I/O: request types and I/O size, request queues, latency,
+  errors
+</li><li class="listitem">
+File Systems: raw I/O (/dev/rdsk), file system I/O, cache
+  hits/misses, physical disk I/O
+</li><li class="listitem">
+Network Lower-Level Protocols: protocol requests, socket
+  connections, transport I/O (TCP or UDP), network interface I/O
+</li></ul></div><p>Basic DTrace/SystemTap recipes will be shipped with Hibari starting
+v0.3.1 or v0.3.2. But until then, please refer to the following
+resources:</p><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+Example Erlang VM scripts in <code class="literal">libs/runtime_tools-x.y.z/examples/</code>
+  directory of your Erlang/OTP installation.
+</li><li class="listitem">
+<a class="ulink" href="http://joyent.com/developers/resources/examining-file-system-latency-in-production" target="_top">Examining File System Latency in Production - Joyent SmartOS</a>
+</li><li class="listitem"><p class="simpara">
+The DTrace Book: "DTrace: Dynamic Tracing in Oracle Solaris, Mac OS
+  X, and FreeBSD" by Brendan Gregg and Jim Mauro, Prentice Hall 2011,
+  1152 pages.
+</p><div class="itemizedlist"><ul class="itemizedlist" type="circle"><li class="listitem">
+<a class="ulink" href="http://www.dtracebook.com/" target="_top">http://www.dtracebook.com/</a>
+</li></ul></div></li><li class="listitem">
+DTrace.org Blog at: <a class="ulink" href="http://dtrace.org/blogs/" target="_top">http://dtrace.org/blogs/</a>
+</li></ul></div></div><div class="section" title="Method 2. dbg module: Trace collection and formatting"><div class="titlepage"><div><div><h5 class="title"><a id="_method_2_dbg_module_trace_collection_and_formatting"></a>Method 2. dbg module: Trace collection and formatting</h5></div></div></div><p>The <code class="literal">gmt_elog:help/0</code> function provides a quick reference for how to
 use the <code class="literal">gmt_elog</code> tracing functions.</p><p title="Example of gmt_elog:help/0 usage."><strong>Example of <code class="literal">gmt_elog:help/0</code> usage. </strong>
 </p><pre class="screen">(hibari_dev@bb3)56&gt; gmt_elog:help().
   gmt_elog:start_tracing().
@@ -2103,9 +2202,11 @@ use the <code class="literal">gmt_elog</code> tracing functions.</p><p title="Ex
   gmt_elog:format_file("/path/to/trace-file", "/path/to/output", MatchStr|"").
 ok</pre><p title="Example of gmt_elog:help/0 usage.">
 </p><p>When we enable tracing, we’re actually tracing calls to the
-<code class="literal">gmt_elog_policy:enabled/6</code> function.  As with any tracing match
-specification, we can be as general (using <code class="literal">'_'</code> wildcards) or as
-specific as we wish in filtering trace events.</p><p>For the examples of <code class="literal">add_match_spec</code> shown above, here is an explanation</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
+<code class="literal">gmt_elog_policy:dtrace/6</code> function. The Erlang VM’s tracing mechanism
+will tell us the module name, function name, and arguments of any
+function call that meets its match specification. As with any tracing
+match specification, we can be as general (using <code class="literal">'_'</code> wildcards) or
+as specific as we wish in filtering trace events.</p><p>For the examples of <code class="literal">add_match_spec</code> shown above, here is an explanation</p><div class="orderedlist"><ol class="orderedlist" type="1"><li class="listitem">
 Trace everything, i.e. all calls to <code class="literal">gmt_elog_policy:enabled/6</code>.
 </li><li class="listitem">
 Trace anything where the <code class="literal">Category</code> arg == <code class="literal">target_category</code>.
@@ -2131,7 +2232,7 @@ Trace anything where either of the following conditions is true:
 &gt; gmt_elog:format_file("/tmp/trace-file1", "/tmp/trace-file1.out").</pre><p title="Outline of a typical tracing session">
 </p><p>If you have a low volume of trace messages, it may be convenient to
 use <code class="literal">gmt_elog:start_tracing/0</code> to send those messages to the shell
-window instead of to a file.</p></div><div class="section" title="For more information about tracing"><div class="titlepage"><div><div><h5 class="title"><a id="_for_more_information_about_tracing"></a>For more information about tracing</h5></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
+window instead of to a file.</p></div><div class="section" title="For more information about dbg module tracing"><div class="titlepage"><div><div><h5 class="title"><a id="_for_more_information_about_dbg_module_tracing"></a>For more information about dbg module tracing</h5></div></div></div><div class="itemizedlist"><ul class="itemizedlist" type="disc"><li class="listitem">
 See the EDoc documentation for the <code class="literal">gmt_elog</code> module for detailed
   information on how to use all the tracing functions in that module.
 </li><li class="listitem">
